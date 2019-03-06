@@ -524,7 +524,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		// 搜索框
 		let searchBar = UISearchBar(frame: CGRect(x:0, y:0, width:viewBounds.width-80, height: 44))
 		searchBar.searchBarStyle = .minimal
-		searchBar.delegate = self as! UISearchBarDelegate
+		searchBar.delegate = self as UISearchBarDelegate
 		//searchbar背景色
 //		searchBar.barTintColor = UIColor.black
 		searchBar.placeholder = "Search";
