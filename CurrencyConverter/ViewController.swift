@@ -141,6 +141,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
 		]
 	]
+	
+	var searchResults:Array = [String]()
     
     // UI 组件
 	var settingsView: UIView!
@@ -153,6 +155,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var txtToMoney: UITextField!
 	var tbvResults: UITableView!
 	var searchBar: UISearchBar!
+	var searchBarIsActive:Bool = false
     
     func updateRates() {
         let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -371,10 +374,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 				let tempMoney = self.txtFromMoney.text
 				self.txtFromMoney.text = self.txtToMoney.text
 				self.txtToMoney.text = tempMoney
-//				self.txtToMoney.text = self.output()
 			})
-			
-			
 		}
 	}
 	
@@ -511,56 +511,80 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		self.currencyPickerView.isHidden = true
 		self.view.addSubview(self.currencyPickerView)
 		
+		// 导航条
+		let navbar:UINavigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
+		navbar.barTintColor = UIColor.black
+		navbar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+		navbar.backgroundColor = UIColor.black
+		self.currencyPickerView.addSubview(navbar)
+		
+		let navigationitem = UINavigationItem()
+		let rightBtn = UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onCurrencyPickerCancel(_:)))
+		
+		//		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone))
+//		navigationitem.title = "Settings"
+		navigationitem.rightBarButtonItem = rightBtn
+		//		navigationitem.setRightBarButton(rightBtn, animated: true)
+		navbar.pushItem(navigationitem, animated: true)
+
 		tbvResults = UITableView(frame: CGRect(x: 0, y: 44, width: viewBounds.width, height: viewBounds.height-44), style: .plain)
 		tbvResults.delegate = self
 		tbvResults.dataSource = self
 		tbvResults.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
 		self.currencyPickerView.addSubview(tbvResults)
 
-		let viewTableHeader = UIView(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
-		viewTableHeader.backgroundColor = UIColor.black
-		self.currencyPickerView.addSubview(viewTableHeader)
+//		let viewTableHeader = UIView(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
+//		viewTableHeader.backgroundColor = UIColor.black
+//		self.currencyPickerView.addSubview(viewTableHeader)
 		
 		// 搜索框
-		let searchBar = UISearchBar(frame: CGRect(x:0, y:0, width:viewBounds.width-80, height: 44))
+		let searchBar = UISearchBar(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
 		searchBar.searchBarStyle = .minimal
+//		searchBar.dims
 		searchBar.delegate = self as UISearchBarDelegate
 		//searchbar背景色
 //		searchBar.barTintColor = UIColor.black
-		searchBar.placeholder = "Search";
-		let searchTextFeild = searchBar.subviews.first?.subviews.last as! UITextField
+		searchBar.placeholder = "Search"
+		searchBar.showsCancelButton = true
+		searchBar.barTintColor = UIColor(red: 218.0/255.0, green: 100.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+		let searchTextFeild = searchBar.subviews.first?.subviews[1] as! UITextField
 		// 修改输入文字的颜色
 		searchTextFeild.textColor = UIColor.white
 //		searchTextFeild.backgroundColor = UIColor.gray
 		// 输入内容大写
 		searchTextFeild.autocapitalizationType = .allCharacters
-		viewTableHeader.addSubview(searchBar)
+		tbvResults.tableHeaderView = searchBar
+//		viewTableHeader.addSubview(searchBar)
 		self.searchBar = searchBar
 		
 		// 完成按钮
-		let btnSearchCancel = UIButton(frame: CGRect(x:viewBounds.width-80, y:0, width:80, height:44))
-		btnSearchCancel.setTitle("Cancel", for: .normal)
-		btnSearchCancel.setTitleColor(UIColor.blue, for: .normal)
-		btnSearchCancel.setTitleColor(UIColor.gray, for: .highlighted)
-		btnSearchCancel.addTarget(self, action: #selector(onCurrencyPickerCancel(_:)), for: .touchDown)
-		viewTableHeader.addSubview(btnSearchCancel)
+//		let btnSearchCancel = UIButton(frame: CGRect(x:viewBounds.width-80, y:0, width:80, height:44))
+//		btnSearchCancel.setTitle("Cancel", for: .normal)
+//		btnSearchCancel.setTitleColor(UIColor.blue, for: .normal)
+//		btnSearchCancel.setTitleColor(UIColor.gray, for: .highlighted)
+//		btnSearchCancel.addTarget(self, action: #selector(onCurrencyPickerCancel(_:)), for: .touchDown)
+//		viewTableHeader.addSubview(btnSearchCancel)
 	}
 	
 	//返回表格行数
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let data = self.allCurrencies[section] ?? [String]()
-		return data.count
+		if self.searchBarIsActive{
+			return self.searchResults.count
+		} else {
+			let data = self.allCurrencies[section] ?? [String]()
+			return data.count
+		}
 	}
 	
 	//分组数量
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
+		return self.searchBarIsActive ? 1 : self.allCurrencies.count
 	}
 	
 	//cell
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
-		let currency = allCurrencies[sectionId]?[indexPath.row]
+		let currency = self.searchBarIsActive ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "CellID")
 		cell.detailTextLabel?.textColor = UIColor.black
 		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
@@ -633,13 +657,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return self.adHeaders[section]
+		return self.searchBarIsActive ? "" : self.adHeaders[section]
 	}
 	
+	//searchbar的事件代理
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		print("3 searchBar")
 		
 		print("3 text=\(String(describing: searchBar.text)), string=\(searchText)")
+		
+		self.searchResults.removeAll()
+		self.allCurrencies[1]?.forEach {
+			item in
+			if item.contains(searchText) {
+				self.searchResults.append(item)
+			}
+		}
+		self.tbvResults.reloadData()
+	}
+	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+		self.searchBarIsActive = true
+		self.tbvResults.reloadData()
+		return true
+	}
+	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+		self.searchBarIsActive = false
+		self.tbvResults.reloadData()
 	}
 
 }
