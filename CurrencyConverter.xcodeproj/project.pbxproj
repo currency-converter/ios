@@ -17,6 +17,7 @@
 		24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */; };
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
+		24EAA6262231ACAB00ACF074 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24ADE840222ED4AB00B4C046 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		24C6800F2227855A00747FBF /* button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = button.swift; sourceTree = "<group>"; };
+		24EAA6252231ACAB00ACF074 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				241CA3602223D13700D5FC5F /* Info.plist */,
 				24C6800F2227855A00747FBF /* button.swift */,
 				24ADE834222AAE3900B4C046 /* Iconfont.swift */,
+				24EAA6252231ACAB00ACF074 /* Util.swift */,
 			);
 			path = CurrencyConverter;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			files = (
 				241CA3572223D13600D5FC5F /* ViewController.swift in Sources */,
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
+				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
 			);

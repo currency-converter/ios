@@ -154,8 +154,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var txtFromMoney: UITextField!
     var txtToMoney: UITextField!
 	var tbvResults: UITableView!
+	var searchController: UISearchController!
 	var searchBar: UISearchBar!
-	var searchBarIsActive:Bool = false
     
     func updateRates() {
         let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -462,7 +462,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	func hideCurrencyPickerView() {
 		//收起键盘
-		self.searchBar.resignFirstResponder()
+		//self.searchBar.resignFirstResponder()
+		self.searchController.isActive = false
 		UIView.animate(withDuration: 0.5, animations: {
 			self.currencyPickerView.frame.origin.y = UIScreen.main.bounds.height
 		}, completion: nil)
@@ -514,8 +515,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		// 导航条
 		let navbar:UINavigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
 		navbar.barTintColor = UIColor.black
-		navbar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-		navbar.backgroundColor = UIColor.black
+//		navbar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 		self.currencyPickerView.addSubview(navbar)
 		
 		let navigationitem = UINavigationItem()
@@ -532,43 +532,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tbvResults.dataSource = self
 		tbvResults.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
 		self.currencyPickerView.addSubview(tbvResults)
-
-//		let viewTableHeader = UIView(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
-//		viewTableHeader.backgroundColor = UIColor.black
-//		self.currencyPickerView.addSubview(viewTableHeader)
+		
+		let searchController = UISearchController(searchResultsController: nil)
+		self.searchController = searchController
+		// Setup the Search Controller
+		searchController.searchResultsUpdater = self
+		//搜索时，取消背景变模糊
+		searchController.obscuresBackgroundDuringPresentation = false
+		//搜索时，取消背景变暗色
+		searchController.dimsBackgroundDuringPresentation = false
+		//搜索时，取消隐藏导航条
+		//searchController.hidesNavigationBarDuringPresentation = false
+		tbvResults.tableHeaderView = searchController.searchBar
 		
 		// 搜索框
-		let searchBar = UISearchBar(frame: CGRect(x:0, y:0, width:viewBounds.width, height: 44))
-		searchBar.searchBarStyle = .minimal
-//		searchBar.dims
-		searchBar.delegate = self as UISearchBarDelegate
+		let searchBar = searchController.searchBar
+		self.searchBar = searchBar
+//		searchBar.searchBarStyle = .minimal
+//		searchBar.barStyle = .default
+		searchBar.delegate = self
 		//searchbar背景色
 //		searchBar.barTintColor = UIColor.black
-		searchBar.placeholder = "Search"
-		searchBar.showsCancelButton = true
-		searchBar.barTintColor = UIColor(red: 218.0/255.0, green: 100.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+		//searchBar.placeholder = "Search"
 		let searchTextFeild = searchBar.subviews.first?.subviews[1] as! UITextField
 		// 修改输入文字的颜色
-		searchTextFeild.textColor = UIColor.white
-//		searchTextFeild.backgroundColor = UIColor.gray
+		//searchTextFeild.textColor = UIColor.rgba(r: 41, g: 202, b: 111, a: 1)
 		// 输入内容大写
 		searchTextFeild.autocapitalizationType = .allCharacters
-		tbvResults.tableHeaderView = searchBar
-//		viewTableHeader.addSubview(searchBar)
-		self.searchBar = searchBar
-		
-		// 完成按钮
-//		let btnSearchCancel = UIButton(frame: CGRect(x:viewBounds.width-80, y:0, width:80, height:44))
-//		btnSearchCancel.setTitle("Cancel", for: .normal)
-//		btnSearchCancel.setTitleColor(UIColor.blue, for: .normal)
-//		btnSearchCancel.setTitleColor(UIColor.gray, for: .highlighted)
-//		btnSearchCancel.addTarget(self, action: #selector(onCurrencyPickerCancel(_:)), for: .touchDown)
-//		viewTableHeader.addSubview(btnSearchCancel)
 	}
 	
 	//返回表格行数
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if self.searchBarIsActive{
+		if self.searchController?.isActive ?? false {
 			return self.searchResults.count
 		} else {
 			let data = self.allCurrencies[section] ?? [String]()
@@ -578,13 +573,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	//分组数量
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return self.searchBarIsActive ? 1 : self.allCurrencies.count
+		return self.searchController?.isActive ?? false ? 1 : self.allCurrencies.count
 	}
 	
 	//cell
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
-		let currency = self.searchBarIsActive ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let currency = self.searchController?.isActive ?? false ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "CellID")
 		cell.detailTextLabel?.textColor = UIColor.black
 		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
@@ -644,8 +639,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			self.rate = rate
 			//更新计算结果
 			self.txtToMoney.text = self.output()
-			//收起键盘
-			self.searchBar.resignFirstResponder()
 		}
 		self.hideCurrencyPickerView()
 	}
@@ -657,32 +650,51 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return self.searchBarIsActive ? "" : self.adHeaders[section]
+		return self.searchController?.isActive ?? false ? "" : self.adHeaders[section]
 	}
 	
 	//searchbar的事件代理
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		print("3 searchBar")
-		
-		print("3 text=\(String(describing: searchBar.text)), string=\(searchText)")
-		
+//	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//		print("3 searchBar")
+//
+//		print("3 text=\(String(describing: searchBar.text)), string=\(searchText)")
+//
+//		self.searchResults.removeAll()
+//		self.allCurrencies[1]?.forEach {
+//			item in
+//			if item.contains(searchText) {
+//				self.searchResults.append(item)
+//			}
+//		}
+//		self.tbvResults.reloadData()
+//	}
+//	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+//		print("begin editing")
+//		self.searchResults.removeAll()
+//		self.searchBarIsActive = true
+//		self.tbvResults.reloadData()
+//		return true
+//	}
+//	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//		print("end editing")
+//		self.searchBarIsActive = false
+//		self.tbvResults.reloadData()
+//	}
+
+}
+
+extension ViewController: UISearchResultsUpdating {
+	// MARK: - UISearchResultsUpdating Delegate
+	func updateSearchResults(for searchController: UISearchController) {
+		print("search keyword:", searchController.searchBar.text!)
 		self.searchResults.removeAll()
 		self.allCurrencies[1]?.forEach {
 			item in
-			if item.contains(searchText) {
+			if item.contains(searchController.searchBar.text!) {
 				self.searchResults.append(item)
 			}
 		}
 		self.tbvResults.reloadData()
 	}
-	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-		self.searchBarIsActive = true
-		self.tbvResults.reloadData()
-		return true
-	}
-	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-		self.searchBarIsActive = false
-		self.tbvResults.reloadData()
-	}
-
 }
+
