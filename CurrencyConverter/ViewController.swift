@@ -8,6 +8,7 @@
 
 import UIKit
 
+//货币选择类型
 enum CurrencyPickerType {
 	case from
 	case to
@@ -19,9 +20,17 @@ let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     // 当前输入货币是否为空
     var isEmpty: Bool = true
+	
+	// 当前运算符
+	var operatorSign:String = ""
+	
+	var operatorButton:UIButton!
+	
+	// 被操作的数
+	var operatorEnd:String = ""
     
     // 输入货币数量
-    var fromMony: String = "0"
+    var fromMoney: String = "0"
     
     // 汇率
     var rate: Float!
@@ -38,9 +47,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var toCurrency: String!
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
-    
-    // 汇率更新时间
-    var updatedAt: Int = 1551166586929
 	
 	var propertyList:String = NSHomeDirectory() + "/Library/app.plist"
     
@@ -135,7 +141,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		"fromCurrency": "USD",
 		"toCurrency": "CNY",
 		"decimals": 2,
-		"updatedAt": 1551251719471,
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
 		"rates": [
 			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
@@ -148,6 +153,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var settingsView: UIView!
 	var viewFromScreen: UIView!
 	var viewToScreen: UIView!
+	var keyboardView: UIView!
 	var currencyPickerView: UIView!
     var btnFromCurrency: UIButton!
 	var btnToCurrency: UIButton!
@@ -254,7 +260,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		txtFromMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtFromMoney.minimumFontSize = 14
 		txtFromMoney.textAlignment = .right
-		txtFromMoney.text = self.fromMony
+		txtFromMoney.text = self.fromMoney
 		txtFromMoney.textColor = UIColor.white
 		txtFromMoney.isEnabled = false
 		viewFromScreen.addSubview(txtFromMoney)
@@ -273,7 +279,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		txtToMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtToMoney.minimumFontSize = 14
 		txtToMoney.textAlignment = .right
-		txtToMoney.text = self.fromMony
+		txtToMoney.text = self.fromMoney
 		txtToMoney.textColor = UIColor.white
 		txtToMoney.isEnabled = false
 		viewToScreen.addSubview(txtToMoney)
@@ -295,6 +301,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // 创建键盘容器
         let keyboardView = UIView()
+		self.keyboardView = keyboardView
         // 坐标
         keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width, width: viewBounds.width, height: viewBounds.width)
         // 背景颜色
@@ -308,38 +315,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // 添加到当前视图控制器
         self.view.addSubview(keyboardView)
 		
-        let buttonWidth = (keyboardView.frame.size.width - 3) / 4
-        let buttonHeight = (keyboardView.frame.size.height - 3) / 4
-        let characters:[String] = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "A", "0", ".", "C"]
+        let buttonWidth = (keyboardView.frame.size.width - 50) / 4
+		let buttonPadding:CGFloat = 10
+//        let buttonHeight = (keyboardView.frame.size.height - 3) / 4
+        let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
         
         for (index, item) in characters.enumerated() {
             // print(item)
             // 创建数字按钮
             var btn:UIButton
-
+			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
+			btn.layer.cornerRadius = buttonWidth/2
+			btn.setTitleColor(UIColor.white, for: .normal)
+			btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
+			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+			
             switch item {
-                case "C":
-                    btn = UIButton.init(frame: CGRect(x:(buttonWidth + 1) * 3, y:0, width:buttonWidth, height:keyboardView.frame.size.height))
-					btn.setBackgroundColor(color: UIColor.orange, forState: .normal)
-					btn.setBackgroundColor(color: UIColor.white, forState: .highlighted)
-                    btn.setTitleColor(UIColor.white, for: .normal)
-					btn.setTitleColor(UIColor.gray, for: .highlighted)
-                default:
-                    btn = UIButton.init(frame: CGRect(x:(buttonWidth + 1) * CGFloat(index % 3), y:(buttonHeight + 1) * CGFloat(floor(Double(index/3))), width:buttonWidth, height:buttonHeight))
-					btn.setTitleColor(UIColor.black, for: .normal)
-					btn.setTitleColor(UIColor.white, for: .highlighted);
-					btn.setBackgroundColor(color: UIColor.lightGray, forState: .normal)
-					btn.setBackgroundColor(color: UIColor.gray, forState: .highlighted)
+			case "=", "+", "-", "AC":
+				btn.setBackgroundColor(color: UIColor.rgb(r: 255, g: 148, b: 8), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.rgb(r: 251, g: 213, b: 170), forState: .highlighted)
+				btn.setBackgroundColor(color: UIColor.rgb(r: 254, g: 254, b: 254), forState: .selected)
+				btn.setTitleColor(UIColor.rgb(r: 251, g: 150, b: 1), for: .selected)
+//                    btn = UIButton.init(frame: CGRect(x:(buttonWidth + 1) * 3, y:0, width:buttonWidth, height:keyboardView.frame.size.height))
+//					btn.setBackgroundColor(color: UIColor.orange, forState: .normal)
+//					btn.setBackgroundColor(color: UIColor.white, forState: .highlighted)
+//                    btn.setTitleColor(UIColor.white, for: .normal)
+//					btn.setTitleColor(UIColor.gray, for: .highlighted)
+			case "A":
+				btn.setBackgroundColor(color: UIColor.rgb(r: 44, g: 44, b: 44), forState: .normal)
+				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
+			default:
+				btn.setBackgroundColor(color: UIColor.rgb(r: 66, g: 66, b: 66), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.rgb(r: 100, g: 100, b: 100), forState: .highlighted)
             }
 
-            if item == "A" {
-				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
-				btn.setBackgroundColor(color: UIColor.gray, forState: .normal)
-                btn.addTarget(self, action:#selector(onSettingsClick(_:)), for: UIControl.Event.touchDown)
-            } else {
-                btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
-				btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
-            }
+//            if item == "A" {
+//				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
+//				btn.setBackgroundColor(color: UIColor.gray, forState: .normal)
+////                btn.addTarget(self, action:#selector(onSettingsClick(_:)), for: UIControl.Event.touchDown)
+//            } else {
+////                btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+//				btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
+//            }
             btn.setTitle(item, for: UIControl.State.normal)
             keyboardView.addSubview(btn)//将标签添加到View中
         }
@@ -397,26 +414,74 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func onInput(_ sender: UIButton) {//按钮相应事件方法，注意在该方法前需要加@objc
         // let btn = sender as! UIButton
         let n = sender.currentTitle
+		
+		//清除+-的选中状态
+//		print(self.keyboardView.)
+		self.operatorButton?.isSelected = false
+		
         switch n {
-        case "C":
+        case "AC":
             self.isEmpty = true
-            self.fromMony = "0"
+            self.fromMoney = "0"
+			self.operatorEnd = ""
+			self.operatorSign = ""
+		case "A":
+			self.onSettingsClick(sender)
+		case "+", "-":
+			if !self.isEmpty {
+				self.operatorSign = n ?? ""
+				self.operatorEnd = ""
+				self.operatorButton = sender
+				sender.isSelected = true
+			}
+		case "=":
+			if self.operatorEnd != "" {
+				var a:Float = 0
+				if self.operatorSign == "+" {
+					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
+				} else {
+					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
+				}
+				self.fromMoney = "\(a)"
+			}
+			self.operatorSign = ""
+			self.operatorEnd = ""
         case "0":
-            if fromMony != "0" {
-                self.fromMony += "0"
-				self.isEmpty = false
-            }
+			if self.operatorSign == "" {
+				if fromMoney != "0" {
+					self.fromMoney += "0"
+					self.isEmpty = false
+				}
+			} else {
+				self.operatorEnd += "0"
+			}
         case ".":
-            if !self.fromMony.contains(".") {
-                self.fromMony += "."
-				self.isEmpty = false
-            }
+			if self.operatorSign == "" {
+				if !self.fromMoney.contains(".") {
+					self.fromMoney += "."
+					self.isEmpty = false
+				}
+			} else {
+				if !self.operatorEnd.contains(".") {
+					self.operatorEnd += "."
+				}
+			}
         default:
-            self.fromMony = self.isEmpty ? n! : self.fromMony + n!
-			self.isEmpty = false
+			if self.operatorSign == "" {
+				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
+				self.isEmpty = false
+			} else {
+				self.operatorEnd += n!
+			}
         }
-		txtFromMoney.text = self.fromMony
-		txtToMoney.text = self.output()
+		
+		if self.operatorSign != "" && self.operatorEnd != "" {
+			txtFromMoney.text = self.operatorEnd
+			txtToMoney.text = self.output(money: self.operatorEnd)
+		} else {
+			txtFromMoney.text = self.fromMoney
+			txtToMoney.text = self.output(money: self.fromMoney)
+		}
     }
     
     @objc func onSettingsClick(_ sender: UIButton) {
@@ -434,7 +499,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	@objc func onSettingsDone(_ sender: UIButton) {
-		print("done")
 		UIView.animate(withDuration: 0.5, animations: {
 			self.settingsView.frame.origin.y = UIScreen.main.bounds.height
 		}, completion: nil)
@@ -471,8 +535,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	// 格式化输出换算结果
-	func output() -> String {
-		return String(format: "%.\(String(self.decimals))f", Float(self.fromMony)! * self.rate)
+	func output(money:String) -> String {
+		return String(format: "%.\(String(self.decimals))f", Float(money)! * self.rate)
 	}
 	
 	func setupSettingsView() {
@@ -638,7 +702,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			let rate:Float = toRate/fromRate
 			self.rate = rate
 			//更新计算结果
-			self.txtToMoney.text = self.output()
+			self.txtToMoney.text = self.output(money: self.fromMoney)
 		}
 		self.hideCurrencyPickerView()
 	}
