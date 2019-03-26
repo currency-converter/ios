@@ -17,6 +17,12 @@
 		24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */; };
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
+		24D0A64B224375F600BC423B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A64A224375F600BC423B /* SettingsViewController.swift */; };
+		24D0A64E224379AA00BC423B /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */; };
+		24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A650224394FC00BC423B /* SettingsTableCell.swift */; };
+		24D0A6532248C58A00BC423B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6522248C58A00BC423B /* Settings.bundle */; };
+		24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */; };
+		24D0A6572248F12900BC423B /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6562248F12800BC423B /* Sounds */; };
 		24EAA6262231ACAB00ACF074 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +60,12 @@
 		24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24ADE840222ED4AB00B4C046 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		24C6800F2227855A00747FBF /* button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = button.swift; sourceTree = "<group>"; };
+		24D0A64A224375F600BC423B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewController.swift; sourceTree = "<group>"; };
+		24D0A650224394FC00BC423B /* SettingsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
+		24D0A6522248C58A00BC423B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleHelper.swift; sourceTree = "<group>"; };
+		24D0A6562248F12800BC423B /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		24EAA6252231ACAB00ACF074 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +117,8 @@
 		241CA3532223D13600D5FC5F /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
+				24D0A6562248F12800BC423B /* Sounds */,
+				24D0A64F224379E600BC423B /* ViewControllers */,
 				24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */,
 				24ADE840222ED4AB00B4C046 /* Main.storyboard */,
 				24ADE830222909E600B4C046 /* cc.ttf */,
@@ -115,6 +129,9 @@
 				24C6800F2227855A00747FBF /* button.swift */,
 				24ADE834222AAE3900B4C046 /* Iconfont.swift */,
 				24EAA6252231ACAB00ACF074 /* Util.swift */,
+				24D0A650224394FC00BC423B /* SettingsTableCell.swift */,
+				24D0A6522248C58A00BC423B /* Settings.bundle */,
+				24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */,
 			);
 			path = CurrencyConverter;
 			sourceTree = "<group>";
@@ -135,6 +152,16 @@
 				241CA3762223D13700D5FC5F /* Info.plist */,
 			);
 			path = CurrencyConverterUITests;
+			sourceTree = "<group>";
+		};
+		24D0A64F224379E600BC423B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				24D0A64A224375F600BC423B /* SettingsViewController.swift */,
+				24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */,
+			);
+			name = ViewControllers;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,8 +268,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24D0A6572248F12900BC423B /* Sounds in Resources */,
 				24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */,
 				24ADE831222909E600B4C046 /* cc.ttf in Resources */,
+				24D0A6532248C58A00BC423B /* Settings.bundle in Resources */,
 				241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */,
 				24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */,
 			);
@@ -272,8 +301,12 @@
 				241CA3572223D13600D5FC5F /* ViewController.swift in Sources */,
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
+				24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */,
+				24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */,
+				24D0A64E224379AA00BC423B /* CurrencyPickerViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
+				24D0A64B224375F600BC423B /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

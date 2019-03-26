@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 //货币选择类型
 enum CurrencyPickerType {
@@ -162,6 +163,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var tbvResults: UITableView!
 	var searchController: UISearchController!
 	var searchBar: UISearchBar!
+	var tapSoundPlayer: AVAudioPlayer!
+	
+	var prefs: UserDefaults = UserDefaults.standard
     
     func updateRates() {
         let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -225,35 +229,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		registerSettingsBundle()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
+//		defaultsChanged()
+		
 		// 设置全局背景色
-		self.view.backgroundColor = UIColor.black
+		self.view.backgroundColor = UIColor.hex("121212")
 		
-		self.updateRates()
+		updateRates()
         
-        self.initConfig()
+        initConfig()
 		
-        // 获取屏幕尺寸
-        let viewBounds:CGRect = UIScreen.main.bounds
-        
-        // 创建屏幕容器
-        let screenView = UIView()
-        // 坐标
-        screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - 180, width: viewBounds.width, height: 180)
-        // 是否切除子视图超出部分
-        screenView.clipsToBounds = true
-        // 透明度
-        // screenView = 0.5
-        // 是否隐藏视图
-        screenView.isHidden = false
-        // 添加到当前视图控制器
-        self.view.addSubview(screenView)
+		createScreenView()
+		
+		createKeyboardView()
+		
+		setupSettingsView()
+		
+		//setupCurrencyPickerView()
+    }
+	
+	private func createScreenView() {
+		// 获取屏幕尺寸
+		let viewBounds:CGRect = UIScreen.main.bounds
+		// 创建屏幕容器
+		let screenView = UIView()
+		// 坐标
+		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - 180, width: viewBounds.width, height: 180)
+		// 是否切除子视图超出部分
+		screenView.clipsToBounds = true
+		// 透明度
+		// screenView = 0.5
+		// 是否隐藏视图
+		screenView.isHidden = false
+		// 添加到当前视图控制器
+		self.view.addSubview(screenView)
 		
 		self.viewFromScreen = UIView(frame: CGRect(x:0, y:20, width:viewBounds.width, height:66))
 		screenView.addSubview(self.viewFromScreen)
 		self.viewToScreen = UIView(frame: CGRect(x:0, y:96, width:viewBounds.width, height:66))
 		screenView.addSubview(self.viewToScreen)
-        
-        // 创建输入货币数量标签
+		
+		// 创建输入货币数量标签
 		txtFromMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
 		txtFromMoney.clearButtonMode = .never
 		txtFromMoney.font = UIFont(name: "Avenir", size: 48)
@@ -265,14 +282,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		txtFromMoney.isEnabled = false
 		viewFromScreen.addSubview(txtFromMoney)
 		
-        // 创建输入货币缩写标签
+		// 创建输入货币缩写标签
 		btnFromCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
 		btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
 		btnFromCurrency.tag = 1
 		btnFromCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-        viewFromScreen.addSubview(btnFromCurrency)
-        
-        // 创建输出货币数量标签
+		viewFromScreen.addSubview(btnFromCurrency)
+		
+		// 创建输出货币数量标签
 		txtToMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
 		txtToMoney.clearButtonMode = .never
 		txtToMoney.font = UIFont(name: "Avenir", size: 48)
@@ -284,12 +301,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		txtToMoney.isEnabled = false
 		viewToScreen.addSubview(txtToMoney)
 		
-        // 创建输入货币缩写标签
+		// 创建输入货币缩写标签
 		btnToCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
 		btnToCurrency.setTitle(self.toCurrency, for: .normal)
 		btnToCurrency.tag = 2
 		btnToCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-        viewToScreen.addSubview(btnToCurrency)
+		viewToScreen.addSubview(btnToCurrency)
 		
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeUp.direction = .up
@@ -298,73 +315,61 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeDown.direction = .down
 		screenView.addGestureRecognizer(swipeDown)
-        
-        // 创建键盘容器
-        let keyboardView = UIView()
-		self.keyboardView = keyboardView
-        // 坐标
-        keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width, width: viewBounds.width, height: viewBounds.width)
-        // 背景颜色
-        // keyboardView.backgroundColor = UIColor.yellow
-        // 是否切除子视图超出部分
-        keyboardView.clipsToBounds = true
-        // 透明度
-        // screenView = 0.5
-        // 是否隐藏视图
-        keyboardView.isHidden = false
-        // 添加到当前视图控制器
-        self.view.addSubview(keyboardView)
+	}
+	
+	private func createKeyboardView() {
+		// 获取屏幕尺寸
+		let viewBounds:CGRect = UIScreen.main.bounds
 		
-        let buttonWidth = (keyboardView.frame.size.width - 50) / 4
+		// 创建键盘容器
+		let keyboardView = UIView()
+		self.keyboardView = keyboardView
+		// 坐标
+		keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width, width: viewBounds.width, height: viewBounds.width)
+		// 背景颜色
+		// keyboardView.backgroundColor = UIColor.yellow
+		// 是否切除子视图超出部分
+		keyboardView.clipsToBounds = true
+		// 透明度
+		// screenView = 0.5
+		// 是否隐藏视图
+		keyboardView.isHidden = false
+		// 添加到当前视图控制器
+		self.view.addSubview(keyboardView)
+		
+		let buttonWidth = (keyboardView.frame.size.width - 50) / 4
 		let buttonPadding:CGFloat = 10
-//        let buttonHeight = (keyboardView.frame.size.height - 3) / 4
-        let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
-        
-        for (index, item) in characters.enumerated() {
-            // print(item)
-            // 创建数字按钮
-            var btn:UIButton
+		//        let buttonHeight = (keyboardView.frame.size.height - 3) / 4
+		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
+		
+		for (index, item) in characters.enumerated() {
+			// print(item)
+			// 创建数字按钮
+			var btn:UIButton
 			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
-            switch item {
+			switch item {
 			case "=", "+", "-", "AC":
-				btn.setBackgroundColor(color: UIColor.rgb(r: 255, g: 148, b: 8), forState: .normal)
-				btn.setBackgroundColor(color: UIColor.rgb(r: 251, g: 213, b: 170), forState: .highlighted)
-				btn.setBackgroundColor(color: UIColor.rgb(r: 254, g: 254, b: 254), forState: .selected)
-				btn.setTitleColor(UIColor.rgb(r: 251, g: 150, b: 1), for: .selected)
-//                    btn = UIButton.init(frame: CGRect(x:(buttonWidth + 1) * 3, y:0, width:buttonWidth, height:keyboardView.frame.size.height))
-//					btn.setBackgroundColor(color: UIColor.orange, forState: .normal)
-//					btn.setBackgroundColor(color: UIColor.white, forState: .highlighted)
-//                    btn.setTitleColor(UIColor.white, for: .normal)
-//					btn.setTitleColor(UIColor.gray, for: .highlighted)
+				btn.setBackgroundColor(color: UIColor.hex("ff9408"), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
+				btn.setBackgroundColor(color: UIColor.hex("fefefe"), forState: .selected)
+				btn.setTitleColor(UIColor.hex("fb9601"), for: .selected)
 			case "A":
-				btn.setBackgroundColor(color: UIColor.rgb(r: 44, g: 44, b: 44), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.hex("2c2c2c"), forState: .normal)
 				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
 			default:
-				btn.setBackgroundColor(color: UIColor.rgb(r: 66, g: 66, b: 66), forState: .normal)
-				btn.setBackgroundColor(color: UIColor.rgb(r: 100, g: 100, b: 100), forState: .highlighted)
-            }
-
-//            if item == "A" {
-//				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
-//				btn.setBackgroundColor(color: UIColor.gray, forState: .normal)
-////                btn.addTarget(self, action:#selector(onSettingsClick(_:)), for: UIControl.Event.touchDown)
-//            } else {
-////                btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
-//				btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
-//            }
-            btn.setTitle(item, for: UIControl.State.normal)
-            keyboardView.addSubview(btn)//将标签添加到View中
-        }
-		
-		setupSettingsView()
-		
-		//setupCurrencyPickerView()
-    }
+				btn.setBackgroundColor(color: UIColor.hex("424242"), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.hex("646464"), forState: .highlighted)
+			}
+			
+			btn.setTitle(item, for: UIControl.State.normal)
+			keyboardView.addSubview(btn)
+		}
+	}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -482,13 +487,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			txtFromMoney.text = self.fromMoney
 			txtToMoney.text = self.output(money: self.fromMoney)
 		}
+		
+		self.playTapSound()
     }
+	
+	func playTapSound() {
+		guard prefs.bool(forKey: "sound_preference") else {
+			return
+		}
+		
+		let path = Bundle.main.path(forResource: "Sounds/tap", ofType: "wav")!
+		let url = URL(fileURLWithPath: path)
+		
+		do {
+			try tapSoundPlayer = AVAudioPlayer(contentsOf: url)
+			tapSoundPlayer.play()
+		} catch {
+			print("Could not load audio file.")
+		}
+	}
     
     @objc func onSettingsClick(_ sender: UIButton) {
-        self.settingsView.isHidden = false
-		UIView.animate(withDuration: 0.5, animations: {
-			self.settingsView.frame.origin.y = UIApplication.shared.statusBarFrame.height
-		}, completion: nil)
+		let settingsView = SettingsViewController()
+//		self.navigationController?.pushViewController(settingsView, animated: true)
+		self.present(settingsView, animated: true, completion: nil)
+//        self.settingsView.isHidden = false
+//		UIView.animate(withDuration: 0.5, animations: {
+//			self.settingsView.frame.origin.y = UIApplication.shared.statusBarFrame.height
+//		}, completion: nil)
     }
 	
 	@objc func onCurrenyClick(_ sender: UIButton) {
@@ -536,7 +562,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	// 格式化输出换算结果
 	func output(money:String) -> String {
-		return String(format: "%.\(String(self.decimals))f", Float(money)! * self.rate)
+		// return String(format: "%.\(String(self.decimals))f", Float(money)! * self.rate)
+		let decimals = prefs.integer(forKey: "decimals_preference")
+		return String(format: "%.\(String(decimals))f", Float(money)! * self.rate)
 	}
 	
 	func setupSettingsView() {
@@ -744,6 +772,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //		self.searchBarIsActive = false
 //		self.tbvResults.reloadData()
 //	}
+	
+	func registerSettingsBundle(){
+		let appDefaults = [String:AnyObject]()
+		prefs.register(defaults: appDefaults)
+	}
+	@objc func defaultsChanged() {
+		print("sound:", prefs.bool(forKey: "sound_preference"))
+		if prefs.bool(forKey: "sound_preference") {
+			self.view.backgroundColor = UIColor.red
+		}
+		else {
+			self.view.backgroundColor = UIColor.green
+		}
+		
+		print("isEmpty:", self.isEmpty)
+		
+		if !self.isEmpty {
+			self.txtToMoney.text = self.output(money: self.fromMoney)
+		}
+	}
 
 }
 
