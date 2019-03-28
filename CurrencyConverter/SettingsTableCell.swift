@@ -24,26 +24,17 @@ class SettingsTableCell: UITableViewCell {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		self.selectionStyle = .none
+		self.backgroundColor = UIColor.black
 		
 		title.frame = CGRect(x: 15, y: 0, width: 300, height: 44)
+		title.textColor = UIColor.white
 		box.addSubview(title)
 		
-//		let switcher = UISwitch(frame: CGRect(x: 315, y: 7, width: 100, height: 44))
-//		switcher.addTarget(self, action: #selector(switchDidChange(_:)), for: .touchDown)
-//		switcher.isOn = true
-//		box.addSubview(switcher)
-		
-//		let btn = UIButton(frame: CGRect(x: 315, y: 7, width: 100, height: 44))
-//		btn.setTitle("test", for: .normal)
-//		btn.addTarget(self, action: #selector(btnClick(_:)), for: .touchDown)
-//		box.addSubview(btn)
-		let button = UIButton(type: .custom)
-		button.frame = CGRect(x:315, y:0, width:80, height:30)
-		button.setTitle("FirstBtn", for: .normal)
-		button.setTitleColor(UIColor.red, for: .normal)
-		button.backgroundColor = UIColor.green
-		button.addTarget(self, action: #selector(self.btnClick), for: .touchUpInside)
-		box.addSubview(button)
+		let switcher = UISwitch(frame: CGRect(x: 315, y: 7, width: 100, height: 44))
+		switcher.addTarget(self, action: #selector(switchDidChange), for: .touchDown)
+		switcher.isOn = true
+		box.addSubview(switcher)
+	
 		self.addSubview(box)
 	}
 	
@@ -51,8 +42,8 @@ class SettingsTableCell: UITableViewCell {
 		title.text = "\(index) \(item)"
 	}
 	
-	@objc func btnClick() {
-		print("clicked.")
+	@objc func switchDidChange() {
+		print("changed.")
 	}
 	
 	override func awakeFromNib() {

@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	let cellIdentifier: String = "SettingsTableCell"
-	let items: [String] = ["按键声音", "计算精度", "自定义汇率"]
+	let items: [String] = ["按键声音", "小数位数", "自定义汇率"]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -36,6 +36,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-64), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.backgroundColor = UIColor.black
 		tableView.register(SettingsTableCell.self, forCellReuseIdentifier: cellIdentifier)
 		self.view.addSubview(tableView)
 	}
@@ -62,7 +63,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	//cell
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! SettingsTableCell
-		print("items[indexPath.row]:", items[indexPath.row])
+		//print("items[indexPath.row]:", items[indexPath.row])
 		cell.setValueForCell(item: items[indexPath.row], index: indexPath.row)
 		
 		return cell
