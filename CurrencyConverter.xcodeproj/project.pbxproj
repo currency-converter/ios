@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
-		241CA3572223D13600D5FC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3562223D13600D5FC5F /* ViewController.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		241CA36A2223D13700D5FC5F /* CurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3692223D13700D5FC5F /* CurrencyConverterTests.swift */; };
 		241CA3752223D13700D5FC5F /* CurrencyConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3742223D13700D5FC5F /* CurrencyConverterUITests.swift */; };
@@ -16,9 +15,10 @@
 		24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADE834222AAE3900B4C046 /* Iconfont.swift */; };
 		24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */; };
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
+		24B95BFA224CC46600ED40B3 /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */; };
+		24B95BFB224CC46600ED40B3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */; };
+		24B95BFD224CC64500ED40B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BFC224CC64500ED40B3 /* ViewController.swift */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
-		24D0A64B224375F600BC423B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A64A224375F600BC423B /* SettingsViewController.swift */; };
-		24D0A64E224379AA00BC423B /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */; };
 		24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A650224394FC00BC423B /* SettingsTableCell.swift */; };
 		24D0A6532248C58A00BC423B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6522248C58A00BC423B /* Settings.bundle */; };
 		24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */; };
@@ -46,7 +46,6 @@
 /* Begin PBXFileReference section */
 		241CA3512223D13600D5FC5F /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		241CA3542223D13600D5FC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		241CA3562223D13600D5FC5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		241CA35B2223D13700D5FC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		241CA3602223D13700D5FC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		241CA3652223D13700D5FC5F /* CurrencyConverterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyConverterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,9 +58,10 @@
 		24ADE834222AAE3900B4C046 /* Iconfont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconfont.swift; sourceTree = "<group>"; };
 		24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24ADE840222ED4AB00B4C046 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurrencyPickerViewController.swift; path = CurrencyConverter/ViewControllers/CurrencyPickerViewController.swift; sourceTree = SOURCE_ROOT; };
+		24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = CurrencyConverter/ViewControllers/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
+		24B95BFC224CC64500ED40B3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = CurrencyConverter/ViewControllers/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		24C6800F2227855A00747FBF /* button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = button.swift; sourceTree = "<group>"; };
-		24D0A64A224375F600BC423B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewController.swift; sourceTree = "<group>"; };
 		24D0A650224394FC00BC423B /* SettingsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
 		24D0A6522248C58A00BC423B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleHelper.swift; sourceTree = "<group>"; };
@@ -123,7 +123,6 @@
 				24ADE840222ED4AB00B4C046 /* Main.storyboard */,
 				24ADE830222909E600B4C046 /* cc.ttf */,
 				241CA3542223D13600D5FC5F /* AppDelegate.swift */,
-				241CA3562223D13600D5FC5F /* ViewController.swift */,
 				241CA35B2223D13700D5FC5F /* Assets.xcassets */,
 				241CA3602223D13700D5FC5F /* Info.plist */,
 				24C6800F2227855A00747FBF /* button.swift */,
@@ -157,8 +156,9 @@
 		24D0A64F224379E600BC423B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				24D0A64A224375F600BC423B /* SettingsViewController.swift */,
-				24D0A64D224379AA00BC423B /* CurrencyPickerViewController.swift */,
+				24B95BFC224CC64500ED40B3 /* ViewController.swift */,
+				24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */,
+				24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */,
 			);
 			name = ViewControllers;
 			path = "New Group";
@@ -298,15 +298,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				241CA3572223D13600D5FC5F /* ViewController.swift in Sources */,
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
+				24B95BFB224CC46600ED40B3 /* SettingsViewController.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
+				24B95BFD224CC64500ED40B3 /* ViewController.swift in Sources */,
+				24B95BFA224CC46600ED40B3 /* CurrencyPickerViewController.swift in Sources */,
 				24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */,
 				24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */,
-				24D0A64E224379AA00BC423B /* CurrencyPickerViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
-				24D0A64B224375F600BC423B /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -266,7 +266,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate
 	func updateSearchResults(for searchController: UISearchController) {
-		print("search keyword:", searchController.searchBar.text!)
+//		print("search keyword:", searchController.searchBar.text!)
 		self.searchResults.removeAll()
 		self.allCurrencies[1]?.forEach {
 			item in
