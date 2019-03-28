@@ -19,8 +19,6 @@ enum CurrencyPickerType: String {
 let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 
 class ViewController: UIViewController, myDelegate {
-	// plist文件路径
-	static var propertyList:String = NSHomeDirectory() + "/Library/app.plist"
 	
    	// 当前输入货币是否为空
     var isEmpty: Bool = true
@@ -52,8 +50,11 @@ class ViewController: UIViewController, myDelegate {
     // api
     var updateRatesUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
 	
-	
-	var defaultRates:NSDictionary = [
+	var defaults:[String:Any] = [
+		// 小数位数
+		"decimals_preference" : 2,
+		// 是否使用按键声音
+		"sound_preference": false,
 		"fromCurrency": "USD",
 		"toCurrency": "CNY",
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
@@ -75,21 +76,19 @@ class ViewController: UIViewController, myDelegate {
 	var tapSoundPlayer: AVAudioPlayer!
 	
 	func currencyCellClickCallback(data: String) {
-		let configs:NSDictionary? = NSDictionary(contentsOfFile: ViewController.propertyList)
+		var key = ""
 		if currencyPickerType == CurrencyPickerType.from {
+			key = "fromCurrency"
 			fromCurrency = data
-			//更新界面
 			self.btnFromCurrency.setTitle(data, for: .normal)
-			//更新配置
-			configs?.setValue(data, forKey: "fromCurrency")
 		} else {
 			toCurrency = data
-			//更新界面
+			key = "toCurrency"
+			// 更新界面
 			self.btnToCurrency.setTitle(data, for: .normal)
-			//更新配置
-			configs?.setValue(data, forKey: "toCurrency")
 		}
-		configs?.write(toFile: ViewController.propertyList, atomically: true)
+		// 更新配置
+		UserDefaults.standard.set(data, forKey: key)
 		//更新汇率
 		let fromRate:Float! = self.rates[self.fromCurrency]?.floatValue
 		let toRate:Float! = self.rates[self.toCurrency]?.floatValue
@@ -115,9 +114,7 @@ class ViewController: UIViewController, myDelegate {
 				// 将json数据解析成字典
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 				self.rates = rates as? Dictionary<String, NSNumber>
-				let configs:NSDictionary? = NSDictionary(contentsOfFile: ViewController.propertyList)
-				configs?.setValue(rates, forKey: "rates")
-				configs?.write(toFile: ViewController.propertyList, atomically: true)
+				UserDefaults.standard.set(rates, forKey: "rates")
 			} else {
 				print("Update rates failed.")
 			}
@@ -128,28 +125,14 @@ class ViewController: UIViewController, myDelegate {
     }
     
     func initConfig() {
-		print("app.plist:", ViewController.propertyList)
-        // 判断文件是是否存在
-        let manager = FileManager.default
-        let notExist = !manager.fileExists(atPath: ViewController.propertyList)
-        if notExist {
-            // 初始化配置项
-            self.defaultRates.write(toFile: ViewController.propertyList, atomically:true)
-		}
-		
-		// 读取配置
-		let configs:NSDictionary? = NSDictionary(contentsOfFile: ViewController.propertyList)
-		self.fromCurrency = configs?["fromCurrency"] as? String
-		self.toCurrency = configs?["toCurrency"] as? String
-		
-		// 计算汇率
-		let rates:Dictionary = configs?["rates"] as! Dictionary<String, NSNumber>
+		// 初始化输入输出货币
+		self.fromCurrency = UserDefaults.standard.string(forKey: "fromCurrency")
+		self.toCurrency = UserDefaults.standard.string(forKey: "toCurrency")
+		self.rates = UserDefaults.standard.object(forKey: "rates") as? Dictionary<String, NSNumber>
 		let fromRate:Float! = rates[self.fromCurrency]?.floatValue
 		let toRate:Float! = rates[self.toCurrency]?.floatValue
-		let rate:Float = toRate/fromRate
-		self.rate = rate
-		self.rates = rates
-    }
+		self.rate = toRate/fromRate
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -440,15 +423,11 @@ class ViewController: UIViewController, myDelegate {
 	// 格式化输出换算结果
 	func output(money:String) -> String {
 		let decimals = UserDefaults.standard.integer(forKey: "decimals_preference")
-		print("decimals:", decimals)
 		return String(format: "%.\(String(decimals))f", Float(money)! * self.rate)
 	}
 
 	func registerSettingsBundle(){
-		UserDefaults.standard.register(defaults: [
-			"decimals_preference" : 2,
-			"sound_preference": false
-		])
+		UserDefaults.standard.register(defaults: defaults)
 	}
 	
 	@objc func defaultsChanged() {

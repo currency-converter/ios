@@ -110,8 +110,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let configs:NSDictionary? = NSDictionary(contentsOfFile: ViewController.propertyList)
-		self.allCurrencies[0] = configs?["favorites"] as? [String]
+		self.allCurrencies[0] = UserDefaults.standard.array(forKey: "favorites") as? [String]
 		
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
@@ -160,6 +159,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.backgroundColor = UIColor.black
+		tableView.separatorColor = UIColor.hex("333333")
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
@@ -173,16 +173,14 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	
 	// 收藏/取消收藏
 	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
-		let configs:NSDictionary? = NSDictionary(contentsOfFile: ViewController.propertyList)
-		var favorites:[String] = configs?["favorites"] as? [String] ?? [String]()
+		var favorites:[String] = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
 		let currency = sender.view?.accessibilityLabel ?? ""
 		if favorites.contains(currency) {
 			favorites = favorites.filter {$0 != currency}
 		} else {
 			favorites.append(currency)
 		}
-		configs?.setValue(favorites, forKey: "favorites")
-		configs?.write(toFile: ViewController.propertyList, atomically:true)
+		UserDefaults.standard.set(favorites, forKey: "favorites")
 
 		self.allCurrencies[0] = favorites
 		self.currencyTableView.reloadData()
@@ -218,7 +216,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let sectionId:Int = indexPath.section
 		let currency = self.searchController?.isActive ?? false ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
-		cell.selectionStyle = .none
+		cell.preservesSuperviewLayoutMargins = false
+		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+		cell.layoutMargins = UIEdgeInsets.zero
 		cell.detailTextLabel?.textColor = UIColor.white
 		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
 		cell.detailTextLabel?.textAlignment = .natural
