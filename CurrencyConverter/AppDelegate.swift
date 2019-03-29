@@ -16,14 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
-		
-//		UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-//		
-//		//无启动画面
-//		window = UIWindow(frame: UIScreen.main.bounds)
-//		window?.backgroundColor = UIColor.black
-//		window?.rootViewController = ViewController()
-//		window?.makeKeyAndVisible()
         return true
     }
 

@@ -117,7 +117,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		let backgroundView = UIView(frame: self.view.bounds)
 		backgroundView.backgroundColor = UIColor.hex("121212")
-		backgroundView.clipsToBounds = true
 		self.view.addSubview(backgroundView)
 		
 		// 导航条
@@ -134,13 +133,15 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		navigationBar.pushItem(navigationitem, animated: true)
 		
 		let searchController = UISearchController(searchResultsController: nil)
-		//searchController.searchBar.searchBarStyle = .minimal
+		searchController.searchBar.searchBarStyle = .minimal
+		searchController.searchBar.backgroundColor = UIColor.hex("121212")
 		// Setup the Search Controller
 		searchController.searchResultsUpdater = self
 		//搜索时，取消背景变模糊
-		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.obscuresBackgroundDuringPresentation = true
 		//搜索时，取消背景变暗色
-		searchController.dimsBackgroundDuringPresentation = false
+		searchController.dimsBackgroundDuringPresentation = true
+		definesPresentationContext = true
 		//搜索时，取消隐藏导航条
 		//searchController.hidesNavigationBarDuringPresentation = false
 		self.searchController = searchController
@@ -155,16 +156,27 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		searchTextFeild.textColor = UIColor.white
 		// 输入内容大写
 		searchTextFeild.autocapitalizationType = .allCharacters
+//		searchTextFeild.delegate = self
 	
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
-		tableView.tableHeaderView = searchController.searchBar
 		tableView.backgroundColor = UIColor.black
 		tableView.separatorColor = UIColor.hex("333333")
 		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.tableHeaderView = searchController.searchBar
+		//进入页面时隐藏searchbar
+		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
 		backgroundView.addSubview(tableView)
 		self.currencyTableView = tableView
+		
+//		if #available(iOS 11.0, *) {
+//			self.navigationItem.searchController = searchController
+//			print("==ios11")
+//		} else {
+//			tableView.tableHeaderView = searchController.searchBar
+//		}
+
 	}
 	
 	@objc func onPickerDone(_ sender: UIButton) {
@@ -194,10 +206,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if self.searchController?.isActive ?? false {
 			return self.searchResults.count
-		} else {
-			let data = self.allCurrencies[section] ?? [String]()
-			return data.count
 		}
+		let data = self.allCurrencies[section] ?? [String]()
+		return data.count
 	}
 	
 	//分组数量
@@ -259,7 +270,19 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return self.searchController?.isActive ?? false ? "" : self.adHeaders[section]
+		if self.searchController?.isActive ?? false {
+			if self.searchResults.count > 0 {
+				return self.adHeaders[1]
+			}
+			return ""
+		}
+		return self.adHeaders[section]
+	}
+	
+	// 搜索框只能输入字母
+	// 小写字母自动转成大写
+	func textField(_ textField:UITextField, shouldChangeCharactersIn range:NSRange, replacementString string: String) -> Bool {
+		return true
 	}
 }
 
@@ -270,7 +293,7 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		self.searchResults.removeAll()
 		self.allCurrencies[1]?.forEach {
 			item in
-			if item.contains(searchController.searchBar.text!) {
+			if item.contains(searchController.searchBar.text!.uppercased()) {
 				self.searchResults.append(item)
 			}
 		}
