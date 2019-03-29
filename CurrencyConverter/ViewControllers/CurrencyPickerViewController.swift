@@ -164,6 +164,12 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableHeaderView = searchController.searchBar
+		//去掉没有数据显示部分多余的分隔线
+		tableView.tableFooterView =  UIView.init(frame: CGRect.zero)
+		//将分隔线offset设为零，即将分割线拉满屏幕
+		tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		//设置分隔线颜色
+		tableView.separatorColor = UIColor.gray
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
@@ -272,7 +278,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if self.searchController?.isActive ?? false {
 			if self.searchResults.count > 0 {
-				return self.adHeaders[1]
+				return "Matched Currencies"
 			}
 			return ""
 		}
