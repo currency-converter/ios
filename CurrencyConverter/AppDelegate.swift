@@ -16,6 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		//初始化navigationController、设置viewController为主窗口
+
+		//viewcontroller设置
+		let viewController = ViewController()
+
+		//NavigationController设置
+		let navigationViewController = UINavigationController.init(rootViewController: viewController)
+
+		//window设置
+		let screen = UIScreen.main.bounds
+		self.window = UIWindow.init(frame: screen)
+		self.window?.backgroundColor = UIColor.black
+		self.window?.makeKeyAndVisible()
+		self.window?.rootViewController = navigationViewController;
+
         return true
     }
 
