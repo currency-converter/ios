@@ -115,16 +115,16 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		
-		let backgroundView = UIView(frame: self.view.bounds)
-		backgroundView.backgroundColor = UIColor.hex("121212")
-		self.view.addSubview(backgroundView)
+		let page = UIView(frame: self.view.bounds)
+		page.backgroundColor = UIColor.hex("121212")
+		self.view.addSubview(page)
 		
 		// 导航条
 		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
 		navigationBar.barTintColor = UIColor.black
 		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 		navigationBar.backgroundColor = UIColor.black
-		backgroundView.addSubview(navigationBar)
+		page.addSubview(navigationBar)
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
@@ -173,7 +173,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
-		backgroundView.addSubview(tableView)
+		page.addSubview(tableView)
 		self.currencyTableView = tableView
 	}
 	
