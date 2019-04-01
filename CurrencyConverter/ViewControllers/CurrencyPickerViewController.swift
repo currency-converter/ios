@@ -29,74 +29,74 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	]
 	
 	var adHeaders:[String] = [
-		NSLocalizedString("favoriteCurrencies", comment: ""),
-		NSLocalizedString("allCurrencies", comment: "")
+		"Favorite Currencies",
+		"All Currencies"
 	]
 	
 	var currencyNames:Dictionary = [
-		"": NSLocalizedString("unknow", comment: ""),
-		"AED": NSLocalizedString("AED", comment: ""),
-		"AUD": NSLocalizedString("AUD", comment: ""),
-		"BGN": NSLocalizedString("BGN", comment: ""),
-		"BHD": NSLocalizedString("BHD", comment: ""),
-		"BND": NSLocalizedString("BND", comment: ""),
-		"BRL": NSLocalizedString("BRL", comment: ""),
-		"BYN": NSLocalizedString("BYN", comment: ""),
-		"CAD": NSLocalizedString("CAD", comment: ""),
-		"CHF": NSLocalizedString("CHF", comment: ""),
-		"CLP": NSLocalizedString("CLP", comment: ""),
-		"CNY": NSLocalizedString("CNY", comment: ""),
-		"COP": NSLocalizedString("COP", comment: ""),
-		"CRC": NSLocalizedString("CRC", comment: ""),
-		"CZK": NSLocalizedString("CZK", comment: ""),
-		"DKK": NSLocalizedString("DKK", comment: ""),
-		"DZD": NSLocalizedString("DZD", comment: ""),
-		"EGP": NSLocalizedString("EGP", comment: ""),
-		"EUR": NSLocalizedString("EUR", comment: ""),
-		"GBP": NSLocalizedString("GBP", comment: ""),
-		"HKD": NSLocalizedString("HKD", comment: ""),
-		"HRK": NSLocalizedString("HRK", comment: ""),
-		"HUF": NSLocalizedString("HUF", comment: ""),
-		"IDR": NSLocalizedString("IDR", comment: ""),
-		"ILS": NSLocalizedString("ILS", comment: ""),
-		"INR": NSLocalizedString("INR", comment: ""),
-		"IQD": NSLocalizedString("IQD", comment: ""),
-		"ISK": NSLocalizedString("ISK", comment: ""),
-		"JOD": NSLocalizedString("JOD", comment: ""),
-		"JPY": NSLocalizedString("JPY", comment: ""),
-		"KES": NSLocalizedString("KES", comment: ""),
-		"KHR": NSLocalizedString("KHR", comment: ""),
-		"KRW": NSLocalizedString("KRW", comment: ""),
-		"KWD": NSLocalizedString("KWD", comment: ""),
-		"LAK": NSLocalizedString("LAK", comment: ""),
-		"LBP": NSLocalizedString("LBP", comment: ""),
-		"LKR": NSLocalizedString("LKR", comment: ""),
-		"MAD": NSLocalizedString("MAD", comment: ""),
-		"MMK": NSLocalizedString("MMK", comment: ""),
-		"MOP": NSLocalizedString("MOP", comment: ""),
-		"MXN": NSLocalizedString("MXN", comment: ""),
-		"MYR": NSLocalizedString("MYR", comment: ""),
-		"NOK": NSLocalizedString("NOK", comment: ""),
-		"NZD": NSLocalizedString("NZD", comment: ""),
-		"OMR": NSLocalizedString("OMR", comment: ""),
-		"PHP": NSLocalizedString("PHP", comment: ""),
-		"PLN": NSLocalizedString("PLN", comment: ""),
-		"QAR": NSLocalizedString("QAR", comment: ""),
-		"RON": NSLocalizedString("RON", comment: ""),
-		"RSD": NSLocalizedString("RSD", comment: ""),
-		"RUB": NSLocalizedString("RUB", comment: ""),
-		"SAR": NSLocalizedString("SAR", comment: ""),
-		"SEK": NSLocalizedString("SEK", comment: ""),
-		"SGD": NSLocalizedString("SGD", comment: ""),
-		"SYP": NSLocalizedString("SYP", comment: ""),
-		"THB": NSLocalizedString("THB", comment: ""),
-		"TRY": NSLocalizedString("TRY", comment: ""),
-		"TWD": NSLocalizedString("TWD", comment: ""),
-		"TZS": NSLocalizedString("TZS", comment: ""),
-		"UGX": NSLocalizedString("UGX", comment: ""),
-		"USD": NSLocalizedString("USD", comment: ""),
-		"VND": NSLocalizedString("VND", comment: ""),
-		"ZAR": NSLocalizedString("ZAR", comment: "")
+		"": "Unknow",
+		"AED": "United Arab Emirates Dirham",
+		"AUD": "Australian Dollar",
+		"BGN": "Bulgarian Lev",
+		"BHD": "Bahraini Dinar",
+		"BND": "Brunei Dollar",
+		"BRL": "Brazilian Real",
+		"BYN": "Belarusian Ruble",
+		"CAD": "Canadian Dollar",
+		"CHF": "Swiss Franc",
+		"CLP": "Chilean Peso",
+		"CNY": "Chinese Yuan",
+		"COP": "Colombian Pesa",
+		"CRC": "Costa Rican Colon",
+		"CZK": "Czech Koruna",
+		"DKK": "Danish Krone",
+		"DZD": "Algerian Dinar",
+		"EGP": "Egyptian Pound",
+		"EUR": "Euro",
+		"GBP": "British Pound",
+		"HKD": "Hong Kong Dollar",
+		"HRK": "Croatian Kuna",
+		"HUF": "Hungarian Forint",
+		"IDR": "Indonesian Rupiah",
+		"ILS": "Israeli New Shekel",
+		"INR": "Indian Rupee",
+		"IQD": "Iraqi Dinar",
+		"ISK": "Icelandic Krona",
+		"JOD": "Jordanian Dinar",
+		"JPY": "Japanese Yen",
+		"KES": "Kenyan Shilling",
+		"KHR": "Cambodian Riel",
+		"KRW": "South Korean Won",
+		"KWD": "Kuwaiti Dinar",
+		"LAK": "Laotian Kip",
+		"LBP": "Lebanese Pound",
+		"LKR": "Sri Lankan Rupee",
+		"MAD": "Moroccan Dirham",
+		"MMK": "Myanmar Kyat",
+		"MOP": "Macanese Pataca",
+		"MXN": "Mexican Peso",
+		"MYR": "Malaysian Ringgit",
+		"NOK": "Norwegian Krone",
+		"NZD": "New Zealand Dollar",
+		"OMR": "Omani Rial",
+		"PHP": "Philippine Peso",
+		"PLN": "Polish Zloty",
+		"QAR": "Qatari Rial",
+		"RON": "Romanian Leu",
+		"RSD": "Serbian Dinar",
+		"RUB": "Russian Ruble",
+		"SAR": "Saudi Riyal",
+		"SEK": "Swedish Krona",
+		"SGD": "Singapore Dollar",
+		"SYP": "Syrian Pound",
+		"THB": "Thai Baht",
+		"TRY": "Turkish Lira",
+		"TWD": "New Taiwan Dollar",
+		"TZS": "Tanzanian Shilling",
+		"UGX": "Ugandan Shilling",
+		"USD": "US Dollar",
+		"VND": "Vietnamese Dong",
+		"ZAR": "South African Rand"
 	]
 	
 	var currencyTableView: UITableView!
@@ -127,8 +127,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		backgroundView.addSubview(navigationBar)
 		
 		let navigationitem = UINavigationItem()
-		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(onPickerCancel(_:)))
-		navigationitem.title = NSLocalizedString("selectCurrency", comment: "")
+		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
+//		navigationitem.title = "Settings"
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
@@ -179,7 +179,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 
 	}
 	
-	@objc func onPickerCancel(_ sender: UIButton) {
+	@objc func onPickerDone(_ sender: UIButton) {
 		self.close()
 	}
 	

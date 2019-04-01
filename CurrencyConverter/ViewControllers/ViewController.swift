@@ -95,7 +95,7 @@ class ViewController: UIViewController, myDelegate {
 		let rate:Float = toRate/fromRate
 		self.rate = rate
 		//更新计算结果
-		self.txtToMoney.text = self.output(self.fromMoney)
+		self.txtToMoney.text = self.output(money: self.fromMoney)
 	}
     
     func updateRates() {
@@ -143,8 +143,6 @@ class ViewController: UIViewController, myDelegate {
 		
 		// 设置全局背景色
 		self.view.backgroundColor = UIColor.hex("121212")
-		
-		self.navigationController?.navigationBar.isHidden = true
 		
 		updateRates()
         
@@ -202,7 +200,7 @@ class ViewController: UIViewController, myDelegate {
 		txtToMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtToMoney.minimumFontSize = 14
 		txtToMoney.textAlignment = .right
-		txtToMoney.text = self.output(self.fromMoney)
+		txtToMoney.text = self.fromMoney
 		txtToMoney.textColor = UIColor.white
 		txtToMoney.isEnabled = false
 		viewToScreen.addSubview(txtToMoney)
@@ -386,10 +384,10 @@ class ViewController: UIViewController, myDelegate {
 		
 		if self.operatorSign != "" && self.operatorEnd != "" {
 			txtFromMoney.text = self.operatorEnd
-			txtToMoney.text = self.output(self.operatorEnd)
+			txtToMoney.text = self.output(money: self.operatorEnd)
 		} else {
 			txtFromMoney.text = self.fromMoney
-			txtToMoney.text = self.output(self.fromMoney)
+			txtToMoney.text = self.output(money: self.fromMoney)
 		}
 		
 		self.playTapSound()
@@ -423,7 +421,7 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	// 格式化输出换算结果
-	func output(_ money:String) -> String {
+	func output(money:String) -> String {
 		let decimals = UserDefaults.standard.integer(forKey: "decimals_preference")
 		return String(format: "%.\(String(decimals))f", Float(money)! * self.rate)
 	}
@@ -433,7 +431,9 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	@objc func defaultsChanged() {
-		self.txtToMoney?.text = self.output(self.fromMoney)
+		if !self.isEmpty {
+			self.txtToMoney.text = self.output(money: self.fromMoney)
+		}
 	}
 
 }
