@@ -159,7 +159,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//		searchTextFeild.delegate = self
 		
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
-		tableView.backgroundColor = UIColor.black
+		//tableView.backgroundColor = UIColor.black
+		let tableViewBackground = UIView(frame: self.view.bounds)
+		tableViewBackground.backgroundColor = UIColor.black
+		tableView.backgroundView = tableViewBackground
 		//tableView.separatorColor = UIColor.hex("090909")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -243,28 +246,36 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
 		let currency = self.searchController?.isActive ?? false ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let isFav: Bool = allCurrencies[0]?.contains(currency ?? "") ?? false
+		let unicode: String = isFav ? "B" : "C"
+		
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
 		cell.preservesSuperviewLayoutMargins = false
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
-		cell.detailTextLabel?.textColor = UIColor.white
-		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
-		cell.detailTextLabel?.textAlignment = .natural
-		cell.textLabel?.text = currency
-		cell.textLabel?.textColor = UIColor.white
 		cell.backgroundColor = UIColor.black
-		if (cell.textLabel?.text == currentCurrency) {
-			cell.accessoryType = .checkmark
-			//cell.backgroundColor = UIColor.hex("222222")
-		} else {
-			cell.accessoryType = .none
-			//cell.backgroundColor = UIColor.black
-		}
-		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: (allCurrencies[0]?.contains(currency ?? "") ?? false) ? "B" : "C", color: .white)
+		cell.selectionStyle = .blue
+
+		// icon
+		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
 		cell.imageView?.accessibilityLabel = currency
 		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
 		cell.imageView?.addGestureRecognizer(singleTapGesture)
 		cell.imageView?.isUserInteractionEnabled = true
+
+		// label
+		cell.textLabel?.text = currency
+		cell.textLabel?.textColor = UIColor.white
+		cell.textLabel?.highlightedTextColor = UIColor.black
+
+		// detail
+		cell.detailTextLabel?.textColor = UIColor.white
+		cell.detailTextLabel?.highlightedTextColor = UIColor.black
+		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
+		cell.detailTextLabel?.textAlignment = .natural
+
+		// accessory
+		cell.accessoryType = cell.textLabel?.text == currentCurrency ? .checkmark : .none
 		return cell
 	}
 	
