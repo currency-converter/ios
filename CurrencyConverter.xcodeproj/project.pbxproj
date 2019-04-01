@@ -11,13 +11,14 @@
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		241CA36A2223D13700D5FC5F /* CurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3692223D13700D5FC5F /* CurrencyConverterTests.swift */; };
 		241CA3752223D13700D5FC5F /* CurrencyConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3742223D13700D5FC5F /* CurrencyConverterUITests.swift */; };
+		24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11522523DB8001D77C2 /* ViewController.swift */; };
+		24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */; };
+		24A4B11A22523DB8001D77C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11722523DB8001D77C2 /* SettingsViewController.swift */; };
+		24A4B11D22523F73001D77C2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24A4B11F22523F73001D77C2 /* Localizable.strings */; };
 		24ADE831222909E600B4C046 /* cc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE830222909E600B4C046 /* cc.ttf */; };
 		24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADE834222AAE3900B4C046 /* Iconfont.swift */; };
 		24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */; };
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
-		24B95BFA224CC46600ED40B3 /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */; };
-		24B95BFB224CC46600ED40B3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */; };
-		24B95BFD224CC64500ED40B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B95BFC224CC64500ED40B3 /* ViewController.swift */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
 		24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A650224394FC00BC423B /* SettingsTableCell.swift */; };
 		24D0A6532248C58A00BC423B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6522248C58A00BC423B /* Settings.bundle */; };
@@ -54,13 +55,15 @@
 		241CA3702223D13700D5FC5F /* CurrencyConverterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyConverterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		241CA3742223D13700D5FC5F /* CurrencyConverterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterUITests.swift; sourceTree = "<group>"; };
 		241CA3762223D13700D5FC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24A4B11522523DB8001D77C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewController.swift; sourceTree = "<group>"; };
+		24A4B11722523DB8001D77C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		24A4B11E22523F73001D77C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		24A4B12022523F96001D77C2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24ADE830222909E600B4C046 /* cc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cc.ttf; sourceTree = "<group>"; };
 		24ADE834222AAE3900B4C046 /* Iconfont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconfont.swift; sourceTree = "<group>"; };
 		24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24ADE840222ED4AB00B4C046 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurrencyPickerViewController.swift; path = CurrencyConverter/ViewControllers/CurrencyPickerViewController.swift; sourceTree = SOURCE_ROOT; };
-		24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = CurrencyConverter/ViewControllers/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
-		24B95BFC224CC64500ED40B3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = CurrencyConverter/ViewControllers/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		24C6800F2227855A00747FBF /* button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = button.swift; sourceTree = "<group>"; };
 		24D0A650224394FC00BC423B /* SettingsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
 		24D0A6522248C58A00BC423B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 		241CA3482223D13600D5FC5F = {
 			isa = PBXGroup;
 			children = (
+				24A4B11F22523F73001D77C2 /* Localizable.strings */,
 				241CA3532223D13600D5FC5F /* CurrencyConverter */,
 				241CA3682223D13700D5FC5F /* CurrencyConverterTests */,
 				241CA3732223D13700D5FC5F /* CurrencyConverterUITests */,
@@ -117,8 +121,8 @@
 		241CA3532223D13600D5FC5F /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
+				24A4B11422523DB8001D77C2 /* ViewControllers */,
 				24D0A6562248F12800BC423B /* Sounds */,
-				24D0A64F224379E600BC423B /* ViewControllers */,
 				24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */,
 				24ADE840222ED4AB00B4C046 /* Main.storyboard */,
 				24ADE830222909E600B4C046 /* cc.ttf */,
@@ -153,15 +157,14 @@
 			path = CurrencyConverterUITests;
 			sourceTree = "<group>";
 		};
-		24D0A64F224379E600BC423B /* ViewControllers */ = {
+		24A4B11422523DB8001D77C2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				24B95BFC224CC64500ED40B3 /* ViewController.swift */,
-				24B95BF8224CC46600ED40B3 /* CurrencyPickerViewController.swift */,
-				24B95BF9224CC46600ED40B3 /* SettingsViewController.swift */,
+				24A4B11522523DB8001D77C2 /* ViewController.swift */,
+				24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */,
+				24A4B11722523DB8001D77C2 /* SettingsViewController.swift */,
 			);
-			name = ViewControllers;
-			path = "New Group";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +253,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 241CA3482223D13600D5FC5F;
 			productRefGroup = 241CA3522223D13600D5FC5F /* Products */;
@@ -271,6 +275,7 @@
 				24D0A6572248F12900BC423B /* Sounds in Resources */,
 				24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */,
 				24ADE831222909E600B4C046 /* cc.ttf in Resources */,
+				24A4B11D22523F73001D77C2 /* Localizable.strings in Resources */,
 				24D0A6532248C58A00BC423B /* Settings.bundle in Resources */,
 				241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */,
 				24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */,
@@ -299,14 +304,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
-				24B95BFB224CC46600ED40B3 /* SettingsViewController.swift in Sources */,
+				24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
-				24B95BFD224CC64500ED40B3 /* ViewController.swift in Sources */,
-				24B95BFA224CC46600ED40B3 /* CurrencyPickerViewController.swift in Sources */,
 				24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */,
 				24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */,
+				24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
+				24A4B11A22523DB8001D77C2 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,11 +346,25 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		24A4B11F22523F73001D77C2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24A4B11E22523F73001D77C2 /* en */,
+				24A4B12022523F96001D77C2 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = CurrencyConverter;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		241CA3772223D13700D5FC5F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -407,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

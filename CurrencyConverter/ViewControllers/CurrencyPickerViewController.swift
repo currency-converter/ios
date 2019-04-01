@@ -29,74 +29,74 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	]
 	
 	var adHeaders:[String] = [
-		"Favorite Currencies",
-		"All Currencies"
+		NSLocalizedString("favoriteCurrencies", comment: ""),
+		NSLocalizedString("allCurrencies", comment: "")
 	]
 	
 	var currencyNames:Dictionary = [
-		"": "Unknow",
-		"AED": "United Arab Emirates Dirham",
-		"AUD": "Australian Dollar",
-		"BGN": "Bulgarian Lev",
-		"BHD": "Bahraini Dinar",
-		"BND": "Brunei Dollar",
-		"BRL": "Brazilian Real",
-		"BYN": "Belarusian Ruble",
-		"CAD": "Canadian Dollar",
-		"CHF": "Swiss Franc",
-		"CLP": "Chilean Peso",
-		"CNY": "Chinese Yuan",
-		"COP": "Colombian Pesa",
-		"CRC": "Costa Rican Colon",
-		"CZK": "Czech Koruna",
-		"DKK": "Danish Krone",
-		"DZD": "Algerian Dinar",
-		"EGP": "Egyptian Pound",
-		"EUR": "Euro",
-		"GBP": "British Pound",
-		"HKD": "Hong Kong Dollar",
-		"HRK": "Croatian Kuna",
-		"HUF": "Hungarian Forint",
-		"IDR": "Indonesian Rupiah",
-		"ILS": "Israeli New Shekel",
-		"INR": "Indian Rupee",
-		"IQD": "Iraqi Dinar",
-		"ISK": "Icelandic Krona",
-		"JOD": "Jordanian Dinar",
-		"JPY": "Japanese Yen",
-		"KES": "Kenyan Shilling",
-		"KHR": "Cambodian Riel",
-		"KRW": "South Korean Won",
-		"KWD": "Kuwaiti Dinar",
-		"LAK": "Laotian Kip",
-		"LBP": "Lebanese Pound",
-		"LKR": "Sri Lankan Rupee",
-		"MAD": "Moroccan Dirham",
-		"MMK": "Myanmar Kyat",
-		"MOP": "Macanese Pataca",
-		"MXN": "Mexican Peso",
-		"MYR": "Malaysian Ringgit",
-		"NOK": "Norwegian Krone",
-		"NZD": "New Zealand Dollar",
-		"OMR": "Omani Rial",
-		"PHP": "Philippine Peso",
-		"PLN": "Polish Zloty",
-		"QAR": "Qatari Rial",
-		"RON": "Romanian Leu",
-		"RSD": "Serbian Dinar",
-		"RUB": "Russian Ruble",
-		"SAR": "Saudi Riyal",
-		"SEK": "Swedish Krona",
-		"SGD": "Singapore Dollar",
-		"SYP": "Syrian Pound",
-		"THB": "Thai Baht",
-		"TRY": "Turkish Lira",
-		"TWD": "New Taiwan Dollar",
-		"TZS": "Tanzanian Shilling",
-		"UGX": "Ugandan Shilling",
-		"USD": "US Dollar",
-		"VND": "Vietnamese Dong",
-		"ZAR": "South African Rand"
+		"": NSLocalizedString("unknow", comment: ""),
+		"AED": NSLocalizedString("AED", comment: ""),
+		"AUD": NSLocalizedString("AUD", comment: ""),
+		"BGN": NSLocalizedString("BGN", comment: ""),
+		"BHD": NSLocalizedString("BHD", comment: ""),
+		"BND": NSLocalizedString("BND", comment: ""),
+		"BRL": NSLocalizedString("BRL", comment: ""),
+		"BYN": NSLocalizedString("BYN", comment: ""),
+		"CAD": NSLocalizedString("CAD", comment: ""),
+		"CHF": NSLocalizedString("CHF", comment: ""),
+		"CLP": NSLocalizedString("CLP", comment: ""),
+		"CNY": NSLocalizedString("CNY", comment: ""),
+		"COP": NSLocalizedString("COP", comment: ""),
+		"CRC": NSLocalizedString("CRC", comment: ""),
+		"CZK": NSLocalizedString("CZK", comment: ""),
+		"DKK": NSLocalizedString("DKK", comment: ""),
+		"DZD": NSLocalizedString("DZD", comment: ""),
+		"EGP": NSLocalizedString("EGP", comment: ""),
+		"EUR": NSLocalizedString("EUR", comment: ""),
+		"GBP": NSLocalizedString("GBP", comment: ""),
+		"HKD": NSLocalizedString("HKD", comment: ""),
+		"HRK": NSLocalizedString("HRK", comment: ""),
+		"HUF": NSLocalizedString("HUF", comment: ""),
+		"IDR": NSLocalizedString("IDR", comment: ""),
+		"ILS": NSLocalizedString("ILS", comment: ""),
+		"INR": NSLocalizedString("INR", comment: ""),
+		"IQD": NSLocalizedString("IQD", comment: ""),
+		"ISK": NSLocalizedString("ISK", comment: ""),
+		"JOD": NSLocalizedString("JOD", comment: ""),
+		"JPY": NSLocalizedString("JPY", comment: ""),
+		"KES": NSLocalizedString("KES", comment: ""),
+		"KHR": NSLocalizedString("KHR", comment: ""),
+		"KRW": NSLocalizedString("KRW", comment: ""),
+		"KWD": NSLocalizedString("KWD", comment: ""),
+		"LAK": NSLocalizedString("LAK", comment: ""),
+		"LBP": NSLocalizedString("LBP", comment: ""),
+		"LKR": NSLocalizedString("LKR", comment: ""),
+		"MAD": NSLocalizedString("MAD", comment: ""),
+		"MMK": NSLocalizedString("MMK", comment: ""),
+		"MOP": NSLocalizedString("MOP", comment: ""),
+		"MXN": NSLocalizedString("MXN", comment: ""),
+		"MYR": NSLocalizedString("MYR", comment: ""),
+		"NOK": NSLocalizedString("NOK", comment: ""),
+		"NZD": NSLocalizedString("NZD", comment: ""),
+		"OMR": NSLocalizedString("OMR", comment: ""),
+		"PHP": NSLocalizedString("PHP", comment: ""),
+		"PLN": NSLocalizedString("PLN", comment: ""),
+		"QAR": NSLocalizedString("QAR", comment: ""),
+		"RON": NSLocalizedString("RON", comment: ""),
+		"RSD": NSLocalizedString("RSD", comment: ""),
+		"RUB": NSLocalizedString("RUB", comment: ""),
+		"SAR": NSLocalizedString("SAR", comment: ""),
+		"SEK": NSLocalizedString("SEK", comment: ""),
+		"SGD": NSLocalizedString("SGD", comment: ""),
+		"SYP": NSLocalizedString("SYP", comment: ""),
+		"THB": NSLocalizedString("THB", comment: ""),
+		"TRY": NSLocalizedString("TRY", comment: ""),
+		"TWD": NSLocalizedString("TWD", comment: ""),
+		"TZS": NSLocalizedString("TZS", comment: ""),
+		"UGX": NSLocalizedString("UGX", comment: ""),
+		"USD": NSLocalizedString("USD", comment: ""),
+		"VND": NSLocalizedString("VND", comment: ""),
+		"ZAR": NSLocalizedString("ZAR", comment: "")
 	]
 	
 	var currencyTableView: UITableView!
@@ -128,7 +128,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
-//		navigationitem.title = "Settings"
+		navigationitem.title = NSLocalizedString("selectCurrency", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
@@ -145,7 +145,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//搜索时，取消隐藏导航条
 		//searchController.hidesNavigationBarDuringPresentation = false
 		self.searchController = searchController
-
+		
 		// 搜索框
 		let searchBar = searchController.searchBar
 		searchBar.barStyle = .black
@@ -156,27 +156,25 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		searchTextFeild.textColor = UIColor.white
 		// 输入内容大写
 		searchTextFeild.autocapitalizationType = .allCharacters
-//		searchTextFeild.delegate = self
-	
+		//		searchTextFeild.delegate = self
+		
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
 		tableView.backgroundColor = UIColor.black
-		tableView.separatorColor = UIColor.hex("333333")
+		//tableView.separatorColor = UIColor.hex("090909")
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableHeaderView = searchController.searchBar
+		//去掉没有数据显示部分多余的分隔线
+		//		tableView.tableFooterView =  UIView.init(frame: CGRect.zero)
+		//将分隔线offset设为零，即将分割线拉满屏幕
+		//		tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		//设置分隔线颜色
+		tableView.separatorColor = UIColor.hex("333333")
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
 		backgroundView.addSubview(tableView)
 		self.currencyTableView = tableView
-		
-//		if #available(iOS 11.0, *) {
-//			self.navigationItem.searchController = searchController
-//			print("==ios11")
-//		} else {
-//			tableView.tableHeaderView = searchController.searchBar
-//		}
-
 	}
 	
 	@objc func onPickerDone(_ sender: UIButton) {
@@ -193,7 +191,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 			favorites.append(currency)
 		}
 		UserDefaults.standard.set(favorites, forKey: "favorites")
-
+		
 		self.allCurrencies[0] = favorites
 		self.currencyTableView.reloadData()
 	}
@@ -220,6 +218,25 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		view.tintColor = UIColor.black
 		let header = view as! UITableViewHeaderFooterView
 		header.textLabel?.textColor = UIColor.white
+		header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+		header.subviews[0].backgroundColor = UIColor.hex("121212")
+	}
+	
+	//设置头视图的View
+	//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	//		let view = UIView()
+	//		view.backgroundColor = UIColor.hex("121212")
+	//		let textLabel = UITextField(frame: CGRect(x: 15, y: 5, width: UIScreen.main.bounds.width-15, height: 20))
+	//		textLabel.textColor = UIColor.white
+	//		textLabel.font = UIFont.boldSystemFont(ofSize: 18)
+	//		textLabel.text = adHeaders[section]
+	//
+	//		view.addSubview(textLabel)
+	//		return view
+	//	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 30
 	}
 	
 	//cell
@@ -228,17 +245,20 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let currency = self.searchController?.isActive ?? false ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
 		cell.preservesSuperviewLayoutMargins = false
-		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.detailTextLabel?.textColor = UIColor.white
 		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
 		cell.detailTextLabel?.textAlignment = .natural
 		cell.textLabel?.text = currency
 		cell.textLabel?.textColor = UIColor.white
+		cell.backgroundColor = UIColor.black
 		if (cell.textLabel?.text == currentCurrency) {
-			cell.backgroundColor = UIColor.hex("222222")
+			cell.accessoryType = .checkmark
+			//cell.backgroundColor = UIColor.hex("222222")
 		} else {
-			cell.backgroundColor = UIColor.black
+			cell.accessoryType = .none
+			//cell.backgroundColor = UIColor.black
 		}
 		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: (allCurrencies[0]?.contains(currency ?? "") ?? false) ? "B" : "C", color: .white)
 		cell.imageView?.accessibilityLabel = currency
@@ -252,7 +272,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		//取消选中的样式
 		tableView.deselectRow(at: indexPath, animated: true)
-
+		
 		//获取当前选中的单元格
 		let cell:UITableViewCell! = tableView.cellForRow(at: indexPath)
 		let text = cell.textLabel?.text
@@ -272,7 +292,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if self.searchController?.isActive ?? false {
 			if self.searchResults.count > 0 {
-				return self.adHeaders[1]
+				return "Matched Currencies"
 			}
 			return ""
 		}
@@ -289,7 +309,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate
 	func updateSearchResults(for searchController: UISearchController) {
-//		print("search keyword:", searchController.searchBar.text!)
+		//		print("search keyword:", searchController.searchBar.text!)
 		self.searchResults.removeAll()
 		self.allCurrencies[1]?.forEach {
 			item in
