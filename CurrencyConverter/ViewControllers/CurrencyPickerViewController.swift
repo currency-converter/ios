@@ -333,7 +333,7 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		
 		if searchController.searchBar.text?.count ?? 0 > 0 && self.searchResults.count == 0 {
 			let noDataLabel = UILabel(frame: self.currencyTableView.frame)
-			noDataLabel.text = NSLocalizedString("noDataAvailable", comment: "")
+			noDataLabel.text = NSLocalizedString("noResults", comment: "")
 			noDataLabel.textAlignment = .center
 			noDataLabel.textColor = UIColor.gray
 			noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
