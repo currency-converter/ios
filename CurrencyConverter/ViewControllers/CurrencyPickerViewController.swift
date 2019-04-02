@@ -311,18 +311,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if self.searchController?.isActive ?? false {
-			if self.searchResults.count > 0 {
-				return "Matched Currencies"
-			}
 			return ""
 		}
 		return self.adHeaders[section]
-	}
-	
-	// 搜索框只能输入字母
-	// 小写字母自动转成大写
-	func textField(_ textField:UITextField, shouldChangeCharactersIn range:NSRange, replacementString string: String) -> Bool {
-		return true
 	}
 }
 
@@ -338,12 +329,15 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 			}
 		}
 		self.currencyTableView?.reloadData()
+		//self.currencyTableView?.setContentOffset(CGPoint.zero, animated: false)
 		
 		if searchController.searchBar.text?.count ?? 0 > 0 && self.searchResults.count == 0 {
 			let noDataLabel = UILabel(frame: self.currencyTableView.frame)
-			noDataLabel.text = "No data available"
+			noDataLabel.text = NSLocalizedString("noDataAvailable", comment: "")
 			noDataLabel.textAlignment = .center
-			noDataLabel.textColor = UIColor.red
+			noDataLabel.textColor = UIColor.gray
+			noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
+			noDataLabel.backgroundColor = UIColor.black
 			self.currencyTableView.separatorStyle = .none
 			self.currencyTableView.backgroundView = noDataLabel
 		} else {
