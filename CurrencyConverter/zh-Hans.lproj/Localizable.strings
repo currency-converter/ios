@@ -5,6 +5,9 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+settings = "设置";
+sound = "声音";
+decimals = "小数位数";
 selectCurrency = "选择货币";
 search = "搜索";
 favoriteCurrencies = "收藏的货币";

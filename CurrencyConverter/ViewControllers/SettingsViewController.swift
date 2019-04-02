@@ -10,7 +10,10 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	let cellIdentifier: String = "SettingsTableCell"
-	let items: [String] = ["按键声音", "小数位数", "自定义汇率"]
+	let items: [String] = [
+		NSLocalizedString("sound", comment: ""),
+		NSLocalizedString("decimals", comment: "")
+	]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,7 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
-		navigationitem.title = "Settings"
+		navigationitem.title = NSLocalizedString("settings", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
@@ -80,5 +83,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	
 	@objc func btnClick(_ sender: UIButton) {
 		print("button click")
+	}
+	
+	func pickupTableViewCell() {
+		print("====pickupTableViewCell===")
 	}
 }

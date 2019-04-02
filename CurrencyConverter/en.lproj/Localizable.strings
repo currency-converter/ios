@@ -5,6 +5,9 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+settings = "Settings";
+sound = "Sound";
+decimals = "Decimals";
 selectCurrency = "Select Currency";
 search = "Search";
 favoriteCurrencies = "Favorite Currencies";
