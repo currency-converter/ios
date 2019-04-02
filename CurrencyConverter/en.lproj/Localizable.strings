@@ -6,7 +6,7 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 settings = "Settings";
-sound = "Sound";
+keyboardClicks = "Keyboard Clicks";
 decimals = "Decimals";
 selectCurrency = "Select Currency";
 search = "Search";

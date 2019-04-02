@@ -6,7 +6,7 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 settings = "设置";
-sound = "声音";
+keyboardClicks = "按键声音";
 decimals = "小数位数";
 selectCurrency = "选择货币";
 search = "搜索";

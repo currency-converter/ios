@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	let cellIdentifier: String = "SettingsTableCell"
 	let items: [String] = [
-		NSLocalizedString("sound", comment: ""),
+		NSLocalizedString("keyboardClicks", comment: ""),
 		NSLocalizedString("decimals", comment: "")
 	]
 	
@@ -32,6 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
+		rightBtn.tintColor = UIColor.hex("f09a37")
 		navigationitem.title = NSLocalizedString("settings", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
