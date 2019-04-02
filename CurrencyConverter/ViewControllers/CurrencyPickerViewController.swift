@@ -128,6 +128,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
+		rightBtn.tintColor = UIColor.hex("f09a37")
 		navigationitem.title = NSLocalizedString("selectCurrency", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
@@ -148,15 +149,20 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		// 搜索框
 		let searchBar = searchController.searchBar
-		searchBar.barStyle = .black
+//		searchBar.barStyle = .black
 		searchBar.delegate = self
-		let searchTextFeild = searchBar.subviews.first?.subviews[1] as! UITextField
+		guard let searchTextFeild = searchBar.value(forKey: "searchField") as? UITextField else {
+			return
+		}
 		searchTextFeild.backgroundColor = UIColor.black
 		// 修改输入文字的颜色
 		searchTextFeild.textColor = UIColor.white
+		searchTextFeild.tintColor = UIColor.hex("f09a37")
 		// 输入内容大写
 		searchTextFeild.autocapitalizationType = .allCharacters
-		//		searchTextFeild.delegate = self
+		// 设置取消按钮字体颜色
+		let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.hex("f09a37")]
+		UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
 		
 		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
 		//tableView.backgroundColor = UIColor.black
@@ -255,6 +261,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.backgroundColor = UIColor.black
 		cell.selectionStyle = .blue
+		let cellBackgroundView = UIView()
+		cellBackgroundView.backgroundColor = UIColor.hex("333333")
+		cell.selectedBackgroundView = cellBackgroundView
 
 		// icon
 		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
@@ -266,11 +275,11 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		// label
 		cell.textLabel?.text = currency
 		cell.textLabel?.textColor = UIColor.white
-		cell.textLabel?.highlightedTextColor = UIColor.black
+		//cell.textLabel?.highlightedTextColor = UIColor.black
 
 		// detail
 		cell.detailTextLabel?.textColor = UIColor.white
-		cell.detailTextLabel?.highlightedTextColor = UIColor.black
+		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
 		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
 		cell.detailTextLabel?.textAlignment = .natural
 
@@ -320,7 +329,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate
 	func updateSearchResults(for searchController: UISearchController) {
-		//		print("search keyword:", searchController.searchBar.text!)
+		//print("search keyword:", searchController.searchBar.text!)
 		self.searchResults.removeAll()
 		self.allCurrencies[1]?.forEach {
 			item in
@@ -329,5 +338,18 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 			}
 		}
 		self.currencyTableView?.reloadData()
+		
+		if searchController.searchBar.text?.count ?? 0 > 0 && self.searchResults.count == 0 {
+			let noDataLabel = UILabel(frame: self.currencyTableView.frame)
+			noDataLabel.text = "No data available"
+			noDataLabel.textAlignment = .center
+			noDataLabel.textColor = UIColor.red
+			self.currencyTableView.separatorStyle = .none
+			self.currencyTableView.backgroundView = noDataLabel
+		} else {
+			let tableViewBackground = UIView(frame: self.view.bounds)
+			tableViewBackground.backgroundColor = UIColor.black
+			self.currencyTableView.backgroundView = tableViewBackground
+		}
 	}
 }
