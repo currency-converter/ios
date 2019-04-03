@@ -177,7 +177,7 @@ class ViewController: UIViewController, myDelegate {
 		// 创建输入货币数量标签
 		txtFromMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
 		txtFromMoney.clearButtonMode = .never
-		txtFromMoney.font = UIFont(name: "Avenir", size: 48)
+		txtFromMoney.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
 		txtFromMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtFromMoney.minimumFontSize = 14
 		txtFromMoney.textAlignment = .right
@@ -196,7 +196,7 @@ class ViewController: UIViewController, myDelegate {
 		// 创建输出货币数量标签
 		txtToMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
 		txtToMoney.clearButtonMode = .never
-		txtToMoney.font = UIFont(name: "Avenir", size: 48)
+		txtToMoney.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
 		txtToMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtToMoney.minimumFontSize = 14
 		txtToMoney.textAlignment = .right
@@ -253,7 +253,7 @@ class ViewController: UIViewController, myDelegate {
 			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
 			btn.setTitleColor(UIColor.white, for: .normal)
-			btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
+			btn.titleLabel?.font = UIFont.systemFont(ofSize: 32) //UIFont(name:"Avenir", size:32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
