@@ -7,7 +7,9 @@
  */
 settings = "设置";
 keyboardClicks = "按键声音";
-decimals = "小数位数";
+decimalPlaces = "小数位数";
+sample = "示例";
+thousandSeparator = "使用千位分隔符(,)";
 selectCurrency = "选择货币";
 search = "搜索";
 favoriteCurrencies = "收藏的货币";

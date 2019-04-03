@@ -8,27 +8,24 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	let cellIdentifier: String = "SettingsTableCell"
-	let items: [String] = [
-		NSLocalizedString("keyboardClicks", comment: ""),
-		NSLocalizedString("decimals", comment: "")
-	]
+class SettingsViewController: UIViewController  {
+//	let items: [String] = [
+//		NSLocalizedString("keyboardClicks", comment: ""),
+//		NSLocalizedString("decimalPlaces", comment: "")
+//	]
+	var decimalsLabel: UILabel!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let backgroundView = UIView(frame: self.view.bounds)
-		backgroundView.backgroundColor = UIColor.hex("121212")
-		// 添加到当前视图控制器
-		self.view.addSubview(backgroundView)
+		self.view.backgroundColor = UIColor.hex("121212")
 		
 		// 导航条
 		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
 		navigationBar.barTintColor = UIColor.black
 		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 		navigationBar.backgroundColor = UIColor.black
-		backgroundView.addSubview(navigationBar)
+		self.view.addSubview(navigationBar)
 		
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
@@ -37,56 +34,88 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
-		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-64), style: .plain)
-		tableView.delegate = self
-		tableView.dataSource = self
-		tableView.backgroundColor = UIColor.black
-		tableView.register(SettingsTableCell.self, forCellReuseIdentifier: cellIdentifier)
-		self.view.addSubview(tableView)
+		self.addLine(fromPoint: CGPoint(x: 0, y: 64), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 64))
+		
+		//Sounds
+		let soundsLabel = UILabel(frame: CGRect(x: 15, y: 60, width: 150, height: 50))
+		soundsLabel.text = NSLocalizedString("keyboardClicks", comment: "")
+		soundsLabel.textColor = UIColor.white
+		self.view.addSubview(soundsLabel)
+		
+		let soundsSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 70, width: 50, height: 40))
+		soundsSwitch.isOn = UserDefaults.standard.bool(forKey: "sounds")
+		soundsSwitch.addTarget(self, action: #selector(soundsDidChange(_:)), for: .valueChanged)
+		self.view.addSubview(soundsSwitch)
+		
+		self.addLine(fromPoint: CGPoint(x: 0, y: 110), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 110))
+		
+		//decimal
+		decimalsLabel = UILabel(frame: CGRect(x: 15, y: 110, width: 150, height: 50))
+		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(UserDefaults.standard.integer(forKey: "decimals")))"
+		decimalsLabel.textColor = UIColor.white
+		self.view.addSubview(decimalsLabel)
+		
+		let decimalsSlider = UISlider( frame: CGRect(x: 15, y: 160, width: UIScreen.main.bounds.width-30, height: 40))
+		decimalsSlider.minimumValue = 0
+		decimalsSlider.maximumValue = 4
+		decimalsSlider.setValue(Float(UserDefaults.standard.integer(forKey: "decimals")), animated: true)
+		decimalsSlider.isContinuous = false
+		decimalsSlider.addTarget(self, action: #selector(self.onDecimalChange(slider:)), for: UIControl.Event.valueChanged)
+		self.view.addSubview(decimalsSlider)
+		
+		self.addLine(fromPoint: CGPoint(x: 15, y: 200), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 200))
+		
+		let thousandSeparatorLabel = UILabel(frame: CGRect(x: 15, y: 200, width: UIScreen.main.bounds.width-70, height: 50))
+		thousandSeparatorLabel.text = NSLocalizedString("thousandSeparator", comment: "")
+		thousandSeparatorLabel.textColor = UIColor.white
+		self.view.addSubview(thousandSeparatorLabel)
+		
+		let thousandSeparatorSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 210, width: 50, height: 40))
+		thousandSeparatorSwitch.isOn = UserDefaults.standard.bool(forKey: "thousandSeparator")
+		thousandSeparatorSwitch.addTarget(self, action: #selector(thousandSeparatorDidChange(_:)), for: .valueChanged)
+		self.view.addSubview(thousandSeparatorSwitch)
+		
+		self.addLine(fromPoint: CGPoint(x: 0, y: 250), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 250))
+		
 	}
 	
-	@objc func onSettingsDone(_ sender: UIButton) {
-		//		self.navigationController?.popToRootViewController(animated: true)
-		self.close()
+	func addLine(fromPoint start: CGPoint, toPoint end:CGPoint) {
+		let line = CAShapeLayer()
+		let linePath = UIBezierPath()
+		linePath.move(to: start)
+		linePath.addLine(to: end)
+		line.path = linePath.cgPath
+		line.strokeColor = UIColor.hex("333333").cgColor
+		line.lineWidth = 1
+		line.lineJoin = CAShapeLayerLineJoin.round
+		self.view.layer.addSublayer(line)
 	}
 	
 	func close() {
 		self.dismiss(animated: true, completion: nil)
 	}
 	
-	//返回表格行数
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return items.count
+	@objc func onDecimalChange(slider:UISlider) {
+		let decimals = lroundf(slider.value)
+		slider.setValue(Float(decimals), animated: true)
+		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(decimals))"
+		UserDefaults.standard.set(decimals, forKey: "decimals")
 	}
 	
-	//分组数量
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+	@objc func onSettingsDone(_ sender: UIButton) {
+		self.close()
 	}
 	
-	//cell
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! SettingsTableCell
-		//print("items[indexPath.row]:", items[indexPath.row])
-		cell.setValueForCell(item: items[indexPath.row], index: indexPath.row)
-		
-		return cell
+	@objc func soundsDidChange(_ sender: UISwitch) {
+		UserDefaults.standard.set(sender.isOn, forKey: "sounds")
 	}
 	
-	//行高
-	//	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-	//		return 60
-	//	}
+	@objc func thousandSeparatorDidChange(_ sender: UISwitch) {
+		UserDefaults.standard.set(sender.isOn, forKey: "thousandSeparator")
+	}
+	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
-	}
-	
-	@objc func btnClick(_ sender: UIButton) {
-		print("button click")
-	}
-	
-	func pickupTableViewCell() {
-		print("====pickupTableViewCell===")
 	}
 }

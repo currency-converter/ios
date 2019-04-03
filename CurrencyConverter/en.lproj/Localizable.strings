@@ -7,7 +7,9 @@
  */
 settings = "Settings";
 keyboardClicks = "Keyboard Clicks";
-decimals = "Decimals";
+decimalPlaces = "Decimal places";
+sample = "Sample";
+thousandSeparator = "Use 1000 Separator (,)";
 selectCurrency = "Select Currency";
 search = "Search";
 favoriteCurrencies = "Favorite Currencies";

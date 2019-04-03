@@ -52,9 +52,11 @@ class ViewController: UIViewController, myDelegate {
 	
 	var defaults:[String:Any] = [
 		// 小数位数
-		"decimals_preference" : 2,
+		"decimals": 2,
+		// 使用千位分隔符
+		"thousandSeparator": true,
 		// 是否使用按键声音
-		"sound_preference": false,
+		"sounds": false,
 		"fromCurrency": "USD",
 		"toCurrency": "CNY",
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
@@ -95,7 +97,7 @@ class ViewController: UIViewController, myDelegate {
 		let rate:Float = toRate/fromRate
 		self.rate = rate
 		//更新计算结果
-		self.txtToMoney.text = self.output(money: self.fromMoney)
+		self.txtToMoney.text = self.output(self.fromMoney)
 	}
     
     func updateRates() {
@@ -200,7 +202,7 @@ class ViewController: UIViewController, myDelegate {
 		txtToMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
 		txtToMoney.minimumFontSize = 14
 		txtToMoney.textAlignment = .right
-		txtToMoney.text = self.fromMoney
+		txtToMoney.text = self.output(self.fromMoney)
 		txtToMoney.textColor = UIColor.white
 		txtToMoney.isEnabled = false
 		viewToScreen.addSubview(txtToMoney)
@@ -383,18 +385,18 @@ class ViewController: UIViewController, myDelegate {
         }
 		
 		if self.operatorSign != "" && self.operatorEnd != "" {
-			txtFromMoney.text = self.operatorEnd
-			txtToMoney.text = self.output(money: self.operatorEnd)
+			txtFromMoney.text = addThousandSeparator(self.operatorEnd)
+			txtToMoney.text = self.output(self.operatorEnd)
 		} else {
-			txtFromMoney.text = self.fromMoney
-			txtToMoney.text = self.output(money: self.fromMoney)
+			txtFromMoney.text = addThousandSeparator(self.fromMoney)
+			txtToMoney.text = self.output(self.fromMoney)
 		}
 		
 		self.playTapSound()
     }
 	
 	func playTapSound() {
-		guard UserDefaults.standard.bool(forKey: "sound_preference") else {
+		guard UserDefaults.standard.bool(forKey: "sounds") else {
 			return
 		}
 		
@@ -421,19 +423,29 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	// 格式化输出换算结果
-	func output(money:String) -> String {
-		let decimals = UserDefaults.standard.integer(forKey: "decimals_preference")
-		return String(format: "%.\(String(decimals))f", Float(money)! * self.rate)
+	func output(_ money:String) -> String {
+		let decimals = UserDefaults.standard.integer(forKey: "decimals")
+		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
 	}
 
 	func registerSettingsBundle(){
 		UserDefaults.standard.register(defaults: defaults)
 	}
 	
-	@objc func defaultsChanged() {
-		if !self.isEmpty {
-			self.txtToMoney.text = self.output(money: self.fromMoney)
+	//把 "1234567.89" -> "1,234,567.89"
+	func addThousandSeparator(_ s:String) -> String {
+		var price: NSNumber = 0
+		if let myInteger = Double(s) {
+			price = NSNumber(value:myInteger)
 		}
+		let f = NumberFormatter()
+		f.numberStyle = .decimal
+		return f.string(from: price)!
+	}
+	
+	@objc func defaultsChanged() {
+		//会出现非主线程更新UI的警告
+		self.txtToMoney.text = self.output(self.fromMoney)
 	}
 
 }
