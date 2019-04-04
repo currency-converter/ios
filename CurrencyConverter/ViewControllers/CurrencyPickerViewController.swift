@@ -157,7 +157,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		searchTextFeild.textColor = UIColor.white
 		searchTextFeild.tintColor = UIColor.hex("f09a37")
 		// 输入内容大写
-		searchTextFeild.autocapitalizationType = .allCharacters
+		//searchTextFeild.autocapitalizationType = .allCharacters
 		// 设置取消按钮字体颜色
 		let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.hex("f09a37")]
 		UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
@@ -271,14 +271,14 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.imageView?.isUserInteractionEnabled = true
 
 		// label
-		cell.textLabel?.text = currency
+		cell.textLabel?.text = self.currencyNames[currency ?? ""]
 		cell.textLabel?.textColor = UIColor.white
 		//cell.textLabel?.highlightedTextColor = UIColor.black
 
 		// detail
 		cell.detailTextLabel?.textColor = UIColor.white
 		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
-		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
+		cell.detailTextLabel?.text = currency
 		cell.detailTextLabel?.textAlignment = .natural
 
 		// accessory
@@ -318,14 +318,22 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate
 	func updateSearchResults(for searchController: UISearchController) {
-		//print("search keyword:", searchController.searchBar.text!)
 		self.searchResults.removeAll()
-		self.allCurrencies[1]?.forEach {
-			item in
-			if item.contains(searchController.searchBar.text!.uppercased()) {
-				self.searchResults.append(item)
+
+		let keyword:String = searchController.searchBar.text!.uppercased()
+		print(keyword)
+		//从key和value中都找一遍
+		for currency in currencyNames {
+			if currency.key.contains(keyword) || currency.value.uppercased().contains(keyword) {
+//				print("currency.key:", currency.key)
+//				print(currency.key.contains(keyword))
+//				print("currency.value:", currency.value.uppercased())
+//				print(currency.value.uppercased().contains(keyword))
+//				print("")
+				self.searchResults.append(currency.key)
 			}
 		}
+
 		self.currencyTableView?.reloadData()
 		//self.currencyTableView?.setContentOffset(CGPoint.zero, animated: false)
 		
