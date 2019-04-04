@@ -200,6 +200,7 @@ class ViewController: UIViewController, myDelegate {
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
 		toMoneyLabel.textColor = UIColor.white
+		// 允许响应用户交互（长按出现copy）
 		toMoneyLabel.isUserInteractionEnabled = true
 		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
 		toMoneyLabel.addGestureRecognizer(longPress)
@@ -471,8 +472,10 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	@objc func defaultsChanged() {
-		//会出现非主线程更新UI的警告
-		self.toMoneyLabel.text = self.output(self.fromMoney)
+		//避免出现非主线程更新UI的警告
+		DispatchQueue.main.async {
+			self.toMoneyLabel.text = self.output(self.fromMoney)
+		}
 	}
 	
 }
