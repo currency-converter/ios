@@ -29,7 +29,7 @@ class ViewController: UIViewController, myDelegate {
 	var operatorButton:UIButton!
 	
 	// 被操作的数
-	var operatorEnd:String = ""
+	var operatorEnd:String = "0"
 	
 	// 输入货币数量
 	var fromMoney: String = "0"
@@ -206,7 +206,7 @@ class ViewController: UIViewController, myDelegate {
 		viewToScreen.addSubview(toMoneyLabel)
 		
 		// 创建输入货币缩写标签
-		btnToCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 120))
+		btnToCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
 		btnToCurrency.setTitle(self.toCurrency, for: .normal)
 		btnToCurrency.tag = 2
 		btnToCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
@@ -329,19 +329,19 @@ class ViewController: UIViewController, myDelegate {
 		case "AC":
 			self.isEmpty = true
 			self.fromMoney = "0"
-			self.operatorEnd = ""
+			self.operatorEnd = "0"
 			self.operatorSign = ""
 		case "A":
 			self.onSettingsClick(sender)
 		case "+", "-":
 			if !self.isEmpty {
 				self.operatorSign = n ?? ""
-				self.operatorEnd = ""
+				self.operatorEnd = "0"
 				self.operatorButton = sender
 				sender.isSelected = true
 			}
 		case "=":
-			if self.operatorEnd != "" {
+			if self.operatorEnd != "0" {
 				var a:Float = 0
 				if self.operatorSign == "+" {
 					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
@@ -351,7 +351,7 @@ class ViewController: UIViewController, myDelegate {
 				self.fromMoney = "\(a)"
 			}
 			self.operatorSign = ""
-			self.operatorEnd = ""
+			self.operatorEnd = "0"
 		case "0":
 			if self.operatorSign == "" {
 				if fromMoney != "0" {
@@ -359,7 +359,9 @@ class ViewController: UIViewController, myDelegate {
 					self.isEmpty = false
 				}
 			} else {
-				self.operatorEnd += "0"
+				if operatorEnd != "0" {
+					self.operatorEnd += "0"
+				}
 			}
 		case ".":
 			if self.operatorSign == "" {
@@ -381,7 +383,7 @@ class ViewController: UIViewController, myDelegate {
 			}
 		}
 		
-		if self.operatorSign != "" && self.operatorEnd != "" {
+		if self.operatorSign != "" && self.operatorEnd != "0" {
 			fromMoneyLabel.text = addThousandSeparator(self.operatorEnd)
 			toMoneyLabel.text = self.output(self.operatorEnd)
 		} else {
