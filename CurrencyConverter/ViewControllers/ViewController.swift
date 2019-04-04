@@ -157,7 +157,7 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	private func createScreenView() {
-		let screenViewHeight: CGFloat = 240
+		let screenViewHeight: CGFloat = 180
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		// 创建屏幕容器
@@ -169,15 +169,15 @@ class ViewController: UIViewController, myDelegate {
 		// 添加到当前视图控制器
 		self.view.addSubview(screenView)
 		
-		self.viewFromScreen = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 120))
+		self.viewFromScreen = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 80))
 		//viewFromScreen.backgroundColor = UIColor.red
 		screenView.addSubview(self.viewFromScreen)
-		self.viewToScreen = UIView(frame: CGRect(x: 0, y: 120, width: viewBounds.width, height: 120))
+		self.viewToScreen = UIView(frame: CGRect(x: 0, y: 80, width: viewBounds.width, height: 100))
 		//viewToScreen.backgroundColor = UIColor.yellow
 		screenView.addSubview(self.viewToScreen)
 		
-		// 创建货币输入框
-		fromMoneyLabel = UILabel(frame: CGRect(x: 6, y: 0, width:viewBounds.width - 70, height: 120))
+		// 货币输入框
+		fromMoneyLabel = UILabel(frame: CGRect(x: 16, y: 0, width:viewBounds.width - 80, height: 80))
 		fromMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
@@ -185,15 +185,15 @@ class ViewController: UIViewController, myDelegate {
 		fromMoneyLabel.textColor = UIColor.white
 		viewFromScreen.addSubview(fromMoneyLabel)
 		
-		// 创建输入货币缩写标签
-		btnFromCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 120))
+		// 输入货币缩写标签
+		btnFromCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
 		btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
 		btnFromCurrency.tag = 1
 		btnFromCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 		viewFromScreen.addSubview(btnFromCurrency)
 		
-		// 创建货币输出框
-		toMoneyLabel = UILabel(frame: CGRect(x: 6, y: 0, width: viewBounds.width - 70, height: 120))
+		// 货币输出框
+		toMoneyLabel = UILabel(frame: CGRect(x: 16, y: 0, width: viewBounds.width - 80, height: 80))
 		toMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.textAlignment = .right
