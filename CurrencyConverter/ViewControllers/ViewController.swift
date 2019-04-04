@@ -434,13 +434,16 @@ class ViewController: UIViewController, myDelegate {
 	
 	//把 "1234567.89" -> "1,234,567.89"
 	func addThousandSeparator(_ s:String) -> String {
-		var price: NSNumber = 0
-		if let myInteger = Double(s) {
-			price = NSNumber(value:myInteger)
+		if (UserDefaults.standard.bool(forKey: "thousandSeparator")) {
+			var price: NSNumber = 0
+			if let myInteger = Double(s) {
+				price = NSNumber(value:myInteger)
+			}
+			let f = NumberFormatter()
+			f.numberStyle = .decimal
+			return f.string(from: price)!
 		}
-		let f = NumberFormatter()
-		f.numberStyle = .decimal
-		return f.string(from: price)!
+		return s
 	}
 	
 	@objc func defaultsChanged() {
