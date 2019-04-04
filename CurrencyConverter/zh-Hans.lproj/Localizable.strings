@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+copy = "复制";
 settings = "设置";
 keyboardClicks = "按键声音";
 decimalPlaces = "小数位数";

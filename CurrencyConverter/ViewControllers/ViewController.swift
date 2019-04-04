@@ -20,8 +20,8 @@ let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 
 class ViewController: UIViewController, myDelegate {
 	
-   	// 当前输入货币是否为空
-    var isEmpty: Bool = true
+	// 当前输入货币是否为空
+	var isEmpty: Bool = true
 	
 	// 当前运算符
 	var operatorSign:String = ""
@@ -30,25 +30,25 @@ class ViewController: UIViewController, myDelegate {
 	
 	// 被操作的数
 	var operatorEnd:String = ""
-    
-    // 输入货币数量
-    var fromMoney: String = "0"
-    
-    // 汇率
-    var rate: Float!
-    
-    var rates: Dictionary<String,NSNumber>!
-    
-    // 输入货币类型
-    var fromCurrency: String!
-    
-    // 输出货币类型
+	
+	// 输入货币数量
+	var fromMoney: String = "0"
+	
+	// 汇率
+	var rate: Float!
+	
+	var rates: Dictionary<String,NSNumber>!
+	
+	// 输入货币类型
+	var fromCurrency: String!
+	
+	// 输出货币类型
 	var toCurrency: String!
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
-    // api
-    var updateRatesUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
+	// api
+	var updateRatesUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
 	
 	var defaults:[String:Any] = [
 		// 小数位数
@@ -65,16 +65,16 @@ class ViewController: UIViewController, myDelegate {
 		]
 	]
 	
-    // UI 组件
+	// UI 组件
 	var settingsView: UIView!
 	var viewFromScreen: UIView!
 	var viewToScreen: UIView!
 	var keyboardView: UIView!
 	var currencyPickerView: UIView!
-    var btnFromCurrency: UIButton!
+	var btnFromCurrency: UIButton!
 	var btnToCurrency: UIButton!
-    var txtFromMoney: UITextField!
-    var txtToMoney: UITextField!
+	var fromMoneyLabel: UILabel!
+	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
 	
 	func currencyCellClickCallback(data: String) {
@@ -97,21 +97,21 @@ class ViewController: UIViewController, myDelegate {
 		let rate:Float = toRate/fromRate
 		self.rate = rate
 		//更新计算结果
-		self.txtToMoney.text = self.output(self.fromMoney)
+		self.toMoneyLabel.text = self.output(self.fromMoney)
 	}
-    
-    func updateRates() {
-        let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        // 创建请求配置
-        let config = URLSessionConfiguration.default
-        // 创建请求URL
-        let url = URL(string: newUrlString!)
-        // 创建请求实例
-        let request = URLRequest(url: url!)
-        // 创建请求Session
-        let session = URLSession(configuration: config)
-        // 创建请求任务
-        let task = session.dataTask(with: request) { (data,response,error) in
+	
+	func updateRates() {
+		let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+		// 创建请求配置
+		let config = URLSessionConfiguration.default
+		// 创建请求URL
+		let url = URL(string: newUrlString!)
+		// 创建请求实例
+		let request = URLRequest(url: url!)
+		// 创建请求Session
+		let session = URLSession(configuration: config)
+		// 创建请求任务
+		let task = session.dataTask(with: request) { (data,response,error) in
 			if(error == nil) {
 				// 将json数据解析成字典
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
@@ -120,13 +120,13 @@ class ViewController: UIViewController, myDelegate {
 			} else {
 				print("Update rates failed.")
 			}
-        }
-        
-        // 激活请求任务
-        task.resume()
-    }
-    
-    func initConfig() {
+		}
+		
+		// 激活请求任务
+		task.resume()
+	}
+	
+	func initConfig() {
 		// 初始化输入输出货币
 		self.fromCurrency = UserDefaults.standard.string(forKey: "fromCurrency")
 		self.toCurrency = UserDefaults.standard.string(forKey: "toCurrency")
@@ -135,25 +135,26 @@ class ViewController: UIViewController, myDelegate {
 		let toRate:Float! = rates[self.toCurrency]?.floatValue
 		self.rate = toRate/fromRate
 	}
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		registerSettingsBundle()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
-//		defaultsChanged()
+		//		defaultsChanged()
 		
 		// 设置全局背景色
 		self.view.backgroundColor = UIColor.hex("121212")
 		
+		
 		updateRates()
-        
-        initConfig()
+		
+		initConfig()
 		
 		createScreenView()
 		
 		createKeyboardView()
-    }
+	}
 	
 	private func createScreenView() {
 		// 获取屏幕尺寸
@@ -177,16 +178,13 @@ class ViewController: UIViewController, myDelegate {
 		screenView.addSubview(self.viewToScreen)
 		
 		// 创建输入货币数量标签
-		txtFromMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
-		txtFromMoney.clearButtonMode = .never
-		txtFromMoney.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
-		txtFromMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
-		txtFromMoney.minimumFontSize = 14
-		txtFromMoney.textAlignment = .right
-		txtFromMoney.text = self.fromMoney
-		txtFromMoney.textColor = UIColor.white
-		txtFromMoney.isEnabled = false
-		viewFromScreen.addSubview(txtFromMoney)
+		fromMoneyLabel = UILabel(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
+		fromMoneyLabel.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
+		fromMoneyLabel.adjustsFontSizeToFitWidth = true
+		fromMoneyLabel.textAlignment = .right
+		fromMoneyLabel.text = self.fromMoney
+		fromMoneyLabel.textColor = UIColor.white
+		viewFromScreen.addSubview(fromMoneyLabel)
 		
 		// 创建输入货币缩写标签
 		btnFromCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
@@ -196,16 +194,16 @@ class ViewController: UIViewController, myDelegate {
 		viewFromScreen.addSubview(btnFromCurrency)
 		
 		// 创建输出货币数量标签
-		txtToMoney = UITextField(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
-		txtToMoney.clearButtonMode = .never
-		txtToMoney.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
-		txtToMoney.adjustsFontSizeToFitWidth = true  //当文字超出文本框宽度时，自动调整文字大小
-		txtToMoney.minimumFontSize = 14
-		txtToMoney.textAlignment = .right
-		txtToMoney.text = self.output(self.fromMoney)
-		txtToMoney.textColor = UIColor.white
-		txtToMoney.isEnabled = false
-		viewToScreen.addSubview(txtToMoney)
+		toMoneyLabel = UILabel(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
+		toMoneyLabel.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
+		toMoneyLabel.adjustsFontSizeToFitWidth = true
+		toMoneyLabel.textAlignment = .right
+		toMoneyLabel.text = self.output(self.fromMoney)
+		toMoneyLabel.textColor = UIColor.white
+		toMoneyLabel.isUserInteractionEnabled = true
+		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
+		toMoneyLabel.addGestureRecognizer(longPress)
+		viewToScreen.addSubview(toMoneyLabel)
 		
 		// 创建输入货币缩写标签
 		btnToCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
@@ -276,11 +274,11 @@ class ViewController: UIViewController, myDelegate {
 			keyboardView.addSubview(btn)
 		}
 	}
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
 	
 	@objc func swipe(_ recognizer:UISwipeGestureRecognizer){
 		if recognizer.direction == .up || recognizer.direction == .down {
@@ -299,9 +297,9 @@ class ViewController: UIViewController, myDelegate {
 				self.viewToScreen.frame.origin.y = 96
 				self.btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
 				self.btnToCurrency.setTitle(self.toCurrency, for: .normal)
-				let tempMoney = self.txtFromMoney.text
-				self.txtFromMoney.text = self.txtToMoney.text
-				self.txtToMoney.text = tempMoney
+				let tempMoney = self.fromMoneyLabel.text
+				self.fromMoneyLabel.text = self.toMoneyLabel.text
+				self.toMoneyLabel.text = tempMoney
 			})
 		}
 	}
@@ -321,17 +319,17 @@ class ViewController: UIViewController, myDelegate {
 		pickerView.delegate = self
 		self.present(pickerView, animated: true, completion: nil)
 	}
-    
-    @objc func onInput(_ sender: UIButton) {
-        let n = sender.currentTitle
+	
+	@objc func onInput(_ sender: UIButton) {
+		let n = sender.currentTitle
 		
 		//清除+-的选中状态
 		self.operatorButton?.isSelected = false
 		
-        switch n {
-        case "AC":
-            self.isEmpty = true
-            self.fromMoney = "0"
+		switch n {
+		case "AC":
+			self.isEmpty = true
+			self.fromMoney = "0"
 			self.operatorEnd = ""
 			self.operatorSign = ""
 		case "A":
@@ -355,7 +353,7 @@ class ViewController: UIViewController, myDelegate {
 			}
 			self.operatorSign = ""
 			self.operatorEnd = ""
-        case "0":
+		case "0":
 			if self.operatorSign == "" {
 				if fromMoney != "0" {
 					self.fromMoney += "0"
@@ -364,7 +362,7 @@ class ViewController: UIViewController, myDelegate {
 			} else {
 				self.operatorEnd += "0"
 			}
-        case ".":
+		case ".":
 			if self.operatorSign == "" {
 				if !self.fromMoney.contains(".") {
 					self.fromMoney += "."
@@ -375,25 +373,25 @@ class ViewController: UIViewController, myDelegate {
 					self.operatorEnd += "."
 				}
 			}
-        default:
+		default:
 			if self.operatorSign == "" {
 				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
 				self.isEmpty = false
 			} else {
 				self.operatorEnd += n!
 			}
-        }
+		}
 		
 		if self.operatorSign != "" && self.operatorEnd != "" {
-			txtFromMoney.text = addThousandSeparator(self.operatorEnd)
-			txtToMoney.text = self.output(self.operatorEnd)
+			fromMoneyLabel.text = addThousandSeparator(self.operatorEnd)
+			toMoneyLabel.text = self.output(self.operatorEnd)
 		} else {
-			txtFromMoney.text = addThousandSeparator(self.fromMoney)
-			txtToMoney.text = self.output(self.fromMoney)
+			fromMoneyLabel.text = addThousandSeparator(self.fromMoney)
+			toMoneyLabel.text = self.output(self.fromMoney)
 		}
 		
 		self.playTapSound()
-    }
+	}
 	
 	func playTapSound() {
 		guard UserDefaults.standard.bool(forKey: "sounds") else {
@@ -410,11 +408,11 @@ class ViewController: UIViewController, myDelegate {
 			print("Could not load audio file.")
 		}
 	}
-    
-    @objc func onSettingsClick(_ sender: UIButton) {
+	
+	@objc func onSettingsClick(_ sender: UIButton) {
 		let settingsView = SettingsViewController()
 		self.present(settingsView, animated: true, completion: nil)
-    }
+	}
 	
 	@objc func onSettingsDone(_ sender: UIButton) {
 		UIView.animate(withDuration: 0.5, animations: {
@@ -422,12 +420,38 @@ class ViewController: UIViewController, myDelegate {
 		}, completion: nil)
 	}
 	
+	@objc func toMoneyLongPress(_ recognizer: UILongPressGestureRecognizer) {
+		self.toMoneyLabel.becomeFirstResponder()
+		let menu = UIMenuController.shared
+		menu.arrowDirection = .down
+		menu.menuItems = [ UIMenuItem.init(title: NSLocalizedString("copy", comment: ""), action: #selector(copyMoney(_:))) ]
+		let rect = CGRect(x: self.toMoneyLabel.frame.width-50, y: 10, width: 50, height: 50)
+		menu.setTargetRect(rect, in: self.toMoneyLabel)
+		menu.setMenuVisible(true, animated: true)
+	}
+
+	@objc func copyMoney(_ sender: AnyObject?) {
+		let paste = UIPasteboard.general
+		paste.string = self.toMoneyLabel.text
+	}
+	
+	override var canBecomeFirstResponder : Bool {
+		return true
+	}
+	
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		if action == #selector(self.copyMoney) {
+			return true
+		}
+		return false
+	}
+	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
 		let decimals = UserDefaults.standard.integer(forKey: "decimals")
 		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
 	}
-
+	
 	func registerSettingsBundle(){
 		UserDefaults.standard.register(defaults: defaults)
 	}
@@ -448,9 +472,9 @@ class ViewController: UIViewController, myDelegate {
 	
 	@objc func defaultsChanged() {
 		//会出现非主线程更新UI的警告
-		self.txtToMoney.text = self.output(self.fromMoney)
+		self.toMoneyLabel.text = self.output(self.fromMoney)
 	}
-
+	
 }
 
 
