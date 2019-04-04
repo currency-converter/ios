@@ -157,29 +157,28 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	private func createScreenView() {
+		let screenViewHeight: CGFloat = 240
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		// 创建屏幕容器
 		let screenView = UIView()
 		// 坐标
-		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - 180, width: viewBounds.width, height: 180)
+		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - screenViewHeight, width: viewBounds.width, height: screenViewHeight)
 		// 是否切除子视图超出部分
 		screenView.clipsToBounds = true
-		// 透明度
-		// screenView = 0.5
-		// 是否隐藏视图
-		screenView.isHidden = false
 		// 添加到当前视图控制器
 		self.view.addSubview(screenView)
 		
-		self.viewFromScreen = UIView(frame: CGRect(x:0, y:20, width:viewBounds.width, height:66))
+		self.viewFromScreen = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 120))
+		//viewFromScreen.backgroundColor = UIColor.red
 		screenView.addSubview(self.viewFromScreen)
-		self.viewToScreen = UIView(frame: CGRect(x:0, y:96, width:viewBounds.width, height:66))
+		self.viewToScreen = UIView(frame: CGRect(x: 0, y: 120, width: viewBounds.width, height: 120))
+		//viewToScreen.backgroundColor = UIColor.yellow
 		screenView.addSubview(self.viewToScreen)
 		
-		// 创建输入货币数量标签
-		fromMoneyLabel = UILabel(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
-		fromMoneyLabel.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
+		// 创建货币输入框
+		fromMoneyLabel = UILabel(frame: CGRect(x: 6, y: 0, width:viewBounds.width - 70, height: 120))
+		fromMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
@@ -187,15 +186,15 @@ class ViewController: UIViewController, myDelegate {
 		viewFromScreen.addSubview(fromMoneyLabel)
 		
 		// 创建输入货币缩写标签
-		btnFromCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
+		btnFromCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 120))
 		btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
 		btnFromCurrency.tag = 1
 		btnFromCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 		viewFromScreen.addSubview(btnFromCurrency)
 		
-		// 创建输出货币数量标签
-		toMoneyLabel = UILabel(frame: CGRect(x:0, y:0, width:viewBounds.width - 64, height:66))
-		toMoneyLabel.font = UIFont.systemFont(ofSize: 48) //UIFont(name: "Avenir", size: 48)
+		// 创建货币输出框
+		toMoneyLabel = UILabel(frame: CGRect(x: 6, y: 0, width: viewBounds.width - 70, height: 120))
+		toMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
@@ -207,7 +206,7 @@ class ViewController: UIViewController, myDelegate {
 		viewToScreen.addSubview(toMoneyLabel)
 		
 		// 创建输入货币缩写标签
-		btnToCurrency = UIButton(frame: CGRect(x:viewBounds.width - 64, y:0, width:64, height:66))
+		btnToCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 120))
 		btnToCurrency.setTitle(self.toCurrency, for: .normal)
 		btnToCurrency.tag = 2
 		btnToCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
@@ -248,13 +247,12 @@ class ViewController: UIViewController, myDelegate {
 		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
 		
 		for (index, item) in characters.enumerated() {
-			// print(item)
 			// 创建数字按钮
 			var btn:UIButton
 			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
 			btn.setTitleColor(UIColor.white, for: .normal)
-			btn.titleLabel?.font = UIFont.systemFont(ofSize: 32) //UIFont(name:"Avenir", size:32)
+			btn.titleLabel?.font = UIFont(name:"Avenir", size:32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
