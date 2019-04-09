@@ -234,10 +234,6 @@ class ViewController: UIViewController, myDelegate {
 		// keyboardView.backgroundColor = UIColor.yellow
 		// 是否切除子视图超出部分
 		keyboardView.clipsToBounds = true
-		// 透明度
-		// screenView = 0.5
-		// 是否隐藏视图
-		keyboardView.isHidden = false
 		// 添加到当前视图控制器
 		self.view.addSubview(keyboardView)
 		
