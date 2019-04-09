@@ -140,7 +140,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		searchController.obscuresBackgroundDuringPresentation = true
 		//搜索时，取消背景变暗色
 		searchController.dimsBackgroundDuringPresentation = true
-		definesPresentationContext = true
+		definesPresentationContext = false
 		//搜索时，取消隐藏导航条
 		//searchController.hidesNavigationBarDuringPresentation = false
 		self.searchController = searchController
@@ -318,18 +318,13 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate
 	func updateSearchResults(for searchController: UISearchController) {
-		self.searchResults.removeAll()
+		self.searchResults.removeAll(keepingCapacity: false)
 
 		let keyword:String = searchController.searchBar.text!.uppercased()
 		print(keyword)
 		//从key和value中都找一遍
 		for currency in currencyNames {
 			if currency.key.contains(keyword) || currency.value.uppercased().contains(keyword) {
-//				print("currency.key:", currency.key)
-//				print(currency.key.contains(keyword))
-//				print("currency.value:", currency.value.uppercased())
-//				print(currency.value.uppercased().contains(keyword))
-//				print("")
 				self.searchResults.append(currency.key)
 			}
 		}
