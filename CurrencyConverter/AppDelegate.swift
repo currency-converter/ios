@@ -18,6 +18,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
         return true
     }
+	
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		if url.host == nil {
+			return true;
+		}
+
+		//获取url以及参数
+		let urlString = url.absoluteString
+		let queryArray = urlString.components(separatedBy: "/")
+		print("queryArray:", queryArray)
+		let rootView = self.window!.rootViewController as! ViewController
+		switch queryArray[2] {
+		case "settings": // currencyconverter://settings
+			let controller = SettingsViewController()
+			rootView.present(controller, animated: true, completion: nil)
+		case "currencypicker": // currencyconverter://currencypicker/to/CNY
+			if queryArray[3] == "from" {
+				rootView.currencyPickerType = .from
+			} else {
+				rootView.currencyPickerType = .to
+			}
+			
+			let controller = CurrencyPickerViewController()
+			controller.currentCurrency = queryArray[4]
+			controller.delegate = rootView
+			
+			rootView.present(controller, animated: true, completion: nil)
+		default: break
+		}
+		
+		return true
+	}
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

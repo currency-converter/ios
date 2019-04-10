@@ -9,10 +9,9 @@
 import UIKit
 
 class SettingsViewController: UIViewController  {
-//	let items: [String] = [
-//		NSLocalizedString("keyboardClicks", comment: ""),
-//		NSLocalizedString("decimalPlaces", comment: "")
-//	]
+
+	let groupId: String = "group.com.zhongzhi.currencyconverter"
+	
 	var decimalsLabel: UILabel!
 	
 	override func viewDidLoad() {
@@ -20,6 +19,7 @@ class SettingsViewController: UIViewController  {
 		
 		self.view.backgroundColor = UIColor.hex("121212")
 		
+		let shared = UserDefaults(suiteName: self.groupId)
 		// 导航条
 		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
 		navigationBar.barTintColor = UIColor.black
@@ -43,7 +43,7 @@ class SettingsViewController: UIViewController  {
 		self.view.addSubview(soundsLabel)
 		
 		let soundsSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 70, width: 50, height: 40))
-		soundsSwitch.isOn = UserDefaults.standard.bool(forKey: "sounds")
+		soundsSwitch.isOn = shared?.bool(forKey: "sounds") ?? false
 		soundsSwitch.addTarget(self, action: #selector(soundsDidChange(_:)), for: .valueChanged)
 		self.view.addSubview(soundsSwitch)
 		
@@ -51,14 +51,14 @@ class SettingsViewController: UIViewController  {
 		
 		//decimal
 		decimalsLabel = UILabel(frame: CGRect(x: 15, y: 110, width: 150, height: 50))
-		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(UserDefaults.standard.integer(forKey: "decimals")))"
+		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(shared?.integer(forKey: "decimals") ?? 0))"
 		decimalsLabel.textColor = UIColor.white
 		self.view.addSubview(decimalsLabel)
 		
 		let decimalsSlider = UISlider( frame: CGRect(x: 15, y: 160, width: UIScreen.main.bounds.width-30, height: 40))
 		decimalsSlider.minimumValue = 0
 		decimalsSlider.maximumValue = 4
-		decimalsSlider.setValue(Float(UserDefaults.standard.integer(forKey: "decimals")), animated: true)
+		decimalsSlider.setValue(Float(shared?.integer(forKey: "decimals") ?? 0), animated: true)
 		decimalsSlider.isContinuous = false
 		decimalsSlider.addTarget(self, action: #selector(self.onDecimalChange(slider:)), for: UIControl.Event.valueChanged)
 		self.view.addSubview(decimalsSlider)
@@ -71,7 +71,7 @@ class SettingsViewController: UIViewController  {
 		self.view.addSubview(thousandSeparatorLabel)
 		
 		let thousandSeparatorSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 210, width: 50, height: 40))
-		thousandSeparatorSwitch.isOn = UserDefaults.standard.bool(forKey: "thousandSeparator")
+		thousandSeparatorSwitch.isOn = shared?.bool(forKey: "thousandSeparator") ?? true
 		thousandSeparatorSwitch.addTarget(self, action: #selector(thousandSeparatorDidChange(_:)), for: .valueChanged)
 		self.view.addSubview(thousandSeparatorSwitch)
 		
@@ -96,10 +96,11 @@ class SettingsViewController: UIViewController  {
 	}
 	
 	@objc func onDecimalChange(slider:UISlider) {
+		let shared = UserDefaults(suiteName: self.groupId)
 		let decimals = lroundf(slider.value)
 		slider.setValue(Float(decimals), animated: true)
 		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(decimals))"
-		UserDefaults.standard.set(decimals, forKey: "decimals")
+		shared?.set(decimals, forKey: "decimals")
 	}
 	
 	@objc func onSettingsDone(_ sender: UIButton) {
@@ -107,11 +108,13 @@ class SettingsViewController: UIViewController  {
 	}
 	
 	@objc func soundsDidChange(_ sender: UISwitch) {
-		UserDefaults.standard.set(sender.isOn, forKey: "sounds")
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(sender.isOn, forKey: "sounds")
 	}
 	
 	@objc func thousandSeparatorDidChange(_ sender: UISwitch) {
-		UserDefaults.standard.set(sender.isOn, forKey: "thousandSeparator")
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(sender.isOn, forKey: "thousandSeparator")
 	}
 	
 	override func didReceiveMemoryWarning() {

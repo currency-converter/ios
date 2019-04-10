@@ -15,6 +15,8 @@ protocol myDelegate {
 class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 	var delegate: myDelegate?
 	
+	let groupId: String = "group.com.zhongzhi.currencyconverter"
+	
 	var allCurrencies = [
 		0: [String](),
 		1: [String]([
@@ -112,7 +114,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		self.view.backgroundColor = UIColor.hex("121212")
 		
-		self.allCurrencies[0] = UserDefaults.standard.array(forKey: "favorites") as? [String]
+		let shared = UserDefaults(suiteName: self.groupId)
+		
+		self.allCurrencies[0] = shared?.array(forKey: "favorites") as? [String]
 		
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
@@ -190,14 +194,15 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	
 	// 收藏/取消收藏
 	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
-		var favorites:[String] = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
+		let shared = UserDefaults(suiteName: self.groupId)
+		var favorites:[String] = shared?.array(forKey: "favorites") as? [String] ?? [String]()
 		let currency = sender.view?.accessibilityLabel ?? ""
 		if favorites.contains(currency) {
 			favorites = favorites.filter {$0 != currency}
 		} else {
 			favorites.append(currency)
 		}
-		UserDefaults.standard.set(favorites, forKey: "favorites")
+		shared?.set(favorites, forKey: "favorites")
 		
 		self.allCurrencies[0] = favorites
 		self.currencyTableView.reloadData()
@@ -228,19 +233,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
 		header.subviews[0].backgroundColor = UIColor.hex("121212")
 	}
-	
-	//设置头视图的View
-	//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-	//		let view = UIView()
-	//		view.backgroundColor = UIColor.hex("121212")
-	//		let textLabel = UITextField(frame: CGRect(x: 15, y: 5, width: UIScreen.main.bounds.width-15, height: 20))
-	//		textLabel.textColor = UIColor.white
-	//		textLabel.font = UIFont.boldSystemFont(ofSize: 18)
-	//		textLabel.text = adHeaders[section]
-	//
-	//		view.addSubview(textLabel)
-	//		return view
-	//	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 30
@@ -282,7 +274,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.detailTextLabel?.textAlignment = .natural
 
 		// accessory
-		cell.accessoryType = cell.textLabel?.text == currentCurrency ? .checkmark : .none
+		cell.accessoryType = cell.detailTextLabel?.text == currentCurrency ? .checkmark : .none
 		return cell
 	}
 	
@@ -293,7 +285,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		//获取当前选中的单元格
 		let cell:UITableViewCell! = tableView.cellForRow(at: indexPath)
-		let text = cell.textLabel?.text
+		let text = cell.detailTextLabel?.text
 		if let text = text {
 			self.delegate?.currencyCellClickCallback(data: text)
 		}

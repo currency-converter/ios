@@ -20,11 +20,13 @@ let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 
 class ViewController: UIViewController, myDelegate {
 	
+	let groupId: String = "group.com.zhongzhi.currencyconverter"
+	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true
 	
 	// 当前运算符
-	var operatorSign:String = ""
+	var operatorSymbol:String = ""
 	
 	var operatorButton:UIButton!
 	
@@ -40,10 +42,10 @@ class ViewController: UIViewController, myDelegate {
 	var rates: Dictionary<String,NSNumber>!
 	
 	// 输入货币类型
-	var fromCurrency: String!
+	var fromSymbol: String!
 	
 	// 输出货币类型
-	var toCurrency: String!
+	var toSymbol: String!
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
@@ -57,8 +59,8 @@ class ViewController: UIViewController, myDelegate {
 		"thousandSeparator": true,
 		// 是否使用按键声音
 		"sounds": false,
-		"fromCurrency": "USD",
-		"toCurrency": "CNY",
+		"fromSymbol": "USD",
+		"toSymbol": "CNY",
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
 		"rates": [
 			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
@@ -67,12 +69,12 @@ class ViewController: UIViewController, myDelegate {
 	
 	// UI 组件
 	var settingsView: UIView!
-	var viewFromScreen: UIView!
-	var viewToScreen: UIView!
+	var fromScreenView: UIView!
+	var toScreenView: UIView!
 	var keyboardView: UIView!
 	var currencyPickerView: UIView!
-	var btnFromCurrency: UIButton!
-	var btnToCurrency: UIButton!
+	var fromSymbolButton: UIButton!
+	var toSymbolButton: UIButton!
 	var fromMoneyLabel: UILabel!
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
@@ -80,20 +82,21 @@ class ViewController: UIViewController, myDelegate {
 	func currencyCellClickCallback(data: String) {
 		var key = ""
 		if currencyPickerType == CurrencyPickerType.from {
-			key = "fromCurrency"
-			fromCurrency = data
-			self.btnFromCurrency.setTitle(data, for: .normal)
+			key = "fromSymbol"
+			fromSymbol = data
+			self.fromSymbolButton.setTitle(data, for: .normal)
 		} else {
-			toCurrency = data
-			key = "toCurrency"
+			toSymbol = data
+			key = "toSymbol"
 			// 更新界面
-			self.btnToCurrency.setTitle(data, for: .normal)
+			self.toSymbolButton.setTitle(data, for: .normal)
 		}
 		// 更新配置
-		UserDefaults.standard.set(data, forKey: key)
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(data, forKey: key)
 		//更新汇率
-		let fromRate:Float! = self.rates[self.fromCurrency]?.floatValue
-		let toRate:Float! = self.rates[self.toCurrency]?.floatValue
+		let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+		let toRate:Float! = self.rates[self.toSymbol]?.floatValue
 		let rate:Float = toRate/fromRate
 		self.rate = rate
 		//更新计算结果
@@ -116,7 +119,8 @@ class ViewController: UIViewController, myDelegate {
 				// 将json数据解析成字典
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 				self.rates = rates as? Dictionary<String, NSNumber>
-				UserDefaults.standard.set(rates, forKey: "rates")
+				let shared = UserDefaults(suiteName: self.groupId)
+				shared?.set(rates, forKey: "rates")
 			} else {
 				print("Update rates failed.")
 			}
@@ -128,11 +132,12 @@ class ViewController: UIViewController, myDelegate {
 	
 	func initConfig() {
 		// 初始化输入输出货币
-		self.fromCurrency = UserDefaults.standard.string(forKey: "fromCurrency")
-		self.toCurrency = UserDefaults.standard.string(forKey: "toCurrency")
-		self.rates = UserDefaults.standard.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		let fromRate:Float! = rates[self.fromCurrency]?.floatValue
-		let toRate:Float! = rates[self.toCurrency]?.floatValue
+		let shared = UserDefaults(suiteName: self.groupId)
+		self.fromSymbol = shared?.string(forKey: "fromSymbol")
+		self.toSymbol = shared?.string(forKey: "toSymbol")
+		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
+		let fromRate:Float! = rates[self.fromSymbol]?.floatValue
+		let toRate:Float! = rates[self.toSymbol]?.floatValue
 		self.rate = toRate/fromRate
 	}
 	
@@ -169,12 +174,12 @@ class ViewController: UIViewController, myDelegate {
 		// 添加到当前视图控制器
 		self.view.addSubview(screenView)
 		
-		self.viewFromScreen = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 80))
-		//viewFromScreen.backgroundColor = UIColor.red
-		screenView.addSubview(self.viewFromScreen)
-		self.viewToScreen = UIView(frame: CGRect(x: 0, y: 80, width: viewBounds.width, height: 100))
-		//viewToScreen.backgroundColor = UIColor.yellow
-		screenView.addSubview(self.viewToScreen)
+		self.fromScreenView = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 80))
+		//fromScreenView.backgroundColor = UIColor.red
+		screenView.addSubview(self.fromScreenView)
+		self.toScreenView = UIView(frame: CGRect(x: 0, y: 80, width: viewBounds.width, height: 100))
+		//toScreenView.backgroundColor = UIColor.yellow
+		screenView.addSubview(self.toScreenView)
 		
 		// 货币输入框
 		fromMoneyLabel = UILabel(frame: CGRect(x: 16, y: 0, width:viewBounds.width - 80, height: 80))
@@ -183,14 +188,14 @@ class ViewController: UIViewController, myDelegate {
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
 		fromMoneyLabel.textColor = UIColor.white
-		viewFromScreen.addSubview(fromMoneyLabel)
+		fromScreenView.addSubview(fromMoneyLabel)
 		
 		// 输入货币缩写标签
-		btnFromCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
-		btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
-		btnFromCurrency.tag = 1
-		btnFromCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-		viewFromScreen.addSubview(btnFromCurrency)
+		fromSymbolButton = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
+		fromSymbolButton.setTitle(self.fromSymbol, for: .normal)
+		fromSymbolButton.tag = 1
+		fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+		fromScreenView.addSubview(fromSymbolButton)
 		
 		// 货币输出框
 		toMoneyLabel = UILabel(frame: CGRect(x: 16, y: 0, width: viewBounds.width - 80, height: 80))
@@ -203,14 +208,14 @@ class ViewController: UIViewController, myDelegate {
 		toMoneyLabel.isUserInteractionEnabled = true
 		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
 		toMoneyLabel.addGestureRecognizer(longPress)
-		viewToScreen.addSubview(toMoneyLabel)
+		toScreenView.addSubview(toMoneyLabel)
 		
 		// 创建输入货币缩写标签
-		btnToCurrency = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
-		btnToCurrency.setTitle(self.toCurrency, for: .normal)
-		btnToCurrency.tag = 2
-		btnToCurrency.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-		viewToScreen.addSubview(btnToCurrency)
+		toSymbolButton = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
+		toSymbolButton.setTitle(self.toSymbol, for: .normal)
+		toSymbolButton.tag = 2
+		toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+		toScreenView.addSubview(toSymbolButton)
 		
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeUp.direction = .up
@@ -277,21 +282,21 @@ class ViewController: UIViewController, myDelegate {
 	
 	@objc func swipe(_ recognizer:UISwipeGestureRecognizer){
 		if recognizer.direction == .up || recognizer.direction == .down {
-			let tempCurrency = self.fromCurrency
-			self.fromCurrency = self.toCurrency
-			self.toCurrency = tempCurrency
+			let tempCurrency = self.fromSymbol
+			self.fromSymbol = self.toSymbol
+			self.toSymbol = tempCurrency
 			self.rate = 1/self.rate
 			
 			UIView.animate(withDuration: 0.5, animations: {
-				self.viewFromScreen.frame.origin.y = 96
-				self.viewToScreen.frame.origin.y = 20
+				self.fromScreenView.frame.origin.y = 96
+				self.toScreenView.frame.origin.y = 20
 			}, completion: {
 				(finished:Bool) -> Void in
 				//更新界面
-				self.viewFromScreen.frame.origin.y = 20
-				self.viewToScreen.frame.origin.y = 96
-				self.btnFromCurrency.setTitle(self.fromCurrency, for: .normal)
-				self.btnToCurrency.setTitle(self.toCurrency, for: .normal)
+				self.fromScreenView.frame.origin.y = 20
+				self.toScreenView.frame.origin.y = 96
+				self.fromSymbolButton.setTitle(self.fromSymbol, for: .normal)
+				self.toSymbolButton.setTitle(self.toSymbol, for: .normal)
 				let tempMoney = self.fromMoneyLabel.text
 				self.fromMoneyLabel.text = self.toMoneyLabel.text
 				self.toMoneyLabel.text = tempMoney
@@ -303,10 +308,10 @@ class ViewController: UIViewController, myDelegate {
 		var currentCurrency = ""
 		if sender.tag == 1 {
 			self.currencyPickerType = .from
-			currentCurrency = self.fromCurrency
+			currentCurrency = self.fromSymbol
 		} else {
 			self.currencyPickerType = .to
-			currentCurrency = self.toCurrency
+			currentCurrency = self.toSymbol
 		}
 		
 		let pickerView = CurrencyPickerViewController()
@@ -326,12 +331,12 @@ class ViewController: UIViewController, myDelegate {
 			self.isEmpty = true
 			self.fromMoney = "0"
 			self.operatorEnd = "0"
-			self.operatorSign = ""
+			self.operatorSymbol = ""
 		case "A":
 			self.onSettingsClick(sender)
 		case "+", "-":
 			if !self.isEmpty {
-				self.operatorSign = n ?? ""
+				self.operatorSymbol = n ?? ""
 				self.operatorEnd = "0"
 				self.operatorButton = sender
 				sender.isSelected = true
@@ -339,17 +344,17 @@ class ViewController: UIViewController, myDelegate {
 		case "=":
 			if self.operatorEnd != "0" {
 				var a:Float = 0
-				if self.operatorSign == "+" {
+				if self.operatorSymbol == "+" {
 					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
 				} else {
 					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
 				}
 				self.fromMoney = "\(a)"
 			}
-			self.operatorSign = ""
+			self.operatorSymbol = ""
 			self.operatorEnd = "0"
 		case "0":
-			if self.operatorSign == "" {
+			if self.operatorSymbol == "" {
 				if fromMoney != "0" {
 					self.fromMoney += "0"
 					self.isEmpty = false
@@ -360,7 +365,7 @@ class ViewController: UIViewController, myDelegate {
 				}
 			}
 		case ".":
-			if self.operatorSign == "" {
+			if self.operatorSymbol == "" {
 				if !self.fromMoney.contains(".") {
 					self.fromMoney += "."
 					self.isEmpty = false
@@ -371,7 +376,7 @@ class ViewController: UIViewController, myDelegate {
 				}
 			}
 		default:
-			if self.operatorSign == "" {
+			if self.operatorSymbol == "" {
 				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
 				self.isEmpty = false
 			} else {
@@ -379,7 +384,7 @@ class ViewController: UIViewController, myDelegate {
 			}
 		}
 		
-		if self.operatorSign != "" && self.operatorEnd != "0" {
+		if self.operatorSymbol != "" && self.operatorEnd != "0" {
 			fromMoneyLabel.text = addThousandSeparator(self.operatorEnd)
 			toMoneyLabel.text = self.output(self.operatorEnd)
 		} else {
@@ -391,7 +396,8 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	func playTapSound() {
-		guard UserDefaults.standard.bool(forKey: "sounds") else {
+		let shared = UserDefaults(suiteName: self.groupId)
+		guard shared?.bool(forKey: "sounds") ?? false else {
 			return
 		}
 		
@@ -445,17 +451,20 @@ class ViewController: UIViewController, myDelegate {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let decimals = UserDefaults.standard.integer(forKey: "decimals")
+		let shared = UserDefaults(suiteName: self.groupId)
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 0
 		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
 	}
 	
-	func registerSettingsBundle(){
-		UserDefaults.standard.register(defaults: defaults)
+	func registerSettingsBundle() {
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.register(defaults: defaults)
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
 	func addThousandSeparator(_ s:String) -> String {
-		if (UserDefaults.standard.bool(forKey: "thousandSeparator")) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		if shared?.bool(forKey: "thousandSeparator") ?? true {
 			var price: NSNumber = 0
 			if let myInteger = Double(s) {
 				price = NSNumber(value:myInteger)
