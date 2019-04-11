@@ -8,10 +8,13 @@
 
 import UIKit
 
-class STC: UIViewController {
+class STC: UITableViewController {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		
+		print("====")
+		self.navigationItem.title = NSLocalizedString("settings", comment: "")
 
         // Do any additional setup after loading the view.
 		

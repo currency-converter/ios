@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="kR8-ax-UIU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,18 +18,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Lmh-1x-rkW"/>
                     <connections>
-                        <segue destination="cuO-Ne-e52" kind="modal" identifier="showSettingsSegue" id="ZK1-Lt-j4E"/>
+                        <segue destination="MlH-0k-gFc" kind="push" identifier="showSettingsSegue" id="WI6-vK-Vfg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-52" y="148.87556221889056"/>
+            <point key="canvasLocation" x="887.20000000000005" y="148.87556221889056"/>
         </scene>
         <!--stc-->
         <scene sceneID="Lof-fT-vc5">
             <objects>
-                <tableViewController title="stc" id="MlH-0k-gFc" customClass="STC" sceneMemberID="viewController">
+                <tableViewController title="stc" id="MlH-0k-gFc" customClass="STC" customModule="CurrencyConverter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Egu-gg-T4I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,12 +157,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0YR-VT-WxP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1783.2" y="148.87556221889056"/>
+            <point key="canvasLocation" x="1780" y="149"/>
         </scene>
         <!--Rates Update-->
         <scene sceneID="7BU-dD-h8y">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4oI-03-uXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="mOH-xo-rpc" customClass="RatesUpdatedFrequencyViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NnH-y6-UhJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -251,27 +251,28 @@
                         <outlet property="tableView" destination="NnH-y6-UhJ" id="sGC-ZX-PkQ"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4oI-03-uXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2471.1999999999998" y="148.87556221889056"/>
+            <point key="canvasLocation" x="3410.4000000000001" y="148.87556221889056"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="hDs-G7-6T4">
+        <scene sceneID="cbW-UU-A4C">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cuO-Ne-e52" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kR8-ax-UIU" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="8hb-Wd-jgh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="giC-uq-4hB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oee-CF-K3K">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.5507143256" blue="0.3632804436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="MlH-0k-gFc" kind="relationship" relationship="rootViewController" id="Ok8-u3-li2"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="SiY-1A-gUe"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3fJ-Tm-WfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="svw-tV-7wX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="889" y="149"/>
+            <point key="canvasLocation" x="-52" y="148.87556221889056"/>
         </scene>
     </scenes>
 </document>
