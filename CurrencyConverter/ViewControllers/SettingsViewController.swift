@@ -17,14 +17,76 @@ class SettingsViewController: UIViewController  {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.view.backgroundColor = UIColor.hex("121212")
+		self.render()
 		
-		let shared = UserDefaults(suiteName: self.groupId)
+//		self.view.backgroundColor = UIColor.hex("121212")
+//
+//		let shared = UserDefaults(suiteName: self.groupId)
+//		// 导航条
+//		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
+//		navigationBar.barTintColor = UIColor.black
+//		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+//		navigationBar.backgroundColor = UIColor.black
+//		self.view.addSubview(navigationBar)
+//
+//		let navigationitem = UINavigationItem()
+//		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
+//		rightBtn.tintColor = UIColor.hex("f09a37")
+//		navigationitem.title = NSLocalizedString("settings", comment: "")
+//		navigationitem.rightBarButtonItem = rightBtn
+//		navigationBar.pushItem(navigationitem, animated: true)
+//
+//		self.addLine(fromPoint: CGPoint(x: 0, y: 64), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 64))
+//
+//		//Sounds
+//		let soundsLabel = UILabel(frame: CGRect(x: 15, y: 60, width: 150, height: 50))
+//		soundsLabel.text = NSLocalizedString("keyboardClicks", comment: "")
+//		soundsLabel.textColor = UIColor.white
+//		self.view.addSubview(soundsLabel)
+//
+//		let soundsSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 70, width: 50, height: 40))
+//		soundsSwitch.isOn = shared?.bool(forKey: "sounds") ?? false
+//		soundsSwitch.addTarget(self, action: #selector(soundsDidChange(_:)), for: .valueChanged)
+//		self.view.addSubview(soundsSwitch)
+//
+//		self.addLine(fromPoint: CGPoint(x: 0, y: 110), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 110))
+//
+//		//decimal
+//		decimalsLabel = UILabel(frame: CGRect(x: 15, y: 110, width: 150, height: 50))
+//		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(shared?.integer(forKey: "decimals") ?? 0))"
+//		decimalsLabel.textColor = UIColor.white
+//		self.view.addSubview(decimalsLabel)
+//
+//		let decimalsSlider = UISlider( frame: CGRect(x: 15, y: 160, width: UIScreen.main.bounds.width-30, height: 40))
+//		decimalsSlider.minimumValue = 0
+//		decimalsSlider.maximumValue = 4
+//		decimalsSlider.setValue(Float(shared?.integer(forKey: "decimals") ?? 0), animated: true)
+//		decimalsSlider.isContinuous = false
+//		decimalsSlider.addTarget(self, action: #selector(self.onDecimalChange(slider:)), for: UIControl.Event.valueChanged)
+//		self.view.addSubview(decimalsSlider)
+//
+//		self.addLine(fromPoint: CGPoint(x: 15, y: 200), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 200))
+//
+//		let thousandSeparatorLabel = UILabel(frame: CGRect(x: 15, y: 200, width: UIScreen.main.bounds.width-70, height: 50))
+//		thousandSeparatorLabel.text = NSLocalizedString("thousandSeparator", comment: "")
+//		thousandSeparatorLabel.textColor = UIColor.white
+//		self.view.addSubview(thousandSeparatorLabel)
+//
+//		let thousandSeparatorSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 210, width: 50, height: 40))
+//		thousandSeparatorSwitch.isOn = shared?.bool(forKey: "thousandSeparator") ?? true
+//		thousandSeparatorSwitch.addTarget(self, action: #selector(thousandSeparatorDidChange(_:)), for: .valueChanged)
+//		self.view.addSubview(thousandSeparatorSwitch)
+//
+//		self.addLine(fromPoint: CGPoint(x: 0, y: 250), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 250))
+		
+	}
+	
+	func render() {
 		// 导航条
 		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
-		navigationBar.barTintColor = UIColor.black
-		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-		navigationBar.backgroundColor = UIColor.black
+//		navigationBar.barTintColor = UIColor.black
+//		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+//		navigationBar.backgroundColor = UIColor.black
 		self.view.addSubview(navigationBar)
 		
 		let navigationitem = UINavigationItem()
@@ -34,49 +96,8 @@ class SettingsViewController: UIViewController  {
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
-		self.addLine(fromPoint: CGPoint(x: 0, y: 64), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 64))
-		
-		//Sounds
-		let soundsLabel = UILabel(frame: CGRect(x: 15, y: 60, width: 150, height: 50))
-		soundsLabel.text = NSLocalizedString("keyboardClicks", comment: "")
-		soundsLabel.textColor = UIColor.white
-		self.view.addSubview(soundsLabel)
-		
-		let soundsSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 70, width: 50, height: 40))
-		soundsSwitch.isOn = shared?.bool(forKey: "sounds") ?? false
-		soundsSwitch.addTarget(self, action: #selector(soundsDidChange(_:)), for: .valueChanged)
-		self.view.addSubview(soundsSwitch)
-		
-		self.addLine(fromPoint: CGPoint(x: 0, y: 110), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 110))
-		
-		//decimal
-		decimalsLabel = UILabel(frame: CGRect(x: 15, y: 110, width: 150, height: 50))
-		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(shared?.integer(forKey: "decimals") ?? 0))"
-		decimalsLabel.textColor = UIColor.white
-		self.view.addSubview(decimalsLabel)
-		
-		let decimalsSlider = UISlider( frame: CGRect(x: 15, y: 160, width: UIScreen.main.bounds.width-30, height: 40))
-		decimalsSlider.minimumValue = 0
-		decimalsSlider.maximumValue = 4
-		decimalsSlider.setValue(Float(shared?.integer(forKey: "decimals") ?? 0), animated: true)
-		decimalsSlider.isContinuous = false
-		decimalsSlider.addTarget(self, action: #selector(self.onDecimalChange(slider:)), for: UIControl.Event.valueChanged)
-		self.view.addSubview(decimalsSlider)
-		
-		self.addLine(fromPoint: CGPoint(x: 15, y: 200), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 200))
-		
-		let thousandSeparatorLabel = UILabel(frame: CGRect(x: 15, y: 200, width: UIScreen.main.bounds.width-70, height: 50))
-		thousandSeparatorLabel.text = NSLocalizedString("thousandSeparator", comment: "")
-		thousandSeparatorLabel.textColor = UIColor.white
-		self.view.addSubview(thousandSeparatorLabel)
-		
-		let thousandSeparatorSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 210, width: 50, height: 40))
-		thousandSeparatorSwitch.isOn = shared?.bool(forKey: "thousandSeparator") ?? true
-		thousandSeparatorSwitch.addTarget(self, action: #selector(thousandSeparatorDidChange(_:)), for: .valueChanged)
-		self.view.addSubview(thousandSeparatorSwitch)
-		
-		self.addLine(fromPoint: CGPoint(x: 0, y: 250), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 250))
-		
+		let tableview = UITableView(frame: CGRect(x: 0, y: 145, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 44))
+		self.view.addSubview(tableview)
 	}
 	
 	func addLine(fromPoint start: CGPoint, toPoint end:CGPoint) {

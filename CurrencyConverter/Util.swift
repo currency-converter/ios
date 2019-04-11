@@ -53,3 +53,33 @@ extension UIColor {
 		return UIColor.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1);
 	}
 }
+
+extension Date {
+	enum unit: String {
+		case day
+		case hour
+		case minute
+		case second
+	}
+	
+	//返回秒数
+	var timeStamp: Int {
+		let timeInterval: TimeInterval = self.timeIntervalSince1970
+		return Int(timeInterval)
+	}
+	
+	func diff(timestamp: Int, unit: unit) -> Int {
+		let now: Int = self.timeStamp
+		let diffSecond: Int = now - timestamp
+		switch unit {
+		case .day:
+			return Int(diffSecond/(24 * 3600))
+		case .hour:
+			return Int(diffSecond/3600)
+		case .minute:
+			return Int(diffSecond/60)
+		default:
+			return diffSecond
+		}
+	}
+}

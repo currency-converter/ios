@@ -15,6 +15,14 @@ enum CurrencyPickerType: String {
 	case to
 }
 
+//汇率更新频率
+enum RatesUpdatedFrequency: String {
+	case none = "none"
+	case day = "day"
+	case hour = "hour"
+	case realtime = "realtime"
+}
+
 //域名
 let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 
@@ -37,7 +45,7 @@ class ViewController: UIViewController, myDelegate {
 	var fromMoney: String = "0"
 	
 	// 汇率
-	var rate: Float!
+	var rate: Float = 6.777
 	
 	var rates: Dictionary<String,NSNumber>!
 	
@@ -46,6 +54,10 @@ class ViewController: UIViewController, myDelegate {
 	
 	// 输出货币类型
 	var toSymbol: String!
+	
+	var ratesUpdatedAt: Int!
+	
+	var ratesUpdatedFrequency: String!
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
@@ -61,6 +73,8 @@ class ViewController: UIViewController, myDelegate {
 		"sounds": false,
 		"fromSymbol": "USD",
 		"toSymbol": "CNY",
+		"ratesUpdatedFrequency": RatesUpdatedFrequency.day.rawValue,
+		"ratesUpdatedAt": 1554968594,
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
 		"rates": [
 			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
@@ -104,30 +118,54 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	func updateRates() {
-		let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-		// 创建请求配置
-		let config = URLSessionConfiguration.default
-		// 创建请求URL
-		let url = URL(string: newUrlString!)
-		// 创建请求实例
-		let request = URLRequest(url: url!)
-		// 创建请求Session
-		let session = URLSession(configuration: config)
-		// 创建请求任务
-		let task = session.dataTask(with: request) { (data,response,error) in
-			if(error == nil) {
-				// 将json数据解析成字典
-				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-				self.rates = rates as? Dictionary<String, NSNumber>
-				let shared = UserDefaults(suiteName: self.groupId)
-				shared?.set(rates, forKey: "rates")
-			} else {
-				print("Update rates failed.")
-			}
+		var isRefetch = false
+		
+		if self.rates == nil ||
+			self.ratesUpdatedFrequency == RatesUpdatedFrequency.realtime.rawValue ||
+			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.day.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day) > 0) ||
+			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.hour.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.hour) > 0) {
+			isRefetch = true
 		}
 		
-		// 激活请求任务
-		task.resume()
+		print("self.ratesUpdatedFrequency:", self.ratesUpdatedFrequency)
+		print(Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day))
+		
+		print("isRefetch:", isRefetch)
+		
+		if isRefetch {
+			let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			// 创建请求配置
+			let config = URLSessionConfiguration.default
+			// 创建请求URL
+			let url = URL(string: newUrlString!)
+			// 创建请求实例
+			let request = URLRequest(url: url!)
+			// 创建请求Session
+			let session = URLSession(configuration: config)
+			// 创建请求任务
+			let task = session.dataTask(with: request) { (data,response,error) in
+				if(error == nil) {
+					// 将json数据解析成字典
+					let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+					self.rates = rates as? Dictionary<String, NSNumber>
+					let shared = UserDefaults(suiteName: self.groupId)
+					shared?.set(rates, forKey: "rates")
+					let now = Date().timeStamp
+					shared?.set(now, forKey: "ratesUpdatedAt")
+					
+					//汇率更新后，需要主动更新app中正使用的汇率
+					let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+					let toRate:Float! = self.rates[self.toSymbol]?.floatValue
+					self.rate = toRate/fromRate
+				} else {
+					print("Update rates failed.")
+				}
+			}
+			
+			// 激活请求任务
+			task.resume()
+		}
+		
 	}
 	
 	func initConfig() {
@@ -135,10 +173,18 @@ class ViewController: UIViewController, myDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
+		self.ratesUpdatedAt = shared?.integer(forKey: "ratesUpdatedAt")
+		self.ratesUpdatedFrequency = shared?.string(forKey: "ratesUpdatedFrequency")
 		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		let fromRate:Float! = rates[self.fromSymbol]?.floatValue
-		let toRate:Float! = rates[self.toSymbol]?.floatValue
-		self.rate = toRate/fromRate
+		print(self.rates == nil)
+		if self.rates == nil {
+			updateRates()
+		} else {
+			let fromRate:Float! = rates[self.fromSymbol]?.floatValue
+			let toRate:Float! = rates[self.toSymbol]?.floatValue
+			self.rate = toRate/fromRate
+		}
+		
 	}
 	
 	override func viewDidLoad() {
@@ -146,15 +192,12 @@ class ViewController: UIViewController, myDelegate {
 		
 		registerSettingsBundle()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
-		//		defaultsChanged()
-		
-		// 设置全局背景色
+	
 		self.view.backgroundColor = UIColor.hex("121212")
 		
+		initConfig()
 		
 		updateRates()
-		
-		initConfig()
 		
 		createScreenView()
 		
@@ -413,9 +456,14 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	@objc func onSettingsClick(_ sender: UIButton) {
-		let settingsView = SettingsViewController()
-		self.present(settingsView, animated: true, completion: nil)
+//		let settingsView = SettingsViewController()
+//		self.present(settingsView, animated: true, completion: nil)
+		
+//		let settingsView = STC()
+//		self.present(settingsView, animated: true, completion: nil)
+		self.performSegue(withIdentifier: "showSettingsSegue", sender: nil)
 	}
+	
 	
 	@objc func onSettingsDone(_ sender: UIButton) {
 		UIView.animate(withDuration: 0.5, animations: {
