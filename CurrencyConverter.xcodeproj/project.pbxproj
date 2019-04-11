@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2410D7D4225EDB18001B192B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		241CA36A2223D13700D5FC5F /* CurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3692223D13700D5FC5F /* CurrencyConverterTests.swift */; };
@@ -405,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24D98583225C8CE900AEBA7B /* MainInterface.storyboard in Resources */,
+				2410D7D4225EDB18001B192B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

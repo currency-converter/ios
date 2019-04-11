@@ -452,7 +452,7 @@ class ViewController: UIViewController, myDelegate {
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 0
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
 		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
 	}
 	

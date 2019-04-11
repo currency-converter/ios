@@ -65,7 +65,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	//折叠change size
 	func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-		print("maxWidth %f maxHeight %f",maxSize.width,maxSize.height)
 		self.clearViews()
 		
 		if activeDisplayMode == NCWidgetDisplayMode.compact {
@@ -142,8 +141,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let numberOfButtonsPerLine: Int = 6
 		let buttonPadding :CGFloat = 5
 		let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 150) / CGFloat(numberOfButtonsPerLine) - buttonPadding
-		print("UIScreen.main.bounds.width:", UIScreen.main.bounds.width)
-		print("buttonWidth:", buttonWidth)
 		let characters:[String] = ["4", "5", "6", "7", "8", "9", "0", "1", "2", "3", ".", "AC"]
 		
 		for (index, item) in characters.enumerated() {
@@ -311,16 +308,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let shared = UserDefaults(suiteName: groupId)
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 0
+		let shared = UserDefaults(suiteName: self.groupId)
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
 		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
 	func addThousandSeparator(_ s:String) -> String {
-		let shared = UserDefaults(suiteName: groupId)
-		print((shared?.bool(forKey: "thousandSeparator"))!)
-		if ((shared?.bool(forKey: "thousandSeparator"))!) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		if shared?.bool(forKey: "thousandSeparator") ?? true {
 			var price: NSNumber = 0
 			if let myInteger = Double(s) {
 				price = NSNumber(value:myInteger)
