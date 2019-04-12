@@ -8,16 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2410D7D4225EDB18001B192B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
-		2410D7D6225F3ACB001B192B /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7D5225F3ACB001B192B /* OptionsViewController.swift */; };
-		2410D7D8225F4463001B192B /* STC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7D7225F4463001B192B /* STC.swift */; };
-		2410D7DC225F4B34001B192B /* DecimalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7DB225F4B34001B192B /* DecimalsViewController.swift */; };
-		2410D7DE225F618A001B192B /* SettingsDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7DD225F618A001B192B /* SettingsDoneButton.swift */; };
+		2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7D7225F4463001B192B /* SettingsViewController.swift */; };
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		2495A1A02253AE6F0009052D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
 		24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11522523DB8001D77C2 /* ViewController.swift */; };
 		24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */; };
-		24A4B11A22523DB8001D77C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11722523DB8001D77C2 /* SettingsViewController.swift */; };
 		24A4B11D22523F73001D77C2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24A4B11F22523F73001D77C2 /* Localizable.strings */; };
 		24ADE831222909E600B4C046 /* cc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE830222909E600B4C046 /* cc.ttf */; };
 		24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADE834222AAE3900B4C046 /* Iconfont.swift */; };
@@ -34,6 +30,8 @@
 		24D98587225C8CE900AEBA7B /* TodayWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24D9857A225C8CE900AEBA7B /* TodayWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24D9858D225CA52500AEBA7B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9858C225CA52500AEBA7B /* Util.swift */; };
 		24EAA6262231ACAB00ACF074 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
+		24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906922606CF8005D6130 /* DecimalsViewController.swift */; };
+		24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906B22609FEC005D6130 /* FrequencyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,10 +75,7 @@
 /* Begin PBXFileReference section */
 		2410D7D2225D83D3001B192B /* CurrencyConverter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CurrencyConverter.entitlements; sourceTree = "<group>"; };
 		2410D7D3225E0B42001B192B /* TodayWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWidget.entitlements; sourceTree = "<group>"; };
-		2410D7D5225F3ACB001B192B /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
-		2410D7D7225F4463001B192B /* STC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STC.swift; sourceTree = "<group>"; };
-		2410D7DB225F4B34001B192B /* DecimalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalsViewController.swift; sourceTree = "<group>"; };
-		2410D7DD225F618A001B192B /* SettingsDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDoneButton.swift; sourceTree = "<group>"; };
+		2410D7D7225F4463001B192B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		241CA3512223D13600D5FC5F /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		241CA3542223D13600D5FC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		241CA35B2223D13700D5FC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,7 +86,6 @@
 		2495A1A32253AE720009052D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		24A4B11522523DB8001D77C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewController.swift; sourceTree = "<group>"; };
-		24A4B11722523DB8001D77C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4B11E22523F73001D77C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		24A4B12022523F96001D77C2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24ADE830222909E600B4C046 /* cc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cc.ttf; sourceTree = "<group>"; };
@@ -110,6 +104,8 @@
 		24D98584225C8CE900AEBA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24D9858C225CA52500AEBA7B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		24EAA6252231ACAB00ACF074 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		24EF906922606CF8005D6130 /* DecimalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalsViewController.swift; sourceTree = "<group>"; };
+		24EF906B22609FEC005D6130 /* FrequencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +167,6 @@
 		241CA3532223D13600D5FC5F /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
-				2410D7DD225F618A001B192B /* SettingsDoneButton.swift */,
 				2410D7D2225D83D3001B192B /* CurrencyConverter.entitlements */,
 				24A4B11422523DB8001D77C2 /* ViewControllers */,
 				24D0A6562248F12800BC423B /* Sounds */,
@@ -194,12 +189,11 @@
 		24A4B11422523DB8001D77C2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2410D7DB225F4B34001B192B /* DecimalsViewController.swift */,
-				2410D7D7225F4463001B192B /* STC.swift */,
+				24EF906922606CF8005D6130 /* DecimalsViewController.swift */,
+				24EF906B22609FEC005D6130 /* FrequencyViewController.swift */,
+				2410D7D7225F4463001B192B /* SettingsViewController.swift */,
 				24A4B11522523DB8001D77C2 /* ViewController.swift */,
 				24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */,
-				24A4B11722523DB8001D77C2 /* SettingsViewController.swift */,
-				2410D7D5225F3ACB001B192B /* OptionsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -404,18 +398,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
+				24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */,
 				24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
 				24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */,
-				2410D7DE225F618A001B192B /* SettingsDoneButton.swift in Sources */,
 				24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */,
 				24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */,
-				2410D7D8225F4463001B192B /* STC.swift in Sources */,
-				2410D7DC225F4B34001B192B /* DecimalsViewController.swift in Sources */,
+				2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
+				24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
-				24A4B11A22523DB8001D77C2 /* SettingsViewController.swift in Sources */,
-				2410D7D6225F3ACB001B192B /* OptionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

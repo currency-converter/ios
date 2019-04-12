@@ -9,6 +9,15 @@
 import UIKit
 import AVFoundation
 
+//定义协议
+protocol CallbackDelegate {
+	func onReady(key: String, value: String)
+}
+
+protocol myDelegate {
+	func currencyCellClickCallback(data: String)
+}
+
 //货币选择类型
 enum CurrencyPickerType: String {
 	case from
@@ -17,10 +26,10 @@ enum CurrencyPickerType: String {
 
 //汇率更新频率
 enum RatesUpdatedFrequency: String {
-	case none = "none"
-	case day = "day"
-	case hour = "hour"
-	case realtime = "realtime"
+	case realtime = "0"
+	case hourly = "1"
+	case daily = "2"
+	case none = "3"
 }
 
 //域名
@@ -73,7 +82,7 @@ class ViewController: UIViewController, myDelegate {
 		"sounds": false,
 		"fromSymbol": "USD",
 		"toSymbol": "CNY",
-		"ratesUpdatedFrequency": RatesUpdatedFrequency.day.rawValue,
+		"ratesUpdatedFrequency": RatesUpdatedFrequency.daily.rawValue,
 		"ratesUpdatedAt": 1554968594,
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
 		"rates": [
@@ -122,14 +131,10 @@ class ViewController: UIViewController, myDelegate {
 		
 		if self.rates == nil ||
 			self.ratesUpdatedFrequency == RatesUpdatedFrequency.realtime.rawValue ||
-			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.day.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day) > 0) ||
-			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.hour.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.hour) > 0) {
+			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.daily.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day) > 0) ||
+			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.hour) > 0) {
 			isRefetch = true
 		}
-		
-		print("self.ratesUpdatedFrequency:", self.ratesUpdatedFrequency)
-		print(Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day))
-		
 		print("isRefetch:", isRefetch)
 		
 		if isRefetch {
@@ -176,7 +181,7 @@ class ViewController: UIViewController, myDelegate {
 		self.ratesUpdatedAt = shared?.integer(forKey: "ratesUpdatedAt")
 		self.ratesUpdatedFrequency = shared?.string(forKey: "ratesUpdatedFrequency")
 		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		print(self.rates == nil)
+		
 		if self.rates == nil {
 			updateRates()
 		} else {

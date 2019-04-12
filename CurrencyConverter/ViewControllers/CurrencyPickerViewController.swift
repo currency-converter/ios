@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol myDelegate {
-	func currencyCellClickCallback(data: String)
-}
-
 class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 	var delegate: myDelegate?
 	

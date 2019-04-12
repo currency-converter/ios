@@ -1,5 +1,5 @@
 //
-//  DecimalsViewController.swift
+//  FrequencyViewController.swift
 //  CurrencyConverter
 //
 //  Created by zhi.zhong on 2019/4/12.
@@ -8,24 +8,29 @@
 
 import UIKit
 
-class DecimalsViewController: UITableViewController {
+class FrequencyViewController: UITableViewController {
 	
 	var delegate: CallbackDelegate?
 	
 	var defaultValue: String!
 	
-	var values: [String] = ["0", "1", "2", "3", "4"]
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	var values: [String] = [
+		NSLocalizedString("settings.update.0", comment: ""),
+		NSLocalizedString("settings.update.1", comment: ""),
+		NSLocalizedString("settings.update.2", comment: ""),
+		NSLocalizedString("settings.update.3", comment: "")
+	]
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		render()
-
-        // Do any additional setup after loading the view.
-    }
+		
+		// Do any additional setup after loading the view.
+	}
 	
 	func render() {
-		navigationItem.title = NSLocalizedString("settings.decimalPlaces", comment: "")
+		navigationItem.title = NSLocalizedString("settings.updateFrequency", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self
 	}
@@ -46,12 +51,15 @@ class DecimalsViewController: UITableViewController {
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
+		cell.tag = indexPath.row
 		
 		// label
 		cell.textLabel?.text = value
 		
 		// accessory
-		cell.accessoryType = value == defaultValue ? .checkmark : .none
+		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none
+		print("indexPath.row.description:", indexPath.row.description)
+		print("defaultValue:", defaultValue)
 		return cell
 	}
 	
@@ -66,20 +74,20 @@ class DecimalsViewController: UITableViewController {
 			}
 			cell.accessoryType = .checkmark
 		}
-		if let data = cell.textLabel?.text {
-			self.delegate?.onReady(key: "decimals", value: data)
+		if let data = cell?.tag.description {
+			self.delegate?.onReady(key: "ratesUpdatedFrequency", value: data)
 		}
 	}
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+	
+	
+	/*
+	// MARK: - Navigation
+	
+	// In a storyboard-based application, you will often want to do a little preparation before navigation
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+	// Get the new view controller using segue.destination.
+	// Pass the selected object to the new view controller.
+	}
+	*/
+	
 }

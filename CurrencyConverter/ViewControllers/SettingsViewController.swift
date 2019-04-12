@@ -1,145 +1,143 @@
 //
-//  SettingsViewController.swift
+//  STC.swift
 //  CurrencyConverter
 //
-//  Created by zhi.zhong on 2019/3/21.
+//  Created by zhi.zhong on 2019/4/11.
 //  Copyright © 2019 zhi.zhong. All rights reserved.
 //
 
 import UIKit
 
-class SettingsViewController: UIViewController  {
-
+class SettingsViewController: UITableViewController, CallbackDelegate {
+	@IBOutlet weak var keyboardClicksLabel: UILabel!
+	@IBOutlet weak var updateFrequencyLabel: UILabel!
+	@IBOutlet weak var updatedAtLabel: UILabel!
+	@IBOutlet weak var updatedAtValue: UILabel!
+	@IBOutlet weak var frequencyValue: UILabel!
+	@IBOutlet weak var use1000SeparatorLabel: UILabel!
+	@IBOutlet weak var decimalPlacesLabel: UILabel!
+	@IBOutlet weak var decimalValue: UILabel!
+	@IBOutlet weak var keyboardClicksSwitch: UISwitch!
+	@IBOutlet weak var use1000SeparatorSwitch: UISwitch!
+	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
-	var decimalsLabel: UILabel!
+	var sectionHeaders:[String] = [
+		NSLocalizedString("settings.sounds", comment: ""),
+		NSLocalizedString("settings.rates", comment: ""),
+		NSLocalizedString("settings.display", comment: "")
+	]
 	
 	override func viewDidLoad() {
-		super.viewDidLoad()
+        super.viewDidLoad()
 		
-		self.render()
-		
-//		self.view.backgroundColor = UIColor.hex("121212")
-//
-//		let shared = UserDefaults(suiteName: self.groupId)
-//		// 导航条
-//		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
-//		navigationBar.barTintColor = UIColor.black
-//		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-//		navigationBar.backgroundColor = UIColor.black
-//		self.view.addSubview(navigationBar)
-//
-//		let navigationitem = UINavigationItem()
-//		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
-//		rightBtn.tintColor = UIColor.hex("f09a37")
-//		navigationitem.title = NSLocalizedString("settings", comment: "")
-//		navigationitem.rightBarButtonItem = rightBtn
-//		navigationBar.pushItem(navigationitem, animated: true)
-//
-//		self.addLine(fromPoint: CGPoint(x: 0, y: 64), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 64))
-//
-//		//Sounds
-//		let soundsLabel = UILabel(frame: CGRect(x: 15, y: 60, width: 150, height: 50))
-//		soundsLabel.text = NSLocalizedString("keyboardClicks", comment: "")
-//		soundsLabel.textColor = UIColor.white
-//		self.view.addSubview(soundsLabel)
-//
-//		let soundsSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 70, width: 50, height: 40))
-//		soundsSwitch.isOn = shared?.bool(forKey: "sounds") ?? false
-//		soundsSwitch.addTarget(self, action: #selector(soundsDidChange(_:)), for: .valueChanged)
-//		self.view.addSubview(soundsSwitch)
-//
-//		self.addLine(fromPoint: CGPoint(x: 0, y: 110), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 110))
-//
-//		//decimal
-//		decimalsLabel = UILabel(frame: CGRect(x: 15, y: 110, width: 150, height: 50))
-//		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(shared?.integer(forKey: "decimals") ?? 0))"
-//		decimalsLabel.textColor = UIColor.white
-//		self.view.addSubview(decimalsLabel)
-//
-//		let decimalsSlider = UISlider( frame: CGRect(x: 15, y: 160, width: UIScreen.main.bounds.width-30, height: 40))
-//		decimalsSlider.minimumValue = 0
-//		decimalsSlider.maximumValue = 4
-//		decimalsSlider.setValue(Float(shared?.integer(forKey: "decimals") ?? 0), animated: true)
-//		decimalsSlider.isContinuous = false
-//		decimalsSlider.addTarget(self, action: #selector(self.onDecimalChange(slider:)), for: UIControl.Event.valueChanged)
-//		self.view.addSubview(decimalsSlider)
-//
-//		self.addLine(fromPoint: CGPoint(x: 15, y: 200), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 200))
-//
-//		let thousandSeparatorLabel = UILabel(frame: CGRect(x: 15, y: 200, width: UIScreen.main.bounds.width-70, height: 50))
-//		thousandSeparatorLabel.text = NSLocalizedString("thousandSeparator", comment: "")
-//		thousandSeparatorLabel.textColor = UIColor.white
-//		self.view.addSubview(thousandSeparatorLabel)
-//
-//		let thousandSeparatorSwitch = UISwitch( frame: CGRect(x: UIScreen.main.bounds.width-70, y: 210, width: 50, height: 40))
-//		thousandSeparatorSwitch.isOn = shared?.bool(forKey: "thousandSeparator") ?? true
-//		thousandSeparatorSwitch.addTarget(self, action: #selector(thousandSeparatorDidChange(_:)), for: .valueChanged)
-//		self.view.addSubview(thousandSeparatorSwitch)
-//
-//		self.addLine(fromPoint: CGPoint(x: 0, y: 250), toPoint: CGPoint(x: UIScreen.main.bounds.width, y: 250))
-		
-	}
+		render()
+
+        // Do any additional setup after loading the view.
+    }
 	
-	func render() {
-		// 导航条
-		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
-//		navigationBar.barTintColor = UIColor.black
-//		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-//		navigationBar.backgroundColor = UIColor.black
-		self.view.addSubview(navigationBar)
-		
-		let navigationitem = UINavigationItem()
-		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onSettingsDone(_:)))
-		rightBtn.tintColor = UIColor.hex("f09a37")
-		navigationitem.title = NSLocalizedString("settings", comment: "")
-		navigationitem.rightBarButtonItem = rightBtn
-		navigationBar.pushItem(navigationitem, animated: true)
-		
-		let tableview = UITableView(frame: CGRect(x: 0, y: 145, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 44))
-		self.view.addSubview(tableview)
-	}
-	
-	func addLine(fromPoint start: CGPoint, toPoint end:CGPoint) {
-		let line = CAShapeLayer()
-		let linePath = UIBezierPath()
-		linePath.move(to: start)
-		linePath.addLine(to: end)
-		line.path = linePath.cgPath
-		line.strokeColor = UIColor.hex("333333").cgColor
-		line.lineWidth = 1
-		line.lineJoin = CAShapeLayerLineJoin.round
-		self.view.layer.addSublayer(line)
-	}
-	
-	func close() {
-		self.dismiss(animated: true, completion: nil)
-	}
-	
-	@objc func onDecimalChange(slider:UISlider) {
+	func onReady(key: String, value: String) {
+		// 更新配置
 		let shared = UserDefaults(suiteName: self.groupId)
-		let decimals = lroundf(slider.value)
-		slider.setValue(Float(decimals), animated: true)
-		decimalsLabel.text = NSLocalizedString("decimalPlaces", comment: "") + "(\(decimals))"
-		shared?.set(decimals, forKey: "decimals")
+		shared?.set(value, forKey: key)
+		//更新界面
+		if key == "decimals" {
+			decimalValue.text = value
+		}
+		
+		if key == "ratesUpdatedFrequency" {
+			frequencyValue.text = NSLocalizedString("settings.update.\(value)", comment: "")
+			frequencyValue.tag = Int(value) ?? 2
+		}
 	}
 	
-	@objc func onSettingsDone(_ sender: UIButton) {
-		self.close()
-	}
-	
-	@objc func soundsDidChange(_ sender: UISwitch) {
+	@IBAction func onKeyboardClicksChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "sounds")
 	}
-	
-	@objc func thousandSeparatorDidChange(_ sender: UISwitch) {
+
+	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "thousandSeparator")
 	}
 	
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+	func render() {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let frequency = shared?.string(forKey: "ratesUpdatedFrequency") ?? RatesUpdatedFrequency.daily.rawValue
+		let frequencyText = NSLocalizedString("settings.update.\(frequency)", comment: "")
+		let timeStamp = shared?.integer(forKey: "ratesUpdatedAt") ?? 1463637809
+		let timeInterval:TimeInterval = TimeInterval(timeStamp)
+		let date = Date(timeIntervalSince1970: timeInterval)
+		let dformatter = DateFormatter()
+		dformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		let updatedAtText = dformatter.string(from: date)
+		let decimals = shared?.integer(forKey: "decimals")
+		let isSounds = shared?.bool(forKey: "sounds")
+		let isUse1000Separator = shared?.bool(forKey: "thousandSeparator")
+		//设置界面文字
+		self.navigationItem.title = NSLocalizedString("settings.title", comment: "")
+		self.keyboardClicksLabel.text = NSLocalizedString("settings.keyboardClicks", comment: "")
+		self.updatedAtLabel.text = NSLocalizedString("settings.updatedAt", comment: "")
+		self.updateFrequencyLabel.text = NSLocalizedString("settings.updateFrequency", comment: "")
+		self.use1000SeparatorLabel.text = NSLocalizedString("settings.use1000Separator", comment: "")
+		self.decimalPlacesLabel.text = NSLocalizedString("settings.decimalPlaces", comment: "")
+		//设置初始值
+		self.frequencyValue.text = frequencyText
+		self.frequencyValue.tag = Int(frequency) ?? 2
+		self.updatedAtValue.text = updatedAtText
+		self.decimalValue.text = decimals?.description
+		self.keyboardClicksSwitch.isOn = isSounds ?? false
+		self.use1000SeparatorSwitch.isOn = isUse1000Separator ?? true
 	}
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return self.sectionHeaders[section]
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 40
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 20
+	}
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		//小数位数
+		if indexPath.section == 2 && indexPath.row == 1 {
+			self.performSegue(withIdentifier: "showDecimalSegue", sender: self.decimalValue.text)
+		}
+		//更新频率
+		if indexPath.section == 1 && indexPath.row == 0 {
+			self.performSegue(withIdentifier: "showFrequencySegue", sender: self.frequencyValue.tag.description)
+		}
+	}
+	
+	//在这个方法中给新页面传递参数
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		//if segue.identifier == "showDecimalSegue"{
+		if segue.destination is DecimalsViewController {
+			let controller = segue.destination as! DecimalsViewController
+			controller.delegate = self
+			controller.defaultValue = sender as? String
+		}
+		
+		if segue.destination is FrequencyViewController {
+			let controller = segue.destination as! FrequencyViewController
+			controller.delegate = self
+			controller.defaultValue = sender as? String
+		}
+	}
+	
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

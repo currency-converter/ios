@@ -5,13 +5,21 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
-done = "Done";
+
+"settings.title" = "Settings";
+"settings.sounds" = "Sounds";
+"settings.keyboardClicks" = "Keyboard Clicks";
+"settings.rates" = "Rates";
+"settings.updateFrequency" = "Rates Update Frequency";
+"settings.update.0" = "Real Time";
+"settings.update.1" = "Hourly";
+"settings.update.2" = "Daily";
+"settings.update.3" = "None";
+"settings.updatedAt" = "Updated at";
+"settings.display" = "Display";
+"settings.use1000Separator" = "Use 1000 Separator (,)";
+"settings.decimalPlaces" = "Decimal places";
 copy = "Copy";
-settings = "Settings";
-keyboardClicks = "Keyboard Clicks";
-decimalPlaces = "Decimal places";
-sample = "Sample";
-thousandSeparator = "Use 1000 Separator (,)";
 selectCurrency = "Select Currency";
 search = "Search";
 favoriteCurrencies = "Favorite Currencies";
