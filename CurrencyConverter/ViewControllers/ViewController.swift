@@ -199,6 +199,7 @@ class ViewController: UIViewController, myDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
 	
 		self.view.backgroundColor = UIColor.hex("121212")
+		self.navigationController?.isNavigationBarHidden = true
 		
 		initConfig()
 		

@@ -75,6 +75,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let isSounds = shared?.bool(forKey: "sounds")
 		let isUse1000Separator = shared?.bool(forKey: "thousandSeparator")
 		//设置界面文字
+		self.navigationController?.isNavigationBarHidden = false
 		self.navigationItem.title = NSLocalizedString("settings.title", comment: "")
 		self.keyboardClicksLabel.text = NSLocalizedString("settings.keyboardClicks", comment: "")
 		self.updatedAtLabel.text = NSLocalizedString("settings.updatedAt", comment: "")
