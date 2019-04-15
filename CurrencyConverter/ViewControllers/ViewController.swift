@@ -264,12 +264,13 @@ class ViewController: UIViewController, myDelegate {
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
-		fromMoneyLabel.textColor = UIColor.white
+		fromMoneyLabel.textColor = UIColor.gray
 		fromScreenView.addSubview(fromMoneyLabel)
 		
 		// 输入货币缩写标签
 		fromSymbolButton = UIButton(frame: CGRect(x: viewBounds.width - 64, y: 0, width: 64, height: 80))
 		fromSymbolButton.setTitle(self.fromSymbol, for: .normal)
+		fromSymbolButton.setTitleColor(UIColor.gray, for: .normal)
 		fromSymbolButton.tag = 1
 		fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 		fromScreenView.addSubview(fromSymbolButton)
