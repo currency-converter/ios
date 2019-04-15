@@ -102,6 +102,7 @@ class ViewController: UIViewController, myDelegate {
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
 	
+	//键盘距离顶部的间距
 	var PADDING_BOTTOM: CGFloat = 20
 	
 	func currencyCellClickCallback(data: String) {
@@ -195,7 +196,6 @@ class ViewController: UIViewController, myDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
 	
 		self.view.backgroundColor = UIColor.hex("121212")
-		
 		
 		initConfig()
 		

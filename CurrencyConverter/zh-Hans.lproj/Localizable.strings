@@ -6,6 +6,8 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
+"dateTimeFormat" = "yyyy-MM-dd H:mm";
+
 "settings.title" = "设置";
 "settings.sounds" = "声音";
 "settings.keyboardClicks" = "按键声音";
