@@ -58,8 +58,6 @@ class FrequencyViewController: UITableViewController {
 		
 		// accessory
 		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none
-		print("indexPath.row.description:", indexPath.row.description)
-		print("defaultValue:", defaultValue)
 		return cell
 	}
 	
@@ -75,7 +73,7 @@ class FrequencyViewController: UITableViewController {
 			cell.accessoryType = .checkmark
 		}
 		if let data = cell?.tag.description {
-			self.delegate?.onReady(key: "ratesUpdatedFrequency", value: data)
+			self.delegate?.onReady(key: "rateUpdatedFrequency", value: data)
 		}
 	}
 	

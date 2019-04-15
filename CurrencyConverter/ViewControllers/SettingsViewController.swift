@@ -14,27 +14,33 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var updatedAtLabel: UILabel!
 	@IBOutlet weak var updatedAtValue: UILabel!
 	@IBOutlet weak var frequencyValue: UILabel!
+	@IBOutlet weak var demoLabel: UILabel!
 	@IBOutlet weak var use1000SeparatorLabel: UILabel!
 	@IBOutlet weak var decimalPlacesLabel: UILabel!
 	@IBOutlet weak var decimalValue: UILabel!
 	@IBOutlet weak var keyboardClicksSwitch: UISwitch!
 	@IBOutlet weak var use1000SeparatorSwitch: UISwitch!
+	@IBOutlet weak var loading: UIActivityIndicatorView!
+	@IBOutlet weak var updateImmediatelyButton: UIButton!
 	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	var sectionHeaders:[String] = [
 		NSLocalizedString("settings.sounds", comment: ""),
-		NSLocalizedString("settings.rates", comment: ""),
+		NSLocalizedString("settings.rate", comment: ""),
 		NSLocalizedString("settings.display", comment: "")
 	]
+	
+	// 是否正在更新汇率
+	var isUpdating = false
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
 		render()
-
-        // Do any additional setup after loading the view.
-    }
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUpdateRate), name: .didUpdateRate, object: nil)
+	}
 	
 	func onReady(key: String, value: String) {
 		// 更新配置
@@ -43,11 +49,38 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		//更新界面
 		if key == "decimals" {
 			decimalValue.text = value
+			demoLabel.text = self.formatDemoText()
 		}
 		
-		if key == "ratesUpdatedFrequency" {
+		if key == "rateUpdatedFrequency" {
 			frequencyValue.text = NSLocalizedString("settings.update.\(value)", comment: "")
 			frequencyValue.tag = Int(value) ?? 2
+		}
+	}
+	
+	@objc func onDidUpdateRate(_ notification: Notification) {
+		isUpdating = false
+		
+		var title: String = NSLocalizedString("settings.updateSuccess", comment: "")
+		if let data = notification.userInfo as? [String: Int] {
+			if data["error"]?.description == "1" {
+				title = NSLocalizedString("settings.updateFailed", comment: "")
+			}
+		}
+		
+		//避免出现非主线程更新UI的警告
+		DispatchQueue.main.async {
+			self.updatedAtValue.text = self.formatUpdatedAtText()
+			self.updateImmediatelyButton.tintColor = UIColor.black
+			self.loading.stopAnimating()
+			
+			let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+			//显示提示框
+			self.present(alertController, animated: true, completion: nil)
+			//1秒钟后自动消失
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+				self.presentedViewController?.dismiss(animated: false, completion: nil)
+			}
 		}
 	}
 	
@@ -59,18 +92,23 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "thousandSeparator")
+		self.demoLabel.text = self.formatDemoText()
+	}
+	
+	@IBAction func onUpdateImmediatelyClick(_ sender: UIButton) {
+		if !isUpdating {
+			isUpdating = true
+			updateImmediatelyButton.tintColor = UIColor.gray
+			loading.startAnimating()
+			let viewController = navigationController?.children[0] as! ViewController
+			viewController.updateRate()
+		}
 	}
 	
 	func render() {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let frequency = shared?.string(forKey: "ratesUpdatedFrequency") ?? RatesUpdatedFrequency.daily.rawValue
+		let frequency = shared?.string(forKey: "rateUpdatedFrequency") ?? RateUpdatedFrequency.daily.rawValue
 		let frequencyText = NSLocalizedString("settings.update.\(frequency)", comment: "")
-		let timeStamp = shared?.integer(forKey: "ratesUpdatedAt") ?? 1463637809
-		let timeInterval:TimeInterval = TimeInterval(timeStamp)
-		let date = Date(timeIntervalSince1970: timeInterval)
-		let dformatter = DateFormatter()
-		dformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-		let updatedAtText = dformatter.string(from: date)
 		let decimals = shared?.integer(forKey: "decimals")
 		let isSounds = shared?.bool(forKey: "sounds")
 		let isUse1000Separator = shared?.bool(forKey: "thousandSeparator")
@@ -82,13 +120,53 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.updateFrequencyLabel.text = NSLocalizedString("settings.updateFrequency", comment: "")
 		self.use1000SeparatorLabel.text = NSLocalizedString("settings.use1000Separator", comment: "")
 		self.decimalPlacesLabel.text = NSLocalizedString("settings.decimalPlaces", comment: "")
+		self.updateImmediatelyButton.setTitle(NSLocalizedString("settings.updateImmediately", comment: ""), for: .normal)
 		//设置初始值
 		self.frequencyValue.text = frequencyText
 		self.frequencyValue.tag = Int(frequency) ?? 2
-		self.updatedAtValue.text = updatedAtText
+		self.updatedAtValue.text = self.formatUpdatedAtText()
 		self.decimalValue.text = decimals?.description
 		self.keyboardClicksSwitch.isOn = isSounds ?? false
 		self.use1000SeparatorSwitch.isOn = isUse1000Separator ?? true
+		self.demoLabel.text = self.formatDemoText()
+	}
+	
+	func formatDemoText() -> String {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+		let isUse1000Separator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
+
+		var demoLabelText = "1234"
+		if isUse1000Separator {
+			demoLabelText = "1,234"
+		}
+		
+		switch decimals {
+		case 4:
+			demoLabelText = "\(demoLabelText).3210"
+		case 3:
+			demoLabelText = "\(demoLabelText).210"
+		case 2:
+			demoLabelText = "\(demoLabelText).10"
+		case 1:
+			demoLabelText = "\(demoLabelText).0"
+		default:
+			break
+		}
+		
+		return demoLabelText
+	}
+	
+	func formatUpdatedAtText() -> String {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? 1463637809
+		let timeInterval:TimeInterval = TimeInterval(timeStamp)
+		let date = Date(timeIntervalSince1970: timeInterval)
+		let dformatter = DateFormatter()
+		dformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		let updatedAtText = dformatter.string(from: date)
+		
+		return updatedAtText
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -105,7 +183,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		//小数位数
-		if indexPath.section == 2 && indexPath.row == 1 {
+		if indexPath.section == 2 && indexPath.row == 2 {
 			self.performSegue(withIdentifier: "showDecimalSegue", sender: self.decimalValue.text)
 		}
 		//更新频率

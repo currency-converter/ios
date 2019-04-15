@@ -83,3 +83,7 @@ extension Date {
 		}
 	}
 }
+
+extension Notification.Name {
+	static let didUpdateRate = Notification.Name("didUpdateRate")
+}

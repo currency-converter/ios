@@ -9,12 +9,15 @@
 "settings.title" = "Settings";
 "settings.sounds" = "Sounds";
 "settings.keyboardClicks" = "Keyboard Clicks";
-"settings.rates" = "Rates";
-"settings.updateFrequency" = "Rates Update Frequency";
+"settings.rate" = "Rate";
+"settings.updateFrequency" = "Rate Update Frequency";
 "settings.update.0" = "Real Time";
 "settings.update.1" = "Hourly";
 "settings.update.2" = "Daily";
 "settings.update.3" = "None";
+"settings.updateImmediately" = "Update immediately";
+"settings.updateSuccess" = "Update success";
+"settings.updateFailed" = "Update failed";
 "settings.updatedAt" = "Updated at";
 "settings.display" = "Display";
 "settings.use1000Separator" = "Use 1000 Separator (,)";

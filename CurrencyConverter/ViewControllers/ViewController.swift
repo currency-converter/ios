@@ -25,7 +25,7 @@ enum CurrencyPickerType: String {
 }
 
 //汇率更新频率
-enum RatesUpdatedFrequency: String {
+enum RateUpdatedFrequency: String {
 	case realtime = "0"
 	case hourly = "1"
 	case daily = "2"
@@ -64,14 +64,17 @@ class ViewController: UIViewController, myDelegate {
 	// 输出货币类型
 	var toSymbol: String!
 	
-	var ratesUpdatedAt: Int!
+	// 是否立即更新汇率
+	var updateRateImmediately: Bool = false
 	
-	var ratesUpdatedFrequency: String!
+	var rateUpdatedAt: Int!
+	
+	var rateUpdatedFrequency: String!
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
 	// api
-	var updateRatesUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
+	var updateRateUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
 	
 	var defaults:[String:Any] = [
 		// 小数位数
@@ -82,12 +85,9 @@ class ViewController: UIViewController, myDelegate {
 		"sounds": false,
 		"fromSymbol": "USD",
 		"toSymbol": "CNY",
-		"ratesUpdatedFrequency": RatesUpdatedFrequency.daily.rawValue,
-		"ratesUpdatedAt": 1554968594,
-		"favorites": ["CNY", "HKD", "JPY", "USD"],
-		"rates": [
-			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
-		]
+		"rateUpdatedFrequency": RateUpdatedFrequency.daily.rawValue,
+		"rateUpdatedAt": 1554968594,
+		"favorites": ["CNY", "HKD", "JPY", "USD"]
 	]
 	
 	// UI 组件
@@ -126,51 +126,45 @@ class ViewController: UIViewController, myDelegate {
 		self.toMoneyLabel.text = self.output(self.fromMoney)
 	}
 	
-	func updateRates() {
-		var isRefetch = false
-		
-		if self.rates == nil ||
-			self.ratesUpdatedFrequency == RatesUpdatedFrequency.realtime.rawValue ||
-			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.daily.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.day) > 0) ||
-			(self.ratesUpdatedFrequency == RatesUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: self.ratesUpdatedAt, unit: Date.unit.hour) > 0) {
-			isRefetch = true
-		}
-		print("isRefetch:", isRefetch)
-		
-		if isRefetch {
-			let newUrlString = self.updateRatesUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-			// 创建请求配置
-			let config = URLSessionConfiguration.default
-			// 创建请求URL
-			let url = URL(string: newUrlString!)
-			// 创建请求实例
-			let request = URLRequest(url: url!)
-			// 创建请求Session
-			let session = URLSession(configuration: config)
-			// 创建请求任务
-			let task = session.dataTask(with: request) { (data,response,error) in
-				if(error == nil) {
-					// 将json数据解析成字典
-					let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-					self.rates = rates as? Dictionary<String, NSNumber>
-					let shared = UserDefaults(suiteName: self.groupId)
-					shared?.set(rates, forKey: "rates")
-					let now = Date().timeStamp
-					shared?.set(now, forKey: "ratesUpdatedAt")
-					
-					//汇率更新后，需要主动更新app中正使用的汇率
-					let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-					let toRate:Float! = self.rates[self.toSymbol]?.floatValue
-					self.rate = toRate/fromRate
-				} else {
-					print("Update rates failed.")
-				}
+	public func updateRate() {
+		let newUrlString = self.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+		// 创建请求配置
+		let config = URLSessionConfiguration.default
+		// 创建请求URL
+		let url = URL(string: newUrlString!)
+		// 创建请求实例
+		let request = URLRequest(url: url!)
+		// 创建请求Session
+		let session = URLSession(configuration: config)
+		// 创建请求任务
+		let task = session.dataTask(with: request) { (data,response,error) in
+			if(error == nil) {
+				print("update rate success!")
+				// 将json数据解析成字典
+				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+				let now = Date().timeStamp
+				//汇率更新后，需要主动更新app中正使用的汇率
+				let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+				let toRate:Float! = self.rates[self.toSymbol]?.floatValue
+
+				//更新app正在使用的数据
+				self.rateUpdatedAt = now
+				self.rates = rates as? Dictionary<String, NSNumber>
+				self.rate = toRate/fromRate
+
+				//更新缓存数据
+				let shared = UserDefaults(suiteName: self.groupId)
+				shared?.set(now, forKey: "rateUpdatedAt")
+				shared?.set(rates, forKey: "rates")
+				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
+			} else {
+				print("Update rate failed.")
+				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 1])
 			}
-			
-			// 激活请求任务
-			task.resume()
 		}
 		
+		// 激活请求任务
+		task.resume()
 	}
 	
 	func initConfig() {
@@ -178,12 +172,12 @@ class ViewController: UIViewController, myDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
-		self.ratesUpdatedAt = shared?.integer(forKey: "ratesUpdatedAt")
-		self.ratesUpdatedFrequency = shared?.string(forKey: "ratesUpdatedFrequency")
+		self.rateUpdatedAt = shared?.integer(forKey: "rateUpdatedAt")
+		self.rateUpdatedFrequency = shared?.string(forKey: "rateUpdatedFrequency")
 		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
 		
 		if self.rates == nil {
-			updateRates()
+			updateRate()
 		} else {
 			let fromRate:Float! = rates[self.fromSymbol]?.floatValue
 			let toRate:Float! = rates[self.toSymbol]?.floatValue
@@ -203,11 +197,38 @@ class ViewController: UIViewController, myDelegate {
 		
 		initConfig()
 		
-		updateRates()
-		
+		createUpdateRateDaemon()
+
 		createScreenView()
 		
 		createKeyboardView()
+		
+	}
+	
+	func isNeedUpdateRate() -> Bool {
+		return self.rates == nil ||
+			self.rateUpdatedFrequency == RateUpdatedFrequency.realtime.rawValue ||
+			(self.rateUpdatedFrequency == RateUpdatedFrequency.daily.rawValue && Date().diff(timestamp: self.rateUpdatedAt, unit: Date.unit.day) > 0) ||
+			(self.rateUpdatedFrequency == RateUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: self.rateUpdatedAt, unit: Date.unit.hour) > 0)
+	}
+	
+	func createUpdateRateDaemon() {
+		//若当前汇率已过期，立即更新汇率
+		if self.isNeedUpdateRate() {
+			self.updateRate()
+		}
+		
+		//延迟3秒启动汇率更新h守护程序
+		Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (_) in
+			
+			Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { (start) in
+				print("rateUpdatedAt:", self.rateUpdatedAt)
+				
+				if self.isNeedUpdateRate() {
+					self.updateRate()
+				}
+			}.fire()
+		}.fire()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
