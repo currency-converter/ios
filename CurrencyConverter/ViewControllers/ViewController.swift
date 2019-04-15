@@ -146,13 +146,13 @@ class ViewController: UIViewController, myDelegate {
 				// 将json数据解析成字典
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 				let now = Date().timeStamp
-				//汇率更新后，需要主动更新app中正使用的汇率
-				let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-				let toRate:Float! = self.rates[self.toSymbol]?.floatValue
 
 				//更新app正在使用的数据
 				self.rateUpdatedAt = now
 				self.rates = rates as? Dictionary<String, NSNumber>
+				//汇率更新后，需要主动更新app中正使用的汇率
+				let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+				let toRate:Float! = self.rates[self.toSymbol]?.floatValue
 				self.rate = toRate/fromRate
 
 				//更新缓存数据
