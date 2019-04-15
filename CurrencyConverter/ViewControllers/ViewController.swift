@@ -102,6 +102,8 @@ class ViewController: UIViewController, myDelegate {
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
 	
+	var PADDING_BOTTOM: CGFloat = 20
+	
 	func currencyCellClickCallback(data: String) {
 		var key = ""
 		if currencyPickerType == CurrencyPickerType.from {
@@ -243,7 +245,7 @@ class ViewController: UIViewController, myDelegate {
 		// 创建屏幕容器
 		let screenView = UIView()
 		// 坐标
-		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - screenViewHeight, width: viewBounds.width, height: screenViewHeight)
+		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - screenViewHeight - PADDING_BOTTOM, width: viewBounds.width, height: screenViewHeight)
 		// 是否切除子视图超出部分
 		screenView.clipsToBounds = true
 		// 添加到当前视图控制器
@@ -309,7 +311,7 @@ class ViewController: UIViewController, myDelegate {
 		let keyboardView = UIView()
 		self.keyboardView = keyboardView
 		// 坐标
-		keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width, width: viewBounds.width, height: viewBounds.width)
+		keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - PADDING_BOTTOM, width: viewBounds.width, height: viewBounds.width)
 		// 背景颜色
 		// keyboardView.backgroundColor = UIColor.yellow
 		// 是否切除子视图超出部分
