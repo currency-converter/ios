@@ -29,7 +29,6 @@ enum RateUpdatedFrequency: String {
 	case realtime = "0"
 	case hourly = "1"
 	case daily = "2"
-	case none = "3"
 }
 
 //域名
@@ -64,13 +63,6 @@ class ViewController: UIViewController, myDelegate {
 	// 输出货币类型
 	var toSymbol: String!
 	
-	// 是否立即更新汇率
-	var updateRateImmediately: Bool = false
-	
-	var rateUpdatedAt: Int!
-	
-	var rateUpdatedFrequency: String!
-	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
 	// api
@@ -85,6 +77,7 @@ class ViewController: UIViewController, myDelegate {
 		"sounds": false,
 		"fromSymbol": "USD",
 		"toSymbol": "CNY",
+		"autoUpdateRate": true,
 		"rateUpdatedFrequency": RateUpdatedFrequency.daily.rawValue,
 		"rateUpdatedAt": 1554968594,
 		"favorites": ["CNY", "HKD", "JPY", "USD"]
@@ -148,7 +141,7 @@ class ViewController: UIViewController, myDelegate {
 				let now = Date().timeStamp
 
 				//更新app正在使用的数据
-				self.rateUpdatedAt = now
+				//self.rateUpdatedAt = now
 				self.rates = rates as? Dictionary<String, NSNumber>
 				//汇率更新后，需要主动更新app中正使用的汇率
 				let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
@@ -175,13 +168,10 @@ class ViewController: UIViewController, myDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
-		self.rateUpdatedAt = shared?.integer(forKey: "rateUpdatedAt")
-		self.rateUpdatedFrequency = shared?.string(forKey: "rateUpdatedFrequency")
+		
 		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
 		
-		if self.rates == nil {
-			updateRate()
-		} else {
+		if self.rates != nil {
 			let fromRate:Float! = rates[self.fromSymbol]?.floatValue
 			let toRate:Float! = rates[self.toSymbol]?.floatValue
 			self.rate = toRate/fromRate
@@ -197,9 +187,9 @@ class ViewController: UIViewController, myDelegate {
 	
 		self.view.backgroundColor = UIColor.hex("121212")
 		
-		initConfig()
-		
 		createUpdateRateDaemon()
+
+		initConfig()
 
 		createScreenView()
 		
@@ -208,28 +198,23 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	func isNeedUpdateRate() -> Bool {
-		return self.rates == nil ||
-			self.rateUpdatedFrequency == RateUpdatedFrequency.realtime.rawValue ||
-			(self.rateUpdatedFrequency == RateUpdatedFrequency.daily.rawValue && Date().diff(timestamp: self.rateUpdatedAt, unit: Date.unit.day) > 0) ||
-			(self.rateUpdatedFrequency == RateUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: self.rateUpdatedAt, unit: Date.unit.hour) > 0)
+		let shared = UserDefaults(suiteName: self.groupId)
+		let rateUpdatedAt: Int = shared?.integer(forKey: "rateUpdatedAt") ?? defaults["rateUpdatedAt"] as! Int
+		let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? defaults["rateUpdatedFrequency"] as! String
+		let autoUpdateRate = shared?.bool(forKey: "autoUpdateRate") ?? defaults["autoUpdateRate"] as! Bool
+		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
+
+		return rates == nil ||
+			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.realtime.rawValue) ||
+			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.daily.rawValue && Date().diff(timestamp: rateUpdatedAt, unit: Date.unit.day) > 0) ||
+			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: rateUpdatedAt, unit: Date.unit.hour) > 0)
 	}
 	
 	func createUpdateRateDaemon() {
-		//若当前汇率已过期，立即更新汇率
-		if self.isNeedUpdateRate() {
-			self.updateRate()
-		}
-		
-		//延迟3秒启动汇率更新h守护程序
-		Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (_) in
-			
-			Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { (start) in
-				print("rateUpdatedAt:", self.rateUpdatedAt)
-				
-				if self.isNeedUpdateRate() {
-					self.updateRate()
-				}
-			}.fire()
+		Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { (start) in
+			if self.isNeedUpdateRate() {
+				self.updateRate()
+			}
 		}.fire()
 	}
 	
@@ -239,7 +224,7 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	private func createScreenView() {
-		let screenViewHeight: CGFloat = 180
+		let screenViewHeight: CGFloat = 200
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		// 创建屏幕容器
@@ -251,10 +236,10 @@ class ViewController: UIViewController, myDelegate {
 		// 添加到当前视图控制器
 		self.view.addSubview(screenView)
 		
-		self.fromScreenView = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 80))
+		self.fromScreenView = UIView(frame: CGRect(x: 0, y: 0, width: viewBounds.width, height: 100))
 		//fromScreenView.backgroundColor = UIColor.red
 		screenView.addSubview(self.fromScreenView)
-		self.toScreenView = UIView(frame: CGRect(x: 0, y: 80, width: viewBounds.width, height: 100))
+		self.toScreenView = UIView(frame: CGRect(x: 0, y: 100, width: viewBounds.width, height: 100))
 		//toScreenView.backgroundColor = UIColor.yellow
 		screenView.addSubview(self.toScreenView)
 		

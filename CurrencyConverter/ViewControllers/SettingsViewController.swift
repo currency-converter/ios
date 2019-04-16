@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var keyboardClicksLabel: UILabel!
+	@IBOutlet weak var autoUpdateRateLabel: UILabel!
 	@IBOutlet weak var updateFrequencyLabel: UILabel!
 	@IBOutlet weak var updatedAtLabel: UILabel!
 	@IBOutlet weak var updatedAtValue: UILabel!
@@ -19,16 +20,26 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var decimalPlacesLabel: UILabel!
 	@IBOutlet weak var decimalValue: UILabel!
 	@IBOutlet weak var keyboardClicksSwitch: UISwitch!
+	@IBOutlet weak var autoUpdateRateSwitch: UISwitch!
 	@IBOutlet weak var use1000SeparatorSwitch: UISwitch!
 	@IBOutlet weak var loading: UIActivityIndicatorView!
 	@IBOutlet weak var updateImmediatelyButton: UIButton!
+	@IBOutlet weak var disclaimerLabel: UILabel!
 	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	var sectionHeaders:[String] = [
-		NSLocalizedString("settings.sounds", comment: ""),
-		NSLocalizedString("settings.rate", comment: ""),
-		NSLocalizedString("settings.display", comment: "")
+		NSLocalizedString("settings.soundsHeader", comment: ""),
+		NSLocalizedString("settings.rateHeader", comment: ""),
+		NSLocalizedString("settings.displayHeader", comment: ""),
+		NSLocalizedString("settings.disclaimerHeader", comment: "")
+	]
+	
+	var sectionFooters:[String] = [
+		NSLocalizedString("settings.soundsFooter", comment: ""),
+		NSLocalizedString("settings.rateFooter", comment: ""),
+		NSLocalizedString("settings.displayFooter", comment: ""),
+		""
 	]
 	
 	// 是否正在更新汇率
@@ -88,13 +99,18 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "sounds")
 	}
-
+	
+	@IBAction func onAutoUpdateRateChanged(_ sender: UISwitch) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(sender.isOn, forKey: "autoUpdateRate")
+	}
+	
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "thousandSeparator")
 		self.demoLabel.text = self.formatDemoText()
 	}
-	
+
 	@IBAction func onUpdateImmediatelyClick(_ sender: UIButton) {
 		if !isUpdating {
 			isUpdating = true
@@ -106,11 +122,17 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func render() {
+		//self.view.backgroundColor = UIColor.hex("000000")
+		//self.tableView.style = .plain
+		//去除表格上放多余的空隙
+		//self.tableView?.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
+		
 		let shared = UserDefaults(suiteName: self.groupId)
 		let frequency = shared?.string(forKey: "rateUpdatedFrequency") ?? RateUpdatedFrequency.daily.rawValue
 		let frequencyText = NSLocalizedString("settings.update.\(frequency)", comment: "")
 		let decimals = shared?.integer(forKey: "decimals")
 		let isSounds = shared?.bool(forKey: "sounds")
+		let isAutoUpdateRate = shared?.bool(forKey: "autoUpdateRate")
 		let isUse1000Separator = shared?.bool(forKey: "thousandSeparator")
 		//设置界面文字
 		self.navigationController?.isNavigationBarHidden = false
@@ -121,12 +143,14 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.use1000SeparatorLabel.text = NSLocalizedString("settings.use1000Separator", comment: "")
 		self.decimalPlacesLabel.text = NSLocalizedString("settings.decimalPlaces", comment: "")
 		self.updateImmediatelyButton.setTitle(NSLocalizedString("settings.updateImmediately", comment: ""), for: .normal)
+		self.disclaimerLabel.text = NSLocalizedString("settings.disclaimer", comment: "")
 		//设置初始值
 		self.frequencyValue.text = frequencyText
 		self.frequencyValue.tag = Int(frequency) ?? 2
 		self.updatedAtValue.text = self.formatUpdatedAtText()
 		self.decimalValue.text = decimals?.description
 		self.keyboardClicksSwitch.isOn = isSounds ?? false
+		self.autoUpdateRateSwitch.isOn = isAutoUpdateRate ?? true
 		self.use1000SeparatorSwitch.isOn = isUse1000Separator ?? true
 		self.demoLabel.text = self.formatDemoText()
 	}
@@ -174,21 +198,39 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 40
+		return 30
+	}
+
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		return self.sectionFooters[section]
 	}
 	
-	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 20
+//	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//		return 30
+//	}
+	
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		guard let header = view as? UITableViewHeaderFooterView else { return }
+		header.textLabel?.textColor = UIColor.gray
+		header.textLabel?.font = UIFont.systemFont(ofSize: 12)
+		header.textLabel?.frame = header.frame
+	}
+	
+	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+		guard let footer = view as? UITableViewHeaderFooterView else { return }
+		footer.textLabel?.textColor = UIColor.gray
+		footer.textLabel?.font = UIFont.systemFont(ofSize: 12)
+		footer.textLabel?.frame = footer.frame
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		//更新频率
+		if indexPath.section == 1 && indexPath.row == 1 {
+			self.performSegue(withIdentifier: "showFrequencySegue", sender: self.frequencyValue.tag.description)
+		}
 		//小数位数
 		if indexPath.section == 2 && indexPath.row == 2 {
 			self.performSegue(withIdentifier: "showDecimalSegue", sender: self.decimalValue.text)
-		}
-		//更新频率
-		if indexPath.section == 1 && indexPath.row == 0 {
-			self.performSegue(withIdentifier: "showFrequencySegue", sender: self.frequencyValue.tag.description)
 		}
 	}
 	

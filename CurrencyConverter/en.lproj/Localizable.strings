@@ -201,24 +201,29 @@
  zh-TW ==== yyyy/M/d tt hh:mm
  */
 
-"dateTimeFormat" = "M/d/yyyy h:mm tt";
+"dateTimeFormat" = "M/d/yyyy h:mm a";
 
 "settings.title" = "Settings";
-"settings.sounds" = "Sounds";
+"settings.soundsHeader" = "Sounds";
+"settings.soundsFooter" = "Using sounds can reduce keystroke error rate";
 "settings.keyboardClicks" = "Keyboard Clicks";
-"settings.rate" = "Rate";
-"settings.updateFrequency" = "Rate Update Frequency";
-"settings.update.0" = "Real Time";
-"settings.update.1" = "Hourly";
-"settings.update.2" = "Daily";
-"settings.update.3" = "None";
+"settings.rateHeader" = "Rate";
+"settings.rateFooter" = "Using the latest exchange rate can make the calculation more accurate.";
+"settings.autoUpdateRate" = "Auto Update Rate";
+"settings.updateFrequency" = "Update Frequency";
+"settings.update.0" = "Update per minute";
+"settings.update.1" = "Update hourly";
+"settings.update.2" = "Updated daily";
 "settings.updateImmediately" = "Update immediately";
 "settings.updateSuccess" = "Update success";
 "settings.updateFailed" = "Update failed";
-"settings.updatedAt" = "Updated at";
-"settings.display" = "Display";
+"settings.updatedAt" = "Last Update";
+"settings.displayHeader" = "Display";
+"settings.displayFooter" = "";
 "settings.use1000Separator" = "Use 1000 Separator (,)";
 "settings.decimalPlaces" = "Decimal places";
+"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimer" = "The data presented in this app is intended for informational purposes only. There is no guarantee of accuracy, validity, availability, or fitness for any purpose. Use at your own risk.";
 copy = "Copy";
 selectCurrency = "Select Currency";
 search = "Search";

@@ -17,8 +17,7 @@ class FrequencyViewController: UITableViewController {
 	var values: [String] = [
 		NSLocalizedString("settings.update.0", comment: ""),
 		NSLocalizedString("settings.update.1", comment: ""),
-		NSLocalizedString("settings.update.2", comment: ""),
-		NSLocalizedString("settings.update.3", comment: "")
+		NSLocalizedString("settings.update.2", comment: "")
 	]
 	
 	override func viewDidLoad() {
