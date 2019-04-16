@@ -176,6 +176,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			rate = toRate/fromRate
 		}
 		
+		if isCustomRate {
+			rate = shared?.float(forKey: "customRate") ?? 1.0
+		}
+		
 		//设置界面文字
 		self.navigationController?.isNavigationBarHidden = false
 		self.navigationItem.title = NSLocalizedString("settings.title", comment: "")

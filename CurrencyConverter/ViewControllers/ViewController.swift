@@ -585,8 +585,6 @@ class ViewController: UIViewController, myDelegate {
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
 		
-		print("customRate:", customRate)
-		
 		self.asteriskLabel.isHidden = !isCustomRate
 		self.rate = customRate
 		
