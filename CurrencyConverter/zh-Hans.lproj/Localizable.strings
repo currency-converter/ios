@@ -10,10 +10,10 @@
 
 "settings.title" = "设置";
 "settings.soundsHeader" = "声音";
-"settings.soundsFooter" = "使用声音能减少按键错误率";
+"settings.soundsFooter" = "使用声音能减少按键错误率。";
 "settings.keyboardClicks" = "按键声音";
-"settings.rateHeader" = "汇率";
-"settings.rateFooter" = "使用最新汇率能让计算结果更准确";
+"settings.rateUpdateHeader" = "汇率更新";
+"settings.rateUpdateFooter" = "使用最新汇率能让计算结果更准确。";
 "settings.autoUpdateRate" = "自动更新汇率";
 "settings.updateFrequency" = "更新频率";
 "settings.update.0" = "每分钟更新";
@@ -23,6 +23,8 @@
 "settings.updateSuccess" = "更新成功";
 "settings.updateFailed" = "更新失败";
 "settings.updatedAt" = "最后更新";
+"settings.customRateHeader" = "自定义汇率";
+"settings.customRateFooter" = "当货币类型发生变化时，自定义汇率将自动禁用。";
 "settings.displayHeader" = "显示";
 "settings.displayFooter" = "";
 "settings.use1000Separator" = "使用千位分隔符(,)";

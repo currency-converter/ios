@@ -29,10 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let queryArray = urlString.components(separatedBy: "/")
 		print("queryArray:", queryArray)
 		let rootView = self.window!.rootViewController as! ViewController
+		print("rootView:", rootView)
 		switch queryArray[2] {
 		case "settings": // currencyconverter://settings
-			let controller = SettingsViewController()
-			rootView.present(controller, animated: true, completion: nil)
+//			let controller = SettingsViewController()
+//			rootView.present(controller, animated: true, completion: nil)
+			rootView.performSegue(withIdentifier: "showSettingsSegue", sender: nil)
 		case "currencypicker": // currencyconverter://currencypicker/to/CNY
 			if queryArray[3] == "from" {
 				rootView.currencyPickerType = .from

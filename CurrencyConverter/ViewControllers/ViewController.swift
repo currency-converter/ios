@@ -80,6 +80,7 @@ class ViewController: UIViewController, myDelegate {
 		"autoUpdateRate": true,
 		"rateUpdatedFrequency": RateUpdatedFrequency.daily.rawValue,
 		"rateUpdatedAt": 1554968594,
+		"isCustomRate": false,
 		"favorites": ["CNY", "HKD", "JPY", "USD"]
 	]
 	
@@ -94,6 +95,7 @@ class ViewController: UIViewController, myDelegate {
 	var fromMoneyLabel: UILabel!
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
+	var asteriskLabel: UILabel!
 	
 	//键盘距离顶部的间距
 	var PADDING_BOTTOM: CGFloat = 20
@@ -113,6 +115,10 @@ class ViewController: UIViewController, myDelegate {
 		// 更新配置
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(data, forKey: key)
+		//清除自定义汇率
+		shared?.set(false, forKey: "isCustomRate")
+		shared?.removeObject(forKey: "customRate")
+		self.asteriskLabel.isHidden = true
 		//更新汇率
 		let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
 		let toRate:Float! = self.rates[self.toSymbol]?.floatValue
@@ -183,7 +189,10 @@ class ViewController: UIViewController, myDelegate {
 		super.viewDidLoad()
 		
 		registerSettingsBundle()
+		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidChangeCustomRate), name: .didChangeCustomRate, object: nil)
 	
 		self.view.backgroundColor = UIColor.hex("121212")
 		
@@ -194,7 +203,6 @@ class ViewController: UIViewController, myDelegate {
 		createScreenView()
 		
 		createKeyboardView()
-		
 	}
 	
 	func isNeedUpdateRate() -> Bool {
@@ -224,6 +232,9 @@ class ViewController: UIViewController, myDelegate {
 	}
 	
 	private func createScreenView() {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		
 		let screenViewHeight: CGFloat = 200
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
@@ -279,6 +290,13 @@ class ViewController: UIViewController, myDelegate {
 		toSymbolButton.tag = 2
 		toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 		toScreenView.addSubview(toSymbolButton)
+		
+		asteriskLabel = UILabel(frame: CGRect(x: viewBounds.width - 50, y: 8, width: 30, height: 30))
+		asteriskLabel.text = "*"
+		asteriskLabel.font = UIFont.systemFont(ofSize: 40)
+		asteriskLabel.textColor = UIColor.white
+		asteriskLabel.isHidden = !isCustomRate
+		toScreenView.addSubview(asteriskLabel)
 		
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeUp.direction = .up
@@ -349,15 +367,22 @@ class ViewController: UIViewController, myDelegate {
 			self.fromSymbol = self.toSymbol
 			self.toSymbol = tempCurrency
 			self.rate = 1/self.rate
+			print("self.fromScreenView.frame.origin.y:", self.fromScreenView.frame.origin.y)
+			print("self.toScreenView.frame.origin.y:", self.toScreenView.frame.origin.y)
 			
 			UIView.animate(withDuration: 0.5, animations: {
-				self.fromScreenView.frame.origin.y = 96
-				self.toScreenView.frame.origin.y = 20
+				self.fromScreenView.frame.origin.y = 100
+				self.toScreenView.frame.origin.y = 0
 			}, completion: {
 				(finished:Bool) -> Void in
+				let shared = UserDefaults(suiteName: self.groupId)
+				shared?.set(false, forKey: "isCustomRate")
+				shared?.removeObject(forKey: "customRate")
+				self.asteriskLabel.isHidden = true
+				
 				//更新界面
-				self.fromScreenView.frame.origin.y = 20
-				self.toScreenView.frame.origin.y = 96
+				self.fromScreenView.frame.origin.y = 0
+				self.toScreenView.frame.origin.y = 100
 				self.fromSymbolButton.setTitle(self.fromSymbol, for: .normal)
 				self.toSymbolButton.setTitle(self.toSymbol, for: .normal)
 				let tempMoney = self.fromMoneyLabel.text
@@ -460,18 +485,18 @@ class ViewController: UIViewController, myDelegate {
 	
 	func playTapSound() {
 		let shared = UserDefaults(suiteName: self.groupId)
-		guard shared?.bool(forKey: "sounds") ?? false else {
-			return
-		}
+		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? false
 		
-		let path = Bundle.main.path(forResource: "Sounds/tap", ofType: "wav")!
-		let url = URL(fileURLWithPath: path)
-		
-		do {
-			try tapSoundPlayer = AVAudioPlayer(contentsOf: url)
-			tapSoundPlayer.play()
-		} catch {
-			print("Could not load audio file.")
+		if isSounds {
+			let path = Bundle.main.path(forResource: "Sounds/tap", ofType: "wav")!
+			let url = URL(fileURLWithPath: path)
+			
+			do {
+				try tapSoundPlayer = AVAudioPlayer(contentsOf: url)
+				tapSoundPlayer.play()
+			} catch {
+				print("Could not load audio file.")
+			}
 		}
 	}
 	
@@ -521,7 +546,11 @@ class ViewController: UIViewController, myDelegate {
 	func output(_ money:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
 		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
-		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+		let rate = isCustomRate ? customRate : self.rate
+		
+		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * rate))
 	}
 	
 	func registerSettingsBundle() {
@@ -548,6 +577,28 @@ class ViewController: UIViewController, myDelegate {
 		//避免出现非主线程更新UI的警告
 		DispatchQueue.main.async {
 			self.toMoneyLabel.text = self.output(self.fromMoney)
+		}
+	}
+	
+	@objc func onDidChangeCustomRate(_ notification: Notification) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+		
+		print("customRate:", customRate)
+		
+		self.asteriskLabel.isHidden = !isCustomRate
+		self.rate = customRate
+		
+		if isCustomRate {
+			self.asteriskLabel.isHidden = false
+			self.rate = customRate
+		} else {
+			self.asteriskLabel.isHidden = true
+			let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+			let toRate:Float! = self.rates[self.toSymbol]?.floatValue
+			let rate:Float = toRate/fromRate
+			self.rate = rate
 		}
 	}
 	

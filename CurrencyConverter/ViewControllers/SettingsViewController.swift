@@ -15,29 +15,35 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var updatedAtLabel: UILabel!
 	@IBOutlet weak var updatedAtValue: UILabel!
 	@IBOutlet weak var frequencyValue: UILabel!
+	@IBOutlet weak var customRateLabel: UILabel!
+	@IBOutlet weak var customRateDetailLabel: UILabel!
 	@IBOutlet weak var demoLabel: UILabel!
 	@IBOutlet weak var use1000SeparatorLabel: UILabel!
 	@IBOutlet weak var decimalPlacesLabel: UILabel!
 	@IBOutlet weak var decimalValue: UILabel!
 	@IBOutlet weak var keyboardClicksSwitch: UISwitch!
 	@IBOutlet weak var autoUpdateRateSwitch: UISwitch!
+	@IBOutlet weak var customRateSwitch: UISwitch!
 	@IBOutlet weak var use1000SeparatorSwitch: UISwitch!
 	@IBOutlet weak var loading: UIActivityIndicatorView!
 	@IBOutlet weak var updateImmediatelyButton: UIButton!
+	@IBOutlet weak var customRateStepper: UIStepper!
 	@IBOutlet weak var disclaimerLabel: UILabel!
 	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	var sectionHeaders:[String] = [
 		NSLocalizedString("settings.soundsHeader", comment: ""),
-		NSLocalizedString("settings.rateHeader", comment: ""),
+		NSLocalizedString("settings.rateUpdateHeader", comment: ""),
+		NSLocalizedString("settings.customRateHeader", comment: ""),
 		NSLocalizedString("settings.displayHeader", comment: ""),
 		NSLocalizedString("settings.disclaimerHeader", comment: "")
 	]
 	
 	var sectionFooters:[String] = [
 		NSLocalizedString("settings.soundsFooter", comment: ""),
-		NSLocalizedString("settings.rateFooter", comment: ""),
+		NSLocalizedString("settings.rateUpdateFooter", comment: ""),
+		NSLocalizedString("settings.customRateFooter", comment: ""),
 		NSLocalizedString("settings.displayFooter", comment: ""),
 		""
 	]
@@ -61,6 +67,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		if key == "decimals" {
 			decimalValue.text = value
 			demoLabel.text = self.formatDemoText()
+			
+			self.updateCustomRateDetail(rate: Float(self.customRateStepper.value))
+			let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+			self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
 		}
 		
 		if key == "rateUpdatedFrequency" {
@@ -99,10 +109,30 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "sounds")
 	}
-	
+
 	@IBAction func onAutoUpdateRateChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "autoUpdateRate")
+	}
+	
+	@IBAction func onCustomRateSwitchChanged(_ sender: UISwitch) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(sender.isOn, forKey: "isCustomRate")
+		if sender.isOn {
+			shared?.set(self.customRateStepper.value, forKey: "customRate")
+		} else {
+			shared?.removeObject(forKey: "customRate")
+		}
+		self.toggleCustomRateDetail(sender.isOn)
+		NotificationCenter.default.post(name: .didChangeCustomRate, object: self)
+	}
+	
+	@IBAction func onCustomRateStepperClick(_ sender: UIStepper) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		shared?.set(self.customRateStepper.value, forKey: "customRate")
+
+		self.updateCustomRateDetail(rate: Float(sender.value))
+		NotificationCenter.default.post(name: .didChangeCustomRate, object: self)
 	}
 	
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
@@ -130,10 +160,22 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let shared = UserDefaults(suiteName: self.groupId)
 		let frequency = shared?.string(forKey: "rateUpdatedFrequency") ?? RateUpdatedFrequency.daily.rawValue
 		let frequencyText = NSLocalizedString("settings.update.\(frequency)", comment: "")
-		let decimals = shared?.integer(forKey: "decimals")
-		let isSounds = shared?.bool(forKey: "sounds")
-		let isAutoUpdateRate = shared?.bool(forKey: "autoUpdateRate")
-		let isUse1000Separator = shared?.bool(forKey: "thousandSeparator")
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? false
+		let isAutoUpdateRate: Bool = shared?.bool(forKey: "autoUpdateRate") ?? true
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		let isUse1000Separator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
+		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
+		let fromCurrency: String = shared?.string(forKey: "fromCurrency") ?? "USD"
+		let toCurrency: String = shared?.string(forKey: "toCurrency") ?? "CNY"
+		
+		var rate: Float = 1.0
+		if rates != nil {
+			let fromRate:Float! = rates![fromCurrency]?.floatValue
+			let toRate:Float! = rates![toCurrency]?.floatValue
+			rate = toRate/fromRate
+		}
+		
 		//设置界面文字
 		self.navigationController?.isNavigationBarHidden = false
 		self.navigationItem.title = NSLocalizedString("settings.title", comment: "")
@@ -143,15 +185,23 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.use1000SeparatorLabel.text = NSLocalizedString("settings.use1000Separator", comment: "")
 		self.decimalPlacesLabel.text = NSLocalizedString("settings.decimalPlaces", comment: "")
 		self.updateImmediatelyButton.setTitle(NSLocalizedString("settings.updateImmediately", comment: ""), for: .normal)
+		self.customRateLabel.text = NSLocalizedString("settings.customRateHeader", comment: "")
 		self.disclaimerLabel.text = NSLocalizedString("settings.disclaimer", comment: "")
+		self.autoUpdateRateLabel.text = NSLocalizedString("settings.autoUpdateRate", comment: "")
 		//设置初始值
 		self.frequencyValue.text = frequencyText
 		self.frequencyValue.tag = Int(frequency) ?? 2
 		self.updatedAtValue.text = self.formatUpdatedAtText()
-		self.decimalValue.text = decimals?.description
-		self.keyboardClicksSwitch.isOn = isSounds ?? false
-		self.autoUpdateRateSwitch.isOn = isAutoUpdateRate ?? true
-		self.use1000SeparatorSwitch.isOn = isUse1000Separator ?? true
+		self.decimalValue.text = decimals.description
+		self.keyboardClicksSwitch.isOn = isSounds
+		self.autoUpdateRateSwitch.isOn = isAutoUpdateRate
+		self.customRateSwitch.isOn = isCustomRate
+		self.toggleCustomRateDetail(self.customRateSwitch.isOn)
+		self.updateCustomRateDetail(rate: rate)
+		self.customRateStepper.isContinuous = true
+		self.customRateStepper.value = Double(rate)
+		self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
+		self.use1000SeparatorSwitch.isOn = isUse1000Separator
 		self.demoLabel.text = self.formatDemoText()
 	}
 	
@@ -193,6 +243,23 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		return updatedAtText
 	}
 	
+	func toggleCustomRateDetail(_ isOn: Bool) {
+		self.customRateDetailLabel.textColor = isOn ? UIColor.black : UIColor.gray
+		self.customRateStepper.tintColor = isOn ? UIColor.hex("0078fb") : UIColor.gray
+		self.customRateStepper.isEnabled = isOn
+	}
+	
+	func updateCustomRateDetail(rate: Float) {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let fromCurrency: String = shared?.string(forKey: "fromCurrency") ?? "USD"
+		let toCurrency: String = shared?.string(forKey: "toCurrency") ?? "CNY"
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+		let fromMoney: String = String(format: "%.\(String(describing: decimals))f", arguments:[1.0])
+		let toMoney = String(format: "%.\(decimals)f", arguments:[rate])
+
+		self.customRateDetailLabel.text = "\(fromMoney) \(fromCurrency) = \(toMoney) \(toCurrency)"
+	}
+	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return self.sectionHeaders[section]
 	}
@@ -229,7 +296,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			self.performSegue(withIdentifier: "showFrequencySegue", sender: self.frequencyValue.tag.description)
 		}
 		//小数位数
-		if indexPath.section == 2 && indexPath.row == 2 {
+		if indexPath.section == 3 && indexPath.row == 2 {
 			self.performSegue(withIdentifier: "showDecimalSegue", sender: self.decimalValue.text)
 		}
 	}

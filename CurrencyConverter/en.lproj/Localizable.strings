@@ -205,10 +205,10 @@
 
 "settings.title" = "Settings";
 "settings.soundsHeader" = "Sounds";
-"settings.soundsFooter" = "Using sounds can reduce keystroke error rate";
+"settings.soundsFooter" = "Using sounds can reduce keystroke error rate.";
 "settings.keyboardClicks" = "Keyboard Clicks";
-"settings.rateHeader" = "Rate";
-"settings.rateFooter" = "Using the latest exchange rate can make the calculation more accurate.";
+"settings.rateUpdateHeader" = "Rate Update";
+"settings.rateUpdateFooter" = "Using the latest exchange rate can make the calculation more accurate.";
 "settings.autoUpdateRate" = "Auto Update Rate";
 "settings.updateFrequency" = "Update Frequency";
 "settings.update.0" = "Update per minute";
@@ -218,6 +218,8 @@
 "settings.updateSuccess" = "Update success";
 "settings.updateFailed" = "Update failed";
 "settings.updatedAt" = "Last Update";
+"settings.customRateHeader" = "Custom Rate";
+"settings.customRateFooter" = "Custom rates are automatically disabled when the currency type changes.";
 "settings.displayHeader" = "Display";
 "settings.displayFooter" = "";
 "settings.use1000Separator" = "Use 1000 Separator (,)";
