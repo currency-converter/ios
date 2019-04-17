@@ -27,13 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		//获取url以及参数
 		let urlString = url.absoluteString
 		let queryArray = urlString.components(separatedBy: "/")
-		print("queryArray:", queryArray)
-		let rootView = self.window!.rootViewController as! ViewController
-		print("rootView:", rootView)
+		let navigationController: UINavigationController = self.window!.rootViewController as! UINavigationController
+		let rootView = navigationController.visibleViewController as! ViewController
+
 		switch queryArray[2] {
 		case "settings": // currencyconverter://settings
-//			let controller = SettingsViewController()
-//			rootView.present(controller, animated: true, completion: nil)
 			rootView.performSegue(withIdentifier: "showSettingsSegue", sender: nil)
 		case "currencypicker": // currencyconverter://currencypicker/to/CNY
 			if queryArray[3] == "from" {
