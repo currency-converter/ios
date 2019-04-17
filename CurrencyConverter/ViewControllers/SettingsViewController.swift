@@ -166,13 +166,13 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
 		let isUse1000Separator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
 		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		let fromCurrency: String = shared?.string(forKey: "fromCurrency") ?? "USD"
-		let toCurrency: String = shared?.string(forKey: "toCurrency") ?? "CNY"
+		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? "USD"
+		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? "CNY"
 		
 		var rate: Float = 1.0
 		if rates != nil {
-			let fromRate:Float! = rates![fromCurrency]?.floatValue
-			let toRate:Float! = rates![toCurrency]?.floatValue
+			let fromRate:Float! = rates![fromSymbol]?.floatValue
+			let toRate:Float! = rates![toSymbol]?.floatValue
 			rate = toRate/fromRate
 		}
 		
@@ -255,13 +255,13 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	func updateCustomRateDetail(rate: Float) {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let fromCurrency: String = shared?.string(forKey: "fromCurrency") ?? "USD"
-		let toCurrency: String = shared?.string(forKey: "toCurrency") ?? "CNY"
+		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? "USD"
+		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? "CNY"
 		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
 		let fromMoney: String = String(format: "%.\(String(describing: decimals))f", arguments:[1.0])
 		let toMoney = String(format: "%.\(decimals)f", arguments:[rate])
 
-		self.customRateDetailLabel.text = "\(fromMoney) \(fromCurrency) = \(toMoney) \(toCurrency)"
+		self.customRateDetailLabel.text = "\(fromMoney) \(fromSymbol) = \(toMoney) \(toSymbol)"
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
