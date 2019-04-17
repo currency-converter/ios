@@ -375,11 +375,6 @@ class ViewController: UIViewController, myDelegate {
 				self.toScreenView.frame.origin.y = 0
 			}, completion: {
 				(finished:Bool) -> Void in
-				let shared = UserDefaults(suiteName: self.groupId)
-				shared?.set(false, forKey: "isCustomRate")
-				shared?.removeObject(forKey: "customRate")
-				self.asteriskLabel.isHidden = true
-				
 				//更新界面
 				self.fromScreenView.frame.origin.y = 0
 				self.toScreenView.frame.origin.y = 100
@@ -388,6 +383,15 @@ class ViewController: UIViewController, myDelegate {
 				let tempMoney = self.fromMoneyLabel.text
 				self.fromMoneyLabel.text = self.toMoneyLabel.text
 				self.toMoneyLabel.text = tempMoney
+
+				let shared = UserDefaults(suiteName: self.groupId)
+				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+				if isCustomRate {
+					shared?.set(false, forKey: "isCustomRate")
+					shared?.removeObject(forKey: "customRate")
+					self.asteriskLabel.isHidden = true
+				}
+				
 			})
 		}
 	}
