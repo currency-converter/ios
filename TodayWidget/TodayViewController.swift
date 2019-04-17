@@ -238,7 +238,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			btn.layer.cornerRadius = buttonWidth/2
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.backgroundColor = UIColor.hex("2c2c2c")
-			btn.titleLabel?.font = UIFont(name:"Avenir", size: 28)
+			if item == "A" {
+				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size: 28)
+			} else {
+				btn.titleLabel?.font = UIFont(name:"Avenir", size: 28)
+			}
 			btn.setTitle(item, for: UIControl.State.normal)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			keyboard.addSubview(btn)

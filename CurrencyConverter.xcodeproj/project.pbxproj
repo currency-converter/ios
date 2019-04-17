@@ -21,6 +21,8 @@
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
 		24C70A472266C502008CAD04 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
+		24C70A482266E0FF008CAD04 /* cc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE830222909E600B4C046 /* cc.ttf */; };
+		24C70A492266E425008CAD04 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADE834222AAE3900B4C046 /* Iconfont.swift */; };
 		24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A650224394FC00BC423B /* SettingsTableCell.swift */; };
 		24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */; };
 		24D0A6572248F12900BC423B /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6562248F12800BC423B /* Sounds */; };
@@ -288,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24D98583225C8CE900AEBA7B /* MainInterface.storyboard in Resources */,
+				24C70A482266E0FF008CAD04 /* cc.ttf in Resources */,
 				2410D7D4225EDB18001B192B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24C70A492266E425008CAD04 /* Iconfont.swift in Sources */,
 				24D98580225C8CE900AEBA7B /* TodayViewController.swift in Sources */,
 				24C70A472266C502008CAD04 /* Util.swift in Sources */,
 			);
