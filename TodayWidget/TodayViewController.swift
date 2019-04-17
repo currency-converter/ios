@@ -106,7 +106,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		if activeDisplayMode == NCWidgetDisplayMode.compact {
 			self.isCompact = true
 			self.preferredContentSize = CGSize(width: maxSize.width, height: compactHeight);
-			renderCompactMode()
+			
+			//延时2秒，让切换效果更加自然
+			DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
+				self.renderCompactMode()
+			})
 		} else {
 			self.isCompact = false
 			self.preferredContentSize = CGSize(width: maxSize.width, height: expandedHeight);
