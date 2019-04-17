@@ -57,10 +57,30 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	var fromMoneyLabel: UILabel!
 	var toMoneyLabel: UILabel!
+	
+	// 最外层间隔宽度
+	let expandedPadding: CGFloat = 20
+	//货币符号的宽度
+	let expandedSymbolWidth: CGFloat = 60
+	//货币符号的高度
+	let expandedSymbolHeight: CGFloat = 60
+	//键盘上间距
+	let expandedKeyboardMarginTop: CGFloat = 20
+	//每个数字按钮间距
+	let expandedButtonMargin: CGFloat = 10
+	//展开时高度(运行时会修改)
+	var expandedHeight: CGFloat = 400
+	//收起时高度，不能小于110
+	let compactHeight: CGFloat = 110
+	//货币数字字体大小
+	let expandedMoneyFontSize: CGFloat = 50
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view from its nib.
+		
+		self.view.backgroundColor = UIColor.black
+		self.expandedHeight = self.view.frame.width + expandedSymbolHeight * 2 + expandedKeyboardMarginTop
 		
 		self.registerSettingsBundle()
 		self.initConfig()
@@ -76,7 +96,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
 		}
 		
-		self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 110)
+		self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: compactHeight)
     }
 	
 	//折叠change size
@@ -85,11 +105,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		if activeDisplayMode == NCWidgetDisplayMode.compact {
 			self.isCompact = true
-			self.preferredContentSize = CGSize(width: maxSize.width, height: 110);
+			self.preferredContentSize = CGSize(width: maxSize.width, height: compactHeight);
 			renderCompactMode()
 		} else {
 			self.isCompact = false
-			self.preferredContentSize = CGSize(width: maxSize.width, height: 460);
+			self.preferredContentSize = CGSize(width: maxSize.width, height: expandedHeight);
 			renderExpandedMode()
 		}
 	}
@@ -117,62 +137,113 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func renderCompactMode() {
-		let fromSymbol = UIButton(frame: CGRect(x: 10, y: 10, width: 40, height: 45))
-		//fromSymbol.backgroundColor = UIColor.yellow
-		fromSymbol.tag = 1
-		fromSymbol.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.black, for: .normal)
-		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		self.view.addSubview(fromSymbol)
+		//整体间距
+		let margin: CGFloat = 10
+		//屏幕宽度
+		let screenWidth: CGFloat = 110
+		//屏幕高度
+		let screenHeight: CGFloat = compactHeight - margin * 2
+		//两个小屏幕之间的间距
+		let screenMargin: CGFloat = 2
+		//小屏幕高度
+		let subScreenHeight: CGFloat = (screenHeight - screenMargin) / 2
 		
-		fromMoneyLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 70, height: 45))
+		let symbolMargin: CGFloat = 3
+		
+		let symbolHeight: CGFloat = 15
+		let symbolWidth: CGFloat = 40
+		
+		//键盘宽度
+		let keyboardWidth: CGFloat = self.view.frame.width - screenWidth - margin * 3
+		let keyboardHeight: CGFloat = screenHeight
+		
+		let screen: UIView = UIView(frame: CGRect(x: margin, y: margin, width: screenWidth, height: screenHeight))
+		//screen.backgroundColor = UIColor.green
+		self.view.addSubview(screen)
+		
+		let fromScreen: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
+		fromScreen.backgroundColor = UIColor.hex("333333")
+		fromScreen.layer.cornerRadius = 5
+		screen.addSubview(fromScreen)
+		
+		let toScreen: UIView = UIView(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
+		toScreen.backgroundColor = UIColor.hex("222222")
+		toScreen.layer.cornerRadius = 5
+		screen.addSubview(toScreen)
+		
+		let fromSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
+		//fromSymbol.backgroundColor = UIColor.red
+		//fromSymbol.layer.cornerRadius = 5
+		fromSymbol.tag = 1
+		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+		fromSymbol.setTitle(self.fromSymbol, for: .normal)
+		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
+		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+		fromScreen.addSubview(fromSymbol)
+
+		fromMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		//fromMoneyLabel.backgroundColor = UIColor.gray
-		//fromMoneyLabel.textAlignment = .right
+		fromMoneyLabel.textAlignment = .right
+		fromMoneyLabel.textColor = UIColor.gray
+		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		fromMoneyLabel.text = self.fromMoney
-		self.view.addSubview(fromMoneyLabel)
-		
-		let toSymbol = UIButton(frame: CGRect(x: 10, y: 55, width: 40, height: 45))
-		//toSymbol.backgroundColor = UIColor.yellow
+		fromScreen.addSubview(fromMoneyLabel)
+
+		let toSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
+		//toSymbol.backgroundColor = UIColor.green
 		toSymbol.tag = 2
-		toSymbol.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+		toSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		toSymbol.setTitle(self.toSymbol, for: .normal)
-		toSymbol.setTitleColor(UIColor.black, for: .normal)
+		toSymbol.setTitleColor(UIColor.white, for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		self.view.addSubview(toSymbol)
-		
-		toMoneyLabel = UILabel(frame: CGRect(x: 50, y: 55, width: 70, height: 45))
+		toScreen.addSubview(toSymbol)
+
+		toMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
+		toMoneyLabel.textColor = UIColor.white
+		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		//toMoneyLabel.backgroundColor = UIColor.gray
-		//toMoneyLabel.textAlignment = .right
+		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
-		self.view.addSubview(toMoneyLabel)
+		toScreen.addSubview(toMoneyLabel)
+//
+//		let arrowLabel = UILabel(frame: CGRect(x: 20, y: 40, width: 30, height: 30))
+//		//arrowLabel.backgroundColor = UIColor.red
+//		arrowLabel.text = "⇩"
+//		arrowLabel.textColor = UIColor.white
+//		arrowLabel.textAlignment = .left
+//		self.view.addSubview(arrowLabel)
 		
-		let arrowLabel = UILabel(frame: CGRect(x: 20, y: 40, width: 30, height: 30))
-		//arrowLabel.backgroundColor = UIColor.red
-		arrowLabel.text = "⇩"
-		arrowLabel.textAlignment = .left
-		self.view.addSubview(arrowLabel)
-		
-		let keyboard = UIView(frame: CGRect(x: 120, y: 10, width: UIScreen.main.bounds.width - 145, height: 90))
+		let keyboard = UIView(frame: CGRect(x: screenWidth + margin * 2, y: margin, width: keyboardWidth, height: keyboardHeight))
 		//keyboard.backgroundColor = UIColor.lightGray
+		keyboard.clipsToBounds = true
 		self.view.addSubview(keyboard)
 		
-		let numberOfButtonsPerLine: Int = 6
-		let buttonPadding :CGFloat = 5
-		let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 150) / CGFloat(numberOfButtonsPerLine) - buttonPadding
+		//每行显示按钮个数
+		let numberOfButtonsPerLine: CGFloat = 6
+		//按钮左右间距
+		let buttonMarginLeft: CGFloat = 5
+		//按钮宽度
+		let buttonWidth: CGFloat = (keyboard.frame.width - buttonMarginLeft * (numberOfButtonsPerLine - 1)) / numberOfButtonsPerLine
+		let buttonY: CGFloat = (subScreenHeight - buttonWidth)/2
 		let characters:[String] = ["4", "5", "6", "7", "8", "9", "0", "1", "2", "3", ".", "AC"]
 		
 		for (index, item) in characters.enumerated() {
 			// 创建数字按钮
-			var btn:UIButton
-			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % numberOfButtonsPerLine) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/numberOfButtonsPerLine))) + buttonPadding, width:buttonWidth, height:buttonWidth))
+			let columnIndex: CGFloat = CGFloat(index % Int(numberOfButtonsPerLine))
+			let x: CGFloat = (buttonWidth + buttonMarginLeft) * columnIndex
+			let y: CGFloat = buttonY + CGFloat(floor(Double(index / Int(numberOfButtonsPerLine)))) * subScreenHeight
+			var btn: UIButton
+			btn = UIButton.init(frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
-			btn.layer.borderWidth = 1
-			btn.layer.borderColor = UIColor.hex("2c2c2c").cgColor
-			btn.setTitleColor(UIColor.hex("2c2c2c"), for: .normal)
-			//btn.backgroundColor = UIColor.hex("2c2c2c")
+			//btn.layer.borderWidth = 1
+			//btn.layer.borderColor = UIColor.hex("2c2c2c").cgColor
+			btn.setTitleColor(UIColor.white, for: .normal)
+			btn.backgroundColor = UIColor.hex("2c2c2c")
+			if item == "AC" {
+				btn.backgroundColor = UIColor.hex("ff9408")
+			}
 			btn.setTitle(item, for: UIControl.State.normal)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			keyboard.addSubview(btn)
@@ -180,71 +251,81 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func renderExpandedMode() {
-		let padding: CGFloat = 20
-		let arrowWidth: CGFloat = 30
-		let labelWidth: CGFloat = (UIScreen.main.bounds.width-4*padding-arrowWidth)/2
-		fromMoneyLabel = UILabel(frame: CGRect(x: padding, y: padding, width: labelWidth, height: 30))
+		let wrapperWidth: CGFloat = self.view.frame.width - expandedPadding * 2
+		let wrapperHeight: CGFloat = expandedHeight - expandedPadding * 2
+		
+		let wrapper = UIView(frame: CGRect(x: expandedPadding, y: expandedPadding, width: wrapperWidth, height: wrapperHeight))
+		//wrapper.backgroundColor = UIColor.green
+		self.view.addSubview(wrapper)
+		
+		//货币输入框的宽度
+		let moneyLabelWidth: CGFloat = wrapper.frame.width - expandedSymbolWidth
+
+		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: moneyLabelWidth, height: expandedSymbolHeight))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
-		fromMoneyLabel.backgroundColor = UIColor.black
-		fromMoneyLabel.font = UIFont.systemFont(ofSize: 30)
-		fromMoneyLabel.textColor = UIColor.white
-		fromMoneyLabel.layer.cornerRadius = 15
-		fromMoneyLabel.clipsToBounds = true
-		fromMoneyLabel.textAlignment = .center
+		//fromMoneyLabel.backgroundColor = UIColor.yellow
+		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
+		fromMoneyLabel.textColor = UIColor.gray
+		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
-		self.view.addSubview(fromMoneyLabel)
-		
-		let arrowLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width-arrowWidth)/2, y: padding, width: arrowWidth, height: 30))
-		arrowLabel.text = "→"
-		self.view.addSubview(arrowLabel)
-		
-		toMoneyLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width+arrowWidth)/2, y: padding, width: labelWidth, height: 30))
-		toMoneyLabel.adjustsFontSizeToFitWidth = true
-		toMoneyLabel.backgroundColor = UIColor.black
-		toMoneyLabel.font = UIFont.systemFont(ofSize: 30)
-		toMoneyLabel.textColor = UIColor.white
-		toMoneyLabel.layer.cornerRadius = 15
-		toMoneyLabel.clipsToBounds = true
-		toMoneyLabel.textAlignment = .center
-		toMoneyLabel.text = self.output(self.fromMoney)
-		self.view.addSubview(toMoneyLabel)
-		
-		let fromSymbol = UIButton(frame: CGRect(x: padding, y: 50, width: labelWidth, height: 30))
+		wrapper.addSubview(fromMoneyLabel)
+
+		let fromSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: 0, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		fromSymbol.tag = 1
+		//fromSymbol.backgroundColor = UIColor.red
 		fromSymbol.setTitle("USD", for: .normal)
-		fromSymbol.setTitleColor(UIColor.black, for: .normal)
+		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
 		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		self.view.addSubview(fromSymbol)
+		wrapper.addSubview(fromSymbol)
 		
-		let toSymbol = UIButton(frame: CGRect(x: (UIScreen.main.bounds.width+arrowWidth)/2, y: 50, width: labelWidth, height: 30))
+		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: expandedSymbolHeight, width: moneyLabelWidth, height: expandedSymbolHeight))
+		toMoneyLabel.adjustsFontSizeToFitWidth = true
+		//toMoneyLabel.backgroundColor = UIColor.purple
+		toMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
+		toMoneyLabel.textColor = UIColor.white
+		toMoneyLabel.textAlignment = .right
+		toMoneyLabel.text = self.output(self.fromMoney)
+		wrapper.addSubview(toMoneyLabel)
+
+		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		toSymbol.tag = 2
+		//toSymbol.backgroundColor = UIColor.brown
 		toSymbol.setTitle("CNY", for: .normal)
-		toSymbol.setTitleColor(UIColor.black, for: .normal)
+		toSymbol.setTitleColor(UIColor.white, for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		self.view.addSubview(toSymbol)
+		wrapper.addSubview(toSymbol)
 		
-		let keyboard = UIView(frame: CGRect(x: 0, y: 80, width: UIScreen.main.bounds.width, height: 400))
-		self.view.addSubview(keyboard)
+		let keyboardY :CGFloat = expandedSymbolHeight * 2 + expandedKeyboardMarginTop
+		let keyboard = UIView(frame: CGRect(x: 0, y: keyboardY, width: wrapper.frame.width, height: wrapper.frame.height - keyboardY))
+		//keyboard.backgroundColor = UIColor.red
+		wrapper.addSubview(keyboard)
 		
-		let buttonMargin: CGFloat = 20
-		let buttonWidth: CGFloat = (UIScreen.main.bounds.width - 70 - buttonMargin * 2) / 4
-		let buttonPadding :CGFloat = 10
+		let buttonWidth: CGFloat = (keyboard.frame.width - expandedButtonMargin * 3) / 4
 		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
 		
 		for (index, item) in characters.enumerated() {
 			// 创建数字按钮
 			var btn:UIButton
-			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding + buttonMargin, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
-			btn.layer.cornerRadius = buttonWidth/2
+			let columnIndex: CGFloat = CGFloat(index % 4)
+			let x: CGFloat = (buttonWidth + expandedButtonMargin) * columnIndex
+			let y: CGFloat = (buttonWidth + expandedButtonMargin) * CGFloat(floor(Double(index / 4)))
+			btn = UIButton.init(frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonWidth))
+			btn.layer.cornerRadius = buttonWidth / 2
 			btn.setTitleColor(UIColor.white, for: .normal)
-			btn.backgroundColor = UIColor.hex("2c2c2c")
-			if item == "A" {
-				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size: 28)
-			} else {
-				btn.titleLabel?.font = UIFont(name:"Avenir", size: 28)
-			}
+			btn.titleLabel?.font = UIFont(name:"Avenir", size: 28)
 			btn.setTitle(item, for: UIControl.State.normal)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+			
+			switch item {
+			case "=", "+", "-", "AC":
+				btn.backgroundColor = UIColor.hex("ff9408")
+			case "A":
+				btn.backgroundColor = UIColor.hex("2c2c2c")
+				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:28)
+			default:
+				btn.backgroundColor = UIColor.hex("424242")
+			}
+		
 			keyboard.addSubview(btn)
 		}
 	}
