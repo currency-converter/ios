@@ -165,12 +165,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		//screen.backgroundColor = UIColor.green
 		self.view.addSubview(screen)
 		
-		let fromScreen: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
+		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
+		fromScreen.tag = 1
+		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		fromScreen.backgroundColor = UIColor.hex("333333")
 		fromScreen.layer.cornerRadius = 5
 		screen.addSubview(fromScreen)
 		
-		let toScreen: UIView = UIView(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
+		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
+		toScreen.tag = 2
+		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		toScreen.backgroundColor = UIColor.hex("222222")
 		toScreen.layer.cornerRadius = 5
 		screen.addSubview(toScreen)
@@ -178,11 +182,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
 		//fromSymbol.backgroundColor = UIColor.red
 		//fromSymbol.layer.cornerRadius = 5
-		fromSymbol.tag = 1
+		//fromSymbol.tag = 1
 		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
 		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
-		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+		//fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		fromScreen.addSubview(fromSymbol)
 
 		fromMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
@@ -196,11 +200,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		let toSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
 		//toSymbol.backgroundColor = UIColor.green
-		toSymbol.tag = 2
+		//toSymbol.tag = 2
 		toSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		toSymbol.setTitle(self.toSymbol, for: .normal)
 		toSymbol.setTitleColor(UIColor.white, for: .normal)
-		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+		//toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		toScreen.addSubview(toSymbol)
 
 		toMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
