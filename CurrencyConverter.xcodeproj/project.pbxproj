@@ -20,6 +20,7 @@
 		24ADE841222ED4AB00B4C046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE83F222ED4AB00B4C046 /* LaunchScreen.storyboard */; };
 		24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE840222ED4AB00B4C046 /* Main.storyboard */; };
 		24C680102227855A00747FBF /* button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C6800F2227855A00747FBF /* button.swift */; };
+		24C70A472266C502008CAD04 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
 		24D0A651224394FC00BC423B /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A650224394FC00BC423B /* SettingsTableCell.swift */; };
 		24D0A6552248D6E800BC423B /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0A6542248D6E800BC423B /* SettingsBundleHelper.swift */; };
 		24D0A6572248F12900BC423B /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6562248F12800BC423B /* Sounds */; };
@@ -27,7 +28,6 @@
 		24D98580225C8CE900AEBA7B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9857F225C8CE900AEBA7B /* TodayViewController.swift */; };
 		24D98583225C8CE900AEBA7B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24D98581225C8CE900AEBA7B /* MainInterface.storyboard */; };
 		24D98587225C8CE900AEBA7B /* TodayWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24D9857A225C8CE900AEBA7B /* TodayWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		24D9858D225CA52500AEBA7B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9858C225CA52500AEBA7B /* Util.swift */; };
 		24EAA6262231ACAB00ACF074 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
 		24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906922606CF8005D6130 /* DecimalsViewController.swift */; };
 		24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906B22609FEC005D6130 /* FrequencyViewController.swift */; };
@@ -84,7 +84,6 @@
 		24D9857F225C8CE900AEBA7B /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		24D98582225C8CE900AEBA7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		24D98584225C8CE900AEBA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		24D9858C225CA52500AEBA7B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		24EAA6252231ACAB00ACF074 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		24EF906922606CF8005D6130 /* DecimalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalsViewController.swift; sourceTree = "<group>"; };
 		24EF906B22609FEC005D6130 /* FrequencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				2410D7D3225E0B42001B192B /* TodayWidget.entitlements */,
-				24D9858C225CA52500AEBA7B /* Util.swift */,
 				24D9857F225C8CE900AEBA7B /* TodayViewController.swift */,
 				24D98581225C8CE900AEBA7B /* MainInterface.storyboard */,
 				24D98584225C8CE900AEBA7B /* Info.plist */,
@@ -320,7 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24D98580225C8CE900AEBA7B /* TodayViewController.swift in Sources */,
-				24D9858D225CA52500AEBA7B /* Util.swift in Sources */,
+				24C70A472266C502008CAD04 /* Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
