@@ -53,10 +53,8 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-		
 		render()
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUpdateRate), name: .didUpdateRate, object: nil)
+		observe()
 	}
 	
 	func onReady(key: String, value: String) {
@@ -161,6 +159,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			let viewController = navigationController?.children[0] as! ViewController
 			viewController.updateRate()
 		}
+	}
+	
+	func observe() {
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUpdateRate), name: .didUpdateRate, object: nil)
 	}
 	
 	func render() {
