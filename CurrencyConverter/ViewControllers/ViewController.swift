@@ -80,8 +80,7 @@ class ViewController: UIViewController {
 		"autoUpdateRate": true,
 		"rateUpdatedFrequency": RateUpdatedFrequency.daily.rawValue,
 		"rateUpdatedAt": 1554968594,
-		"isCustomRate": false,
-		"favorites": ["CNY", "HKD", "JPY", "USD"]
+		"isCustomRate": false
 	]
 	
 	// UI 组件

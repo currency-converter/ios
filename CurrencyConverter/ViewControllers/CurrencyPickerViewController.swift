@@ -13,7 +13,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	var allCurrencies = [
-		0: [String](),
+		0: [String](["CNY", "HKD", "JPY", "USD"]),
 		1: [String]([
 			"AED", "AUD", "BGN", "BHD", "BND", "BRL", "BYN", "CAD", "CHF", "CLP",
 			"CNY", "COP", "CRC", "CZK", "DKK", "DZD", "EGP", "EUR", "GBP", "HKD",
@@ -111,8 +111,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		self.view.backgroundColor = UIColor.hex("121212")
 		
 		let shared = UserDefaults(suiteName: self.groupId)
-		
-		self.allCurrencies[0] = shared?.array(forKey: "favorites") as? [String]
+		if let favorites = shared?.array(forKey: "favorites") as? [String] {
+			self.allCurrencies[0] = favorites
+		}
 		
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
