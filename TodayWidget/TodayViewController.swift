@@ -162,7 +162,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let keyboardHeight: CGFloat = screenHeight
 		
 		let screen: UIView = UIView(frame: CGRect(x: margin, y: margin, width: screenWidth, height: screenHeight))
-		//screen.backgroundColor = UIColor.green
 		self.view.addSubview(screen)
 		
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
@@ -180,18 +179,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		screen.addSubview(toScreen)
 		
 		let fromSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
-		//fromSymbol.backgroundColor = UIColor.red
-		//fromSymbol.layer.cornerRadius = 5
-		//fromSymbol.tag = 1
 		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
 		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
-		//fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		fromScreen.addSubview(fromSymbol)
 
 		fromMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
-		//fromMoneyLabel.backgroundColor = UIColor.gray
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.textColor = UIColor.gray
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -199,32 +193,20 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromScreen.addSubview(fromMoneyLabel)
 
 		let toSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
-		//toSymbol.backgroundColor = UIColor.green
-		//toSymbol.tag = 2
 		toSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		toSymbol.setTitle(self.toSymbol, for: .normal)
 		toSymbol.setTitleColor(UIColor.white, for: .normal)
-		//toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		toScreen.addSubview(toSymbol)
 
 		toMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.textColor = UIColor.white
 		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		//toMoneyLabel.backgroundColor = UIColor.gray
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
 		toScreen.addSubview(toMoneyLabel)
-//
-//		let arrowLabel = UILabel(frame: CGRect(x: 20, y: 40, width: 30, height: 30))
-//		//arrowLabel.backgroundColor = UIColor.red
-//		arrowLabel.text = "⇩"
-//		arrowLabel.textColor = UIColor.white
-//		arrowLabel.textAlignment = .left
-//		self.view.addSubview(arrowLabel)
 		
 		let keyboard = UIView(frame: CGRect(x: screenWidth + margin * 2, y: margin, width: keyboardWidth, height: keyboardHeight))
-		//keyboard.backgroundColor = UIColor.lightGray
 		keyboard.clipsToBounds = true
 		self.view.addSubview(keyboard)
 		
@@ -271,7 +253,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: moneyLabelWidth, height: expandedSymbolHeight))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
-		//fromMoneyLabel.backgroundColor = UIColor.yellow
 		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
 		fromMoneyLabel.textColor = UIColor.gray
 		fromMoneyLabel.textAlignment = .right
@@ -280,15 +261,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		let fromSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: 0, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		fromSymbol.tag = 1
-		//fromSymbol.backgroundColor = UIColor.red
-		fromSymbol.setTitle("USD", for: .normal)
+		fromSymbol.setTitle(self.fromSymbol, for: .normal)
 		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
 		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(fromSymbol)
 		
 		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: expandedSymbolHeight, width: moneyLabelWidth, height: expandedSymbolHeight))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
-		//toMoneyLabel.backgroundColor = UIColor.purple
 		toMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
 		toMoneyLabel.textColor = UIColor.white
 		toMoneyLabel.textAlignment = .right
@@ -297,8 +276,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		toSymbol.tag = 2
-		//toSymbol.backgroundColor = UIColor.brown
-		toSymbol.setTitle("CNY", for: .normal)
+		toSymbol.setTitle(self.toSymbol, for: .normal)
 		toSymbol.setTitleColor(UIColor.white, for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(toSymbol)
