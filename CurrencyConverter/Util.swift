@@ -19,7 +19,7 @@ extension UIColor {
 	public static func rgb(r:CGFloat, g:CGFloat, b:CGFloat) -> UIColor {
 		return UIColor (red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1)
 	}
-	public static func hex(_ hex:String) -> UIColor {
+	public static func hex(_ hex: String, alpha: CGFloat = 1) -> UIColor {
 		var cstr = hex.trimmingCharacters(in:  CharacterSet.whitespacesAndNewlines).uppercased() as NSString;
 		if(cstr.length < 6){
 			return UIColor.clear;
@@ -50,7 +50,7 @@ extension UIColor {
 		Scanner.init(string: rStr).scanHexInt32(&r);
 		Scanner.init(string: gStr).scanHexInt32(&g);
 		Scanner.init(string: bStr).scanHexInt32(&b);
-		return UIColor.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1);
+		return UIColor.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: alpha);
 	}
 }
 

@@ -79,7 +79,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         super.viewDidLoad()
         // Do any additional setup after loading the view from its nib.
 		
-		self.view.backgroundColor = UIColor.black
+		//self.view.backgroundColor = UIColor.black
 		self.expandedHeight = self.view.frame.width + expandedSymbolHeight * 2 + expandedKeyboardMarginTop
 		
 		self.registerSettingsBundle()
@@ -167,7 +167,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
 		fromScreen.tag = 1
 		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		fromScreen.backgroundColor = UIColor.hex("333333")
+		fromScreen.backgroundColor = UIColor.hex("dddddd")
 		fromScreen.layer.cornerRadius = 5
 		screen.addSubview(fromScreen)
 		
@@ -181,13 +181,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
 		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
+		fromSymbol.setTitleColor(UIColor.black, for: .normal)
 		fromScreen.addSubview(fromSymbol)
 
 		fromMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.textColor = UIColor.gray
+		fromMoneyLabel.textColor = UIColor.black
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		fromMoneyLabel.text = self.fromMoney
 		fromScreen.addSubview(fromMoneyLabel)
@@ -232,7 +232,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.backgroundColor = UIColor.hex("2c2c2c")
 			if item == "AC" {
-				btn.backgroundColor = UIColor.hex("ff9408")
+				btn.backgroundColor = UIColor.hex("da8009")
 			}
 			btn.setTitle(item, for: UIControl.State.normal)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
@@ -254,7 +254,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: moneyLabelWidth, height: expandedSymbolHeight))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
-		fromMoneyLabel.textColor = UIColor.gray
+		fromMoneyLabel.textColor = UIColor.black
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
 		wrapper.addSubview(fromMoneyLabel)
@@ -262,7 +262,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: 0, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		fromSymbol.tag = 1
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.gray, for: .normal)
+		fromSymbol.setTitleColor(UIColor.black, for: .normal)
 		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(fromSymbol)
 		
@@ -304,7 +304,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			
 			switch item {
 			case "=", "+", "-", "AC":
-				btn.backgroundColor = UIColor.hex("ff9408")
+				btn.backgroundColor = UIColor.hex("da8009")
 			case "A":
 				btn.backgroundColor = UIColor.hex("2c2c2c")
 				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:28)
