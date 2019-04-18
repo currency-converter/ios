@@ -41,9 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 			
 			let controller = CurrencyPickerViewController()
-			controller.currentCurrency = queryArray[4]
-			controller.delegate = rootView
-			
+			controller.currencyType = queryArray[3]
+			controller.currencySymbol = queryArray[4]
 			rootView.present(controller, animated: true, completion: nil)
 		default: break
 		}

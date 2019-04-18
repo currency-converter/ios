@@ -14,9 +14,9 @@ protocol CallbackDelegate {
 	func onReady(key: String, value: String)
 }
 
-protocol myDelegate {
-	func currencyCellClickCallback(data: String)
-}
+//protocol myDelegate {
+//	func currencyCellClickCallback(data: String)
+//}
 
 //货币选择类型
 enum CurrencyPickerType: String {
@@ -34,7 +34,7 @@ enum RateUpdatedFrequency: String {
 //域名
 let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
 
-class ViewController: UIViewController, myDelegate {
+class ViewController: UIViewController {
 	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
@@ -100,34 +100,6 @@ class ViewController: UIViewController, myDelegate {
 	//键盘距离顶部的间距
 	var PADDING_BOTTOM: CGFloat = 20
 	
-	func currencyCellClickCallback(data: String) {
-		var key = ""
-		if currencyPickerType == CurrencyPickerType.from {
-			key = "fromSymbol"
-			fromSymbol = data
-			self.fromSymbolButton.setTitle(data, for: .normal)
-		} else {
-			toSymbol = data
-			key = "toSymbol"
-			// 更新界面
-			self.toSymbolButton.setTitle(data, for: .normal)
-		}
-		// 更新配置
-		let shared = UserDefaults(suiteName: self.groupId)
-		shared?.set(data, forKey: key)
-		//清除自定义汇率
-		shared?.set(false, forKey: "isCustomRate")
-		shared?.removeObject(forKey: "customRate")
-		self.asteriskLabel.isHidden = true
-		//更新汇率
-		let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-		let toRate:Float! = self.rates[self.toSymbol]?.floatValue
-		let rate:Float = toRate/fromRate
-		self.rate = rate
-		//更新计算结果
-		self.toMoneyLabel.text = self.output(self.fromMoney)
-	}
-	
 	public func updateRate() {
 		let newUrlString = self.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 		// 创建请求配置
@@ -150,9 +122,7 @@ class ViewController: UIViewController, myDelegate {
 				//self.rateUpdatedAt = now
 				self.rates = rates as? Dictionary<String, NSNumber>
 				//汇率更新后，需要主动更新app中正使用的汇率
-				let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-				let toRate:Float! = self.rates[self.toSymbol]?.floatValue
-				self.rate = toRate/fromRate
+				self.retrieveRate()
 
 				//更新缓存数据
 				let shared = UserDefaults(suiteName: self.groupId)
@@ -190,19 +160,13 @@ class ViewController: UIViewController, myDelegate {
 		
 		registerSettingsBundle()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(self.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidChangeCustomRate), name: .didChangeCustomRate, object: nil)
-	
-		self.view.backgroundColor = UIColor.hex("121212")
-		
 		createUpdateRateDaemon()
 
 		initConfig()
-
-		createScreenView()
 		
-		createKeyboardView()
+		render()
+		
+		observe()
 	}
 	
 	func isNeedUpdateRate() -> Bool {
@@ -218,6 +182,12 @@ class ViewController: UIViewController, myDelegate {
 			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: rateUpdatedAt, unit: Date.unit.hour) > 0)
 	}
 	
+	func retrieveRate() {
+		let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
+		let toRate:Float! = self.rates[self.toSymbol]?.floatValue
+		self.rate = toRate/fromRate
+	}
+	
 	func createUpdateRateDaemon() {
 		Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { (start) in
 			if self.isNeedUpdateRate() {
@@ -231,7 +201,18 @@ class ViewController: UIViewController, myDelegate {
 		self.navigationController?.isNavigationBarHidden = true
 	}
 	
-	private func createScreenView() {
+	func render() {
+		self.view.backgroundColor = UIColor.hex("121212")
+		
+		renderScreen()
+		renderKeyboard()
+	}
+	
+	func observe() {
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUserDefaultsChange), name: .didUserDefaultsChange, object: nil)
+	}
+	
+	func renderScreen() {
 		let shared = UserDefaults(suiteName: self.groupId)
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
 		
@@ -307,7 +288,7 @@ class ViewController: UIViewController, myDelegate {
 		screenView.addGestureRecognizer(swipeDown)
 	}
 	
-	private func createKeyboardView() {
+	func renderKeyboard() {
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		
@@ -363,28 +344,33 @@ class ViewController: UIViewController, myDelegate {
 	
 	@objc func swipe(_ recognizer:UISwipeGestureRecognizer){
 		if recognizer.direction == .up || recognizer.direction == .down {
-			let tempCurrency = self.fromSymbol
-			self.fromSymbol = self.toSymbol
-			self.toSymbol = tempCurrency
-			self.rate = 1/self.rate
-			print("self.fromScreenView.frame.origin.y:", self.fromScreenView.frame.origin.y)
-			print("self.toScreenView.frame.origin.y:", self.toScreenView.frame.origin.y)
-			
 			UIView.animate(withDuration: 0.5, animations: {
 				self.fromScreenView.frame.origin.y = 100
 				self.toScreenView.frame.origin.y = 0
 			}, completion: {
 				(finished:Bool) -> Void in
+				
+				let fromSymbol: String = self.toSymbol
+				let toSymbol: String = self.fromSymbol
+				let fromMoney: String = self.toMoneyLabel.text!
+				let toMoney: String = self.fromMoneyLabel.text!
 				//更新界面
 				self.fromScreenView.frame.origin.y = 0
 				self.toScreenView.frame.origin.y = 100
-				self.fromSymbolButton.setTitle(self.fromSymbol, for: .normal)
-				self.toSymbolButton.setTitle(self.toSymbol, for: .normal)
-				let tempMoney = self.fromMoneyLabel.text
-				self.fromMoneyLabel.text = self.toMoneyLabel.text
-				self.toMoneyLabel.text = tempMoney
+				self.fromMoney = fromMoney
+				self.fromSymbol = fromSymbol
+				self.toSymbol = toSymbol
+				self.fromSymbolButton.setTitle(fromSymbol, for: .normal)
+				self.toSymbolButton.setTitle(toSymbol, for: .normal)
+				self.fromMoneyLabel.text = fromMoney
+				self.toMoneyLabel.text = toMoney
+				//交换时禁用自定义汇率
+				self.rate = 1/self.rate//?
 
+				//更新缓存
 				let shared = UserDefaults(suiteName: self.groupId)
+				shared?.set(fromSymbol, forKey: "fromSymbol")
+				shared?.set(toSymbol, forKey: "toSymbol")
 				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
 				if isCustomRate {
 					shared?.set(false, forKey: "isCustomRate")
@@ -392,23 +378,31 @@ class ViewController: UIViewController, myDelegate {
 					self.asteriskLabel.isHidden = true
 				}
 				
+				NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+					"fromSymbol": fromSymbol,
+					"toSymbol": toSymbol,
+					"customRate": 0.0,
+					"isCustomRate": false
+				])
+				
 			})
 		}
 	}
 	
 	@objc func showCurrencyPicker(_ sender: UIButton) {
-		var currentCurrency = ""
+		var currencySymbol: String, currencyType: String
+		
 		if sender.tag == 1 {
-			self.currencyPickerType = .from
-			currentCurrency = self.fromSymbol
+			currencyType = CurrencyPickerType.from.rawValue
+			currencySymbol = self.fromSymbol
 		} else {
-			self.currencyPickerType = .to
-			currentCurrency = self.toSymbol
+			currencyType = CurrencyPickerType.to.rawValue
+			currencySymbol = self.toSymbol
 		}
 		
 		let pickerView = CurrencyPickerViewController()
-		pickerView.currentCurrency = currentCurrency
-		pickerView.delegate = self
+		pickerView.currencySymbol = currencySymbol
+		pickerView.currencyType = currencyType
 		self.present(pickerView, animated: true, completion: nil)
 	}
 	
@@ -577,33 +571,36 @@ class ViewController: UIViewController, myDelegate {
 		return s
 	}
 	
-	@objc func defaultsChanged() {
-		//避免出现非主线程更新UI的警告
-		DispatchQueue.main.async {
-			self.toMoneyLabel.text = self.output(self.fromMoney)
+	@objc func onDidUserDefaultsChange(_ notification: Notification) {
+		if let data = notification.userInfo as? [String: Any] {
+			print("Notification data:", data)
+			if data.keys.contains("isCustomRate") {
+				let isCustomRate: Bool = data["isCustomRate"] as! Bool
+				self.asteriskLabel.isHidden = !isCustomRate
+			}
+			
+			if data.keys.contains("fromSymbol") {
+				let symbol: String = data["fromSymbol"] as! String
+				self.fromSymbolButton.setTitle(symbol, for: .normal)
+				self.fromSymbol = symbol
+				self.retrieveRate()
+			}
+			
+			if data.keys.contains("toSymbol") {
+				let symbol: String = data["toSymbol"] as! String
+				self.toSymbolButton.setTitle(symbol, for: .normal)
+				self.toSymbol = symbol
+				self.retrieveRate()
+			}
+			
+			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("thousandSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
+				DispatchQueue.main.async {
+					print("defaultsChanged")
+					self.toMoneyLabel.text = self.output(self.fromMoney)
+				}
+			}
 		}
 	}
-	
-	@objc func onDidChangeCustomRate(_ notification: Notification) {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
-		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-		
-		self.asteriskLabel.isHidden = !isCustomRate
-		self.rate = customRate
-		
-		if isCustomRate {
-			self.asteriskLabel.isHidden = false
-			self.rate = customRate
-		} else {
-			self.asteriskLabel.isHidden = true
-			let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-			let toRate:Float! = self.rates[self.toSymbol]?.floatValue
-			let rate:Float = toRate/fromRate
-			self.rate = rate
-		}
-	}
-	
 }
 
 

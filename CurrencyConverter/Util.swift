@@ -87,5 +87,5 @@ extension Date {
 //自定义事件
 extension Notification.Name {
 	static let didUpdateRate = Notification.Name("didUpdateRate")
-	static let didChangeCustomRate = Notification.Name("didChangeCustomRate")
+	static let didUserDefaultsChange = Notification.Name("didUserDefaultsChange")
 }

@@ -9,7 +9,6 @@
 import UIKit
 
 class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-	var delegate: myDelegate?
 	
 	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
@@ -23,7 +22,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 			"MYR", "NOK", "NZD", "OMR", "PHP", "PLN", "QAR", "RON", "RSD", "RUB",
 			"SAR", "SEK", "SGD", "SYP", "THB", "TRY", "TWD", "TZS", "UGX", "USD",
 			"VND", "ZAR"
-			])
+		])
 	]
 	
 	var adHeaders:[String] = [
@@ -103,7 +102,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	var searchResults:Array = [String]()
 	
 	// 当前选中的货币，接收主窗口传递过来的值
-	var currentCurrency: String = ""
+	var currencySymbol: String = ""
+	var currencyType: String = ""
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -179,7 +179,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		tableView.separatorColor = UIColor.hex("333333")
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellID")
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
 		self.view.addSubview(tableView)
 		self.currencyTableView = tableView
 	}
@@ -241,7 +241,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let isFav: Bool = allCurrencies[0]?.contains(currency ?? "") ?? false
 		let unicode: String = isFav ? "B" : "C"
 		
-		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
+		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
 		cell.preservesSuperviewLayoutMargins = false
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
@@ -270,7 +270,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.detailTextLabel?.textAlignment = .natural
 
 		// accessory
-		cell.accessoryType = cell.detailTextLabel?.text == currentCurrency ? .checkmark : .none
+		cell.accessoryType = cell.detailTextLabel?.text == currencySymbol ? .checkmark : .none
 		return cell
 	}
 	
@@ -282,8 +282,17 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//获取当前选中的单元格
 		let cell:UITableViewCell! = tableView.cellForRow(at: indexPath)
 		let text = cell.detailTextLabel?.text
-		if let text = text {
-			self.delegate?.currencyCellClickCallback(data: text)
+		if let data = text?.description {
+			let key: String = "\(currencyType)Symbol"
+			let shared = UserDefaults(suiteName: self.groupId)
+			shared?.set(data, forKey: key)
+			//清除自定义汇率
+			shared?.set(false, forKey: "isCustomRate")
+			
+			NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+				"isCustomRate": false,
+				key: data
+			])
 		}
 		
 		self.close()

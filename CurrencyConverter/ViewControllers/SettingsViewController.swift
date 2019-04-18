@@ -63,6 +63,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		// 更新配置
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(value, forKey: key)
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [key: value])
+		
 		//更新界面
 		if key == "decimals" {
 			decimalValue.text = value
@@ -124,7 +127,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			shared?.removeObject(forKey: "customRate")
 		}
 		self.toggleCustomRateDetail(sender.isOn)
-		NotificationCenter.default.post(name: .didChangeCustomRate, object: self)
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"isCustomRate": sender.isOn
+		])
 	}
 	
 	@IBAction func onCustomRateStepperClick(_ sender: UIStepper) {
@@ -132,13 +137,20 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		shared?.set(self.customRateStepper.value, forKey: "customRate")
 
 		self.updateCustomRateDetail(rate: Float(sender.value))
-		NotificationCenter.default.post(name: .didChangeCustomRate, object: self)
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"isCustomRate": true
+		])
 	}
 	
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
 		shared?.set(sender.isOn, forKey: "thousandSeparator")
 		self.demoLabel.text = self.formatDemoText()
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"thousandSeparator": sender.isOn
+		])
 	}
 
 	@IBAction func onUpdateImmediatelyClick(_ sender: UIButton) {
