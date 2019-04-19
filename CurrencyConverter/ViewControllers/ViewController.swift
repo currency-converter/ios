@@ -182,8 +182,8 @@ class ViewController: UIViewController {
 	}
 	
 	func retrieveRate() {
-		let fromRate:Float! = self.rates[self.fromSymbol]?.floatValue
-		let toRate:Float! = self.rates[self.toSymbol]?.floatValue
+		let fromRate: Float! = self.rates[self.fromSymbol]?.floatValue
+		let toRate: Float! = self.rates[self.toSymbol]?.floatValue
 		self.rate = toRate/fromRate
 	}
 	
@@ -357,14 +357,14 @@ class ViewController: UIViewController {
 				self.fromScreenView.frame.origin.y = 0
 				self.toScreenView.frame.origin.y = 100
 				self.fromMoney = fromMoney
-				self.fromSymbol = fromSymbol
-				self.toSymbol = toSymbol
-				self.fromSymbolButton.setTitle(fromSymbol, for: .normal)
-				self.toSymbolButton.setTitle(toSymbol, for: .normal)
+//				self.fromSymbol = fromSymbol
+//				self.toSymbol = toSymbol
+//				self.fromSymbolButton.setTitle(fromSymbol, for: .normal)
+//				self.toSymbolButton.setTitle(toSymbol, for: .normal)
 				self.fromMoneyLabel.text = fromMoney
 				self.toMoneyLabel.text = toMoney
 				//交换时禁用自定义汇率
-				self.rate = 1/self.rate//?
+//				self.rate = 1/self.rate
 
 				//更新缓存
 				let shared = UserDefaults(suiteName: self.groupId)
@@ -373,14 +373,12 @@ class ViewController: UIViewController {
 				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
 				if isCustomRate {
 					shared?.set(false, forKey: "isCustomRate")
-					shared?.removeObject(forKey: "customRate")
 					self.asteriskLabel.isHidden = true
 				}
 				
 				NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 					"fromSymbol": fromSymbol,
 					"toSymbol": toSymbol,
-					"customRate": 0.0,
 					"isCustomRate": false
 				])
 				
