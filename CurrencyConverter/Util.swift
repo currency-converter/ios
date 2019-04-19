@@ -13,6 +13,13 @@ import UIKit
 //}
 
 extension UIColor {
+	
+	// 枇杷黄 - 功能按钮正常背景颜色
+	public static let loquatYellow = UIColor.hex("ff9408")
+	
+	// app 背景色
+	public static let appBackgroundColor = UIColor.hex("121212")
+	
 	public static func rgba(r:CGFloat, g:CGFloat, b:CGFloat, a:CGFloat) -> UIColor {
 		return UIColor (red: r/255.0, green: g/255.0, blue: b/255.0, alpha: a)
 	}

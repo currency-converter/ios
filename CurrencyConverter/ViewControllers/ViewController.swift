@@ -201,7 +201,7 @@ class ViewController: UIViewController {
 	}
 	
 	func render() {
-		self.view.backgroundColor = UIColor.hex("121212")
+		self.view.backgroundColor = UIColor.appBackgroundColor
 		
 		renderScreen()
 		renderKeyboard()
@@ -319,7 +319,7 @@ class ViewController: UIViewController {
 			
 			switch item {
 			case "=", "+", "-", "AC":
-				btn.setBackgroundColor(color: UIColor.hex("ff9408"), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
 				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
 				btn.setBackgroundColor(color: UIColor.hex("fefefe"), forState: .selected)
 				btn.setTitleColor(UIColor.hex("fb9601"), for: .selected)
