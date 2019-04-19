@@ -46,12 +46,15 @@ class DecimalsViewController: UITableViewController {
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
+		cell.backgroundColor = UIColor.black
 		
 		// label
 		cell.textLabel?.text = value
+		cell.textLabel?.textColor = UIColor.white
 		
 		// accessory
 		cell.accessoryType = value == defaultValue ? .checkmark : .none
+		cell.tintColor = UIColor.loquatYellow
 		return cell
 	}
 	

@@ -51,12 +51,15 @@ class FrequencyViewController: UITableViewController {
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
 		cell.tag = indexPath.row
+		cell.backgroundColor = UIColor.black
 		
 		// label
 		cell.textLabel?.text = value
+		cell.textLabel?.textColor = UIColor.white
 		
 		// accessory
 		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none
+		cell.tintColor = UIColor.loquatYellow
 		return cell
 	}
 	

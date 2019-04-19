@@ -93,7 +93,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		//避免出现非主线程更新UI的警告
 		DispatchQueue.main.async {
 			self.updatedAtValue.text = self.formatUpdatedAtText()
-			self.updateImmediatelyButton.tintColor = UIColor.black
+			self.updateImmediatelyButton.tintColor = UIColor.hex("0067d8")
 			self.loading.stopAnimating()
 			
 			let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
@@ -262,7 +262,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func toggleCustomRateDetail(_ isOn: Bool) {
-		self.customRateDetailLabel.textColor = isOn ? UIColor.black : UIColor.gray
+		self.customRateDetailLabel.textColor = isOn ? UIColor.white : UIColor.gray
 		self.customRateStepper.tintColor = isOn ? UIColor.hex("0078fb") : UIColor.gray
 		self.customRateStepper.isEnabled = isOn
 	}
@@ -282,9 +282,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		return self.sectionHeaders[section]
 	}
 	
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 30
-	}
+//	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//		return 30
+//	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		return self.sectionFooters[section]
@@ -294,19 +294,19 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 //		return 30
 //	}
 	
-	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		guard let header = view as? UITableViewHeaderFooterView else { return }
-		header.textLabel?.textColor = UIColor.gray
-		header.textLabel?.font = UIFont.systemFont(ofSize: 12)
-		header.textLabel?.frame = header.frame
-	}
-	
-	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-		guard let footer = view as? UITableViewHeaderFooterView else { return }
-		footer.textLabel?.textColor = UIColor.gray
-		footer.textLabel?.font = UIFont.systemFont(ofSize: 12)
-		footer.textLabel?.frame = footer.frame
-	}
+//	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//		guard let header = view as? UITableViewHeaderFooterView else { return }
+//		header.textLabel?.textColor = UIColor.gray
+//		header.textLabel?.font = UIFont.systemFont(ofSize: 12)
+//		header.textLabel?.frame = header.frame
+//	}
+//	
+//	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+//		guard let footer = view as? UITableViewHeaderFooterView else { return }
+//		footer.textLabel?.textColor = UIColor.gray
+//		footer.textLabel?.font = UIFont.systemFont(ofSize: 12)
+//		footer.textLabel?.frame = footer.frame
+//	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		//更新频率
