@@ -255,7 +255,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
 		let dformatter = DateFormatter()
-		dformatter.dateFormat = NSLocalizedString("dateTimeFormat", comment: "")//"yyyy-MM-dd HH:mm:ss"
+		dformatter.dateFormat = NSLocalizedString("settings.dateTimeFormat", comment: "")//"yyyy-MM-dd HH:mm:ss"
 		let updatedAtText = dformatter.string(from: date)
 		
 		return updatedAtText

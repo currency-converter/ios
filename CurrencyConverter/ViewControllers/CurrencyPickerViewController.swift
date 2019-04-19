@@ -26,8 +26,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	]
 	
 	var adHeaders:[String] = [
-		NSLocalizedString("favoriteCurrencies", comment: ""),
-		NSLocalizedString("allCurrencies", comment: "")
+		NSLocalizedString("currencyPicker.favoriteCurrencies", comment: ""),
+		NSLocalizedString("currencyPicker.allCurrencies", comment: "")
 	]
 	
 	var currencyNames: [String:String] = [:]
@@ -66,7 +66,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let navigationitem = UINavigationItem()
 		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
 		rightBtn.tintColor = UIColor.loquatYellow
-		navigationitem.title = NSLocalizedString("selectCurrency", comment: "")
+		navigationitem.title = NSLocalizedString("currencyPicker.title", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
 		navigationBar.pushItem(navigationitem, animated: true)
 		
@@ -144,14 +144,13 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	}
 	
 	func initCurrencyNames() {
-		currencyNames[""] = NSLocalizedString("unknow", comment: "")
+		currencyNames[""] = NSLocalizedString("currencyPicker.unknow", comment: "")
 		for currency in allCurrencies[1]! {
 			currencyNames[currency] = NSLocalizedString(currency, comment: "")
 		}
 	}
 	
 	func close() {
-		print("==close==", self)
 		self.dismiss(animated: true, completion: nil)
 	}
 	
@@ -279,7 +278,7 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		
 		if searchController.searchBar.text?.count ?? 0 > 0 && self.searchResults.count == 0 {
 			let noDataLabel = UILabel(frame: self.currencyTableView.frame)
-			noDataLabel.text = NSLocalizedString("noResults", comment: "")
+			noDataLabel.text = NSLocalizedString("currencyPicker.noResults", comment: "")
 			noDataLabel.textAlignment = .center
 			noDataLabel.textColor = UIColor.gray
 			noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)

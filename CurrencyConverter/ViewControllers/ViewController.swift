@@ -515,7 +515,7 @@ class ViewController: UIViewController {
 		self.toMoneyLabel.becomeFirstResponder()
 		let menu = UIMenuController.shared
 		menu.arrowDirection = .down
-		menu.menuItems = [ UIMenuItem.init(title: NSLocalizedString("copy", comment: ""), action: #selector(copyMoney(_:))) ]
+		menu.menuItems = [ UIMenuItem.init(title: NSLocalizedString("home.copy", comment: ""), action: #selector(copyMoney(_:))) ]
 		let rect = CGRect(x: self.toMoneyLabel.frame.width-50, y: 10, width: 50, height: 50)
 		menu.setTargetRect(rect, in: self.toMoneyLabel)
 		menu.setMenuVisible(true, animated: true)

@@ -6,7 +6,8 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"dateTimeFormat" = "yyyy-MM-dd H:mm";
+
+"home.copy" = "复制";
 
 "settings.title" = "设置";
 "settings.soundsHeader" = "声音";
@@ -31,13 +32,14 @@
 "settings.decimalPlaces" = "小数位数";
 "settings.disclaimerHeader" = "免责声明";
 "settings.disclaimer" = "此应用程序中提供的数据仅供参考，不能保证任何目的的准确性、有效性、可用性或适合性，自行承担使用风险。";
-copy = "复制";
-selectCurrency = "选择货币";
-search = "搜索";
-favoriteCurrencies = "收藏货币";
-allCurrencies = "所有货币";
-noResults = "无结果";
-unknow = "未知";
+"settings.dateTimeFormat" = "yyyy-MM-dd H:mm";
+
+"currencyPicker.title" = "选择货币";
+"currencyPicker.favoriteCurrencies" = "收藏货币";
+"currencyPicker.allCurrencies" = "所有货币";
+"currencyPicker.noResults" = "无结果";
+"currencyPicker.unknow" = "未知";
+
 "AED" = "阿联酋迪拉姆";
 "AUD" = "澳元";
 "BGN" = "保加利亚列弗";

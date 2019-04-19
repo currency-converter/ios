@@ -201,15 +201,15 @@
  zh-TW ==== yyyy/M/d tt hh:mm
  */
 
-"dateTimeFormat" = "M/d/yyyy h:mm a";
+"home.copy" = "Copy";
 
 "settings.title" = "Settings";
 "settings.soundsHeader" = "Sounds";
-"settings.soundsFooter" = "Using sounds can reduce keystroke error rate.";
+"settings.soundsFooter" = "Keyboard sound can reduce input errors.";
 "settings.keyboardClicks" = "Keyboard Clicks";
-"settings.rateUpdateHeader" = "Rate Update";
-"settings.rateUpdateFooter" = "Using the latest exchange rate can make the calculation more accurate.";
-"settings.autoUpdateRate" = "Auto Update Rate";
+"settings.rateUpdateHeader" = "Exchange Rate Update";
+"settings.rateUpdateFooter" = "The latest exchange rate guarantees more accurate conversion results.";
+"settings.autoUpdateRate" = "Auto Update";
 "settings.updateFrequency" = "Update Frequency";
 "settings.update.0" = "Update per minute";
 "settings.update.1" = "Update hourly";
@@ -219,20 +219,21 @@
 "settings.updateFailed" = "Update failed";
 "settings.updatedAt" = "Last Update";
 "settings.customRateHeader" = "Custom Rate";
-"settings.customRateFooter" = "Custom rates are automatically disabled when the currency type changes.";
+"settings.customRateFooter" = "When changing the currency type, the custom exchange rate switch will be turned off.";
 "settings.displayHeader" = "Display";
 "settings.displayFooter" = "";
 "settings.use1000Separator" = "Use 1000 Separator (,)";
 "settings.decimalPlaces" = "Decimal places";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "The data presented in this app is intended for informational purposes only. There is no guarantee of accuracy, validity, availability, or fitness for any purpose. Use at your own risk.";
-copy = "Copy";
-selectCurrency = "Select Currency";
-search = "Search";
-favoriteCurrencies = "Favorite Currencies";
-allCurrencies = "All Currencies";
-noResults = "No Results";
-unknow = "Unknow";
+"settings.dateTimeFormat" = "M/d/yyyy h:mm a";
+
+"currencyPicker.title" = "Choose Currency";
+"currencyPicker.favoriteCurrencies" = "Favorite Currencies";
+"currencyPicker.allCurrencies" = "All Currencies";
+"currencyPicker.noResults" = "No Results";
+"currencyPicker.unknow" = "Unknow";
+
 "AED" = "United Arab Emirates Dirham";
 "AUD" = "Australian Dollar";
 "BGN" = "Bulgarian Lev";
