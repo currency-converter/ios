@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "počet desatinných miest";
 "settings.disclaimerHeader" = "Vyhlásenie";
 "settings.disclaimer" = "Údaje uvedené v tejto aplikácii majú len informatívny charakter a nezaručujú presnosť, platnosť, dostupnosť alebo vhodnosť akéhokoľvek účelu na vlastné riziko.";
-"settings.dateTimeFormat" = "rrrr-MM-dd H: mm";
+"settings.dateTimeFormat" = "d. M. yyyy H:mm";
 
 "currencyPicker.title" = "Vybrať menu";
 "currencyPicker.favoriteCurrencies" = "Obľúbené";

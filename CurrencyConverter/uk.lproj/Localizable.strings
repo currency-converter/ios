@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "кількість десяткових знаків";
 "settings.disclaimerHeader" = "Відмова від відповідальності";
 "settings.disclaimer" = "Дані, наведені в цій заявці, призначені виключно в інформаційних цілях і не гарантують точність, дійсність, доступність або придатність будь-якої мети на ваш власний ризик.";
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd.MM.yyyy H:mm";
 
 "currencyPicker.title" = "Вибрати валюту";
 "currencyPicker.favoriteCurrencies" = "Вибране";

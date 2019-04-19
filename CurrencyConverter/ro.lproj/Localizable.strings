@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "număr de zecimale";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Datele furnizate în această aplicație sunt doar pentru scopuri informative și nu garantează acuratețea, valabilitatea, disponibilitatea sau adecvarea vreunui scop, pe propriul risc.";
-"settings.dateTimeFormat" = "aaaa-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd.MM.yyyy HH:mm";
 
 "currencyPicker.title" = "Selectați moneda";
 "currencyPicker.favoriteCurrencies" = "Favorite";

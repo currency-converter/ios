@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "αριθμός δεκαδικών θέσεων";
 "settings.disclaimerHeader" = "Αποποίηση ευθυνών";
 «Settings.disclaimer» = «τα δεδομένα της εφαρμογής παρέχονται μόνο για ενημερωτικούς σκοπούς και όχι για οποιονδήποτε σκοπό να εξασφαλιστεί η ακρίβεια, εγκυρότητα, τη διαθεσιμότητα ή την καταλληλότητα, την επιλογή και τον κίνδυνο.»?
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "d/M/yyyy h:mm a";
 
 "currencyPicker.title" = "Επιλογή νομίσματος";
 "currencyPicker.favoriteCurrencies" = "Αγαπημένα";

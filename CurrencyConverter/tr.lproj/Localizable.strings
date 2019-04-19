@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "ondalık basamak sayısı";
 "settings.disclaimerHeader" = "Yasal Uyarı";
 "settings.disclaimer" = "Bu başvuruda sağlanan veriler yalnızca bilgilendirme amaçlıdır ve herhangi bir amacın doğruluğunu, geçerliliğini, kullanılabilirliğini veya uygunluğunu kendi sorumluluğunuzda değildir.";
-"settings.dateTimeFormat" = "yyyy-AA-GG H: mm";
+"settings.dateTimeFormat" = "d.MM.yyyy HH:mm";
 
 "currencyPicker.title" = "Para birimini seçin";
 "currencyPicker.favoriteCurrencies" = "Sık Kullanılanlar";

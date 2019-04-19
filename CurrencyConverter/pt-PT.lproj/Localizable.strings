@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "número de casas decimais";
 "settings.disclaimerHeader" = "Isenção de responsabilidade";
 "settings.disclaimer" = "Os dados apresentados nesta aplicação são apenas para fins informativos e não garantem a precisão, validade, disponibilidade ou adequação de qualquer finalidade, por sua conta e risco.";
-"settings.dateTimeFormat" = "aaaa-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd/MM/yyyy HH:mm";
 
 "currencyPicker.title" = "Selecionar moeda";
 "currencyPicker.favoriteCurrencies" = "Favoritos";

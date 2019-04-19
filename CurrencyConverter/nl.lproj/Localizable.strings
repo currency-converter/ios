@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "aantal decimalen";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "De gegevens in deze applicatie zijn uitsluitend voor informatieve doeleinden en garanderen niet de juistheid, geldigheid, beschikbaarheid of geschiktheid van enig doel, op eigen risico.";
-"settings.dateTimeFormat" = "jjjj-MM-dd H: mm";
+"settings.dateTimeFormat" = "d-M-yyyy HH:mm";
 
 "currencyPicker.title" = "Selecteer valuta";
 "currencyPicker.favoriteCurrencies" = "Favorieten";

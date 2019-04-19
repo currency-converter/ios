@@ -31,7 +31,7 @@
 "settings.decimalPftime" = "số vị trí thập phân";
 "settings.disclaimerHeader" = "Tuyên bố từ chối trách nhiệm";
 "settings.disclaimer" = "Dữ liệu được cung cấp trong ứng dụng này chỉ nhằm mục đích cung cấp thông tin và không đảm bảo tính chính xác, hợp lệ, tính sẵn có hoặc tính phù hợp của bất kỳ mục đích nào, có nguy cơ của riêng bạn.";
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd/MM/yyyy h:mm a";
 
 "tệPicker.title" = "Chọn tiền tệ";
 "tệPicker.favoriteCurrencies" = "Favorites";

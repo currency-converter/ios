@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "количество десятичных разрядов";
 "settings.disclaimerHeader" = "Отказ от ответственности";
 "settings.disclaimer" = "Данные, представленные в этом приложении, предназначены только для информационных целей и не гарантируют точность, обоснованность, доступность или пригодность для каких-либо целей на ваш страх и риск.";
-"settings.dateTimeFormat" = "гггг-мм-дд ч: мм";
+"settings.dateTimeFormat" = "dd.MM.yyyy H:mm";
 
 "currencyPicker.title" = "Выбрать валюту";
 "currencyPicker.favoriteCurrencies" = "Избранное";

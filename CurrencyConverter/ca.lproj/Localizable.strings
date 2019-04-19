@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "nombre de llocs decimals";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Les dades proporcionades en aquesta sol·licitud tenen un caràcter informatiu i no garanteixen l'exactitud, validesa, disponibilitat o idoneïtat de cap propòsit, sota el vostre propi risc.";
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "d/M/yyyy H:mm";
 
 "currencyPicker.title" = "Selecciona la moneda";
 "currencyPicker.favoriteCurrencies" = "Preferits";

@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "antal decimaler";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "De uppgifter som tillhandahålls i denna applikation är endast av informativa skäl och garanterar inte för exakthet, validitet, tillgänglighet eller lämplighet för något ändamål, på egen risk.";
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "yyyy-MM-dd HH:mm";
 
 "currencyPicker.title" = "Välj valuta";
 "currencyPicker.favoriteCurrencies" = "Favoriter";

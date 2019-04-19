@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "liczba miejsc dziesiętnych";
 "settings.disclaimerHeader" = "Zastrzeżenie";
 "settings.disclaimer" = "Dane podane w tej aplikacji mają wyłącznie charakter informacyjny i nie gwarantują dokładności, ważności, dostępności ani przydatności do jakiegokolwiek celu, na własne ryzyko.";
-"settings.dateTimeFormat" = "rrrr-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd.MM.yyyy HH:mm";
 
 "currencyPicker.title" = "Wybierz walutę";
 "currencyPicker.favoriteCurrencies" = "Favorites";

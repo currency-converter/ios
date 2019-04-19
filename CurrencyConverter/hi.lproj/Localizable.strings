@@ -31,7 +31,7 @@
 "settings.decimalPlaces" = "दशमलव स्थानों की संख्या";
 "settings.disclaimerHeader" = "अस्वीकरण";
 "settings.disc अस्वीकरण" = "इस एप्लिकेशन में प्रदान किया गया डेटा केवल सूचना के उद्देश्यों के लिए है और आपके जोखिम पर किसी भी उद्देश्य की सटीकता, वैधता, उपलब्धता या उपयुक्तता की गारंटी नहीं देता है।"
-"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+"settings.dateTimeFormat" = "dd-MM-yyyy HH:mm";
 
 "CurrencyPicker.title" = "मुद्रा का चयन करें";
 "CurrencyPicker.favoriteCurrencies" = "पसंदीदा";
