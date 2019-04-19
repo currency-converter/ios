@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "कॉपी";
+
+"settings.title" = "सेटिंग्स";
+"settings.soundsHeader" = "ध्वनि";
+"settings.soundsFooter" = "बटन ध्वनि इनपुट त्रुटियों को कम कर सकती है।"
+"settings.keyboardClicks" = "बटन ध्वनि";
+"settings.rateUpdateHeader" = "एक्सचेंज रेट अपडेट";
+"settings.rateUpdateFooter" = "नवीनतम विनिमय दर अधिक सटीक रूपांतरण की गारंटी देता है।"
+"settings.autoUpdateRate" = "स्वचालित अद्यतन";
+"settings.updateFrequency" = "अपडेट फ़्रीक्वेंसी";
+"settings.update.0" = "हर मिनट अपडेट करें";
+"settings.update.1" = "हर घंटे अपडेट किया गया";
+"settings.update.2" = "हर दिन अपडेट किया गया";
+"settings.updateImmediately" = "अब अपडेट करें";
+"settings.updateSuccess" = "अपडेट सफल";
+"settings.updateFailed" = "अपडेट विफल";
+"settings.updatedAt" = "अंतिम अद्यतन";
+"settings.customRateHeader" = "कस्टम एक्सचेंज रेट";
+"settings.customRateFooter" = "जब मुद्रा प्रकार बदल रहा है, तो कस्टम विनिमय दर स्विच बंद हो जाएगा;"
+"settings.displayHeader" = "प्रदर्शन";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "हजारों विभाजक (,) का उपयोग करें";
+"settings.decimalPlaces" = "दशमलव स्थानों की संख्या";
+"settings.disclaimerHeader" = "अस्वीकरण";
+"settings.disc अस्वीकरण" = "इस एप्लिकेशन में प्रदान किया गया डेटा केवल सूचना के उद्देश्यों के लिए है और आपके जोखिम पर किसी भी उद्देश्य की सटीकता, वैधता, उपलब्धता या उपयुक्तता की गारंटी नहीं देता है।"
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"CurrencyPicker.title" = "मुद्रा का चयन करें";
+"CurrencyPicker.favoriteCurrencies" = "पसंदीदा";
+"CurrencyPicker.allCurrencies" = "सभी मुद्राएँ";
+"CurrencyPicker.noResults" = "कोई परिणाम नहीं";
+"CurrencyPicker.unknow" = "अज्ञात";
+
+"AED" = "संयुक्त अरब अमीरात डरहम";
+"AUD" = "ऑस्ट्रेलियाई डॉलर";
+"BGN" = "बल्गेरियाई लेव";
+"BHD" = "बहरीन दीनार";
+"BND" = "ब्रुनेई डॉलर";
+"BRL" = "ब्राजील रियल";
+"BYN" = "बेलारूसी रूबल";
+"CAD" = "कनाडाई";
+"CHF" = "स्विस फ़्रैंक";
+"CLP" = "चिली पेसो";
+"CNY" = "आरएमबी";
+"COP" = "कोलम्बियाई पेसो";
+"CRC" = "कोस्टा रिका कोलोन";
+"CZK" = "चेक क्रोन";
+"DKK" = "डेनिश क्रोन";
+"DZD" = "अल्जीरियाई दीनार";
+"EGP" = "मिस्र के पाउंड";
+"EUR" = "यूरो";
+"GBP" = "GBP";
+"HKD" = "बीओवाई";
+"HRK" = "क्रोएशियाई कुना";
+"HUF" = "हंगेरियन फ़ोरिंट";
+"IDR" = "इंडोनेशियन रुपया";
+"ILS" = "इज़राइल न्यू सिकेल";
+"INR" = "भारतीय रुपया";
+"IQD" = "इराकी दिनार";
+"ISK" = "आइसलैंडिक क्रोना";
+"JOD" = "जार्डन दिनार";
+"JPY" = "येन";
+"KES" = "केन्या शिलिंग";
+"KHR" = "कंबोडिया रिअल";
+"KRW" = "कोरियाई";
+"KWD" = "कुवैती दीनार";
+"LAK" = "लाओ किप";
+"LBP" = "लेबनानी पाउंड";
+"LKR" = "श्रीलंकाई रुपया";
+"MAD" = "मोरक्को डोरम";
+"MMK" = "म्यांमार युआन";
+"MOP" = "मकाऊ ​​डॉलर";
+"MXN" = "मेक्सिको डॉलर";
+"MYR" = "मलेशियाई रिंगित";
+"NOK" = "नॉर्वेजियन क्रोन";
+"NZD" = "न्यूजीलैंड डॉलर";
+"OMR" = "ओमान रियाल";
+"PHP" = "फिलीपीन पेसो";
+"PLN" = "पोलिश ज़्लॉटी";
+"QAR" = "क़तरी रियाल";
+"RON" = "रोमानियाई ल्यू";
+"RSD" = "सर्बियाई दिनार";
+"RUB" = "रूसी रूबल";
+"SAR" = "सऊदी रियाल";
+"SEK" = "स्वीडिश क्रोना";
+"SGD" = "सिंगापुर डॉलर";
+"SYP" = "सीरियन पाउंड";
+"THB" = "थाई";
+"TRY" = "न्यू तुर्की लीरा";
+"TWD" = "न्यू ताइवान डॉलर";
+"TZS" = "तंजानिया शिलिंग";
+"UGX" = "युगांडा शिलिंग";
+"USD" = "यूएस डॉलर";
+"VND" = "वियतनामी शील्ड";
+"ZAR" = "दक्षिण अफ्रीकी रैंड";

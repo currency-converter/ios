@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "Kopie";
+
+"settings.title" = "Einstellungen";
+"settings.soundsHeader" = "Ton";
+"settings.soundsFooter" = "Der Tastenton kann Eingabefehler reduzieren.";
+"settings.keyboardClicks" = "Tastenton";
+"settings.rateUpdateHeader" = "Wechselkursaktualisierung";
+"settings.rateUpdateFooter" = "Der letzte Wechselkurs garantiert eine genauere Konvertierung.";
+"settings.autoUpdateRate" = "Automatisches Update";
+"settings.updateFrequency" = "Aktualisierungsfrequenz";
+"settings.update.0" = "Jede Minute aktualisieren";
+"settings.update.1" = "Jede Stunde aktualisiert";
+"settings.update.2" = "Jeden Tag aktualisiert";
+"settings.updateImmediately" = "Jetzt aktualisieren";
+"settings.updateSuccess" = "Aktualisierung erfolgreich";
+"settings.updateFailed" = "Update fehlgeschlagen";
+"settings.updatedAt" = "letzte Aktualisierung";
+"settings.customRateHeader" = "Benutzerdefinierter Wechselkurs";
+"settings.customRateFooter" = "Wenn Sie den Währungstyp ändern, wird der benutzerdefinierte Wechselkursschalter deaktiviert.";
+"settings.displayHeader" = "Anzeige";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Verwenden Sie das Tausendertrennzeichen (,)";
+"settings.decimalPlaces" = "Anzahl der Dezimalstellen";
+"settings.disclaimerHeader" = "Haftungsausschluss";
+"settings.disclaimer" = "Die in dieser Anwendung bereitgestellten Daten dienen nur zu Informationszwecken und garantieren nicht die Genauigkeit, Gültigkeit, Verfügbarkeit oder Eignung eines Zwecks auf eigene Gefahr.";
+"settings.dateTimeFormat" = "JJJJ-MM-TT H: mm";
+
+"currencyPicker.title" = "Währung wählen";
+"currencyPicker.favoriteCurrencies" = "Favoriten";
+"currencyPicker.allCurrencies" = "Alle Währungen";
+"currencyPicker.noResults" = "kein Ergebnis";
+"currencyPicker.unknow" = "Unbekannt";
+
+"AED" = "United Arab Emirates Dirham";
+"AUD" = "Australischer Dollar";
+"BGN" = "Bulgarischer Lew";
+"BHD" = "Bahraini Dinar";
+"BND" = "Brunei-Dollar";
+"BRL" = "Brazil Real";
+"BYN" = "Weißrussischer Rubel";
+"CAD" = "Canadian";
+"CHF" = "Schweizer Franken";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "kolumbianischer Peso";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Tschechische Krone";
+"DKK" = "Dänische Krone";
+"DZD" = "Algerischer Dinar";
+"EGP" = "ägyptisches Pfund";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Kroatische Kuna";
+"HUF" = "Ungarischer Forint";
+"IDR" = "Indonesische Rupie";
+"ILS" = "Israel New Sikel";
+"INR" = "Indische Rupie";
+"IQD" = "Irakischer Dinar";
+"ISK" = "Isländische Krone";
+"JOD" = "Jordanischer Dinar";
+"JPY" = "Yen";
+"KES" = "Kenia Shilling";
+"KHR" = "Kambodscha-Riel";
+"KRW" = "Koreanisch";
+"KWD" = "Kuwaiti Dinar";
+"LAK" = "Lao Kip";
+"LBP" = "Libanesisches Pfund";
+"LKR" = "Sri Lanka Rupie";
+"MAD" = "Marokko Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Macau-Dollar";
+"MXN" = "Mexiko-Dollar";
+"MYR" = "Malaysischer Ringgit";
+"NOK" = "Norwegische Krone";
+"NZD" = "Neuseeland-Dollar";
+"OMR" = "Oman Rial";
+"PHP" = "Philippinischer Peso";
+"PLN" = "Polnischer Zloty";
+"QAR" = "Qatari Rial";
+"RON" = "Rumänischer Leu";
+"RSD" = "Serbischer Dinar";
+"RUB" = "Russischer Rubel";
+"SAR" = "Saudi Riyal";
+"SEK" = "Schwedische Krone";
+"SGD" = "Singapur-Dollar";
+"SYP" = "Syrisches Pfund";
+"THB" = "Thai";
+"TRY" = "Neue türkische Lira";
+"TWD" = "Neuer Taiwan-Dollar";
+"TZS" = "Tansania-Schilling";
+"UGX" = "Ugandischer Schilling";
+"USD" = "US-Dollar";
+"VND" = "Vietnamesischer Schild";
+"ZAR" = "Südafrikanischer Rand";

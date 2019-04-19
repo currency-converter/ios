@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "kopiraj";
+
+"settings.title" = "Postavke";
+"settings.soundsHeader" = "zvuk";
+"settings.soundsFooter" = "Zvuk gumba može smanjiti ulazne pogreške.";
+"settings.keyboardClicks" = "zvuk gumba";
+"settings.rateUpdateHeader" = "Ažuriranje tečaja razmjene";
+"settings.rateUpdateFooter" = "Najnoviji tečaj jamči točniju konverziju.";
+"settings.autoUpdateRate" = "Automatsko ažuriranje";
+"settings.updateFrequency" = "Učestalost ažuriranja";
+"settings.update.0" = "ažuriraj svaku minutu";
+"settings.update.1" = "ažurira se svaki sat";
+"settings.update.2" = "ažurira se svaki dan";
+"settings.updateImmediately" = "Ažuriraj sada";
+"settings.updateSuccess" = "Ažuriranje uspješno";
+"settings.updateFailed" = "Ažuriranje nije uspjelo";
+"settings.updatedAt" = "posljednji put ažurirano";
+"settings.customRateHeader" = "prilagođeni tečaj";
+"settings.customRateFooter" = "Kada mijenjate vrstu valute, prilagođena prekidač tečaja će biti isključena.";
+"settings.displayHeader" = "prikaz";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Koristi separator tisuća (,)";
+"settings.decimalPlaces" = "broj decimalnih mjesta";
+"settings.disclaimerHeader" = "Odricanje od odgovornosti";
+"settings.disclaimer" = "Podaci navedeni u ovoj aplikaciji služe samo u informativne svrhe i ne jamče točnost, valjanost, dostupnost ili prikladnost bilo koje svrhe, na vlastitu odgovornost.";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "Odabir valute";
+"currencyPicker.favoriteCurrencies" = "Favoriti";
+"currencyPicker.allCurrencies" = "Sve valute";
+"currencyPicker.noResults" = "nema rezultata";
+"currencyPicker.unknow" = "Nepoznato";
+
+"AED" = "dirham Ujedinjenih Arapskih Emirata";
+"AUD" = "australski dolar";
+"BGN" = "bugarski lev";
+"BHD" = "bahrajinski dinar";
+"BND" = "Brunejski dolar";
+"BRL" = "Brazil real";
+"BYN" = "bjeloruska rublja";
+"CAD" = "kanadski";
+"CHF" = "Švicarski franak";
+"CLP" = "Čile peso";
+"CNY" = "RMB";
+"COP" = "kolumbijski pezo";
+"CRC" = "Costa Rica Colon";
+"CZK" = "češka kruna";
+"DKK" = "danska kruna";
+"DZD" = "alžirski dinar";
+"EGP" = "egipatska funta";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Hrvatska kuna";
+"HUF" = "mađarska forinta";
+"IDR" = "indonezijska rupija";
+"ILS" = "Izraelski novi Sikel";
+"INR" = "indijska rupija";
+"IQD" = "irački dinar";
+"ISK" = "islandska kruna";
+"JOD" = "jordanski dinar";
+"JPY" = "jen";
+"KES" = "Kenija šiling";
+"KHR" = "Kambodža Riel";
+"KRW" = "korejski";
+"KWD" = "Kuvajtski dinar";
+"LAK" = "Lao Kip";
+"LBP" = "libanska funta";
+"LKR" = "rupija Šri Lanke";
+"MAD" = "Maroko Doram";
+"MMK" = "Mianmar Yuan";
+"MOP" = "Makao dolar";
+"MXN" = "Meksički dolar";
+"MYR" = "Malezijski Ringgit";
+"NOK" = "norveška kruna";
+"NZD" = "novozelandski dolar";
+"OMR" = "Oman Rial";
+"PHP" = "filipinski pezo";
+"PLN" = "poljski zlot";
+"QAR" = "katarski rial";
+"RON" = "rumunjski leu";
+"RSD" = "Srpski dinar";
+"RUB" = "Ruska rublja";
+"SAR" = "Saudijski rijal";
+"SEK" = "švedska kruna";
+"SGD" = "singapurski dolar";
+"SYP" = "sirijska funta";
+"THB" = "tajlandski";
+"TRY" = "Nova turska lira";
+"TWD" = "novi tajvanski dolar";
+"TZS" = "Tanzanija šiling";
+"UGX" = "ugandski šiling";
+"USD" = "američki dolar";
+"VND" = "Vijetnamski štit";
+"ZAR" = "južnoafrički rand";

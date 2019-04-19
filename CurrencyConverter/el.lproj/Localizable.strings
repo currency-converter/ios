@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "αντίγραφο";
+
+"settings.title" = "Ρυθμίσεις";
+"settings.soundsHeader" = "ήχος";
+"settings.soundsFooter" = "Ο ήχος του κουμπιού μπορεί να μειώσει τα σφάλματα εισόδου.";
+"settings.keyboardClicks" = "Ήχος κουμπιού";
+"settings.rateUpdateHeader" = "Ενημέρωση ανταλλαγής επιτοκίων";
+"settings.rateUpdateFooter" = "Η τελευταία ισοτιμία εγγυάται πιο ακριβή μετατροπή.";
+"settings.autoUpdateRate" = "Αυτόματη ενημέρωση";
+"settings.updateFrequency" = "Συχνότητα ενημέρωσης";
+"settings.update.0" = "ενημέρωση κάθε λεπτό";
+"settings.update.1" = "ενημερώνεται κάθε ώρα";
+"settings.update.2" = "ενημέρωση κάθε μέρα";
+"settings.updateImmediately" = "Ενημέρωση τώρα";
+"settings.updateSuccess" = "Ενημέρωση επιτυχής";
+"settings.updateFailed" = "Η ενημέρωση απέτυχε";
+"settings.updatedAt" = "τελευταία ενημέρωση";
+"settings.customRateHeader" = "Προσαρμοσμένη συναλλαγματική ισοτιμία";
+«Settings.customRateFooter» = «όταν αλλάζετε τον τύπο της νόμισμα, το νόμισμα έθιμο σβήσει.»?
+"settings.displayHeader" = "εμφάνιση";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Χρήση του διαχωριστή χιλιάδων (,)";
+"settings.decimalPlaces" = "αριθμός δεκαδικών θέσεων";
+"settings.disclaimerHeader" = "Αποποίηση ευθυνών";
+«Settings.disclaimer» = «τα δεδομένα της εφαρμογής παρέχονται μόνο για ενημερωτικούς σκοπούς και όχι για οποιονδήποτε σκοπό να εξασφαλιστεί η ακρίβεια, εγκυρότητα, τη διαθεσιμότητα ή την καταλληλότητα, την επιλογή και τον κίνδυνο.»?
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "Επιλογή νομίσματος";
+"currencyPicker.favoriteCurrencies" = "Αγαπημένα";
+"currencyPicker.allCurrencies" = "Όλα τα νομίσματα";
+"currencyPicker.noResults" = "κανένα αποτέλεσμα";
+"currencyPicker.unknow" = "Άγνωστο";
+
+"AED" = "Ηνωμένα Αραβικά Εμιράτα Dirham"?
+"AUD" = "Δολάριο Αυστραλίας".
+"BGN" = "βουλγαρικό λεύκωμα".
+"BHD" = "Δηνάριο Μπαχρέιν".
+"BND" = "Δολάριο Μπρουνέι".
+"BRL" = "Βραζιλία Ρεάλ";
+"BYN" = "Λευκορωσικό ρούβλι"?
+"CAD" = "Καναδική";
+"CHF" = "Ελβετικό φράγκο".
+"CLP" = "Πέσο της Χιλής".
+"CNY" = "RMB";
+"COP" = "Κολομβιανό πέσο".
+"CRC" = "Κόλον Ρίκα Colon"?
+"CZK" = "Κροατία της Τσεχίας".
+"DKK" = "Δανική κορώνη".
+"DZD" = "Αλγερινό Δηνάριο".
+"EGP" = "Αιγυπτιακή λίβρα".
+"EUR" = "Ευρώ".
+"GBP" = "GBP";
+"HKD" = "HKD".
+"HRK" = "Κροατικό Kuna";
+"HUF" = "Ουγγρικό φιορίνι".
+"IDR" = "Ρουπία Ινδονησίας".
+"ILS" = "Ισραήλ New Sikel"?
+"INR" = "ινδική ρουπία".
+"IQD" = "Ιρακινό δηνάριο".
+"ISK" = "ισλανδική κορώνα".
+"JOD" = "Ιορδανικό δηνάριο".
+"JPY" = "γεν".
+"KES" = "Κένυα Shilling"?
+"KHR" = "Καμπότζη Riel";
+"KRW" = "Κορεάτικα".
+"KWD" = "Δηνάριο του Κουβέιτ".
+"LAK" = "Λάο Κίπ";
+"LBP" = "λίβρα του Λιβάνου".
+"LKR" = "Ρουπία Σρι Λάνκα".
+"MAD" = "Μαρόκο Doram";
+"MMK" = "Μυανμάρ γιουάν".
+"MOP" = "Δολάριο του Μακάο".
+"MXN" = "Δολάριο του Μεξικού".
+"MYR" = "Μαλαισιανό Ringgit";
+"NOK" = "Κροατία Νορβηγίας".
+"NZD" = "Δολάριο Νέας Ζηλανδίας".
+"OMR" = "Ομάν Rial";
+"PHP" = "Φιλιππινέζικο πέσο"?
+"PLN" = "Πολωνικό Zloty";
+"QAR" = "Qatar Rial";
+"RON" = "ρουμανικό νόμισμα";
+"RSD" = "Σερβικό δηνάριο".
+"RUB" = "Ρωσικό ρούβλι"?
+"SAR" = "Saudi Riyal";
+"SEK" = "Σουηδική κορόνα".
+"SGD" = "Δολάριο Σιγκαπούρης".
+"SYP" = "Συριακή λίβρα";
+"THB" = "Ταϊλανδικά";
+"TRY" = "Νέα τουρκική λιρέτα".
+"TWD" = "Νέο δολάριο της Ταϊβάν".
+"TZS" = "Τανζανία Shilling"?
+"UGX" = "Ugandan Shilling";
+"USD" = "Δολάριο ΗΠΑ".
+"VND" = "Βιετναμέζικη ασπίδα".
+"ZAR" = "Νότιας Αφρικής";

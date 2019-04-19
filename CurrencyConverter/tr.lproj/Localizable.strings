@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "kopya";
+
+"settings.title" = "Ayarlar";
+"settings.soundsHeader" = "ses";
+"settings.soundsFooter" = "Düğme sesi giriş hatalarını azaltabilir.";
+"settings.keyboardClicks" = "düğme sesi";
+"settings.rateUpdateHeader" = "Döviz Kuru Güncellemesi";
+"settings.rateUpdateFooter" = "En son döviz kuru daha doğru bir dönüşüm sağlar.";
+"settings.autoUpdateRate" = "Otomatik güncelleme";
+"settings.updateFrequency" = "Güncelleme sıklığı";
+"settings.update.0" = "her dakika güncelle";
+"settings.update.1" = "her saat güncellenen";
+"settings.update.2" = "her gün güncellenen";
+"settings.updateImmediately" = "Şimdi Güncelle";
+"settings.updateSuccess" = "Güncelleme başarılı";
+"settings.updateFailed" = "Güncelleme başarısız";
+"settings.updatedAt" = "en son güncelleme";
+"settings.customRateHeader" = "Özel Döviz Kuru";
+"settings.customRateFooter" = "Para birimi türünü değiştirirken, özel döviz kuru anahtarı kapatılacaktır.";
+"settings.displayHeader" = "ekran";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Binlik ayırıcıyı kullanın (,)";
+"settings.decimalPlaces" = "ondalık basamak sayısı";
+"settings.disclaimerHeader" = "Yasal Uyarı";
+"settings.disclaimer" = "Bu başvuruda sağlanan veriler yalnızca bilgilendirme amaçlıdır ve herhangi bir amacın doğruluğunu, geçerliliğini, kullanılabilirliğini veya uygunluğunu kendi sorumluluğunuzda değildir.";
+"settings.dateTimeFormat" = "yyyy-AA-GG H: mm";
+
+"currencyPicker.title" = "Para birimini seçin";
+"currencyPicker.favoriteCurrencies" = "Sık Kullanılanlar";
+"currencyPicker.allCurrencies" = "Tüm para birimleri";
+"currencyPicker.noResults" = "sonuç yok";
+"currencyPicker.unknow" = "Bilinmiyor";
+
+"AED" = "Birleşik Arap Emirlikleri Dirhemi";
+"AUD" = "Avustralya doları";
+"BGN" = "Bulgar Lev";
+"BHD" = "Bahreyn Dinarı";
+"BND" = "Brunei Doları";
+"BRL" = "Brezilya Gerçek";
+"BYN" = "Belarus Rublesi";
+"CAD" = "Kanada";
+"CHF" = "İsviçre Frangı";
+"CLP" = "Şili Pezosu";
+"CNY" = "RMB";
+"COP" = "Kolombiya Pezosu";
+"CRC" = "Kosta Rika Sütunu";
+"CZK" = "Çek Kronu";
+"DKK" = "Danimarka Kronu";
+"DZD" = "Cezayir Dinarı";
+"EGP" = "Mısır Poundu";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Hırvat Kunası";
+"HUF" = "Macar Forinti";
+"IDR" = "Endonezya Rupisi";
+"ILS" = "İsrail Yeni Sikel";
+"INR" = "Hindistan Rupisi";
+"IQD" = "Irak Dinarı";
+"ISK" = "İzlanda Kronu";
+"JOD" = "Ürdün Dinarı";
+"JPY" = "Yen";
+"KES" = "Kenya Şilini";
+"KHR" = "Kamboçya Riel";
+"KRW" = "Korece";
+"KWD" = "Kuveyt Dinarı";
+"LAK" = "Lao Kip";
+"LBP" = "Lübnan Poundu";
+"LKR" = "Sri Lankalı Rupisi";
+"MAD" = "Fas Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Makao Doları";
+"MXN" = "Meksika Doları";
+"MYR" = "Malezya Ringiti";
+"NOK" = "Norveç Kronu";
+"NZD" = "Yeni Zelanda Doları";
+"OMR" = "Umman Riyali";
+"PHP" = "Filipinler Pezosu";
+"PLN" = "Polonya Zlotisi";
+"QAR" = "Katar Riyali";
+"RON" = "Romanya Leyi";
+"RSD" = "Sırp Dinarı";
+"RUB" = "Rus Rublesi";
+"SAR" = "Suudi Riyali";
+"SEK" = "İsveç Kronu";
+"SGD" = "Singapur Doları";
+"SYP" = "Suriye Lirası";
+"THB" = "Tayland";
+"TRY" = "Yeni Türk Lirası";
+"TWD" = "Yeni Tayvan Doları";
+"TZS" = "Tanzanya Şilini";
+"UGX" = "Uganda Şilini";
+"USD" = "ABD Doları";
+"VND" = "Vietnam Kalkanı";
+"ZAR" = "Güney Afrika Randı";

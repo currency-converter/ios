@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "bản sao";
+
+"settings.title" = "Cài đặt";
+"settings.soundHeader" = "âm thanh";
+"settings.soundFooter" = "Âm thanh nút có thể giảm lỗi đầu vào.";
+"settings.keyboardClicks" = "nút âm thanh";
+"settings.rateUpdateHeader" = "Cập nhật tỷ giá hối đoái";
+"settings.rateUpdateFooter" = "Tỷ giá hối đoái mới nhất đảm bảo chuyển đổi chính xác hơn.";
+"settings.autoUpdateRate" = "Cập nhật tự động";
+"settings.updateFrequency" = "Cập nhật tần số";
+"settings.update.0" = "cập nhật mỗi phút";
+"settings.update.1" = "được cập nhật mỗi giờ";
+"settings.update.2" = "được cập nhật mỗi ngày";
+"settings.updateImmediately" = "Cập nhật ngay";
+"settings.updateSuccess" = "Cập nhật thành công";
+"settings.updateFails" = "Cập nhật thất bại";
+"settings.updatedAt" = "cập nhật lần cuối";
+"settings.customRateHeader" = "Tỷ giá hối đoái tùy chỉnh";
+"settings.customRateFooter" = "Khi thay đổi loại tiền tệ, công tắc tỷ giá hối đoái tùy chỉnh sẽ bị tắt.";
+"settings.displayHeader" = "hiển thị";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Sử dụng dấu phân cách hàng nghìn (,)";
+"settings.decimalPftime" = "số vị trí thập phân";
+"settings.disclaimerHeader" = "Tuyên bố từ chối trách nhiệm";
+"settings.disclaimer" = "Dữ liệu được cung cấp trong ứng dụng này chỉ nhằm mục đích cung cấp thông tin và không đảm bảo tính chính xác, hợp lệ, tính sẵn có hoặc tính phù hợp của bất kỳ mục đích nào, có nguy cơ của riêng bạn.";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"tệPicker.title" = "Chọn tiền tệ";
+"tệPicker.favoriteCurrencies" = "Favorites";
+"tệPicker.allCurrencies" = "Tất cả các loại tiền tệ";
+"tệPicker.noResults" = "không có kết quả";
+"tệPicker.unknow" = "Không xác định";
+
+"AED" = "Các tiểu vương quốc Ả Rập thống nhất";
+"AUD" = "Đô la Úc";
+"BGN" = "Lev Bulgaria Lev";
+"BHD" = "Dinar Bahrain";
+"BND" = "Đô la Brunei";
+"BRL" = "Brazil thực sự";
+"BYN" = "Rúp Bêlarut";
+"CAD" = "Canada";
+"CHF" = "Franc Thụy Sĩ";
+"CLP" = "Chile pô";
+"CNY" = "Nhân dân tệ";
+"COP" = "Peso Colombia";
+"CRC" = "Đại tá Costa Rica";
+"Kč" = "Krone Séc";
+"DKK" = "Krone Đan Mạch";
+"DZD" = "Dinar Algeria";
+"EGP" = "Bảng Ai Cập";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Kuna Croatia";
+"HUF" = "Forint Hungary";
+"IDR" = "Rupee Indonesia";
+"ILS" = "Sikel mới của Israel";
+"INR" = "Rupee Ấn Độ";
+"IQD" = "Dinar Iraq";
+"ISK" = "Krona tiếng Iceland";
+"JOD" = "Dinar Jordan";
+"JPY" = "Yên";
+"KES" = "Kenya Shilling";
+"KHR" = "Campuchia Riel";
+"KRW" = "Hàn Quốc";
+"KWD" = "Dinar Kuwaiti";
+"LAK" = "Kíp Lào";
+"LBP" = "Bảng Anh Lebanon";
+"LKR" = "Rupee Sri Lanka";
+"MAD" = "Ma-rốc Ma-rốc";
+"MMK" = "Nhân dân tệ Myanmar";
+"MOP" = "Đô la Macau";
+"MXN" = "Đô la Mexico";
+"MYR" = "Ringgit Malaysia";
+"NOK" = "Krone Na Uy";
+"New Zealand" = "Đô la New Zealand";
+"OMR" = "Rial Ô-man";
+"PHP" = "Peso Philippines";
+"PLN" = "Zloty Ba Lan";
+"QAR" = "Rial Qatari";
+"RON" = "Rumani Leu";
+"RSD" = "Dinar Serbia";
+"RUB" = "Rúp Nga";
+"SAR" = "Ả Rập Saudi";
+"SEK" = "Krona Thụy Điển";
+"SGD" = "Đô la Singapore";
+"SYP" = "Bảng Anh Syria";
+"BNG" = "Thái";
+"TRY" = "Lira Thổ Nhĩ Kỳ mới";
+"TWD" = "Đô la Đài Loan mới";
+"TZS" = "Tanzania Shilling";
+"UGX" = "Shandandan Shilling";
+"USD" = "Đô la Mỹ";
+"VND" = "Khiên Việt";
+"ZAR" = "Rand Nam Phi";

@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copy";
+
+"settings.title" = "Settings";
+"settings.soundsHeader" = "sound";
+"settings.soundsFooter" = "يمكن أن يقلل صوت الزر من أخطاء الإدخال.";
+"settings.keyboardClicks" = "button button";
+"settings.rateUpdateHeader" = "تحديث سعر الصرف";
+"settings.rateUpdateFooter" = "أحدث سعر صرف يضمن تحويل أكثر دقة.";
+"settings.autoUpdateRate" = "التحديث التلقائي";
+"settings.updateFrequency" = "تحديث التردد";
+"settings.update.0" = "تحديث كل دقيقة";
+"settings.update.1" = "يتم التحديث كل ساعة";
+"settings.update.2" = "يتم تحديثه كل يوم";
+"settings.updateImmediately" = "التحديث الآن";
+"settings.updateSuccess" = "تم التحديث بنجاح";
+"settings.updateFailed" = "فشل التحديث";
+"settings.updatedAt" = "آخر تحديث";
+"settings.customRateHeader" = "سعر صرف مخصص";
+"settings.customRateFooter" = "عند تغيير نوع العملة ، سيتم إيقاف تشغيل مفتاح سعر الصرف المخصص.";
+"settings.displayHeader" = "display";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "استخدم الفاصل الآلاف (،)";
+"settings.decimalPlaces" = "عدد المنازل العشرية";
+"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "اختر عملة";
+"currencyPicker.favoriteCurrency" = "Favorites";
+"currencyPicker.allCurrency" = "جميع العملات";
+"currencyPicker.noResults" = "لا توجد نتائج";
+"currencyPicker.unknow" = "Unknown";
+
+"AED" = "درهم الإمارات العربية المتحدة";
+"AUD" = "الدولار الأسترالي";
+"BGN" = "Lev Bulgarian Lev";
+"BHD" = "الدينار البحريني";
+"BND" = "دولار بروناي";
+"BRL" = "Brazil Real";
+"BYN" = "روبل بيلاروسي";
+"CAD" = "كندي";
+"CHF" = "الفرنك السويسري";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "بيزو كولومبي";
+"CRC" = "كوستاريكا كولون";
+"CZK" = "كرونة تشيكية";
+"DKK" = "كرونة دنماركية";
+"DZD" = "الدينار الجزائري";
+"EGP" = "الجنيه المصري";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "كونا كرواتي";
+"HUF" = "الهنغارية فورنت";
+"IDR" = "روبية إندونيسية";
+"ILS" = "Israel New Sikel";
+"INR" = "الروبية الهندية";
+"IQD" = "الدينار العراقي";
+"ISK" = "كرونا أيسلندية";
+"JOD" = "الدينار الأردني";
+"JPY" = "الين";
+"KES" = "كينيا شلن";
+"KHR" = "Cambodia Riel";
+"KRW" = "الكورية";
+"KWD" = "الدينار الكويتي";
+"LAK" = "Lao Kip";
+"LBP" = "الليرة اللبنانية";
+"LKR" = "روبية سريلانكية";
+"MAD" = "المغرب Doram";
+"MMK" = "ميانمار يوان";
+"MOP" = "دولار ماكاو";
+"MXN" = "دولار المكسيك";
+"MYR" = "رينجت ماليزية";
+"NOK" = "الكرونة النرويجية";
+"NZD" = "الدولار النيوزيلندي";
+"OMR" = "Oman Rial";
+"PHP" = "بيزو فلبيني";
+"PLN" = "البولندية الزلوتي";
+"QAR" = "ريال قطري";
+"RON" = "ليو الرومانية";
+"RSD" = "الدينار الصربي";
+"RUB" = "الروبل الروسي";
+"SAR" = "ريال سعودي";
+"SEK" = "كرونا سويدية";
+"SGD" = "دولار سنغافورة";
+"SYP" = "الليرة السورية";
+"THB" = "التايلاندية";
+"TRY" = "الليرة التركية الجديدة";
+"TWD" = "دولار تايوان الجديد";
+"TZS" = "Tanzania Shilling";
+"UGX" = "شلن أوغندي";
+"USD" = "الدولار الأمريكي";
+"VND" = "الدرع الفيتنامي";
+"ZAR" = "راند جنوب إفريقيا";

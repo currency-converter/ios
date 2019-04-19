@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copy";
+
+"settings.title" = "Indstillinger";
+"settings.soundsHeader" = "sound";
+"settings.soundsFooter" = "Knappen lyd kan reducere inputfejl.";
+"settings.keyboardClicks" = "knappen lyd";
+"settings.rateUpdateHeader" = "Exchange Rate Update";
+"settings.rateUpdateFooter" = "Den seneste valutakurs garanterer en mere præcis konvertering.";
+"settings.autoUpdateRate" = "Automatisk opdatering";
+"settings.updateFrequency" = "Opdater frekvens";
+"settings.update.0" = "opdater hvert minut";
+"settings.update.1" = "opdateret hver time";
+"settings.update.2" = "opdateret hver dag";
+"settings.updateImmediately" = "Opdater nu";
+"settings.updateSuccess" = "Opdater succes";
+"settings.updateFailed" = "Opdatering mislykkedes";
+"settings.updatedAt" = "sidst opdateret";
+"settings.customRateHeader" = "Brugerdefineret valutakurs";
+"settings.customRateFooter" = "Når du ændrer valuta type, vil den brugerdefinerede valutakurskontakt blive slået fra.";
+"settings.displayHeader" = "display";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Brug tusind separator (,)";
+"settings.decimalPlaces" = "antal decimaler";
+"settings.disclaimerHeader" = "Ansvarsfraskrivelse";
+"settings.disclaimer" = "Dataene i denne ansøgning er kun til orienteringsformål og garanterer ikke for nøjagtighed, gyldighed, tilgængelighed eller egnethed til noget formål, for egen risiko.";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "Vælg valuta";
+"currencyPicker.favoriteCurrencies" = "Favorites";
+"currencyPicker.allCurrencies" = "Alle valutaer";
+"currencyPicker.noResults" = "Intet resultat";
+"currencyPicker.unknow" = "Unknown";
+
+"AED" = "De Forenede Arabiske Emirater Dirham";
+"AUD" = "australske dollar";
+"BGN" = "Bulgarsk Lev";
+"BHD" = "Bahraini Dinar";
+"BND" = "Brunei Dollar";
+"BRL" = "Brazil Real";
+"BYN" = "Hviderussisk rubel";
+"CAD" = "canadisk";
+"CHF" = "Swiss Franc";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "Colombian Peso";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Tjekkisk Krone";
+"DKK" = "Dansk Krone";
+"DZD" = "Algerisk dinar";
+"EGP" = "egyptisk pund";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "kroatisk Kuna";
+"HUF" = "Ungarsk Forint";
+"IDR" = "Indonesisk Rupee";
+"ILS" = "Israel New Sikel";
+"INR" = "Indian Rupee";
+"IQD" = "Irakisk Dinar";
+"ISK" = "Islandsk Krona";
+"JOD" = "Jordanian Dinar";
+"JPY" = "Yen";
+"KES" = "Kenya Shilling";
+"KHR" = "Cambodja Riel";
+"KRW" = "koreansk";
+"KWD" = "Kuwaiti Dinar";
+"LAK" = "Lao Kip";
+"LBP" = "Libanesisk pund";
+"LKR" = "Sri Lankanske Rupee";
+"MAD" = "Marokko Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Macau Dollar";
+"MXN" = "Mexico Dollar";
+"MYR" = "Malaysisk Ringgit";
+"NOK" = "Norsk Krone";
+"NZD" = "New Zealand Dollar";
+"OMR" = "Oman Rial";
+"PHP" = "Filippinsk Peso";
+"PLN" = "Polsk Zloty";
+"QAR" = "Qatari Rial";
+"RON" = "Rumænsk Leu";
+"RSD" = "Serbisk Dinar";
+"RUB" = "russisk rubel";
+"SAR" = "Saudi Riyal";
+"SEK" = "Svensk Krona";
+"SGD" = "Singapore Dollar";
+"SYP" = "syrisk pund";
+"THB" = "Thai";
+"TRY" = "Ny tyrkisk lire";
+"TWD" = "Ny Taiwan Dollar";
+"TZS" = "Tanzania Shilling";
+"UGX" = "Ugandansk Shilling";
+"USD" = "US Dollar";
+"VND" = "vietnamesisk skjold";
+"ZAR" = "Sydafrikanske rand";

@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copie";
+
+"settings.title" = "Setări";
+"settings.soundsHeader" = "sunet";
+"settings.soundsFooter" = "Sunetul butonului poate reduce erorile de intrare.";
+"settings.keyboardClicks" = "sunetul butonului";
+"settings.rateUpdateHeader" = "Actualizarea ratei de schimb";
+"settings.rateUpdateFooter" = "Ultimul curs de schimb garantează o conversie mai precisă";
+"settings.autoUpdateRate" = "Actualizare automată";
+"settings.updateFrequency" = "Frecvența actualizării";
+"settings.update.0" = "actualizare la fiecare minut";
+"settings.update.1" = "actualizată la fiecare oră";
+"settings.update.2" = "actualizat în fiecare zi";
+"settings.updateImmediately" = "Actualizare acum";
+"settings.updateSuccess" = "Actualizare reușită";
+"settings.updateFailed" = "Actualizarea a eșuat";
+"settings.updatedAt" = "ultima actualizare";
+"settings.customRateHeader" = "Rata de schimb personalizată";
+"settings.customRateFooter" = "La schimbarea tipului de valută, comutatorul cursului de schimb personalizat va fi oprit.";
+"settings.displayHeader" = "afișare";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Utilizați separatorul de mii (,)";
+"settings.decimalPlaces" = "număr de zecimale";
+"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimer" = "Datele furnizate în această aplicație sunt doar pentru scopuri informative și nu garantează acuratețea, valabilitatea, disponibilitatea sau adecvarea vreunui scop, pe propriul risc.";
+"settings.dateTimeFormat" = "aaaa-MM-dd H: mm";
+
+"currencyPicker.title" = "Selectați moneda";
+"currencyPicker.favoriteCurrencies" = "Favorite";
+"currencyPicker.allCurrencies" = "Toate monedele";
+"currencyPicker.noResults" = "fără rezultat";
+"currencyPicker.unknow" = "Necunoscut";
+
+"AED" = "Emiratele Arabe Unite Dirham";
+"AUD" = "Dolar australian";
+"BGN" = "Leul bulgar";
+"BHD" = "Dinarul Bahrein";
+"BND" = "Dollar Brunei";
+"BRL" = "Brazil Real";
+"BYN" = "ruble bielorusă";
+"CAD" = "canadian";
+"CHF" = "Franc elvețian";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "Peso columbian";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Croația Cehă";
+"DKK" = "Croată daneză";
+"DZD" = "Dinarul algerian";
+"EGP" = "Lira egipteană";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Kuna croată";
+"HUF" = "Forint maghiar";
+"IDR" = "Rupeea indoneziană";
+"ILS" = "Israel New Sikel";
+"INR" = "Rupee indiene";
+"IQD" = "Dinar irakian";
+"ISK" = "coroana islandeză";
+"JOD" = "Dinar iordanian";
+"JPY" = "Yen";
+"KES" = "Kenya Shilling";
+"KHR" = "Cambodgia Riel";
+"KRW" = "coreeană";
+"KWD" = "Dinara din Kuweit";
+"LAK" = "Lao Kip";
+"LBP" = "Lira libaneză";
+"LKR" = "Rupee din Sri Lanka";
+"MAD" = "Maroc Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Dolar Macao";
+"MXN" = "Dolar Mexic";
+"MYR" = "Ringgit Malaezian";
+"NOK" = "Coroană norvegiană";
+"NZD" = "Dolar Noua Zeelandă";
+"OMR" = "Oman Rial";
+"PHP" = "Peso filipinez";
+"PLN" = "Zloat polonez";
+"QAR" = "Qatari Rial";
+"RON" = "leu românesc";
+"RSD" = "Dinarul sârb";
+"RUB" = "ruble rusești";
+"SAR" = "Riyal Saudită";
+"SEK" = "coroana suedeză";
+"SGD" = "Dolar Singapore";
+"SYP" = "Lira siriană";
+"THB" = "Thai";
+"TRY" = "Liră turcă nouă";
+"TWD" = "Noul dolar din Taiwan";
+"TZS" = "Tanzania Shilling";
+"UGX" = "Șilingul ugandez";
+"USD" = "Dolar american";
+"VND" = "Shield vietnamez";
+"ZAR" = "Randul Africii de Sud";

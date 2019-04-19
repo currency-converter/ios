@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copy";
+
+"settings.title" = "Settings";
+"settings.soundsHeader" = "sound";
+"settings.soundsFooter" = "El sonido del botón puede reducir los errores de entrada.";
+"settings.keyboardClicks" = "sonido de botón";
+"settings.rateUpdateHeader" = "Actualización del tipo de cambio";
+"settings.rateUpdateFooter" = "El tipo de cambio más reciente garantiza una conversión más precisa.";
+"settings.autoUpdateRate" = "Actualización automática";
+"settings.updateFrequency" = "Frecuencia de actualización";
+"settings.update.0" = "actualizar cada minuto";
+"settings.update.1" = "actualizado cada hora";
+"settings.update.2" = "actualizado todos los días";
+"settings.updateImmself" = "Actualizar ahora";
+"settings.updateSuccess" = "Actualización exitosa";
+"settings.updateFailed" = "Error al actualizar";
+"settings.updatedAt" = "last updated";
+"settings.customRateHeader" = "Tipo de cambio personalizado";
+"settings.customRateFooter" = "Al cambiar el tipo de moneda, el interruptor de tipo de cambio personalizado se desactivará.";
+"settings.displayHeader" = "display";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Usar el separador de miles (,)";
+"settings.decimalPlaces" = "número de decimales";
+"settings.disclaimerHeader" = "Descargo de responsabilidad";
+"settings.disclaimer" = "Los datos proporcionados en esta aplicación solo tienen fines informativos y no garantizan la exactitud, validez, disponibilidad o idoneidad de ningún propósito, bajo su propio riesgo.";
+"settings.dateTimeFormat" = "aaaa-MM-dd H:mm";
+
+"currencyPicker.title" = "Seleccionar moneda";
+"currencyPicker.favoriteCurrencies" = "Favoritos";
+"currencyPicker.allCurrencies" = "Todas las monedas";
+"currencyPicker.noResults" = "sin resultado";
+"currencyPicker.unknow" = "Desconocido";
+
+"AED" = "Dirham de los Emiratos Árabes Unidos";
+"AUD" = "dólar australiano";
+"BGN" = "Lev búlgaro";
+"BHD" = "Dinar de Bahrein";
+"BND" = "Dólar de Brunei";
+"BRL" = "Brasil Real";
+"BYN" = "Rublo bielorruso";
+"CAD" = "canadiense";
+"CHF" = "Franco suizo";
+"CLP" = "Peso de Chile";
+"CNY" = "RMB";
+"COP" = "Peso colombiano";
+"CRC" = "Colón de Costa Rica";
+"CZK" = "Corona Checa";
+"DKK" = "Corona danesa";
+"DZD" = "Dinar argelino";
+"EGP" = "Libra egipcia";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Kuna croata";
+"HUF" = "Florín húngaro";
+"IDR" = "Rupia de Indonesia";
+"ILS" = "Israel New Sikel";
+"INR" = "Rupia india";
+"IQD" = "Dinar iraquí";
+"ISK" = "Corona islandesa";
+"JOD" = "Dinar jordano";
+"JPY" = "Yen";
+"KES" = "Chelín de Kenia";
+"KHR" = "Riel de Camboya";
+"KRW" = "coreano";
+"KWD" = "Dinar kuwaití";
+"LAK" = "Lao Kip";
+"LBP" = "Libra libanesa";
+"LKR" = "Rupia de Sri Lanka";
+"MAD" = "Marruecos Doram";
+"MMK" = "Yuan de Myanmar";
+"MOP" = "Dólar de Macao";
+"MXN" = "Dólar de México";
+"MYR" = "Ringgit de Malasia";
+"NOK" = "Corona noruega";
+"NZD" = "Dólar de Nueva Zelanda";
+"OMR" = "Rial de Omán";
+"PHP" = "Peso filipino";
+"PLN" = "Zloty polaco";
+"QAR" = "Rial de Qatar";
+"RON" = "Leu rumano";
+"RSD" = "Dinar serbio";
+"RUB" = "Rublo ruso";
+"SAR" = "Riyal saudí";
+"SEK" = "Corona sueca";
+"SGD" = "Dólar de Singapur";
+"SYP" = "libra siria";
+"THB" = "tailandés";
+"TRY" = "Nueva lira turca";
+"TWD" = "Nuevo dólar de Taiwán";
+"TZS" = "Chelín de Tanzania";
+"UGX" = "Chelín de Uganda";
+"USD" = "Dólar estadounidense";
+"VND" = "Escudo vietnamita";
+"ZAR" = "Rand sudafricano";

@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copy";
+
+"settings.title" = "Tetapan";
+"settings.soundsHeader" = "bunyi";
+"settings.soundsFooter" = "Bunyi butang boleh mengurangkan ralat masukan.";
+"settings.keyboardClicks" = "bunyi butang";
+"settings.rateUpdateHeader" = "Kemas kini Kadar Pertukaran";
+"settings.rateUpdateFooter" = "Kadar pertukaran terkini menjamin penukaran yang lebih tepat.";
+"settings.autoUpdateRate" = "Pembaruan automatik";
+"settings.updateFrequency" = "Kekerapan kemas kini";
+"settings.update.0" = "kemaskini setiap minit";
+"settings.update.1" = "dikemas kini setiap jam";
+"settings.update.2" = "dikemas kini setiap hari";
+"settings.updateImmediately" = "Update Now";
+"settings.updateSuccess" = "Kemas kini berjaya";
+"settings.updateFailed" = "Kemas kini gagal";
+"settings.updatedAt" = "terakhir dikemas kini";
+"settings.customRateHeader" = "Kadar Pertukaran Kustom";
+"settings.customRateFooter" = "Apabila menukar jenis mata wang, suis kadar pertukaran adat akan dimatikan.";
+"settings.displayHeader" = "paparan";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Gunakan pemisah ribu (,)";
+"settings.decimalPlaces" = "bilangan tempat perpuluhan";
+"settings.disclaimerHeader" = "Penafian";
+"settings.disclaimer" = "Data yang disediakan dalam aplikasi ini adalah untuk tujuan maklumat sahaja dan tidak menjamin ketepatan, kesahihan, ketersediaan atau kesesuaian sebarang tujuan, atas risiko anda sendiri";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "Pilih mata wang";
+"currencyPicker.favorite money" = "Favorites";
+"currencyPicker.allCurrencies" = "Semua mata wang";
+"currencyPicker.noResults" = "no result";
+"currencyPicker.unknow" = "Tidak diketahui";
+
+"AED" = "Dirham Emiriah Arab";
+"AUD" = "Dolar Australia";
+"BGN" = "Lev Bulgaria";
+"BHD" = "Bahraini Dinar";
+"BND" = "Dolar Brunei";
+"BRL" = "Real Brazil";
+"BYN" = "Ruble Belarusia";
+"CAD" = "Kanada";
+"CHF" = "Franc Swiss";
+"CLP" = "Peso Chile";
+"CNY" = "RMB";
+"COP" = "Colombian Peso";
+"CRC" = "Kolon Costa Rica";
+"CZK" = "Krone Czech";
+"DKK" = "Danish Krone";
+"DZD" = "Dinar Algeria";
+"EGP" = "Pound Mesir";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Croatian Kuna";
+"HUF" = "Hungarian Forint";
+"IDR" = "Rupee Indonesia";
+"ILS" = "Israel Baru Sikel";
+"INR" = "Rupee India";
+"IQD" = "Dinar Iraq";
+"ISK" = "Krona Iceland";
+"JOD" = "Jordan Dinar";
+"JPY" = "Yen";
+"KES" = "Kenya Shilling";
+"KHR" = "Cambodia Riel";
+"KRW" = "Korea";
+"KWD" = "Dinar Kuwait";
+"LAK" = "Lao Kip";
+"LBP" = "Pound Lubnan";
+"LKR" = "Rupee Sri Lanka";
+"MAD" = "Maghribi Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Macau Dollar";
+"MXN" = "Dolar Mexico";
+"MYR" = "Ringgit Malaysia";
+"NOK" = "Krone Norway";
+"NZD" = "Dolar New Zealand";
+"OMR" = "Oman Rial";
+"PHP" = "Peso Filipina";
+"PLN" = "Poland Zloty";
+"QAR" = "Qatari Rial";
+"RON" = "Leu Romania";
+"RSD" = "Dinar Serbia";
+"RUB" = "Ruble Rusia";
+"SAR" = "Saudi Riyal";
+"SEK" = "Krona Sweden";
+"SGD" = "Dolar Singapura";
+"SYP" = "Pound Syria";
+"THB" = "Thai";
+"TRY" = "Lira Turki Baru";
+"TWD" = "Dolar Taiwan Baru";
+"TZS" = "Tanzania Shilling";
+"UGX" = "Uganda Shilling";
+"USD" = "Dolar Amerika Syarikat";
+"VND" = "Vietnamese Shield";
+"ZAR" = "Rand Afrika Selatan";

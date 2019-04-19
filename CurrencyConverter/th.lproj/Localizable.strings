@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "คัดลอก";
+
+"settings.title" = "การตั้งค่า";
+"settings.soundsHeader" = "เสียง";
+"settings.soundsFooter" = "เสียงของปุ่มสามารถลดข้อผิดพลาดในการป้อนข้อมูล";
+"settings.keyboardClicks" = "เสียงปุ่ม";
+"settings.rateUpdateHeader" = "การปรับปรุงอัตราแลกเปลี่ยน";
+"settings.rateUpdateFooter" = "อัตราแลกเปลี่ยนล่าสุดรับประกันการแปลงที่แม่นยำยิ่งขึ้น";
+"settings.autoUpdateRate" = "อัปเดตอัตโนมัติ";
+"settings.updateFrequency" = "อัปเดตความถี่";
+"settings.update.0" = "อัปเดตทุกนาที";
+"settings.update.1" = "อัปเดตทุกชั่วโมง";
+"settings.update.2" = "อัปเดตทุกวัน";
+"settings.updateImmediately" = "อัปเดตทันที";
+"settings.updateSuccess" = "อัปเดตสำเร็จ";
+"settings.updateFailed" = "การอัปเดตล้มเหลว";
+"settings.updatedAt" = "อัปเดตล่าสุด";
+"settings.customRateHeader" = "อัตราแลกเปลี่ยนที่กำหนดเอง";
+"settings.customRateFooter" = "เมื่อเปลี่ยนประเภทสกุลเงินสวิตช์อัตราแลกเปลี่ยนแบบกำหนดเองจะถูกปิด";
+"settings.displayHeader" = "จอแสดงผล";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "ใช้ตัวคั่นหลักพัน (,)";
+"settings.decimalPlaces" = "จำนวนตำแหน่งทศนิยม";
+"settings.disclaimerHeader" = "ข้อจำกัดความรับผิดชอบ";
+"settings.disclaimer" = "ข้อมูลที่ให้ไว้ในแอปพลิเคชั่นนี้มีวัตถุประสงค์เพื่อให้ข้อมูลเท่านั้นและไม่รับประกันความถูกต้องความถูกต้องความพร้อมใช้งานหรือความเหมาะสมของวัตถุประสงค์ใด ๆ ภายใต้ความเสี่ยงของคุณ";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "เลือกสกุลเงิน";
+"currencyPicker.favoriteCurrencies" = "รายการโปรด";
+"currencyPicker.allCurrencies" = "ทุกสกุลเงิน";
+"currencyPicker.noResults" = "ไม่มีผลลัพธ์";
+"currencyPicker.unknow" = "ไม่ทราบ";
+
+"AED" = "สหรัฐอาหรับเอมิเรตส์เดอร์แฮม";
+"AUD" = "ดอลลาร์ออสเตรเลีย";
+"BGN" = "บัลแกเรียเลฟ";
+"BHD" = "บาห์เรนดีนาร์";
+"BND" = "ดอลลาร์บรูไน";
+"BRL" = "บราซิลจริง";
+"BYN" = "รูเบิลเบลารุส";
+"CAD" = "แคนาดา";
+"CHF" = "ฟรังก์สวิส";
+"CLP" = "ชิลีเปโซ";
+"CNY" = "RMB";
+"COP" = "เปโซโคลัมเบีย";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Czech Krone";
+"DKK" = "Krone เดนมาร์ก";
+"DZD" = "ดีนาร์แอลจีเรีย";
+"EGP" = "ปอนด์อียิปต์";
+"EUR" = "ยูโร";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "โครเอเชีย Kuna";
+"HUF" = "ฮังการีโฟรินท์";
+"IDR" = "รูปีอินโดนีเซีย";
+"ILS" = "อิสราเอล New Sikel";
+"INR" = "รูปีอินเดีย";
+"IQD" = "อิรักดีนาร์";
+"ISK" = "ไอซ์แลนด์โครนา";
+"JOD" = "ดีนาร์จอร์แดน";
+"JPY" = "เยน";
+"KES" = "ชิลลิงเคนยา";
+"KHR" = "Cambodia Riel";
+"KRW" = "เกาหลี";
+"KWD" = "ดีนาร์คูเวต";
+"LAK" = "ลาวกีบ";
+"LBP" = "ปอนด์เลบานอน";
+"LKR" = "เงินรูปีของศรีลังกา";
+"MAD" = "โมร็อกโก Doram";
+"MMK" = "พม่าหยวน";
+"MOP" = "ดอลลาร์มาเก๊า";
+"MXN" = "ดอลลาร์เม็กซิโก";
+"MYR" = "มาเลเซียริงกิต";
+"NOK" = "นอร์เวย์โครน";
+"NZD" = "ดอลลาร์นิวซีแลนด์";
+"OMR" = "โอมานเรียล";
+"PHP" = "เงินเปโซของฟิลิปปินส์";
+"PLN" = "โปแลนด์ซโลตี้";
+"QAR" = "Qatari Rial";
+"RON" = "Romanian Leu";
+"RSD" = "เซอร์เบียดีนาร์";
+"RUB" = "รูเบิลรัสเซีย";
+"SAR" = "Saudi Riyal";
+"SEK" = "Swedish Krona";
+"SGD" = "ดอลลาร์สิงคโปร์";
+"SYP" = "ปอนด์ซีเรีย";
+"THB" = "ไทย";
+"TRY" = "ลีราตุรกีใหม่";
+"TWD" = "ดอลลาร์ไต้หวันใหม่";
+"TZS" = "ชิลลิงแทนซาเนีย";
+"UGX" = "ชิลลิงยูกันดา";
+"USD" = "ดอลลาร์สหรัฐ";
+"VND" = "เวียตนามโล่";
+"ZAR" = "แรนด์แอฟริกาใต้";

@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy"= "복사";
+
+"settings.title"= "설정";
+"settings.soundsHeader"= "소리";
+"settings.soundsFooter"= "버튼 소리가 입력 오류를 줄일 수 있습니다.";
+"settings.keyboardClicks"= "버튼 사운드";
+"settings.rateUpdateHeader"= "환율 업데이트";
+"settings.rateUpdateFooter"= "최신 환율은보다 정확한 변환을 보장합니다.";
+"settings.autoUpdateRate"= "자동 업데이트";
+"settings.updateFrequency"= "업데이트 빈도";
+"settings.update.0"= "매분마다 업데이트";
+"settings.update.1"= "매시간 업데이트";
+"settings.update.2"= "매일 업데이트";
+"settings.updateImmediately"= "지금 업데이트";
+"settings.updateSuccess"= "업데이트 성공";
+"settings.updateFailed"= "업데이트 실패";
+"settings.updatedAt"= "마지막 업데이트";
+"settings.customRateHeader"= "맞춤 환율";
+"settings.customRateFooter"= "통화 유형을 변경하면 맞춤 환율이 전환됩니다.";
+"settings.displayHeader"= "표시";
+"settings.displayFooter"= "";
+"settings.use1000Separator"= "천 단위 구분 기호 (,) 사용";
+"settings.decimalPlaces"= "소수 자릿수";
+"settings.disclaimerHeader"= "면책 조항";
+"settings.disclaimer"= "이 응용 프로그램에 제공된 데이터는 정보 제공 목적으로 만 제공되며 귀하가 감수해야하는 모든 목적의 정확성, 유효성, 가용성 또는 적합성을 보장하지 않습니다.";
+"settings.dateTimeFormat"= "yyyy-MM-dd H : mm";
+
+"currencyPicker.title"= "통화 선택";
+"currencyPicker.favoriteCurrencies"= "즐겨 찾기";
+"currencyPicker.allCurrencies"= "모든 통화";
+"currencyPicker.noResults"= "결과 없음";
+"currencyPicker.unknow"= "알 수 없음";
+
+"AED"= "아랍 에미리트 디람";
+"AUD"= "호주 달러";
+"BGN"= "불가리아 레프";
+"BHD"= "바레인 디나르";
+"BND"= "브루나이 달러";
+"BRL"= "브라질 리얼";
+"BYN"= "벨로루시 루블";
+"CAD"= "캐나다";
+"CHF"= "스위스 프랑";
+"CLP"= "칠레 페소";
+"CNY"= "RMB";
+"COP"= "Colombian Peso";
+"CRC"= "코스타리카 결장";
+"CZK"= "체코 크로네";
+"DKK"= "덴마크 크로네";
+"DZD"= "알제리 디나르";
+"EGP"= "이집트 파운드";
+"EUR"= "Euro";
+"GBP"= "GBP";
+"HKD"= "HKD";
+"HRK"= "크로아티아 쿠나";
+"HUF"= "헝가리 포린 트";
+"IDR"= "인도네시아 루피";
+"ILS"= "이스라엘 뉴 시켈";
+"INR"= "인도 루피";
+"IQD"= "이라크 디나르";
+"ISK"= "아이슬란드 크로나";
+"JOD"= "요르단 디나르";
+"JPY"= "엔";
+"KES"= "케냐 실링";
+"KHR"= "캄보디아 리엘";
+"원"= "한국어";
+"KWD"= "쿠웨이트 디나르";
+"LAK"= "라오스 킵";
+"LBP"= "레바논 파운드";
+"LKR"= "스리랑카 루피";
+"MAD"= "모로코 도람";
+"MMK"= "미얀마 위안";
+"MOP"= "마카오 달러";
+"MXN"= "멕시코 달러";
+"MYR"= "말레이시아 링깃";
+"NOK"= "노르웨이 크로네";
+"NZD"= "뉴질랜드 달러";
+"OMR"= "오만 리알";
+"PHP"= "필리핀 페소";
+"PLN"= "폴란드 즐 로티";
+"QAR"= "카타르 리알";
+"RON"= "루마니아 Leu";
+"RSD"= "세르비아 디나르";
+"RUB"= "러시아 루블";
+"SAR"= "사우디 리얄";
+"SEK"= "스웨덴 크로나";
+"SGD"= "싱가포르 달러";
+"SYP"= "시리아 파운드";
+"THB"= "태국어";
+"TRY"= "새로운 터키 리라";
+"TWD"= "신 대만 달러";
+"TZS"= "탄자니아 실링";
+"UGX"= "우간다 실링";
+"USD"= "미국 달러";
+"VND"= "베트남 방패";
+"ZAR"= "남아프리카 랜드";

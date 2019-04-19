@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "másolat";
+
+"settings.title" = "Beállítások";
+"settings.soundsHeader" = "hang";
+"settings.soundsFooter" = "A gomb hangja csökkentheti a bemeneti hibákat.";
+"settings.keyboardClicks" = "gomb hang";
+"settings.rateUpdateHeader" = "Árfolyamfrissítés";
+"settings.rateUpdateFooter" = "A legújabb árfolyam pontosabb konverziót garantál.";
+"settings.autoUpdateRate" = "Automatikus frissítés";
+"settings.updateFrequency" = "Frissítési frekvencia";
+"settings.update.0" = "frissítés percenként";
+"settings.update.1" = "óránként frissítve";
+"settings.update.2" = "naponta frissítve";
+"settings.updateImmediately" = "Frissítés most";
+"settings.updateSuccess" = "Sikeres frissítés";
+"settings.updateFailed" = "Nem sikerült frissíteni";
+"settings.updatedAt" = "Utolsó frissítés";
+"settings.customRateHeader" = "Egyéni árfolyam";
+"settings.customRateFooter" = "A pénznem típusának megváltoztatásakor az egyéni árfolyamkapcsoló kikapcsol.";
+"settings.displayHeader" = "kijelző";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Az ezer elválasztó (,) használata";
+"settings.decimalPlaces" = "tizedesjegyek száma";
+"settings.disclaimerHeader" = "Jogi nyilatkozat";
+"settings.disclaimer" = "Az ebben az alkalmazásban megadott adatok csak tájékoztató jellegűek, és nem garantálják a saját felelősségére semmilyen cél, pontosság, rendelkezésre állást vagy alkalmasságot.";
+"settings.dateTimeFormat" = "yyyy-MM-dd H: mm";
+
+"currencyPicker.title" = "Valuta kiválasztása";
+"currencyPicker.favoriteCurrencies" = "Kedvencek";
+"currencyPicker.allCounterencies" = "Valuták";
+"currencyPicker.noResults" = "nincs eredmény";
+"currencyPicker.unknow" = "Ismeretlen";
+
+"AED" = "Egyesült Arab Emírségek Dirham";
+"AUD" = "Ausztrál dollár";
+"BGN" = "bolgár lev";
+"BHD" = "Bahraini dinár";
+"BND" = "Brunei dollár";
+"BRL" = "Brazil Real";
+"BYN" = "Fehérorosz rubel";
+"CAD" = "kanadai";
+"CHF" = "svájci frank";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "Kolumbiai peso";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Cseh Krone";
+"DKK" = "dán korona";
+"DZD" = "Algériai dinár";
+"EGP" = "Egyiptomi font";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "horvát kuna";
+"HUF" = "magyar forint";
+"IDR" = "indonéz rúpia";
+"ILS" = "Izrael New Sikel";
+"INR" = "indiai rúpia";
+"IQD" = "iraki dinár";
+"ISK" = "Izlandi Krona";
+"JOD" = "Jordanian dinár";
+"JPY" = "jen";
+"KES" = "Kenya Shilling";
+"KHR" = "Kambodzsa Riel";
+"KRW" = "koreai";
+"KWD" = "Kuvait dinár";
+"LAK" = "Lao Kip";
+"LBP" = "libanoni font";
+"LKR" = "Srí Lanka-i rúpia";
+"MAD" = "Marokkó Doram";
+"MMK" = "Mianmar Yuan";
+"MOP" = "Makaó dollár";
+"MXN" = "Mexikói dollár";
+"MYR" = "malajziai ringgit";
+"NOK" = "norvég Krone";
+"NZD" = "Új-zélandi dollár";
+"OMR" = "Omán Rial";
+"PHP" = "Fülöp-szigeteki peso";
+"PLN" = "lengyel zloty";
+"QAR" = "Qatari Rial";
+"RON" = "román leu";
+"RSD" = "szerb dinár";
+"RUB" = "Orosz rubel";
+"SAR" = "Szaúd-Riyal";
+"SEK" = "svéd korona";
+"SGD" = "Szingapúri dollár";
+"SYP" = "szíriai font";
+"THB" = "Thai";
+"TRY" = "Új török ​​líra";
+"TWD" = "Új tajvani dollár";
+"TZS" = "Tanzánia shilling";
+"UGX" = "Ugandai shilling";
+"USD" = "US dollár";
+"VND" = "vietnami pajzs";
+"ZAR" = "Dél-afrikai rand";

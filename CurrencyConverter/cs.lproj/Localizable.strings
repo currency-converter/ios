@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "copy";
+
+"settings.title" = "Nastavení";
+"settings.soundsHeader" = "zvuk";
+"settings.soundsFooter" = "Zvuk tlačítka může snížit vstupní chyby.";
+"settings.keyboardClicks" = "zvuk tlačítka";
+"settings.rateUpdateHeader" = "Aktualizace směnného kurzu";
+"settings.rateUpdateFooter" = "Poslední směnný kurz zaručuje přesnější konverzi.";
+"settings.autoUpdateRate" = "Automatická aktualizace";
+"settings.updateFrequency" = "Aktualizovat frekvenci";
+"settings.update.0" = "aktualizovat každou minutu";
+"settings.update.1" = "aktualizováno každou hodinu";
+"settings.update.2" = "každý den aktualizováno";
+"settings.updateImmedantly" = "Aktualizovat";
+"settings.updateSuccess" = "Aktualizace úspěšná";
+"settings.updateFailed" = "Aktualizace se nezdařila";
+"settings.updatedAt" = "poslední aktualizace";
+"settings.customRateHeader" = "Vlastní směnný kurz";
+"settings.customRateFooter" = "Při změně typu měny bude vypnut vlastní přepínač směnného kurzu.";
+"settings.displayHeader" = "display";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Použít oddělovač tisíců (,)";
+"settings.decimalPlaces" = "počet desetinných míst";
+"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimer" = "Data uvedená v této aplikaci slouží pouze pro informační účely a nezaručují správnost, platnost, dostupnost nebo vhodnost jakéhokoliv účelu, na vlastní riziko.";
+"settings.dateTimeFormat" = "rrrr-MM-dd H: mm";
+
+"currencyPicker.title" = "Vybrat měnu";
+"currencyPicker.favoriteCurrencies" = "Oblíbené";
+"currencyPicker.allCurrencies" = "Všechny měny";
+"currencyPicker.noResults" = "žádný výsledek";
+"currencyPicker.unknow" = "Neznámý";
+
+"AED" = "Spojené arabské emiráty Dirham";
+"AUD" = "Australský dolar";
+"BGN" = "bulharský lev";
+"BHD" = "bahrajnský dinár";
+"BND" = "Brunejský dolar";
+"BRL" = "Brazil Real";
+"BYN" = "běloruský rubl";
+"CAD" = "Kanadský";
+"CHF" = "Švýcarský frank";
+"CLP" = "Chile Peso";
+"CNY" = "RMB";
+"COP" = "kolumbijské peso";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Česká Krone";
+"DKK" = "dánská krone";
+"DZD" = "alžírský dinár";
+"EGP" = "Egyptská libra";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "chorvatská kuna";
+"HUF" = "Maďarský forint";
+"IDR" = "indonéská rupie";
+"ILS" = "Izrael Nový Sikel";
+"INR" = "indická rupie";
+"IQD" = "Irácký dinár";
+"ISK" = "islandská koruna";
+"JOD" = "Jordánský dinár";
+"JPY" = "Yen";
+"KES" = "Keňský šilink";
+"KHR" = "Kambodža Riel";
+"KRW" = "korejština";
+"KWD" = "Kuvajtský dinár";
+"LAK" = "Lao Kip";
+"LBP" = "libanonská libra";
+"LKR" = "Srílanská rupie";
+"MAD" = "Maroko Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Macau Dollar";
+"MXN" = "Mexiko dolar";
+"MYR" = "malajský ringgit";
+"NOK" = "Norská koruna";
+"NZD" = "Novozélandský dolar";
+"OMR" = "Oman Rial";
+"PHP" = "Filipínské Peso";
+"PLN" = "polský zlotý";
+"QAR" = "Katarský rial";
+"RON" = "rumunský lev";
+"RSD" = "srbský dinár";
+"RUB" = "ruský rubl";
+"SAR" = "Saudská Riyál";
+"SEK" = "švédská koruna";
+"SGD" = "Singapurský dolar";
+"SYP" = "syrská libra";
+"THB" = "thajština";
+"TRY" = "Nová turecká lira";
+"TWD" = "Nový taiwanský dolar";
+"TZS" = "Tanzanie Shilling";
+"UGX" = "Ugandský šilink";
+"USD" = "Americký dolar";
+"VND" = "vietnamský štít";
+"ZAR" = "Jihoafrický Rand";

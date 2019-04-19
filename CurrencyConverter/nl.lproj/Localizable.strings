@@ -1,0 +1,103 @@
+/*
+ Localizable.strings
+ CurrencyConverter
+ 
+ Created by zhi.zhong on 2019/3/30.
+ Copyright © 2019 zhi.zhong. All rights reserved.
+ */
+
+"home.copy" = "kopiëren";
+
+"settings.title" = "Instellingen";
+"settings.soundsHeader" = "geluid";
+"settings.soundsFooter" = "Het knopgeluid kan invoerfouten verminderen.";
+"settings.keyboardClicks" = "knopgeluid";
+"settings.rateUpdateHeader" = "Wisselkoersupdate";
+"settings.rateUpdateFooter" = "De laatste wisselkoers garandeert een meer accurate conversie.";
+"settings.autoUpdateRate" = "Automatische update";
+"settings.updateFrequency" = "Update frequentie";
+"settings.update.0" = "update elke minuut";
+"settings.update.1" = "elk uur bijgewerkt";
+"settings.update.2" = "elke dag bijgewerkt";
+"settings.updateOnmiddellijk" = "Nu bijwerken";
+"settings.updateSuccess" = "Update succesvol";
+"settings.updateFailed" = "Update mislukt";
+"settings.updatedAt" = "laatst bijgewerkt";
+"settings.customRateHeader" = "Aangepaste Wisselkoers";
+"settings.customRateFooter" = "Als u het valutatype wijzigt, wordt de aangepaste wisselkoersschakelaar uitgeschakeld.";
+"settings.displayHeader" = "display";
+"settings.displayFooter" = "";
+"settings.use1000Separator" = "Gebruik het scheidingsteken voor duizendtallen (,)";
+"settings.decimalPlaces" = "aantal decimalen";
+"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimer" = "De gegevens in deze applicatie zijn uitsluitend voor informatieve doeleinden en garanderen niet de juistheid, geldigheid, beschikbaarheid of geschiktheid van enig doel, op eigen risico.";
+"settings.dateTimeFormat" = "jjjj-MM-dd H: mm";
+
+"currencyPicker.title" = "Selecteer valuta";
+"currencyPicker.favoriteCurrencies" = "Favorieten";
+"currencyPicker.allCurrencies" = "Alle valuta's";
+"currencyPicker.noResults" = "geen resultaat";
+"currencyPicker.unknow" = "Onbekend";
+
+"AED" = "Dirham van Verenigde Arabische Emiraten";
+"AUD" = "Australische dollar";
+"BGN" = "Bulgaarse Lev";
+"BHD" = "Bahreinse Dinar";
+"BND" = "Brunei Dollar";
+"BRL" = "Brazil Real";
+"BYN" = "Wit-Russische roebel";
+"CAD" = "Canadees";
+"CHF" = "Zwitserse Frank";
+"CLP" = "Chili Peso";
+"CNY" = "RMB";
+"COP" = "Colombiaanse Peso";
+"CRC" = "Costa Rica Colon";
+"CZK" = "Tsjechische kroon";
+"DKK" = "Deense kroon";
+"DZD" = "Algerijnse dinar";
+"EGP" = "Egyptische pond";
+"EUR" = "Euro";
+"GBP" = "GBP";
+"HKD" = "HKD";
+"HRK" = "Kroatische Kuna";
+"HUF" = "Hongaarse forint";
+"IDR" = "Indonesische roepie";
+"ILS" = "Israel New Sikel";
+"INR" = "Indiase roepie";
+"IQD" = "Iraakse Dinar";
+"ISK" = "IJslandse kroon";
+"JOD" = "Jordanian Dinar";
+"JPY" = "Yen";
+"KES" = "Kenya Shilling";
+"KHR" = "Cambodia Riel";
+"KRW" = "Koreaans";
+"KWD" = "Koeweitse dinar";
+"LAK" = "Lao Kip";
+"LBP" = "Libanees pond";
+"LKR" = "Sri Lankaanse roepie";
+"MAD" = "Marokko Doram";
+"MMK" = "Myanmar Yuan";
+"MOP" = "Macau-dollar";
+"MXN" = "Mexico-dollar";
+"MYR" = "Maleisische ringgit";
+"NOK" = "Noorse kroon";
+"NZD" = "Nieuw-Zeelandse Dollar";
+"OMR" = "Oman Rial";
+"PHP" = "Filippijnse peso";
+"PLN" = "Poolse zloty";
+"QAR" = "Qatari Rial";
+"RON" = "Roemeense Leu";
+"RSD" = "Servische dinar";
+"RUB" = "Russische roebel";
+"SAR" = "Saudi Riyal";
+"SEK" = "Zweedse kroon";
+"SGD" = "Singaporese dollar";
+"SYP" = "Syrisch pond";
+"THB" = "Thai";
+"TRY" = "Nieuwe Turkse Lira";
+"TWD" = "Nieuwe Taiwanese dollar";
+"TZS" = "Tanzania Shilling";
+"UGX" = "Oegandese shilling";
+"USD" = "Amerikaanse dollar";
+"VND" = "Vietnamese Shield";
+"ZAR" = "Zuid-Afrikaanse rand";

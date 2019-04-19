@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  CurrencyConverter
+
+  Created by zhi.zhong on 2019/4/2.
+  Copyright © 2019 zhi.zhong. All rights reserved.
+*/
+CFBundleDisplayName = "Convertisseur de devises";
