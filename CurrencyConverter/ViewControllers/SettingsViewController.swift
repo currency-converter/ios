@@ -143,11 +143,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: self.groupId)
-		shared?.set(sender.isOn, forKey: "thousandSeparator")
+		shared?.set(sender.isOn, forKey: "usesGroupingSeparator")
 		self.demoLabel.text = self.formatDemoText()
 		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			"thousandSeparator": sender.isOn
+			"usesGroupingSeparator": sender.isOn
 		])
 	}
 
@@ -178,7 +178,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? false
 		let isAutoUpdateRate: Bool = shared?.bool(forKey: "autoUpdateRate") ?? true
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
-		let isUse1000Separator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? true
 		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
 		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? "USD"
 		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? "CNY"
@@ -200,7 +200,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.keyboardClicksLabel.text = NSLocalizedString("settings.keyboardClicks", comment: "")
 		self.updatedAtLabel.text = NSLocalizedString("settings.updatedAt", comment: "")
 		self.updateFrequencyLabel.text = NSLocalizedString("settings.updateFrequency", comment: "")
-		self.use1000SeparatorLabel.text = NSLocalizedString("settings.use1000Separator", comment: "")
+		self.use1000SeparatorLabel.text = NSLocalizedString("settings.usesGroupingSeparator", comment: "")
 		self.decimalPlacesLabel.text = NSLocalizedString("settings.decimalPlaces", comment: "")
 		self.updateImmediatelyButton.setTitle(NSLocalizedString("settings.updateImmediately", comment: ""), for: .normal)
 		self.customRateLabel.text = NSLocalizedString("settings.customRateHeader", comment: "")
@@ -219,34 +219,44 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.customRateStepper.isContinuous = true
 		self.customRateStepper.value = Double(rate)
 		self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
-		self.use1000SeparatorSwitch.isOn = isUse1000Separator
+		self.use1000SeparatorSwitch.isOn = usesGroupingSeparator
 		self.demoLabel.text = self.formatDemoText()
 	}
 	
 	func formatDemoText() -> String {
+		return numberFormat("12345.67890")
+	}
+	
+	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
-		let isUse1000Separator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
-
-		var demoLabelText = "1234"
-		if isUse1000Separator {
-			demoLabelText = "1,234"
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? true
+		let decimals = shared?.integer(forKey: "decimals") ?? 2
+		var price: NSNumber = 0
+		if let myInteger = Double(s) {
+			price = NSNumber(value:myInteger)
 		}
+		//创建一个NumberFormatter对象
+		let numberFormatter = NumberFormatter()
+		//设置number显示样式
+		numberFormatter.numberStyle = .decimal  // 小数形式
+		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
+		//numberFormatter.groupingSeparator = "," //分隔符号
+		//numberFormatter.groupingSize = 4  //分隔位数
 		
-		switch decimals {
-		case 4:
-			demoLabelText = "\(demoLabelText).3210"
-		case 3:
-			demoLabelText = "\(demoLabelText).210"
-		case 2:
-			demoLabelText = "\(demoLabelText).10"
-		case 1:
-			demoLabelText = "\(demoLabelText).0"
-		default:
-			break
-		}
+		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+		//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
 		
-		return demoLabelText
+		//numberFormatter.positivePrefix = "$" //自定义前缀
+		//numberFormatter.positiveSuffix = "元" //自定义后缀
+		
+		//numberFormatter.locale = Locale(identifier: "fa_IR")
+		//numberFormatter.locale = Locale(identifier: "ar_EG")
+		//numberFormatter.locale = Locale(identifier: "cs_CZ")
+		//numberFormatter.locale = Locale(identifier: "de_DE")
+		
+		//格式化
+		let format = numberFormatter.string(from: price)!
+		return format
 	}
 	
 	func formatUpdatedAtText() -> String {

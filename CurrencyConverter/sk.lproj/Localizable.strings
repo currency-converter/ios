@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Pri zmene typu meny sa vypne vlastný prepínač výmenného kurzu.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Použiť oddeľovač tisícov (,)";
+"settings.usesGroupingSeparator" = "Používa separátor zoskupenia";
 "settings.decimalPlaces" = "počet desatinných miest";
 "settings.disclaimerHeader" = "Vyhlásenie";
 "settings.disclaimer" = "Údaje uvedené v tejto aplikácii majú len informatívny charakter a nezaručujú presnosť, platnosť, dostupnosť alebo vhodnosť akéhokoľvek účelu na vlastné riziko.";

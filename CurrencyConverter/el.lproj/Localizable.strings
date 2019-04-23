@@ -27,7 +27,7 @@
 «Settings.customRateFooter» = «όταν αλλάζετε τον τύπο της νόμισμα, το νόμισμα έθιμο σβήσει.»?
 "settings.displayHeader" = "εμφάνιση";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Χρήση του διαχωριστή χιλιάδων (,)";
+"settings.usesGroupingSeparator" = "Χρησιμοποιεί τον διαχωριστή διαχωρισμού";
 "settings.decimalPlaces" = "αριθμός δεκαδικών θέσεων";
 "settings.disclaimerHeader" = "Αποποίηση ευθυνών";
 "Settings.disclaimer" = "τα δεδομένα της εφαρμογής παρέχονται μόνο για ενημερωτικούς σκοπούς και όχι για οποιονδήποτε σκοπό να εξασφαλιστεί η ακρίβεια, εγκυρότητα, τη διαθεσιμότητα ή την καταλληλότητα, την επιλογή και τον κίνδυνο."

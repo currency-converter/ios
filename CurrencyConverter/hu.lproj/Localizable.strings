@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "A pénznem típusának megváltoztatásakor az egyéni árfolyamkapcsoló kikapcsol.";
 "settings.displayHeader" = "kijelző";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Az ezer elválasztó (,) használata";
+"settings.usesGroupingSeparator" = "Csoportosító elválasztó használata";
 "settings.decimalPlaces" = "tizedesjegyek száma";
 "settings.disclaimerHeader" = "Jogi nyilatkozat";
 "settings.disclaimer" = "Az ebben az alkalmazásban megadott adatok csak tájékoztató jellegűek, és nem garantálják a saját felelősségére semmilyen cél, pontosság, rendelkezésre állást vagy alkalmasságot.";

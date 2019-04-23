@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "通貨タイプを変更すると、カスタム為替レートスイッチがオフになります。";
 "settings.displayHeader" = "ディスプレイ";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "千単位の区切り記号（、）を使用してください。";
+"settings.usesGroupingSeparator" = "グループ化区切りを使用";
 "settings.decimalPlaces" = "小数点以下の桁数";
 "settings.disclaimerHeader" = "免責事項";
 "settings.disclaimer" = "このアプリケーションで提供されるデータは情報提供のみを目的としており、自己の責任において、いかなる目的の正確性、妥当性、可用性、または適合性を保証するものでもありません。";

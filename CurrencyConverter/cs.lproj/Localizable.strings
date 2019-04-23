@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Při změně typu měny bude vypnut vlastní přepínač směnného kurzu.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Použít oddělovač tisíců (,)";
+"settings.usesGroupingSeparator" = "Používá separátor seskupení";
 "settings.decimalPlaces" = "počet desetinných míst";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Data uvedená v této aplikaci slouží pouze pro informační účely a nezaručují správnost, platnost, dostupnost nebo vhodnost jakéhokoliv účelu, na vlastní riziko.";

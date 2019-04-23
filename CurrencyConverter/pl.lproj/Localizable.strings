@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Zmieniając typ waluty, niestandardowy przełącznik kursu wymiany zostanie wyłączony.";
 "settings.displayHeader" = "wyświetlacz";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Użyj separatora tysięcy (,)";
+"settings.usesGroupingSeparator" = "Używa separatora grupowania";
 "settings.decimalPlaces" = "liczba miejsc dziesiętnych";
 "settings.disclaimerHeader" = "Zastrzeżenie";
 "settings.disclaimer" = "Dane podane w tej aplikacji mają wyłącznie charakter informacyjny i nie gwarantują dokładności, ważności, dostępności ani przydatności do jakiegokolwiek celu, na własne ryzyko.";

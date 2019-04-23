@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Når du ændrer valuta type, vil den brugerdefinerede valutakurskontakt blive slået fra.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Brug tusind separator (,)";
+"settings.usesGroupingSeparator" = "Bruger Gruppen Separator";
 "settings.decimalPlaces" = "antal decimaler";
 "settings.disclaimerHeader" = "Ansvarsfraskrivelse";
 "settings.disclaimer" = "Dataene i denne ansøgning er kun til orienteringsformål og garanterer ikke for nøjagtighed, gyldighed, tilgængelighed eller egnethed til noget formål, for egen risiko.";

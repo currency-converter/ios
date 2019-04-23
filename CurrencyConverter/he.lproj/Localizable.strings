@@ -27,7 +27,7 @@
 "Settings.customRateFooter" = "כאשר משנים את סוג המטבע, מטבע מותאם אישית לכבות.";
 "settings.displayHeader" = "הצג";
 "settings.displayFooter" = "";
-"Settings.use1000Separator" = "מפריד אלפים השתמש (,)";
+"Settings.usesGroupingSeparator" = "משתמש קיבוץ מפריד";
 "settings.decimalPlaces" = "מספר מקומות עשרוניים";
 "settings.disclaimerHeader" = "כתב ויתור";
 "Settings.disclaimer" = "נתוני היישום ניתן למטרות אינפורמטיביות בלבד, ולא לכל מטרה כדי להבטיח את הדיוק, תוקף, זמינות או התאמתו, אפשרות וסיכון.";

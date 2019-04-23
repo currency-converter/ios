@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Para birimi türünü değiştirirken, özel döviz kuru anahtarı kapatılacaktır.";
 "settings.displayHeader" = "ekran";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Binlik ayırıcıyı kullanın (,)";
+"settings.usesGroupingSeparator" = "Gruplandırma Ayırıcı kullanır";
 "settings.decimalPlaces" = "ondalık basamak sayısı";
 "settings.disclaimerHeader" = "Yasal Uyarı";
 "settings.disclaimer" = "Bu başvuruda sağlanan veriler yalnızca bilgilendirme amaçlıdır ve herhangi bir amacın doğruluğunu, geçerliliğini, kullanılabilirliğini veya uygunluğunu kendi sorumluluğunuzda değildir.";

@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Når du endrer valutatype, vil den tilpassede valutakursbryteren bli slått av.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Bruk tusen separator (,)";
+"settings.usesGroupingSeparator" = "Bruker gruppering av separator";
 "settings.decimalPlaces" = "antall desimaler";
 "settings.disclaimerHeader" = "Ansvarsfraskrivelse";
 "settings.disclaimer" = "Dataene som er oppgitt i denne applikasjonen, er kun til informasjonsformål og garanterer ikke for nøyaktighet, gyldighet, tilgjengelighet eller egnethet for noe formål, for egen risiko.";

@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Wenn Sie den Währungstyp ändern, wird der benutzerdefinierte Wechselkursschalter deaktiviert.";
 "settings.displayHeader" = "Anzeige";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Verwenden Sie das Tausendertrennzeichen (,)";
+"settings.usesGroupingSeparator" = "Verwendet Gruppierungstrennzeichen";
 "settings.decimalPlaces" = "Anzahl der Dezimalstellen";
 "settings.disclaimerHeader" = "Haftungsausschluss";
 "settings.disclaimer" = "Die in dieser Anwendung bereitgestellten Daten dienen nur zu Informationszwecken und garantieren nicht die Genauigkeit, Gültigkeit, Verfügbarkeit oder Eignung eines Zwecks auf eigene Gefahr.";

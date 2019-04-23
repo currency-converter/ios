@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "जब मुद्रा प्रकार बदल रहा है, तो कस्टम विनिमय दर स्विच बंद हो जाएगा";
 "settings.displayHeader" = "प्रदर्शन";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "हजारों विभाजक (,) का उपयोग करें";
+"settings.usesGroupingSeparator" = "ग्रुपिंग सेपरेटर का उपयोग करता है";
 "settings.decimalPlaces" = "दशमलव स्थानों की संख्या";
 "settings.disclaimerHeader" = "अस्वीकरण";
 "settings.disc अस्वीकरण" = "इस एप्लिकेशन में प्रदान किया गया डेटा केवल सूचना के उद्देश्यों के लिए है और आपके जोखिम पर किसी भी उद्देश्य की सटीकता, वैधता, उपलब्धता या उपयुक्तता की गारंटी नहीं देता है।";

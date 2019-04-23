@@ -72,7 +72,7 @@ class ViewController: UIViewController {
 		// 小数位数
 		"decimals": 2,
 		// 使用千位分隔符
-		"thousandSeparator": true,
+		"usesGroupingSeparator": true,
 		// 是否使用按键声音
 		"sounds": false,
 		"fromSymbol": "USD",
@@ -185,6 +185,7 @@ class ViewController: UIViewController {
 		let fromRate: Float! = self.rates[self.fromSymbol]?.floatValue
 		let toRate: Float! = self.rates[self.toSymbol]?.floatValue
 		self.rate = toRate/fromRate
+		print("self.rate:", self.rate)
 	}
 	
 	func createUpdateRateDaemon() {
@@ -213,7 +214,7 @@ class ViewController: UIViewController {
 	
 	func renderScreen() {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
 		
 		let screenViewHeight: CGFloat = 200
 		// 获取屏幕尺寸
@@ -239,7 +240,7 @@ class ViewController: UIViewController {
 		fromMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.text = output(self.fromMoney)
+		fromMoneyLabel.text = numberFormat(self.fromMoney)
 		fromMoneyLabel.textColor = UIColor.gray
 		fromScreenView.addSubview(fromMoneyLabel)
 		
@@ -351,26 +352,21 @@ class ViewController: UIViewController {
 				
 				let fromSymbol: String = self.toSymbol
 				let toSymbol: String = self.fromSymbol
-				let fromMoney: String = self.toMoneyLabel.text!
-				let toMoney: String = self.fromMoneyLabel.text!
+				//let newToMoney: String = self.fromMoney
+				//反向计算得到原始toMoney
+				let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
 				//更新界面
 				self.fromScreenView.frame.origin.y = 0
 				self.toScreenView.frame.origin.y = 100
-				self.fromMoney = fromMoney
-//				self.fromSymbol = fromSymbol
-//				self.toSymbol = toSymbol
-//				self.fromSymbolButton.setTitle(fromSymbol, for: .normal)
-//				self.toSymbolButton.setTitle(toSymbol, for: .normal)
-				self.fromMoneyLabel.text = fromMoney
-				self.toMoneyLabel.text = toMoney
-				//交换时禁用自定义汇率
-//				self.rate = 1/self.rate
+				//fromMoney没有缓存，不能通过UserDefaults事件来派发
+				self.fromMoney = newFromMoney
+				self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
 
 				//更新缓存
 				let shared = UserDefaults(suiteName: self.groupId)
 				shared?.set(fromSymbol, forKey: "fromSymbol")
 				shared?.set(toSymbol, forKey: "toSymbol")
-				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
 				if isCustomRate {
 					shared?.set(false, forKey: "isCustomRate")
 					self.asteriskLabel.isHidden = true
@@ -480,7 +476,7 @@ class ViewController: UIViewController {
 	
 	func playTapSound() {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? false
+		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? self.defaults["sounds"] as! Bool
 		
 		if isSounds {
 			let path = Bundle.main.path(forResource: "Sounds/tap", ofType: "wav")!
@@ -540,12 +536,11 @@ class ViewController: UIViewController {
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
 		let rate = isCustomRate ? customRate : self.rate
 		
-		return numberFormat(String(format: "%.\(String(decimals))f", Float(money)! * rate))
+		return numberFormat(String(Float(money)! * rate))
 	}
 	
 	func registerSettingsBundle() {
@@ -556,37 +551,34 @@ class ViewController: UIViewController {
 	//把 "1234567.89" -> "1,234,567.89"
 	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let usesGroupingSeparator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
-		let decimals = shared?.integer(forKey: "decimals") ?? 2
-		//if usesGroupingSeparator {
-			var price: NSNumber = 0
-			if let myInteger = Double(s) {
-				price = NSNumber(value:myInteger)
-			}
-			//创建一个NumberFormatter对象
-			let numberFormatter = NumberFormatter()
-			//设置number显示样式
-			numberFormatter.numberStyle = .decimal  // 小数形式
-			numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-			//numberFormatter.groupingSeparator = "," //分隔符号
-			//numberFormatter.groupingSize = 4  //分隔位数
-			
-			numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
-			//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
-			
-			//numberFormatter.positivePrefix = "$" //自定义前缀
-			//numberFormatter.positiveSuffix = "元" //自定义后缀
-			
-			//numberFormatter.locale = Locale(identifier: "fa_IR")
-			//numberFormatter.locale = Locale(identifier: "ar_EG")
-			//numberFormatter.locale = Locale(identifier: "cs_CZ")
-			//numberFormatter.locale = Locale(identifier: "de_DE")
-			
-			//格式化
-			let format = numberFormatter.string(from: price)!
-			return format
-		//}
-		//return s
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? self.defaults["usesGroupingSeparator"] as! Bool
+		let decimals = shared?.integer(forKey: "decimals") ?? self.defaults["decimals"] as! Int
+		var price: NSNumber = 0
+		if let myInteger = Double(s) {
+			price = NSNumber(value:myInteger)
+		}
+		//创建一个NumberFormatter对象
+		let numberFormatter = NumberFormatter()
+		//设置number显示样式
+		numberFormatter.numberStyle = .decimal  // 小数形式
+		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
+		//numberFormatter.groupingSeparator = "," //分隔符号
+		//numberFormatter.groupingSize = 4  //分隔位数
+		
+		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+		//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
+		
+		//numberFormatter.positivePrefix = "$" //自定义前缀
+		//numberFormatter.positiveSuffix = "元" //自定义后缀
+		
+		//numberFormatter.locale = Locale(identifier: "fa_IR")
+		//numberFormatter.locale = Locale(identifier: "ar_EG")
+		//numberFormatter.locale = Locale(identifier: "cs_CZ")
+		//numberFormatter.locale = Locale(identifier: "de_DE")
+		
+		//格式化
+		let format = numberFormatter.string(from: price)!
+		return format
 	}
 	
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
@@ -611,9 +603,11 @@ class ViewController: UIViewController {
 				self.retrieveRate()
 			}
 			
-			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("thousandSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
+			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
 				DispatchQueue.main.async {
 					print("defaultsChanged")
+					print("self.rate:", self.rate)
+					print("self.fromMoney:", self.fromMoney)
 					self.toMoneyLabel.text = self.output(self.fromMoney)
 				}
 			}

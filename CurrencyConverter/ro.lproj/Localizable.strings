@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "La schimbarea tipului de valută, comutatorul cursului de schimb personalizat va fi oprit.";
 "settings.displayHeader" = "afișare";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Utilizați separatorul de mii (,)";
+"settings.usesGroupingSeparator" = "Utilizează separatorul de grupare";
 "settings.decimalPlaces" = "număr de zecimale";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Datele furnizate în această aplicație sunt doar pentru scopuri informative și nu garantează acuratețea, valabilitatea, disponibilitatea sau adecvarea vreunui scop, pe propriul risc.";

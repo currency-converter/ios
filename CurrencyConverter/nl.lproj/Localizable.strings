@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Als u het valutatype wijzigt, wordt de aangepaste wisselkoersschakelaar uitgeschakeld.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Gebruik het scheidingsteken voor duizendtallen (,)";
+"settings.usesGroupingSeparator" = "Gebruikt groepenscheiding";
 "settings.decimalPlaces" = "aantal decimalen";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "De gegevens in deze applicatie zijn uitsluitend voor informatieve doeleinden en garanderen niet de juistheid, geldigheid, beschikbaarheid of geschiktheid van enig doel, op eigen risico.";

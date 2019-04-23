@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Ao alterar o tipo de moeda, a opção de taxa de câmbio personalizada será desativada.";
 "settings.displayHeader" = "exibir";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Use o separador de milhares (,)";
+"settings.usesGroupingSeparator" = "Usa o Separador de Agrupamento";
 "settings.decimalPlaces" = "número de casas decimais";
 "settings.disclaimerHeader" = "Isenção de responsabilidade";
 "settings.disclaimer" = "Os dados apresentados nesta aplicação são apenas para fins informativos e não garantem a precisão, validade, disponibilidade ou adequação de qualquer finalidade, por sua conta e risco.";

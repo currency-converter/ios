@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "عند تغيير نوع العملة ، سيتم إيقاف تشغيل مفتاح سعر الصرف المخصص.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "استخدم الفاصل الآلاف (،)";
+"settings.usesGroupingSeparator" = "يستخدم فاصل التجميع";
 "settings.decimalPlaces" = "عدد المنازل العشرية";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";

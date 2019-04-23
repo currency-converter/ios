@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Valuuttatyyppiä muutettaessa mukautettu vaihtokurssikytkin sammuu.";
 "settings.displayHeader" = "näyttö";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Käytä tuhansia erottimia (,)";
+"settings.usesGroupingSeparator" = "Käyttää ryhmittelyerotinta";
 "settings.decimalPlaces" = "desimaalien määrä";
 "settings.disclaimerHeader" = "Vastuuvapauslauseke";
 "settings.disclaimer" = "Tässä hakemuksessa annetut tiedot ovat vain tiedoksi ja eivät takaa tarkkuutta, pätevyyttä, käytettävyyttä tai tarkoituksenmukaisuutta omalla vastuullasi.";

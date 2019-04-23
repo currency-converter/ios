@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Apabila menukar jenis mata wang, suis kadar pertukaran adat akan dimatikan.";
 "settings.displayHeader" = "paparan";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Gunakan pemisah ribu (,)";
+"settings.usesGroupingSeparator" = "Menggunakan Pengasingan Pemasukan";
 "settings.decimalPlaces" = "bilangan tempat perpuluhan";
 "settings.disclaimerHeader" = "Penafian";
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini adalah untuk tujuan maklumat sahaja dan tidak menjamin ketepatan, kesahihan, ketersediaan atau kesesuaian sebarang tujuan, atas risiko anda sendiri";

@@ -19,7 +19,7 @@
 "settings.update.0" = "actualizar cada minuto";
 "settings.update.1" = "actualizado cada hora";
 "settings.update.2" = "actualizado todos los días";
-"settings.updateImmself" = "Actualizar ahora";
+"settings.updateImmediately" = "Actualizar ahora";
 "settings.updateSuccess" = "Actualización exitosa";
 "settings.updateFailed" = "Error al actualizar";
 "settings.updatedAt" = "last updated";
@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Al cambiar el tipo de moneda, el interruptor de tipo de cambio personalizado se desactivará.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Usar el separador de miles (,)";
+"settings.usesGroupingSeparator" = "Usa separador de agrupación";
 "settings.decimalPlaces" = "número de decimales";
 "settings.disclaimerHeader" = "Descargo de responsabilidad";
 "settings.disclaimer" = "Los datos proporcionados en esta aplicación solo tienen fines informativos y no garantizan la exactitud, validez, disponibilidad o idoneidad de ningún propósito, bajo su propio riesgo.";

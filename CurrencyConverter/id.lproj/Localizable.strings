@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Saat mengubah jenis mata uang, sakelar nilai tukar khusus akan dimatikan.";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Gunakan pemisah ribuan (,)";
+"settings.usesGroupingSeparator" = "Gunakan Pemisah Pengelompokan";
 "settings.decimalPlaces" = "jumlah tempat desimal";
 "settings.disclaimerHeader" = "Penafian";
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini hanya untuk tujuan informasi dan tidak menjamin akurasi, validitas, ketersediaan atau kesesuaian tujuan apa pun, dengan risiko Anda sendiri.";

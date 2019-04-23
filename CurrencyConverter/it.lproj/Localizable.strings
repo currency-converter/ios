@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "Quando si modifica il tipo di valuta, l'opzione del tasso di cambio personalizzato verrà disattivata.";
 "settings.displayHeader" = "visualizza";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "Usa il separatore delle migliaia (,)";
+"settings.usesGroupingSeparator" = "Utilizza il separatore di raggruppamento";
 "settings.decimalPlaces" = "numero di posizioni decimali";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "I dati forniti in questa applicazione sono solo a scopo informativo e non garantiscono l'accuratezza, la validità, la disponibilità o l'adeguatezza di qualsiasi scopo, a proprio rischio.";

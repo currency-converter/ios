@@ -27,7 +27,7 @@
 "settings.customRateFooter" = "เมื่อเปลี่ยนประเภทสกุลเงินสวิตช์อัตราแลกเปลี่ยนแบบกำหนดเองจะถูกปิด";
 "settings.displayHeader" = "จอแสดงผล";
 "settings.displayFooter" = "";
-"settings.use1000Separator" = "ใช้ตัวคั่นหลักพัน (,)";
+"settings.usesGroupingSeparator" = "ใช้ตัวแยกการจัดกลุ่ม";
 "settings.decimalPlaces" = "จำนวนตำแหน่งทศนิยม";
 "settings.disclaimerHeader" = "ข้อจำกัดความรับผิดชอบ";
 "settings.disclaimer" = "ข้อมูลที่ให้ไว้ในแอปพลิเคชั่นนี้มีวัตถุประสงค์เพื่อให้ข้อมูลเท่านั้นและไม่รับประกันความถูกต้องความถูกต้องความพร้อมใช้งานหรือความเหมาะสมของวัตถุประสงค์ใด ๆ ภายใต้ความเสี่ยงของคุณ";

@@ -37,11 +37,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		// 小数位数
 		"decimals": 2,
 		// 使用千位分隔符
-		"thousandSeparator": true,
+		"usesGroupingSeparator": true,
 		// 是否使用按键声音
 		"sounds": false,
 		"fromSymbol": "USD",
 		"toSymbol": "CNY",
+		"isCustomRate": false,
 		"favorites": ["CNY", "HKD", "JPY", "USD"],
 		"rates": [
 			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
@@ -189,7 +190,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.textColor = UIColor.black
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		fromMoneyLabel.text = self.fromMoney
+		fromMoneyLabel.text = numberFormat(self.fromMoney)
 		fromScreen.addSubview(fromMoneyLabel)
 
 		let toSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
@@ -241,6 +242,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func renderExpandedMode() {
+		let shared = UserDefaults(suiteName: self.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		
 		let wrapperWidth: CGFloat = self.view.frame.width - expandedPadding * 2
 		let wrapperHeight: CGFloat = expandedHeight - expandedPadding * 2
 		
@@ -280,6 +284,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toSymbol.setTitleColor(UIColor.white, for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(toSymbol)
+		
+		let asteriskLabel = UILabel(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight + 8, width: 30, height: 30))
+		asteriskLabel.text = "*"
+		asteriskLabel.textColor = UIColor.white
+		asteriskLabel.isHidden = !isCustomRate
+		wrapper.addSubview(asteriskLabel)
 		
 		let keyboardY :CGFloat = expandedSymbolHeight * 2 + expandedKeyboardMarginTop
 		let keyboard = UIView(frame: CGRect(x: 0, y: keyboardY, width: wrapper.frame.width, height: wrapper.frame.height - keyboardY))
@@ -378,10 +388,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		}
 
 		if self.operatorSymbol != "" && self.operatorEnd != "0" {
-			fromMoneyLabel.text = addThousandSeparator(self.operatorEnd)
+			fromMoneyLabel.text = numberFormat(self.operatorEnd)
 			toMoneyLabel.text = self.output(self.operatorEnd)
 		} else {
-			fromMoneyLabel.text = addThousandSeparator(self.fromMoney)
+			fromMoneyLabel.text = numberFormat(self.fromMoney)
 			toMoneyLabel.text = self.output(self.fromMoney)
 		}
 	}
@@ -401,23 +411,32 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? self.defaults["decimals"] as! Int
-		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * self.rate))
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+		let rate: Float = isCustomRate ? customRate : self.rate
+		
+		return numberFormat(String(Float(money)! * rate))
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
-	func addThousandSeparator(_ s:String) -> String {
+	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		if shared?.bool(forKey: "thousandSeparator") ?? self.defaults["thousandSeparator"] as! Bool {
-			var price: NSNumber = 0
-			if let myInteger = Double(s) {
-				price = NSNumber(value:myInteger)
-			}
-			let f = NumberFormatter()
-			f.numberStyle = .decimal
-			return f.string(from: price)!
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? self.defaults["usesGroupingSeparator"] as! Bool
+		let decimals = shared?.integer(forKey: "decimals") ?? self.defaults["decimals"] as! Int
+		var price: NSNumber = 0
+		if let myInteger = Double(s) {
+			price = NSNumber(value:myInteger)
 		}
-		return s
+		//创建一个NumberFormatter对象
+		let numberFormatter = NumberFormatter()
+		//设置number显示样式
+		numberFormatter.numberStyle = .decimal  // 小数形式
+		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
+		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+		
+		//格式化
+		let format = numberFormatter.string(from: price)!
+		return format
 	}
         
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
