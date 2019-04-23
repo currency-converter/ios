@@ -239,7 +239,7 @@ class ViewController: UIViewController {
 		fromMoneyLabel.font = UIFont(name: "Avenir", size: 72)
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.text = self.fromMoney
+		fromMoneyLabel.text = output(self.fromMoney)
 		fromMoneyLabel.textColor = UIColor.gray
 		fromScreenView.addSubview(fromMoneyLabel)
 		
@@ -468,10 +468,10 @@ class ViewController: UIViewController {
 		}
 		
 		if self.operatorSymbol != "" && self.operatorEnd != "0" {
-			fromMoneyLabel.text = addThousandSeparator(self.operatorEnd)
+			fromMoneyLabel.text = numberFormat(self.operatorEnd)
 			toMoneyLabel.text = self.output(self.operatorEnd)
 		} else {
-			fromMoneyLabel.text = addThousandSeparator(self.fromMoney)
+			fromMoneyLabel.text = numberFormat(self.fromMoney)
 			toMoneyLabel.text = self.output(self.fromMoney)
 		}
 		
@@ -545,7 +545,7 @@ class ViewController: UIViewController {
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
 		let rate = isCustomRate ? customRate : self.rate
 		
-		return addThousandSeparator(String(format: "%.\(String(decimals))f", Float(money)! * rate))
+		return numberFormat(String(format: "%.\(String(decimals))f", Float(money)! * rate))
 	}
 	
 	func registerSettingsBundle() {
@@ -554,18 +554,39 @@ class ViewController: UIViewController {
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
-	func addThousandSeparator(_ s:String) -> String {
+	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: self.groupId)
-		if shared?.bool(forKey: "thousandSeparator") ?? true {
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "thousandSeparator") ?? true
+		let decimals = shared?.integer(forKey: "decimals") ?? 2
+		//if usesGroupingSeparator {
 			var price: NSNumber = 0
 			if let myInteger = Double(s) {
 				price = NSNumber(value:myInteger)
 			}
-			let f = NumberFormatter()
-			f.numberStyle = .decimal
-			return f.string(from: price)!
-		}
-		return s
+			//创建一个NumberFormatter对象
+			let numberFormatter = NumberFormatter()
+			//设置number显示样式
+			numberFormatter.numberStyle = .decimal  // 小数形式
+			numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
+			//numberFormatter.groupingSeparator = "," //分隔符号
+			//numberFormatter.groupingSize = 4  //分隔位数
+			
+			numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+			//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
+			
+			//numberFormatter.positivePrefix = "$" //自定义前缀
+			//numberFormatter.positiveSuffix = "元" //自定义后缀
+			
+			//numberFormatter.locale = Locale(identifier: "fa_IR")
+			//numberFormatter.locale = Locale(identifier: "ar_EG")
+			//numberFormatter.locale = Locale(identifier: "cs_CZ")
+			//numberFormatter.locale = Locale(identifier: "de_DE")
+			
+			//格式化
+			let format = numberFormatter.string(from: price)!
+			return format
+		//}
+		//return s
 	}
 	
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
