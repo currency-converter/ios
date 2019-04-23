@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "tizedesjegyek száma";
 "settings.disclaimerHeader" = "Jogi nyilatkozat";
 "settings.disclaimer" = "Az ebben az alkalmazásban megadott adatok csak tájékoztató jellegűek, és nem garantálják a saját felelősségére semmilyen cél, pontosság, rendelkezésre állást vagy alkalmasságot.";
-"settings.dateTimeFormat" = "yyyy. MM. dd. H:mm";
 
 "currencyPicker.title" = "Valuta kiválasztása";
 "currencyPicker.favoriteCurrencies" = "Kedvencek";

@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "počet desetinných míst";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Data uvedená v této aplikaci slouží pouze pro informační účely a nezaručují správnost, platnost, dostupnost nebo vhodnost jakéhokoliv účelu, na vlastní riziko.";
-"settings.dateTimeFormat" = "dd.MM.yyyy H:mm";
 
 "currencyPicker.title" = "Vybrat měnu";
 "currencyPicker.favoriteCurrencies" = "Oblíbené";

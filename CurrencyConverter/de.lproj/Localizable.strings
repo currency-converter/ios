@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "Anzahl der Dezimalstellen";
 "settings.disclaimerHeader" = "Haftungsausschluss";
 "settings.disclaimer" = "Die in dieser Anwendung bereitgestellten Daten dienen nur zu Informationszwecken und garantieren nicht die Genauigkeit, Gültigkeit, Verfügbarkeit oder Eignung eines Zwecks auf eigene Gefahr.";
-"settings.dateTimeFormat" = "dd.MM.yyyy HH:mm";
 
 "currencyPicker.title" = "Währung wählen";
 "currencyPicker.favoriteCurrencies" = "Favoriten";

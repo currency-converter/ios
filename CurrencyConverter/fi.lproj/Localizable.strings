@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "desimaalien määrä";
 "settings.disclaimerHeader" = "Vastuuvapauslauseke";
 "settings.disclaimer" = "Tässä hakemuksessa annetut tiedot ovat vain tiedoksi ja eivät takaa tarkkuutta, pätevyyttä, käytettävyyttä tai tarkoituksenmukaisuutta omalla vastuullasi.";
-"settings.dateTimeFormat" = "d.M.yyyy H.mm";
 
 "currencyPicker.title" = "Valitse valuutta";
 "currencyPicker.favoriteCurrencies" = "Suosikit";

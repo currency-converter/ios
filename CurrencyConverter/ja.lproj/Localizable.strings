@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "小数点以下の桁数";
 "settings.disclaimerHeader" = "免責事項";
 "settings.disclaimer" = "このアプリケーションで提供されるデータは情報提供のみを目的としており、自己の責任において、いかなる目的の正確性、妥当性、可用性、または適合性を保証するものでもありません。";
-"settings.dateTimeFormat" = "yyyy/MM/dd H:mm";
 
 "currencyPicker.title" = "通貨を選択";
 "currencyPicker.favoriteCurrencies" = "お気に入り";

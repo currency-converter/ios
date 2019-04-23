@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "عدد المنازل العشرية";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
-"settings.dateTimeFormat" = "dd/MM/yy hh:mm a";
 
 "currencyPicker.title" = "اختر عملة";
 "currencyPicker.favoriteCurrency" = "Favorites";

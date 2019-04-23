@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "מספר מקומות עשרוניים";
 "settings.disclaimerHeader" = "כתב ויתור";
 "Settings.disclaimer" = "נתוני היישום ניתן למטרות אינפורמטיביות בלבד, ולא לכל מטרה כדי להבטיח את הדיוק, תוקף, זמינות או התאמתו, אפשרות וסיכון.";
-"Settings.dateTimeFormat" = "dd/MM/yyyy HH:mm";
 
 "currencyPicker.title" = "בחר מטבע";
 "currencyPicker.favorite מטבעות" = "מועדפים";

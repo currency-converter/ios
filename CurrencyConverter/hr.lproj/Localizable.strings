@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "broj decimalnih mjesta";
 "settings.disclaimerHeader" = "Odricanje od odgovornosti";
 "settings.disclaimer" = "Podaci navedeni u ovoj aplikaciji služe samo u informativne svrhe i ne jamče točnost, valjanost, dostupnost ili prikladnost bilo koje svrhe, na vlastitu odgovornost.";
-"settings.dateTimeFormat" = "d.M.yyyy. H:mm";
 
 "currencyPicker.title" = "Odabir valute";
 "currencyPicker.favoriteCurrencies" = "Favoriti";

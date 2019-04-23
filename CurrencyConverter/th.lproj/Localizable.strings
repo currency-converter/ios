@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "จำนวนตำแหน่งทศนิยม";
 "settings.disclaimerHeader" = "ข้อจำกัดความรับผิดชอบ";
 "settings.disclaimer" = "ข้อมูลที่ให้ไว้ในแอปพลิเคชั่นนี้มีวัตถุประสงค์เพื่อให้ข้อมูลเท่านั้นและไม่รับประกันความถูกต้องความถูกต้องความพร้อมใช้งานหรือความเหมาะสมของวัตถุประสงค์ใด ๆ ภายใต้ความเสี่ยงของคุณ";
-"settings.dateTimeFormat" = "d/M/yyyy H:mm";
 
 "currencyPicker.title" = "เลือกสกุลเงิน";
 "currencyPicker.favoriteCurrencies" = "รายการโปรด";

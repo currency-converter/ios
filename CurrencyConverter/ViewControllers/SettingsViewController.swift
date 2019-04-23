@@ -254,11 +254,14 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? 1463637809
 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
-		let dformatter = DateFormatter()
-		dformatter.dateFormat = NSLocalizedString("settings.dateTimeFormat", comment: "")//"yyyy-MM-dd HH:mm:ss"
-		let updatedAtText = dformatter.string(from: date)
+		let dateFormatter = DateFormatter()
+		//dateFormatter.locale = Locale(identifier: "ar_EG")
+		dateFormatter.dateStyle = .short
+		dateFormatter.timeStyle = .short
+		//let date = Date()
+		let stringOfDate = dateFormatter.string(from: date)
 		
-		return updatedAtText
+		return stringOfDate
 	}
 	
 	func toggleCustomRateDetail(_ isOn: Bool) {

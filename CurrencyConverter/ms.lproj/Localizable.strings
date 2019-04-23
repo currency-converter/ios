@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "bilangan tempat perpuluhan";
 "settings.disclaimerHeader" = "Penafian";
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini adalah untuk tujuan maklumat sahaja dan tidak menjamin ketepatan, kesahihan, ketersediaan atau kesesuaian sebarang tujuan, atas risiko anda sendiri";
-"settings.dateTimeFormat" = "d/MM/yyyy h:mm a";
 
 "currencyPicker.title" = "Pilih mata wang";
 "currencyPicker.favorite money" = "Favorites";

@@ -31,7 +31,6 @@
 "settings.decimalPlaces" = "antall desimaler";
 "settings.disclaimerHeader" = "Ansvarsfraskrivelse";
 "settings.disclaimer" = "Dataene som er oppgitt i denne applikasjonen, er kun til informasjonsformål og garanterer ikke for nøyaktighet, gyldighet, tilgjengelighet eller egnethet for noe formål, for egen risiko.";
-"settings.dateTimeFormat" = "dd.MM.yyyy HH:mm";
 
 "currencyPicker.title" = "Velg valuta";
 "currencyPicker.favoriteCurrencies" = "Favoritter";
