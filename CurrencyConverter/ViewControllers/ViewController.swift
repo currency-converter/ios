@@ -9,34 +9,7 @@
 import UIKit
 import AVFoundation
 
-//定义协议
-protocol CallbackDelegate {
-	func onReady(key: String, value: String)
-}
-
-//protocol myDelegate {
-//	func currencyCellClickCallback(data: String)
-//}
-
-//货币选择类型
-enum CurrencyPickerType: String {
-	case from
-	case to
-}
-
-//汇率更新频率
-enum RateUpdatedFrequency: String {
-	case realtime = "0"
-	case hourly = "1"
-	case daily = "2"
-}
-
-//域名
-let domain = "\u{71}\u{75}\u{6E}\u{61}\u{72}"
-
 class ViewController: UIViewController {
-	
-	let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true
@@ -65,27 +38,6 @@ class ViewController: UIViewController {
 	
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
-	// api
-	var updateRateUrl:String = "https://cc.beta.\(domain).com/api/rates?ios=1"
-	
-	var defaults:[String:Any] = [
-		// 小数位数
-		"decimals": 2,
-		// 使用千位分隔符
-		"usesGroupingSeparator": true,
-		// 是否使用按键声音
-		"sounds": false,
-		"fromSymbol": "USD",
-		"toSymbol": "CNY",
-		"autoUpdateRate": true,
-		"rateUpdatedFrequency": RateUpdatedFrequency.daily.rawValue,
-		"isCustomRate": false,
-		"rateUpdatedAt": 1556017639,
-		"rates": [
-			"AED":3.6729,"AFN":77.4,"ALL":110.06,"AMD":481.48,"ANG":1.785,"AOA":317.839,"ARS":42.415,"AUD":1.406,"AWG":1.78,"AZN":1.6995,"BAM":1.7411,"BBD":2,"BDT":84.35,"BGN":1.73852,"BHD":0.377,"BIF":1817.5,"BMD":1,"BND":1.3567,"BOB":6.86,"BRL":3.9326,"BSD":1,"BTN":69.625,"BWP":10.6333,"BYN":2.09,"BYR":20020,"BZD":1.9978,"CAD":1.33737,"CDF":1635.45,"CHF":1.01998,"CLF":0.0238,"CLP":664.01,"CNY":6.7195,"COP":3153,"CRC":592.5,"CUC":0.995,"CUP":1,"CVE":97.85,"CZK":22.8788,"DJF":177.5,"DKK":6.63648,"DOP":50.64,"DZD":118.92,"EGP":17.15,"ERN":14.99,"ETB":28.51,"EUR":0.8888,"FJD":2.11,"FKP":0.7694,"GBP":0.76899,"GEL":2.6875,"GHS":5.1285,"GIP":0.7696,"GMD":49.3,"GNF":9126,"GTQ":7.6235,"GYD":205.49,"HKD":7.84373,"HNL":24.373,"HRK":6.5954,"HTG":83.2,"HUF":285.2,"IDR":14075,"ILS":3.5954,"INR":69.613,"IQD":1190,"IRR":42000,"ISK":120.3,"JMD":129.13,"JOD":0.707,"JPY":111.891,"KES":101.35,"KGS":69.6759,"KHR":4026,"KMF":436.27,"KPW":900,"KRW":1141.4,"KWD":0.3041,"KYD":0.82,"KZT":377.7,"LAK":8599,"LBP":1505.5,"LKR":174.51,"LRD":167.02,"LSL":14.15,"LTL":2.8345,"LVL":0.5078,"LYD":1.3899,"MAD":9.594,"MDL":17.73,"MGA":3505,"MKD":54.44,"MMK":1531,"MNT":2633.33,"MOP":8.0787,"MRO":355,"MUR":34.7,"MVR":15.57,"MWK":725.36,"MXN":18.8723,"MYR":4.1252,"MZN":64,"NAD":14.184,"NGN":357,"NIO":32.822,"NOK":8.51777,"NPR":110.95,"NZD":1.5012,"OMR":0.3849,"PAB":1,"PEN":3.3035,"PGK":3.3759,"PHP":52.03,"PKR":141.3,"PLN":3.811,"PYG":6220,"QAR":3.6395,"RON":4.2277,"RSD":104.5951,"RUB":63.7303,"RWF":882.05,"SAR":3.7498,"SBD":8.0947,"SCR":13.68,"SDG":45,"SEK":9.3354,"SGD":1.35707,"SHP":0.7696,"SLL":8925,"SOS":570,"SRD":7.43,"STD":21425.4,"SVC":8.75,"SYP":514.98,"SZL":14.1835,"THB":31.95,"TJS":9.4393,"TMT":3.41,"TND":3.0148,"TOP":2.3145,"TRY":5.8362,"TTD":6.7445,"TWD":30.844,"TZS":2298,"UAH":26.625,"UGX":3727,"USD":1,"UYU":32.234,"UZS":8405,"VEF":248209,"VND":23165,"VUV":111.47,"WST":2.6346,"XAF":582.62,"XCD":2.7,"XDR":0.720915,"XOF":582.62,"XPF":105.5,"YER":249.4,"ZAR":14.1874,"ZMW":12.33,"ZWL":321
-		]
-	]
-	
 	// UI 组件
 	var settingsView: UIView!
 	var fromScreenView: UIView!
@@ -103,7 +55,7 @@ class ViewController: UIViewController {
 	var PADDING_BOTTOM: CGFloat = 20
 	
 	public func updateRate() {
-		let newUrlString = self.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+		let newUrlString = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 		// 创建请求配置
 		let config = URLSessionConfiguration.default
 		// 创建请求URL
@@ -124,7 +76,7 @@ class ViewController: UIViewController {
 				} else if self.rates == nil {
 					// 从接口没更新到汇率，且当前汇率集合为空时，使用默认值
 					// 防止闪退
-					self.rates = self.defaults["rates"] as? Dictionary<String, NSNumber>
+					self.rates = Config.defaults["rates"] as? Dictionary<String, NSNumber>
 				}
 				
 				let now = Date().timeStamp
@@ -132,7 +84,7 @@ class ViewController: UIViewController {
 				self.retrieveRate()
 
 				//更新缓存数据
-				let shared = UserDefaults(suiteName: self.groupId)
+				let shared = UserDefaults(suiteName: Config.groupId)
 				shared?.set(now, forKey: "rateUpdatedAt")
 				shared?.set(rates, forKey: "rates")
 				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
@@ -148,7 +100,7 @@ class ViewController: UIViewController {
 	
 	func initConfig() {
 		// 初始化输入输出货币
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
 		
@@ -177,10 +129,10 @@ class ViewController: UIViewController {
 	}
 	
 	func isNeedUpdateRate() -> Bool {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let rateUpdatedAt: Int = shared?.integer(forKey: "rateUpdatedAt") ?? defaults["rateUpdatedAt"] as! Int
-		let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? defaults["rateUpdatedFrequency"] as! String
-		let autoUpdateRate = shared?.bool(forKey: "autoUpdateRate") ?? defaults["autoUpdateRate"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let rateUpdatedAt: Int = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
+		let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! String
+		let autoUpdateRate = shared?.bool(forKey: "autoUpdateRate") ?? Config.defaults["autoUpdateRate"] as! Bool
 		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
 
 		return rates == nil ||
@@ -221,8 +173,8 @@ class ViewController: UIViewController {
 	}
 	
 	func renderScreen() {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		
 		let screenViewHeight: CGFloat = 200
 		// 获取屏幕尺寸
@@ -371,10 +323,10 @@ class ViewController: UIViewController {
 				self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
 
 				//更新缓存
-				let shared = UserDefaults(suiteName: self.groupId)
+				let shared = UserDefaults(suiteName: Config.groupId)
 				shared?.set(fromSymbol, forKey: "fromSymbol")
 				shared?.set(toSymbol, forKey: "toSymbol")
-				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 				if isCustomRate {
 					shared?.set(false, forKey: "isCustomRate")
 					self.asteriskLabel.isHidden = true
@@ -483,8 +435,8 @@ class ViewController: UIViewController {
 	}
 	
 	func playTapSound() {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? self.defaults["sounds"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? Config.defaults["sounds"] as! Bool
 		
 		if isSounds {
 			let path = Bundle.main.path(forResource: "Sounds/tap", ofType: "wav")!
@@ -543,8 +495,8 @@ class ViewController: UIViewController {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
 		let rate = isCustomRate ? customRate : self.rate
 		
@@ -552,15 +504,15 @@ class ViewController: UIViewController {
 	}
 	
 	func registerSettingsBundle() {
-		let shared = UserDefaults(suiteName: self.groupId)
-		shared?.register(defaults: defaults)
+		let shared = UserDefaults(suiteName: Config.groupId)
+		shared?.register(defaults: Config.defaults)
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
 	func numberFormat(_ s:String) -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? self.defaults["usesGroupingSeparator"] as! Bool
-		let decimals = shared?.integer(forKey: "decimals") ?? self.defaults["decimals"] as! Int
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
+		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)

@@ -10,19 +10,9 @@ import UIKit
 
 class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 	
-	let groupId: String = "group.com.zhongzhi.currencyconverter"
-	
 	var allCurrencies = [
 		0: [String](["CNY", "HKD", "JPY", "USD"]),
-		1: [String]([
-			"AED", "AUD", "BGN", "BHD", "BND", "BRL", "BYN", "CAD", "CHF", "CLP",
-			"CNY", "COP", "CRC", "CZK", "DKK", "DZD", "EGP", "EUR", "GBP", "HKD",
-			"HRK", "HUF", "IDR", "ILS", "INR", "IQD", "ISK", "JOD", "JPY", "KES",
-			"KHR", "KRW", "KWD", "LAK", "LBP", "LKR", "MAD", "MMK", "MOP", "MXN",
-			"MYR", "NOK", "NZD", "OMR", "PHP", "PLN", "QAR", "RON", "RSD", "RUB",
-			"SAR", "SEK", "SGD", "SYP", "THB", "TRY", "TWD", "TZS", "UGX", "USD",
-			"VND", "ZAR"
-		])
+		1: [String]([])
 	]
 	
 	var adHeaders:[String] = [
@@ -44,11 +34,13 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		allCurrencies[1] = Array((Config.defaults["rates"] as! Dictionary<String, NSNumber>).keys)
+		
 		self.view.backgroundColor = UIColor.appBackgroundColor
 		
 		self.initCurrencyNames()
 		
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		if let favorites = shared?.array(forKey: "favorites") as? [String] {
 			self.allCurrencies[0] = favorites
 		}
@@ -129,7 +121,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	
 	// 收藏/取消收藏
 	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		var favorites:[String] = shared?.array(forKey: "favorites") as? [String] ?? [String]()
 		let currency = sender.view?.accessibilityLabel ?? ""
 		if favorites.contains(currency) {
@@ -231,7 +223,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let text = cell.detailTextLabel?.text
 		if let data = text?.description {
 			let key: String = "\(currencyType)Symbol"
-			let shared = UserDefaults(suiteName: self.groupId)
+			let shared = UserDefaults(suiteName: Config.groupId)
 			shared?.set(data, forKey: key)
 			//清除自定义汇率
 			shared?.set(false, forKey: "isCustomRate")

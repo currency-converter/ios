@@ -96,3 +96,22 @@ extension Notification.Name {
 	static let didUpdateRate = Notification.Name("didUpdateRate")
 	static let didUserDefaultsChange = Notification.Name("didUserDefaultsChange")
 }
+
+//定义协议
+protocol CallbackDelegate {
+	func onReady(key: String, value: String)
+}
+
+//货币选择类型
+enum CurrencyPickerType: String {
+	case from
+	case to
+}
+
+//汇率更新频率
+enum RateUpdatedFrequency: String {
+	case realtime = "0"
+	case hourly = "1"
+	case daily = "2"
+}
+

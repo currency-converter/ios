@@ -12,6 +12,7 @@
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		2495A1A02253AE6F0009052D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
+		24996125226FD12D0011711A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24996124226FD12D0011711A /* Config.swift */; };
 		24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11522523DB8001D77C2 /* ViewController.swift */; };
 		24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */; };
 		24A4B11D22523F73001D77C2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24A4B11F22523F73001D77C2 /* Localizable.strings */; };
@@ -67,6 +68,7 @@
 		241CA3602223D13700D5FC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2495A1A12253AE6F0009052D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2495A1A32253AE720009052D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		24996124226FD12D0011711A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		24A4B11522523DB8001D77C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		24A4B11622523DB8001D77C2 /* CurrencyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewController.swift; sourceTree = "<group>"; };
 		24A4B11E22523F73001D77C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		241CA3532223D13600D5FC5F /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
+				24996124226FD12D0011711A /* Config.swift */,
 				2410D7D2225D83D3001B192B /* CurrencyConverter.entitlements */,
 				24A4B11422523DB8001D77C2 /* ViewControllers */,
 				24D0A6562248F12800BC423B /* Sounds */,
@@ -396,6 +399,7 @@
 				24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */,
 				2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
+				24996125226FD12D0011711A /* Config.swift in Sources */,
 				24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
 			);
