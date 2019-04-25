@@ -220,6 +220,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.customRateStepper.value = Double(rate)
 		self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
 		self.use1000SeparatorSwitch.isOn = usesGroupingSeparator
+		self.demoLabel.font = UIFont(name: Config.numberFontName, size: 48)
 		self.demoLabel.text = self.formatDemoText()
 	}
 	
