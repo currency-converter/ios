@@ -245,6 +245,7 @@ class ViewController: UIViewController {
 		fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
 		fromSymbolLabel.text = self.fromSymbol
 		fromSymbolLabel.textAlignment = .center
+		fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
 		fromSymbolLabel.textColor = UIColor.gray
 		fromSymbolButton.addSubview(fromSymbolLabel)
 
@@ -275,10 +276,14 @@ class ViewController: UIViewController {
 		}
 		
 		// 创建输出货币缩写标签
-		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))//UILabel(frame: CGRect(x: 4, y: 40, width: 60, height: 40))
-		toSymbolLabel.text = self.toSymbol
+		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
 		toSymbolLabel.textAlignment = .center
-		toSymbolLabel.textColor = isCustomRate ? UIColor.red : UIColor.white
+		toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
+		toSymbolLabel.textColor = UIColor.white
+		toSymbolLabel.text = self.toSymbol
+		if isCustomRate {
+			toSymbolLabel.text = self.toSymbol + "*"
+		}
 		toSymbolButton.addSubview(toSymbolLabel)
 		
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
@@ -587,7 +592,7 @@ class ViewController: UIViewController {
 			print("Notification data:", data)
 			if data.keys.contains("isCustomRate") {
 				let isCustomRate: Bool = data["isCustomRate"] as! Bool
-				self.toSymbolLabel.textColor = isCustomRate ? UIColor.red : UIColor.white
+				self.toSymbolLabel.text = self.toSymbol + (isCustomRate ? "*" : "")
 			}
 			
 			if data.keys.contains("fromSymbol") {
