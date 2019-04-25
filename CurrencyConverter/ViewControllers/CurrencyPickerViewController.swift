@@ -11,7 +11,7 @@ import UIKit
 class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 	
 	var allCurrencies = [
-		0: [String](["CNY", "HKD", "JPY", "USD"]),
+		0: [String]([]),
 		1: [String]([])
 	]
 	
@@ -34,16 +34,17 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		allCurrencies[1] = Array((Config.defaults["rates"] as! Dictionary<String, NSNumber>).keys)
+		let shared = UserDefaults(suiteName: Config.groupId)
+		if let favorites = shared?.array(forKey: "favorites") as? [String] {
+			self.allCurrencies[0] = favorites
+		} else {
+			self.allCurrencies[0] = Config.defaults["favorites"] as? [String]
+		}
+		self.allCurrencies[1] = Array((Config.defaults["rates"] as! [String: [String: NSNumber]]).keys)
 		
 		self.view.backgroundColor = UIColor.appBackgroundColor
 		
 		self.initCurrencyNames()
-		
-		let shared = UserDefaults(suiteName: Config.groupId)
-		if let favorites = shared?.array(forKey: "favorites") as? [String] {
-			self.allCurrencies[0] = favorites
-		}
 		
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds

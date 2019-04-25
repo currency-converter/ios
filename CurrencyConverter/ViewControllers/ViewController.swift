@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 	// 汇率
 	var rate: Float = 6.777
 	
-	var rates: Dictionary<String,NSNumber>!
+	var rates: [String: [String: NSNumber]]!
 	
 	// 输入货币类型
 	var fromSymbol: String!
@@ -75,16 +75,16 @@ class ViewController: UIViewController {
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 				// 请求到数据
 				if rates != nil {
-					self.rates = rates as? Dictionary<String, NSNumber>
+					self.rates = rates as? [String: [String: NSNumber]]
 				} else if self.rates == nil {
 					// 从接口没更新到汇率，且当前汇率集合为空时，使用默认值
 					// 防止闪退
-					self.rates = Config.defaults["rates"] as? Dictionary<String, NSNumber>
+					self.rates = Config.defaults["rates"] as? [String: [String: NSNumber]]
 				}
 				
 				let now = Date().timeStamp
 				//汇率更新后，需要主动更新app中正使用的汇率
-				self.retrieveRate()
+				self.setRate()
 
 				//更新缓存数据
 				let shared = UserDefaults(suiteName: Config.groupId)
@@ -106,13 +106,10 @@ class ViewController: UIViewController {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
-		
-		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
+		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 		
 		if self.rates != nil {
-			let fromRate:Float! = rates[self.fromSymbol]?.floatValue
-			let toRate:Float! = rates[self.toSymbol]?.floatValue
-			self.rate = toRate/fromRate
+			self.setRate()
 		}
 		
 	}
@@ -144,11 +141,10 @@ class ViewController: UIViewController {
 			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.hourly.rawValue && Date().diff(timestamp: rateUpdatedAt, unit: Date.unit.hour) > 0)
 	}
 	
-	func retrieveRate() {
-		let fromRate: Float! = self.rates[self.fromSymbol]?.floatValue
-		let toRate: Float! = self.rates[self.toSymbol]?.floatValue
+	func setRate() {
+		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
+		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
 		self.rate = toRate/fromRate
-		print("self.rate:", self.rate)
 	}
 	
 	func createUpdateRateDaemon() {
@@ -602,7 +598,7 @@ class ViewController: UIViewController {
 					fromImageView.image = UIImage(contentsOfFile: path)
 				}
 				self.fromSymbol = symbol
-				self.retrieveRate()
+				self.setRate()
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -612,7 +608,7 @@ class ViewController: UIViewController {
 					toImageView.image = UIImage(contentsOfFile: path)
 				}
 				self.toSymbol = symbol
-				self.retrieveRate()
+				self.setRate()
 			}
 			
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
