@@ -53,7 +53,6 @@ class ViewController: UIViewController {
 	var fromMoneyLabel: UILabel!
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
-	var asteriskLabel: UILabel!
 	
 	//键盘距离顶部的间距
 	var PADDING_BOTTOM: CGFloat = 20
@@ -279,16 +278,8 @@ class ViewController: UIViewController {
 		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))//UILabel(frame: CGRect(x: 4, y: 40, width: 60, height: 40))
 		toSymbolLabel.text = self.toSymbol
 		toSymbolLabel.textAlignment = .center
-		toSymbolLabel.textColor = UIColor.white
+		toSymbolLabel.textColor = isCustomRate ? UIColor.red : UIColor.white
 		toSymbolButton.addSubview(toSymbolLabel)
-		
-		// 自定义汇率标识符
-		asteriskLabel = UILabel(frame: CGRect(x: viewBounds.width - 50, y: 8, width: 30, height: 30))
-		asteriskLabel.text = "*"
-		asteriskLabel.font = UIFont.systemFont(ofSize: 40)
-		asteriskLabel.textColor = UIColor.white
-		asteriskLabel.isHidden = !isCustomRate
-		toScreenView.addSubview(asteriskLabel)
 		
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeUp.direction = .up
@@ -380,7 +371,6 @@ class ViewController: UIViewController {
 				let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 				if isCustomRate {
 					shared?.set(false, forKey: "isCustomRate")
-					self.asteriskLabel.isHidden = true
 				}
 				
 				NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
@@ -597,7 +587,7 @@ class ViewController: UIViewController {
 			print("Notification data:", data)
 			if data.keys.contains("isCustomRate") {
 				let isCustomRate: Bool = data["isCustomRate"] as! Bool
-				self.asteriskLabel.isHidden = !isCustomRate
+				self.toSymbolLabel.textColor = isCustomRate ? UIColor.red : UIColor.white
 			}
 			
 			if data.keys.contains("fromSymbol") {
