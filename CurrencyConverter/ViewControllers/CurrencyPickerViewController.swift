@@ -8,7 +8,9 @@
 
 import UIKit
 
-class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, myTableDelegate {
+	
+	var rates: [String: [String: NSNumber]]!
 	
 	var allCurrencies = [
 		0: [String]([]),
@@ -40,7 +42,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		} else {
 			self.allCurrencies[0] = Config.defaults["favorites"] as? [String]
 		}
-		self.allCurrencies[1] = Array((Config.defaults["rates"] as! [String: [String: NSNumber]]).keys)
+		self.rates = Config.defaults["rates"] as? [String: [String: NSNumber]]
+		self.allCurrencies[1] = Array((self.rates).keys.sorted())
 		
 		self.view.backgroundColor = UIColor.appBackgroundColor
 		
@@ -111,7 +114,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		tableView.separatorColor = UIColor.hex("333333")
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+		tableView.register(NSClassFromString("CurrencyTableViewCell"), forCellReuseIdentifier: "cellId")
 		self.view.addSubview(tableView)
 		self.currencyTableView = tableView
 	}
@@ -121,10 +124,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	}
 	
 	// 收藏/取消收藏
-	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
+	func toggleFavorite(symbol: String) {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		var favorites:[String] = shared?.array(forKey: "favorites") as? [String] ?? [String]()
-		let currency = sender.view?.accessibilityLabel ?? ""
+		let currency = symbol
 		if favorites.contains(currency) {
 			favorites = favorites.filter {$0 != currency}
 		} else {
@@ -176,41 +179,59 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	//cell
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
-		let currency = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
-		let isFav: Bool = allCurrencies[0]?.contains(currency ?? "") ?? false
-		let unicode: String = isFav ? "B" : "C"
+		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
+		//let unicode: String = isFav ? "B" : "C"
+//
+//		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+//		cell.preservesSuperviewLayoutMargins = false
+//		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
+//		cell.layoutMargins = UIEdgeInsets.zero
+//		cell.backgroundColor = UIColor.black
+//		cell.selectionStyle = .blue
+//		let cellBackgroundView = UIView()
+//		cellBackgroundView.backgroundColor = UIColor.hex("333333")
+//		cell.selectedBackgroundView = cellBackgroundView
+//
+//		// icon
+////		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
+////		cell.imageView?.accessibilityLabel = currency
+//		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
+//		cell.imageView?.addGestureRecognizer(singleTapGesture)
+////		cell.imageView?.isUserInteractionEnabled = true
+//
+//		if let flagPath = Bundle.main.path(forResource: currency, ofType: "png") {
+//			cell.imageView?.image = UIImage(contentsOfFile: flagPath)
+//		}
+//
+//		// label
+//		cell.textLabel?.text = currency
+//		cell.textLabel?.textColor = UIColor.white
+//		//cell.textLabel?.highlightedTextColor = UIColor.black
+//
+//		// detail
+//		cell.detailTextLabel?.textColor = UIColor.white
+//		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
+//		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
+//		cell.detailTextLabel?.textAlignment = .natural
+//
+//		// accessory
+//		cell.accessoryType = cell.detailTextLabel?.text == currencySymbol ? .checkmark : .none
+//		cell.tintColor = UIColor.loquatYellow
+//		return cell
 		
-		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
-		cell.preservesSuperviewLayoutMargins = false
-		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
-		cell.layoutMargins = UIEdgeInsets.zero
-		cell.backgroundColor = UIColor.black
-		cell.selectionStyle = .blue
-		let cellBackgroundView = UIView()
-		cellBackgroundView.backgroundColor = UIColor.hex("333333")
-		cell.selectedBackgroundView = cellBackgroundView
-
-		// icon
-		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
-		cell.imageView?.accessibilityLabel = currency
-		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
-		cell.imageView?.addGestureRecognizer(singleTapGesture)
-		cell.imageView?.isUserInteractionEnabled = true
-
-		// label
-		cell.textLabel?.text = self.currencyNames[currency ?? ""]
-		cell.textLabel?.textColor = UIColor.white
-		//cell.textLabel?.highlightedTextColor = UIColor.black
-
-		// detail
-		cell.detailTextLabel?.textColor = UIColor.white
-		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
-		cell.detailTextLabel?.text = currency
-		cell.detailTextLabel?.textAlignment = .natural
-
-		// accessory
-		cell.accessoryType = cell.detailTextLabel?.text == currencySymbol ? .checkmark : .none
-		cell.tintColor = UIColor.loquatYellow
+		let cell = CurrencyTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
+		
+		//cell.setValueForCell(model: dataArr![indexPath.row])
+		let currency = Currency()
+		currency.symbol = symbol
+		currency.name = self.currencyNames[symbol ?? ""]
+		currency.rate = (self.rates[symbol!] as! [String: NSNumber])["a"]
+		currency.isFav = isFav
+		cell.setValueForCell(currency: currency, isSelected: self.currencySymbol == symbol)
+		//cell.setValueForCell(symbol: currency ?? "", country: self.currencyNames[currency ?? ""] ?? "", rate: "319.529", index: indexPath.row)
+		cell.delegate = self
+		
 		return cell
 	}
 	
@@ -220,27 +241,25 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		tableView.deselectRow(at: indexPath, animated: true)
 		
 		//获取当前选中的单元格
-		let cell:UITableViewCell! = tableView.cellForRow(at: indexPath)
-		let text = cell.detailTextLabel?.text
-		if let data = text?.description {
-			let key: String = "\(currencyType)Symbol"
-			let shared = UserDefaults(suiteName: Config.groupId)
-			shared?.set(data, forKey: key)
-			//清除自定义汇率
-			shared?.set(false, forKey: "isCustomRate")
-			
-			NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-				"isCustomRate": false,
-				key: data
-			])
-		}
+		let cell: UITableViewCell! = tableView.cellForRow(at: indexPath)
+		let data = (cell as! CurrencyTableViewCell).symbol.text!
+		let key: String = "\(currencyType)Symbol"
+		let shared = UserDefaults(suiteName: Config.groupId)
+		shared?.set(data, forKey: key)
+		//清除自定义汇率
+		shared?.set(false, forKey: "isCustomRate")
+
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"isCustomRate": false,
+			key: data
+		])
 		
 		self.close()
 	}
 	
 	//行高
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-		return 60
+		return 66
 	}
 	
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
