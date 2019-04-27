@@ -14,7 +14,7 @@ class Config {
 	static let groupId: String = "group.com.zhongzhi.currencyconverter"
 	
 	// api
-	static let updateRateUrl: String = "https://cc.beta.\u{71}\u{75}\u{6E}\u{61}\u{72}.com/api/rates?ios=1"
+	static let updateRateUrl: String = "https://cc.beta.\u{71}\u{75}\u{6E}\u{61}\u{72}.com/api/rates"
 	
 	// 数字字体名称
 	static let numberFontName: String = "Avenir"

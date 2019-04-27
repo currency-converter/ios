@@ -73,7 +73,7 @@ class CurrencyTableViewCell: UITableViewCell {
 		//rate.backgroundColor = UIColor.red
 		rate.font = UIFont.systemFont(ofSize: 14)
 		rate.textAlignment = .right
-		rate.textColor = UIColor.gray
+		rate.textColor = UIColor.white
 		box.addSubview(rate)
 	}
 	
@@ -95,7 +95,7 @@ class CurrencyTableViewCell: UITableViewCell {
 		self.isSelected = isSelected
 		
 		let cellBackgroundView = UIView()
-		cellBackgroundView.backgroundColor = UIColor.hex("806332")
+		cellBackgroundView.backgroundColor = UIColor.hex("854b00")
 		self.selectedBackgroundView = cellBackgroundView
 
 	}
@@ -103,19 +103,11 @@ class CurrencyTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
-//		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapEdit(_:)))
-//		addGestureRecognizer(tapGesture)
 	}
 	
 	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
 		let symbol: String = sender.view!.accessibilityLabel!
 		delegate?.toggleFavorite(symbol: symbol)
 	}
-	
-//	override func setSelected(_ selected: Bool, animated: Bool) {
-//		super.setSelected(selected, animated: animated)
-//
-//		// Configure the view for the selected state
-//	}
 }
 
