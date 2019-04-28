@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true
@@ -39,6 +39,8 @@ class ViewController: UIViewController {
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
 	// UI 组件
+	var fromScrollView: UIScrollView!
+	var toScrollView: UIScrollView!
 	var settingsView: UIView!
 	var fromScreenView: UIView!
 	var toScreenView: UIView!
@@ -173,119 +175,274 @@ class ViewController: UIViewController {
 	
 	func renderScreen() {
 		let shared = UserDefaults(suiteName: Config.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+		//let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+		let favorites: [String] = shared?.array(forKey: "favorites") as! [String]
+		var fromSymbols: [String] = favorites.filter { (symbol) -> Bool in
+			return symbol != self.fromSymbol
+		}
+		fromSymbols.insert(self.fromSymbol, at: 0)
 		
+		var toSymbols: [String] = favorites.filter { (symbol) -> Bool in
+			return symbol != self.toSymbol
+		}
+		toSymbols.insert(self.toSymbol, at: 0)
+
+		let screenViewPadding: CGFloat = 16
+		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewPadding
 		let screenViewHeight: CGFloat = 200
-		// 获取屏幕尺寸
-		let viewBounds:CGRect = UIScreen.main.bounds
+		let screenViewY: CGFloat = UIScreen.main.bounds.height - UIScreen.main.bounds.width - screenViewHeight - PADDING_BOTTOM
 		
 		// 创建屏幕容器
 		let screenView = UIView()
 		// 坐标
-		screenView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - screenViewHeight - PADDING_BOTTOM, width: viewBounds.width, height: screenViewHeight)
+		screenView.frame = CGRect(x: screenViewPadding, y: screenViewY, width: screenViewWidth, height: screenViewHeight)
 		// 是否切除子视图超出部分
 		screenView.clipsToBounds = true
+		//screenView.backgroundColor = UIColor.red
 		// 添加到当前视图控制器
 		self.view.addSubview(screenView)
 		
-		let subScreenViewPaddingLeft: CGFloat = 16
-		let subScreenViewHeight: CGFloat = screenViewHeight / 2
-		
-		self.fromScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: 0, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
-		screenView.addSubview(self.fromScreenView)
-		self.toScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: subScreenViewHeight, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
-		screenView.addSubview(self.toScreenView)
-		
-		//国旗图片尺寸
-		let flagWidth: CGFloat = 40
-		let flagHeight: CGFloat = 30
-		let flagPaddingTop: CGFloat = 12
-		
-		let symbolLabelWidth: CGFloat = flagWidth
-		let symbolLabelHeight: CGFloat = 20
-		let symbolLabelPaddingTop: CGFloat = 5
-		
+		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
+		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromSymbols.count), height: fromScrollView.frame.height)
+		//关闭滚动条显示
+		fromScrollView.showsHorizontalScrollIndicator = false
+		fromScrollView.showsVerticalScrollIndicator = false
+		fromScrollView.scrollsToTop = false
+		//协议代理，在本类中处理滚动事件
+		fromScrollView.delegate = self
+		fromScrollView.isPagingEnabled = true
+		//fromScrollView.backgroundColor = .gray
+		screenView.addSubview(fromScrollView)
 
-		//货币容器按钮尺寸
-		let symbolButtonWidth: CGFloat = 70
-		let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
-		let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
+		for (seq, symbol) in fromSymbols.enumerated() {
+			let page = UIView(frame: CGRect(x: CGFloat(seq) * fromScrollView.frame.width, y: 0, width: fromScrollView.frame.width, height: fromScrollView.frame.height))
+			//page.backgroundColor = UIColor.green
+			fromScrollView.addSubview(page)
+			
+			//国旗图片尺寸
+			let flagWidth: CGFloat = 40
+			let flagHeight: CGFloat = 30
+			let flagPaddingTop: CGFloat = 12
+	
+			let symbolLabelWidth: CGFloat = flagWidth
+			let symbolLabelHeight: CGFloat = 20
+			let symbolLabelPaddingTop: CGFloat = 5
 
-		let moneyLabelHeight: CGFloat = 80
-		
-		
-		// 货币输入框
-		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: fromScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-		fromMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-		fromMoneyLabel.adjustsFontSizeToFitWidth = true
-		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.text = numberFormat(self.fromMoney)
-		fromMoneyLabel.textColor = UIColor.gray
-		fromScreenView.addSubview(fromMoneyLabel)
-		
-		// 输入货币符号容器
-		fromSymbolButton = UIButton(frame: CGRect(x: fromMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-		fromSymbolButton.tag = 1
-		fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-		fromScreenView.addSubview(fromSymbolButton)
-		
-		// 输入货币国旗
-		fromImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-		fromImageView.alpha = 0.5
-		fromSymbolButton.addSubview(fromImageView)
-		if let fromFlagPath = Bundle.main.path(forResource: self.fromSymbol, ofType: "png") {
-			fromImageView.image = UIImage(contentsOfFile: fromFlagPath)
+			//货币容器按钮尺寸
+			let symbolButtonWidth: CGFloat = 70
+			let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
+			let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
+
+			let moneyLabelHeight: CGFloat = 80
+	
+			// 货币输入框
+			let fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: fromScrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+			fromMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
+			fromMoneyLabel.adjustsFontSizeToFitWidth = true
+			fromMoneyLabel.textAlignment = .right
+			fromMoneyLabel.text = numberFormat(self.fromMoney)
+			fromMoneyLabel.textColor = UIColor.gray
+			page.addSubview(fromMoneyLabel)
+	
+			// 输入货币符号容器
+			let fromSymbolButton = UIButton(frame: CGRect(x: fromMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+			fromSymbolButton.tag = 1
+			fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+			page.addSubview(fromSymbolButton)
+	
+			// 输入货币国旗
+			let fromImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
+			fromImageView.alpha = 0.5
+			fromSymbolButton.addSubview(fromImageView)
+			if let fromFlagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
+				fromImageView.image = UIImage(contentsOfFile: fromFlagPath)
+			}
+	
+			// 输入货币缩写标签
+			let fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
+			fromSymbolLabel.text = symbol
+			fromSymbolLabel.textAlignment = .center
+			fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
+			fromSymbolLabel.textColor = UIColor.gray
+			fromSymbolButton.addSubview(fromSymbolLabel)
+
+			// 将组件和类关联
+			if self.fromSymbol == symbol {
+				self.fromMoneyLabel = fromMoneyLabel
+				self.fromSymbolLabel = fromSymbolLabel
+				self.fromImageView = fromImageView
+			}
 		}
 		
-		// 输入货币缩写标签
-		fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-		fromSymbolLabel.text = self.fromSymbol
-		fromSymbolLabel.textAlignment = .center
-		fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-		fromSymbolLabel.textColor = UIColor.gray
-		fromSymbolButton.addSubview(fromSymbolLabel)
-
-		// 货币输出框
-		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: toScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-		toMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-		toMoneyLabel.adjustsFontSizeToFitWidth = true
-		toMoneyLabel.textAlignment = .right
-		toMoneyLabel.text = self.output(self.fromMoney)
-		toMoneyLabel.textColor = UIColor.white
-		// 允许响应用户交互（长按出现copy）
-		toMoneyLabel.isUserInteractionEnabled = true
-		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
-		toMoneyLabel.addGestureRecognizer(longPress)
-		toScreenView.addSubview(toMoneyLabel)
+		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
+		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toSymbols.count), height: toScrollView.frame.height)
+		//关闭滚动条显示
+		toScrollView.showsHorizontalScrollIndicator = false
+		toScrollView.showsVerticalScrollIndicator = false
+		toScrollView.scrollsToTop = false
+		//协议代理，在本类中处理滚动事件
+		toScrollView.delegate = self
+		toScrollView.isPagingEnabled = true
+		//toScrollView.backgroundColor = .gray
+		screenView.addSubview(toScrollView)
 		
-		// 输出货币符号容器
-		toSymbolButton = UIButton(frame: CGRect(x: toMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-		toSymbolButton.tag = 2
-		toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-		toScreenView.addSubview(toSymbolButton)
-
-		// 输出货币国旗
-		toImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-		toSymbolButton.addSubview(toImageView)
-		if let toFlagPath = Bundle.main.path(forResource: self.toSymbol, ofType: "png") {
-			toImageView.image = UIImage(contentsOfFile: toFlagPath)
+		for (seq, symbol) in toSymbols.enumerated() {
+			let page = UIView(frame: CGRect(x: CGFloat(seq) * toScrollView.frame.width, y: 0, width: toScrollView.frame.width, height: toScrollView.frame.height))
+			//page.backgroundColor = UIColor.green
+			toScrollView.addSubview(page)
+			
+			//国旗图片尺寸
+			let flagWidth: CGFloat = 40
+			let flagHeight: CGFloat = 30
+			let flagPaddingTop: CGFloat = 12
+			
+			let symbolLabelWidth: CGFloat = flagWidth
+			let symbolLabelHeight: CGFloat = 20
+			let symbolLabelPaddingTop: CGFloat = 5
+			
+			//货币容器按钮尺寸
+			let symbolButtonWidth: CGFloat = 70
+			let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
+			let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
+			
+			let moneyLabelHeight: CGFloat = 80
+			
+			// 货币输入框
+			let toMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: toScrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+			toMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
+			toMoneyLabel.adjustsFontSizeToFitWidth = true
+			toMoneyLabel.textAlignment = .right
+			toMoneyLabel.text = numberFormat(self.fromMoney)
+			toMoneyLabel.textColor = UIColor.white
+			page.addSubview(toMoneyLabel)
+			
+			// 输入货币符号容器
+			let toSymbolButton = UIButton(frame: CGRect(x: toMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+			toSymbolButton.tag = 2
+			toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+			page.addSubview(toSymbolButton)
+			
+			// 输入货币国旗
+			let toImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
+			toSymbolButton.addSubview(toImageView)
+			if let toFlagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
+				toImageView.image = UIImage(contentsOfFile: toFlagPath)
+			}
+			
+			// 输入货币缩写标签
+			let toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
+			toSymbolLabel.text = symbol
+			toSymbolLabel.textAlignment = .center
+			toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
+			toSymbolLabel.textColor = UIColor.white
+			toSymbolButton.addSubview(toSymbolLabel)
+			
+			// 将组件和类关联
+			if self.toSymbol == symbol {
+				self.toMoneyLabel = toMoneyLabel
+				self.toSymbolLabel = toSymbolLabel
+				self.toImageView = toImageView
+			}
 		}
 		
-		// 创建输出货币缩写标签
-		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-		toSymbolLabel.textAlignment = .center
-		toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-		toSymbolLabel.textColor = UIColor.white
-		toSymbolLabel.text = self.toSymbol
-		if isCustomRate {
-			toSymbolLabel.text = self.toSymbol + "*"
-		}
-		toSymbolButton.addSubview(toSymbolLabel)
-		
+//		let subScreenViewPaddingLeft: CGFloat = 16
+//		let subScreenViewHeight: CGFloat = screenViewHeight / 2
+//
+//		self.fromScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: 0, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
+//		screenView.addSubview(self.fromScreenView)
+//		self.toScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: subScreenViewHeight, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
+//		screenView.addSubview(self.toScreenView)
+//
+//		//国旗图片尺寸
+//		let flagWidth: CGFloat = 40
+//		let flagHeight: CGFloat = 30
+//		let flagPaddingTop: CGFloat = 12
+//
+//		let symbolLabelWidth: CGFloat = flagWidth
+//		let symbolLabelHeight: CGFloat = 20
+//		let symbolLabelPaddingTop: CGFloat = 5
+//
+//
+//		//货币容器按钮尺寸
+//		let symbolButtonWidth: CGFloat = 70
+//		let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
+//		let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
+//
+//		let moneyLabelHeight: CGFloat = 80
+//
+//
+//		// 货币输入框
+//		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: fromScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+//		fromMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
+//		fromMoneyLabel.adjustsFontSizeToFitWidth = true
+//		fromMoneyLabel.textAlignment = .right
+//		fromMoneyLabel.text = numberFormat(self.fromMoney)
+//		fromMoneyLabel.textColor = UIColor.gray
+//		fromScreenView.addSubview(fromMoneyLabel)
+//
+//		// 输入货币符号容器
+//		fromSymbolButton = UIButton(frame: CGRect(x: fromMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+//		fromSymbolButton.tag = 1
+//		fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+//		fromScreenView.addSubview(fromSymbolButton)
+//
+//		// 输入货币国旗
+//		fromImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
+//		fromImageView.alpha = 0.5
+//		fromSymbolButton.addSubview(fromImageView)
+//		if let fromFlagPath = Bundle.main.path(forResource: self.fromSymbol, ofType: "png") {
+//			fromImageView.image = UIImage(contentsOfFile: fromFlagPath)
+//		}
+//
+//		// 输入货币缩写标签
+//		fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
+//		fromSymbolLabel.text = self.fromSymbol
+//		fromSymbolLabel.textAlignment = .center
+//		fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
+//		fromSymbolLabel.textColor = UIColor.gray
+//		fromSymbolButton.addSubview(fromSymbolLabel)
+//
+//		// 货币输出框
+//		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: toScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+//		toMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
+//		toMoneyLabel.adjustsFontSizeToFitWidth = true
+//		toMoneyLabel.textAlignment = .right
+//		toMoneyLabel.text = self.output(self.fromMoney)
+//		toMoneyLabel.textColor = UIColor.white
+//		// 允许响应用户交互（长按出现copy）
+//		toMoneyLabel.isUserInteractionEnabled = true
+//		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
+//		toMoneyLabel.addGestureRecognizer(longPress)
+//		toScreenView.addSubview(toMoneyLabel)
+//
+//		// 输出货币符号容器
+//		toSymbolButton = UIButton(frame: CGRect(x: toMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+//		toSymbolButton.tag = 2
+//		toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+//		toScreenView.addSubview(toSymbolButton)
+//
+//		// 输出货币国旗
+//		toImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
+//		toSymbolButton.addSubview(toImageView)
+//		if let toFlagPath = Bundle.main.path(forResource: self.toSymbol, ofType: "png") {
+//			toImageView.image = UIImage(contentsOfFile: toFlagPath)
+//		}
+//
+//		// 创建输出货币缩写标签
+//		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
+//		toSymbolLabel.textAlignment = .center
+//		toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
+//		toSymbolLabel.textColor = UIColor.white
+//		toSymbolLabel.text = self.toSymbol
+//		if isCustomRate {
+//			toSymbolLabel.text = self.toSymbol + "*"
+//		}
+//		toSymbolButton.addSubview(toSymbolLabel)
+//
 		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeUp.direction = .up
 		screenView.addGestureRecognizer(swipeUp)
-		
+
 		let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 		swipeDown.direction = .down
 		screenView.addGestureRecognizer(swipeDown)
@@ -309,7 +466,7 @@ class ViewController: UIViewController {
 		
 		let buttonWidth = (keyboardView.frame.size.width - 50) / 4
 		let buttonPadding:CGFloat = 10
-		//        let buttonHeight = (keyboardView.frame.size.height - 3) / 4
+		
 		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
 		
 		for (index, item) in characters.enumerated() {
@@ -345,11 +502,11 @@ class ViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 	
-	@objc func swipe(_ recognizer:UISwipeGestureRecognizer){
+	@objc func swipe(_ recognizer: UISwipeGestureRecognizer) {
 		if recognizer.direction == .up || recognizer.direction == .down {
 			UIView.animate(withDuration: 0.5, animations: {
-				self.fromScreenView.frame.origin.y = 100
-				self.toScreenView.frame.origin.y = 0
+				self.fromScrollView.frame.origin.y = 100
+				self.toScrollView.frame.origin.y = 0
 			}, completion: {
 				(finished:Bool) -> Void in
 				
@@ -359,8 +516,8 @@ class ViewController: UIViewController {
 				//反向计算得到原始toMoney
 				let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
 				//更新界面
-				self.fromScreenView.frame.origin.y = 0
-				self.toScreenView.frame.origin.y = 100
+				self.fromScrollView.frame.origin.y = 0
+				self.toScrollView.frame.origin.y = 100
 				//fromMoney没有缓存，不能通过UserDefaults事件来派发
 				self.fromMoney = newFromMoney
 				self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
@@ -586,19 +743,28 @@ class ViewController: UIViewController {
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
 			print("Notification data:", data)
+			print(0.1)
 			if data.keys.contains("isCustomRate") {
+				print(0.11)
 				let isCustomRate: Bool = data["isCustomRate"] as! Bool
+				print(0.12)
 				self.toSymbolLabel.text = self.toSymbol + (isCustomRate ? "*" : "")
+				print(0.13)
 			}
+			print(0)
 			
 			if data.keys.contains("fromSymbol") {
 				let symbol: String = data["fromSymbol"] as! String
 				self.fromSymbolLabel.text = symbol
+				print(1)
 				if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
 					fromImageView.image = UIImage(contentsOfFile: path)
 				}
+				print(2)
 				self.fromSymbol = symbol
+				print(3)
 				self.setRate()
+				print(4)
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -617,6 +783,13 @@ class ViewController: UIViewController {
 				}
 			}
 		}
+	}
+	
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		//通过scrollView内容的偏移计算当前显示的是第几页
+		print(scrollView == fromScrollView)
+		let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+		print(page)
 	}
 }
 
