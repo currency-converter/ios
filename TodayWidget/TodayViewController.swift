@@ -54,7 +54,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	var rate: Float!
 	
-	var rates: Dictionary<String,NSNumber>!
+	var rates: [String: [String: NSNumber]]!
 	
 	var fromMoneyLabel: UILabel!
 	var toMoneyLabel: UILabel!
@@ -135,9 +135,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let shared = UserDefaults(suiteName: self.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? defaults["fromSymbol"] as! String
 		self.toSymbol = shared?.string(forKey: "toSymbol") ?? defaults["toSymbol"] as! String
-		self.rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		let fromRate:Float! = rates[self.fromSymbol]?.floatValue
-		let toRate:Float! = rates[self.toSymbol]?.floatValue
+		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
+		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
 		self.rate = toRate/fromRate
 	}
 	
