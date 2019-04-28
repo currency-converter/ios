@@ -36,6 +36,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	// 输出货币类型
 	var toSymbol: String!
 	
+	// 缓存收藏的货币
+	var fromFavorites: [String]!
+	var toFavorites: [String]!
+	
+	var fromControllers: [Int: [String: Any]] = [:]
+	var toControllers: [Int: [String: Any]] = [:]
+
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
 	// UI 组件
@@ -114,6 +121,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.setRate()
 		}
 		
+		let favorites: [String] = shared?.array(forKey: "favorites") as! [String]
+		fromFavorites = favorites.filter { (symbol) -> Bool in
+			return symbol != self.fromSymbol
+		}
+		fromFavorites.insert(self.fromSymbol, at: 0)
+		
+		toFavorites = favorites.filter { (symbol) -> Bool in
+			return symbol != self.toSymbol
+		}
+		toFavorites.insert(self.toSymbol, at: 0)
+		
 	}
 	
 	override func viewDidLoad() {
@@ -174,19 +192,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func renderScreen() {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		//let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
-		let favorites: [String] = shared?.array(forKey: "favorites") as! [String]
-		var fromSymbols: [String] = favorites.filter { (symbol) -> Bool in
-			return symbol != self.fromSymbol
-		}
-		fromSymbols.insert(self.fromSymbol, at: 0)
-		
-		var toSymbols: [String] = favorites.filter { (symbol) -> Bool in
-			return symbol != self.toSymbol
-		}
-		toSymbols.insert(self.toSymbol, at: 0)
-
 		let screenViewPadding: CGFloat = 16
 		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewPadding
 		let screenViewHeight: CGFloat = 200
@@ -203,7 +208,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.view.addSubview(screenView)
 		
 		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
-		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromSymbols.count), height: fromScrollView.frame.height)
+		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromFavorites.count), height: fromScrollView.frame.height)
 		//关闭滚动条显示
 		fromScrollView.showsHorizontalScrollIndicator = false
 		fromScrollView.showsVerticalScrollIndicator = false
@@ -214,7 +219,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//fromScrollView.backgroundColor = .gray
 		screenView.addSubview(fromScrollView)
 
-		for (seq, symbol) in fromSymbols.enumerated() {
+		for (seq, symbol) in fromFavorites.enumerated() {
 			let page = UIView(frame: CGRect(x: CGFloat(seq) * fromScrollView.frame.width, y: 0, width: fromScrollView.frame.width, height: fromScrollView.frame.height))
 			//page.backgroundColor = UIColor.green
 			fromScrollView.addSubview(page)
@@ -272,10 +277,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				self.fromSymbolLabel = fromSymbolLabel
 				self.fromImageView = fromImageView
 			}
+			
+			fromControllers[seq] = [
+				"moneyLabel": fromMoneyLabel,
+				"symbolLabel": fromSymbolLabel,
+				"imageView": fromImageView
+			]
 		}
 		
 		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
-		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toSymbols.count), height: toScrollView.frame.height)
+		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toFavorites.count), height: toScrollView.frame.height)
 		//关闭滚动条显示
 		toScrollView.showsHorizontalScrollIndicator = false
 		toScrollView.showsVerticalScrollIndicator = false
@@ -286,7 +297,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//toScrollView.backgroundColor = .gray
 		screenView.addSubview(toScrollView)
 		
-		for (seq, symbol) in toSymbols.enumerated() {
+		for (seq, symbol) in toFavorites.enumerated() {
 			let page = UIView(frame: CGRect(x: CGFloat(seq) * toScrollView.frame.width, y: 0, width: toScrollView.frame.width, height: toScrollView.frame.height))
 			//page.backgroundColor = UIColor.green
 			toScrollView.addSubview(page)
@@ -343,6 +354,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				self.toSymbolLabel = toSymbolLabel
 				self.toImageView = toImageView
 			}
+			
+			toControllers[seq] = [
+				"moneyLabel": toMoneyLabel,
+				"symbolLabel": toSymbolLabel,
+				"imageView": toImageView
+			]
 		}
 		
 //		let subScreenViewPaddingLeft: CGFloat = 16
@@ -707,7 +724,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		shared?.register(defaults: Config.defaults)
 	}
 	
-	//把 "1234567.89" -> "1,234,567.89"
+	//把 "1234567.89" -> "1,234,p567.89"
 	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
@@ -743,28 +760,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
 			print("Notification data:", data)
-			print(0.1)
 			if data.keys.contains("isCustomRate") {
-				print(0.11)
 				let isCustomRate: Bool = data["isCustomRate"] as! Bool
-				print(0.12)
 				self.toSymbolLabel.text = self.toSymbol + (isCustomRate ? "*" : "")
-				print(0.13)
 			}
-			print(0)
 			
 			if data.keys.contains("fromSymbol") {
 				let symbol: String = data["fromSymbol"] as! String
 				self.fromSymbolLabel.text = symbol
-				print(1)
 				if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
 					fromImageView.image = UIImage(contentsOfFile: path)
 				}
-				print(2)
 				self.fromSymbol = symbol
-				print(3)
 				self.setRate()
-				print(4)
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -786,10 +794,35 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		//根据scrollview实例类型判断滑动的货币类型
+		let type: String = scrollView == fromScrollView ? "from" : "to"
+		let favorites: [String] = scrollView == fromScrollView ? fromFavorites : toFavorites
+
 		//通过scrollView内容的偏移计算当前显示的是第几页
-		print(scrollView == fromScrollView)
 		let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-		print(page)
+		
+		let newSymbol: String = favorites[page]
+		
+		if type == "from" {
+			let controllers = fromControllers[page]
+			self.fromSymbol = newSymbol
+			self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
+			self.fromMoneyLabel?.text = numberFormat(self.fromMoney)
+			self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
+			self.fromImageView = controllers?["imageView"] as? UIImageView
+		} else {
+			print("toControllers:", toControllers)
+			let controllers = toControllers[page]
+			self.toSymbol = newSymbol
+			self.toMoneyLabel = controllers?["moneyLabel"] as? UILabel
+			self.toSymbolLabel = controllers?["symbolLabel"] as? UILabel
+			self.toImageView = controllers?["imageView"] as? UIImageView
+		}
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"\(type)Symbol": newSymbol,
+			"isCustomRate": false
+		])
 	}
 }
 
