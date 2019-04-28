@@ -26,6 +26,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	
 	var currencyTableView: UITableView!
 	var searchController: UISearchController!
+	var navigationitem: UINavigationItem = UINavigationItem()
+	var editBarButton: UIBarButtonItem!
+	var doneBarButton: UIBarButtonItem!
 	
 	var searchResults:Array = [String]()
 	
@@ -57,14 +60,17 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		navigationBar.barTintColor = UIColor.black
 		navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
 		navigationBar.backgroundColor = UIColor.black
+		navigationBar.pushItem(navigationitem, animated: true)
 		self.view.addSubview(navigationBar)
+
+		editBarButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.edit, target: self, action: #selector(onEditClick(_:)))
+		doneBarButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onEditClick(_:)))
+		navigationitem.leftBarButtonItem = self.editBarButton
 		
-		let navigationitem = UINavigationItem()
-		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(onPickerDone(_:)))
+		let rightBtn = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(onPickerCancel(_:)))
 		rightBtn.tintColor = UIColor.loquatYellow
 		navigationitem.title = NSLocalizedString("currencyPicker.title", comment: "")
 		navigationitem.rightBarButtonItem = rightBtn
-		navigationBar.pushItem(navigationitem, animated: true)
 		
 		let searchController = UISearchController(searchResultsController: nil)
 		searchController.searchBar.searchBarStyle = .minimal
@@ -102,6 +108,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let tableViewBackground = UIView(frame: self.view.bounds)
 		tableViewBackground.backgroundColor = UIColor.black
 		tableView.backgroundView = tableViewBackground
+		tableView.showsVerticalScrollIndicator = true
+		//tableView.isEditing = false
 		//tableView.separatorColor = UIColor.hex("090909")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -119,8 +127,19 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		self.currencyTableView = tableView
 	}
 	
-	@objc func onPickerDone(_ sender: UIButton) {
+	@objc func onPickerCancel(_ sender: UIButton) {
 		self.close()
+	}
+	
+	@objc func onEditClick(_ sender: UIButton) {
+		if self.currencyTableView!.isEditing {
+			navigationitem.leftBarButtonItem = self.editBarButton
+			self.currencyTableView.setEditing(false, animated: true)
+		} else {
+			navigationitem.leftBarButtonItem = self.doneBarButton
+			self.currencyTableView.setEditing(true, animated: true)
+		}
+		
 	}
 	
 	// 收藏/取消收藏
@@ -180,59 +199,59 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
 		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
-		let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
+		//let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
 		//let unicode: String = isFav ? "B" : "C"
-//
-//		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
-//		cell.preservesSuperviewLayoutMargins = false
-//		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
-//		cell.layoutMargins = UIEdgeInsets.zero
-//		cell.backgroundColor = UIColor.black
-//		cell.selectionStyle = .blue
-//		let cellBackgroundView = UIView()
-//		cellBackgroundView.backgroundColor = UIColor.hex("333333")
-//		cell.selectedBackgroundView = cellBackgroundView
-//
-//		// icon
-////		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
-////		cell.imageView?.accessibilityLabel = currency
+
+		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+		cell.preservesSuperviewLayoutMargins = false
+		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
+		cell.layoutMargins = UIEdgeInsets.zero
+		cell.backgroundColor = UIColor.black
+		cell.selectionStyle = .blue
+		let cellBackgroundView = UIView()
+		cellBackgroundView.backgroundColor = UIColor.hex("333333")
+		cell.selectedBackgroundView = cellBackgroundView
+
+		// icon
+//		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
+//		cell.imageView?.accessibilityLabel = currency
 //		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
 //		cell.imageView?.addGestureRecognizer(singleTapGesture)
-////		cell.imageView?.isUserInteractionEnabled = true
-//
-//		if let flagPath = Bundle.main.path(forResource: currency, ofType: "png") {
-//			cell.imageView?.image = UIImage(contentsOfFile: flagPath)
-//		}
-//
-//		// label
-//		cell.textLabel?.text = currency
-//		cell.textLabel?.textColor = UIColor.white
-//		//cell.textLabel?.highlightedTextColor = UIColor.black
-//
-//		// detail
-//		cell.detailTextLabel?.textColor = UIColor.white
-//		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
-//		cell.detailTextLabel?.text = self.currencyNames[currency ?? ""]
-//		cell.detailTextLabel?.textAlignment = .natural
-//
-//		// accessory
-//		cell.accessoryType = cell.detailTextLabel?.text == currencySymbol ? .checkmark : .none
-//		cell.tintColor = UIColor.loquatYellow
-//		return cell
-		
-		let cell = CurrencyTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
-		
-		//cell.setValueForCell(model: dataArr![indexPath.row])
-		let currency = Currency()
-		currency.symbol = symbol
-		currency.name = self.currencyNames[symbol ?? ""]
-		currency.rate = (self.rates[symbol!] as! [String: NSNumber])["a"]
-		currency.isFav = isFav
-		cell.setValueForCell(currency: currency, isSelected: self.currencySymbol == symbol)
-		//cell.setValueForCell(symbol: currency ?? "", country: self.currencyNames[currency ?? ""] ?? "", rate: "319.529", index: indexPath.row)
-		cell.delegate = self
-		
+//		cell.imageView?.isUserInteractionEnabled = true
+
+		if let flagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
+			cell.imageView?.image = UIImage(contentsOfFile: flagPath)
+		}
+
+		// label
+		cell.textLabel?.text = symbol
+		cell.textLabel?.textColor = UIColor.white
+		//cell.textLabel?.highlightedTextColor = UIColor.black
+
+		// detail
+		cell.detailTextLabel?.textColor = UIColor.white
+		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
+		cell.detailTextLabel?.text = self.currencyNames[symbol ?? ""]
+		cell.detailTextLabel?.textAlignment = .natural
+
+		// accessory
+		cell.accessoryType = cell.textLabel?.text == currencySymbol ? .checkmark : .none
+		cell.tintColor = UIColor.loquatYellow
 		return cell
+		
+//		let cell = CurrencyTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
+//
+//		//cell.setValueForCell(model: dataArr![indexPath.row])
+//		let currency = Currency()
+//		currency.symbol = symbol
+//		currency.name = self.currencyNames[symbol ?? ""]
+//		currency.rate = (self.rates[symbol!] as! [String: NSNumber])["a"]
+//		currency.isFav = isFav
+//		cell.setValueForCell(currency: currency, isSelected: self.currencySymbol == symbol)
+//		//cell.setValueForCell(symbol: currency ?? "", country: self.currencyNames[currency ?? ""] ?? "", rate: "319.529", index: indexPath.row)
+//		cell.delegate = self
+		
+//		return cell
 	}
 	
 	//选中cell时触发这个代理
@@ -242,7 +261,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		//获取当前选中的单元格
 		let cell: UITableViewCell! = tableView.cellForRow(at: indexPath)
-		let data = (cell as! CurrencyTableViewCell).symbol.text!
+		let data: String = (cell.textLabel?.text)! //(cell as! CurrencyTableViewCell).symbol.text!
 		let key: String = "\(currencyType)Symbol"
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(data, forKey: key)
@@ -269,7 +288,46 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		}
 		return self.adHeaders[section]
 	}
+	
+	// 设置单元格的编辑的样式
+	func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+		let sectionId:Int = indexPath.section
+		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
+
+		return isFav ? UITableViewCell.EditingStyle.delete : UITableViewCell.EditingStyle.insert
+	}
+	
+	// 单元格编辑后的响应方法
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		let sectionId:Int = indexPath.section
+		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		self.toggleFavorite(symbol: symbol ?? "")
+	}
+	
+//	func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
+//		print("move")
+//		let content=self.data[sourceIndexPath.row]
+//		self.data.removeAtIndex(sourceIndexPath.row)
+//		self.data.insert(content, atIndex: destinationIndexPath.row)
+//	}
+	
+	// 设置 cell 是否允许移动
+	func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+		// 只允许收藏的货币排序
+		return indexPath.section == 0
+	}
+	
+	func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		// 移动cell之后更换数据数组里的循序
+		(allCurrencies[0]![sourceIndexPath.row], allCurrencies[0]![destinationIndexPath.row]) = (allCurrencies[0]![destinationIndexPath.row], allCurrencies[0]![sourceIndexPath.row])
+		
+		//更新缓存
+		let shared = UserDefaults(suiteName: Config.groupId)
+		shared?.set(allCurrencies[0], forKey: "favorites")
+	}
 }
+
 
 extension CurrencyPickerViewController: UISearchResultsUpdating {
 	// MARK: - UISearchResultsUpdating Delegate

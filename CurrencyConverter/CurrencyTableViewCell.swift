@@ -16,7 +16,7 @@ class CurrencyTableViewCell: UITableViewCell {
 	var delegate: myTableDelegate?
 	
 	lazy var box = UIView()
-	var favorite = UILabel()
+//	var favorite = UILabel()
 	var flag = UIImageView()
 	var symbol = UILabel()
 	var name = UILabel()
@@ -45,13 +45,13 @@ class CurrencyTableViewCell: UITableViewCell {
 		//box.backgroundColor = UIColor.yellow
 		self.addSubview(box)
 		
-		favorite.frame = CGRect(x: 0, y: 0, width: 30, height: 36)
-		favorite.textColor = UIColor.white
-		favorite.font = UIFont(name: "CurrencyConverter", size: 42)
-		favorite.isUserInteractionEnabled = true
-		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
-		favorite.addGestureRecognizer(singleTapGesture)
-		box.addSubview(favorite)
+//		favorite.frame = CGRect(x: 0, y: 0, width: 30, height: 36)
+//		favorite.textColor = UIColor.white
+//		favorite.font = UIFont(name: "CurrencyConverter", size: 42)
+//		favorite.isUserInteractionEnabled = true
+//		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
+//		favorite.addGestureRecognizer(singleTapGesture)
+//		box.addSubview(favorite)
 
 		flag.frame = CGRect(x: 36, y: 0, width: flagWidth, height: flagHeight)
 		//flag.backgroundColor = UIColor.red
@@ -88,8 +88,8 @@ class CurrencyTableViewCell: UITableViewCell {
 		if let flagPath = Bundle.main.path(forResource: currency.symbol, ofType: "png") {
 			self.flag.image = UIImage(contentsOfFile: flagPath)
 		}
-		self.favorite.text = currency.isFav ?? false ? "B" : "C"
-		self.favorite.accessibilityLabel = currency.symbol
+//		self.favorite.text = currency.isFav ?? false ? "B" : "C"
+//		self.favorite.accessibilityLabel = currency.symbol
 		
 		//self.accessoryType = isSelected ? .checkmark : .none
 		self.isSelected = isSelected
@@ -105,9 +105,9 @@ class CurrencyTableViewCell: UITableViewCell {
 		// Initialization code
 	}
 	
-	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
-		let symbol: String = sender.view!.accessibilityLabel!
-		delegate?.toggleFavorite(symbol: symbol)
-	}
+//	@objc func toggleFavorite(_ sender: UITapGestureRecognizer) {
+//		let symbol: String = sender.view!.accessibilityLabel!
+//		delegate?.toggleFavorite(symbol: symbol)
+//	}
 }
 
