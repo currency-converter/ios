@@ -37,8 +37,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var toSymbol: String!
 	
 	// 缓存收藏的货币
-	var fromFavorites: [String]!
-	var toFavorites: [String]!
+	var fromFavorites: [String] = []
+	var toFavorites: [String] = []
 	
 	var fromControllers: [Int: [String: Any]] = [:]
 	var toControllers: [Int: [String: Any]] = [:]
@@ -46,11 +46,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
 	// UI 组件
+	var screenView: UIView!
 	var fromScrollView: UIScrollView!
 	var toScrollView: UIScrollView!
 	var settingsView: UIView!
-	var fromScreenView: UIView!
-	var toScreenView: UIView!
 	var keyboardView: UIView!
 	var currencyPickerView: UIView!
 	var fromSymbolButton: UIButton!
@@ -79,7 +78,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		// 创建请求任务
 		let task = session.dataTask(with: request) { (data,response,error) in
 			if(error == nil) {
-				print("update rate success!")
+				print("Rate update succeeded.")
 				// 将json数据解析成字典
 				let rates = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 				// 请求到数据
@@ -101,7 +100,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				shared?.set(rates, forKey: "rates")
 				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
 			} else {
-				print("Update rate failed.")
+				print("Rate update failed.")
 				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 1])
 			}
 		}
@@ -120,18 +119,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		if self.rates != nil {
 			self.setRate()
 		}
-		
+	}
+	
+	func initFavorites(type: String) {
+		let shared = UserDefaults(suiteName: Config.groupId)
 		let favorites: [String] = shared?.array(forKey: "favorites") as! [String]
-		fromFavorites = favorites.filter { (symbol) -> Bool in
-			return symbol != self.fromSymbol
-		}
-		fromFavorites.insert(self.fromSymbol, at: 0)
 		
-		toFavorites = favorites.filter { (symbol) -> Bool in
-			return symbol != self.toSymbol
+		if type == "from" {
+			fromFavorites.removeAll()
+			fromFavorites = favorites.filter { (symbol) -> Bool in
+				return symbol != self.fromSymbol
+			}
+			fromFavorites.insert(self.fromSymbol, at: 0)
+		} else {
+			toFavorites.removeAll()
+			toFavorites = favorites.filter { (symbol) -> Bool in
+				return symbol != self.toSymbol
+			}
+			toFavorites.insert(self.toSymbol, at: 0)
 		}
-		toFavorites.insert(self.toSymbol, at: 0)
-		
 	}
 	
 	override func viewDidLoad() {
@@ -197,16 +203,22 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let screenViewHeight: CGFloat = 200
 		let screenViewY: CGFloat = UIScreen.main.bounds.height - UIScreen.main.bounds.width - screenViewHeight - PADDING_BOTTOM
 		
-		// 创建屏幕容器
-		let screenView = UIView()
-		// 坐标
-		screenView.frame = CGRect(x: screenViewPadding, y: screenViewY, width: screenViewWidth, height: screenViewHeight)
-		// 是否切除子视图超出部分
-		screenView.clipsToBounds = true
-		//screenView.backgroundColor = UIColor.red
-		// 添加到当前视图控制器
-		self.view.addSubview(screenView)
+		if screenView == nil {
+			screenView = UIView(frame: CGRect(x: screenViewPadding, y: screenViewY, width: screenViewWidth, height: screenViewHeight))
+			screenView.clipsToBounds = true
+			self.view.addSubview(screenView)
+			
+			let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
+			swipeUp.direction = .up
+			screenView.addGestureRecognizer(swipeUp)
+			
+			let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
+			swipeDown.direction = .down
+			screenView.addGestureRecognizer(swipeDown)
+		}
 		
+		initFavorites(type: "from")
+
 		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
 		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromFavorites.count), height: fromScrollView.frame.height)
 		//关闭滚动条显示
@@ -218,73 +230,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		fromScrollView.isPagingEnabled = true
 		//fromScrollView.backgroundColor = .gray
 		screenView.addSubview(fromScrollView)
-
-		for (seq, symbol) in fromFavorites.enumerated() {
-			let page = UIView(frame: CGRect(x: CGFloat(seq) * fromScrollView.frame.width, y: 0, width: fromScrollView.frame.width, height: fromScrollView.frame.height))
-			//page.backgroundColor = UIColor.green
-			fromScrollView.addSubview(page)
-			
-			//国旗图片尺寸
-			let flagWidth: CGFloat = 40
-			let flagHeight: CGFloat = 30
-			let flagPaddingTop: CGFloat = 12
-	
-			let symbolLabelWidth: CGFloat = flagWidth
-			let symbolLabelHeight: CGFloat = 20
-			let symbolLabelPaddingTop: CGFloat = 5
-
-			//货币容器按钮尺寸
-			let symbolButtonWidth: CGFloat = 70
-			let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
-			let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
-
-			let moneyLabelHeight: CGFloat = 80
-	
-			// 货币输入框
-			let fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: fromScrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-			fromMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-			fromMoneyLabel.adjustsFontSizeToFitWidth = true
-			fromMoneyLabel.textAlignment = .right
-			fromMoneyLabel.text = numberFormat(self.fromMoney)
-			fromMoneyLabel.textColor = UIColor.gray
-			page.addSubview(fromMoneyLabel)
-	
-			// 输入货币符号容器
-			let fromSymbolButton = UIButton(frame: CGRect(x: fromMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-			fromSymbolButton.tag = 1
-			fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-			page.addSubview(fromSymbolButton)
-	
-			// 输入货币国旗
-			let fromImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-			fromImageView.alpha = 0.5
-			fromSymbolButton.addSubview(fromImageView)
-			if let fromFlagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
-				fromImageView.image = UIImage(contentsOfFile: fromFlagPath)
-			}
-	
-			// 输入货币缩写标签
-			let fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-			fromSymbolLabel.text = symbol
-			fromSymbolLabel.textAlignment = .center
-			fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-			fromSymbolLabel.textColor = UIColor.gray
-			fromSymbolButton.addSubview(fromSymbolLabel)
-
-			// 将组件和类关联
-			if self.fromSymbol == symbol {
-				self.fromMoneyLabel = fromMoneyLabel
-				self.fromSymbolLabel = fromSymbolLabel
-				self.fromImageView = fromImageView
-			}
-			
-			fromControllers[seq] = [
-				"moneyLabel": fromMoneyLabel,
-				"symbolLabel": fromSymbolLabel,
-				"imageView": fromImageView
-			]
-		}
 		
+		renderPagesInScrollView(type: "from")
+		
+		initFavorites(type: "to")
+
 		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
 		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toFavorites.count), height: toScrollView.frame.height)
 		//关闭滚动条显示
@@ -296,11 +246,57 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		toScrollView.isPagingEnabled = true
 		//toScrollView.backgroundColor = .gray
 		screenView.addSubview(toScrollView)
+
+		renderPagesInScrollView(type: "to")
+	}
+	
+	func clearScrollView(type: String) {
+		let scrollView: UIScrollView = type == "from" ? fromScrollView : toScrollView
+		// 滚动到最开始
+		scrollView.contentOffset.x = 0
+		for subview in scrollView.subviews as [UIView] {
+			subview.removeFromSuperview()
+		}
+	}
+	
+	func clearAll() {
+		for subview in view.subviews as [UIView] {
+			subview.removeFromSuperview()
+		}
+	}
+	
+	func renderPagesInScrollView(type: String) {
+		var favorites: [String]
+		var scrollView: UIScrollView
+		var moneyLabelText: String
+		var moneyLabelTextColor: UIColor
+		var symbolButtonTag: Int
+		var flagAlpha: CGFloat
+		var contentOffsetX: CGFloat = 0
 		
-		for (seq, symbol) in toFavorites.enumerated() {
-			let page = UIView(frame: CGRect(x: CGFloat(seq) * toScrollView.frame.width, y: 0, width: toScrollView.frame.width, height: toScrollView.frame.height))
-			//page.backgroundColor = UIColor.green
-			toScrollView.addSubview(page)
+		clearScrollView(type: type)
+		
+		if type == "from" {
+			favorites = fromFavorites
+			scrollView = fromScrollView
+			moneyLabelText = numberFormat(fromMoney)
+			moneyLabelTextColor = UIColor.gray
+			symbolButtonTag = 1
+			flagAlpha = 0.5
+			fromControllers.removeAll()
+		} else {
+			favorites = toFavorites
+			scrollView = toScrollView
+			moneyLabelText = output(fromMoney)
+			moneyLabelTextColor = UIColor.white
+			symbolButtonTag = 2
+			flagAlpha = 1
+			toControllers.removeAll()
+		}
+		
+		for (seq, symbol) in favorites.enumerated() {
+			let page = UIView(frame: CGRect(x: CGFloat(seq) * scrollView.frame.width, y: 0, width: scrollView.frame.width, height: scrollView.frame.height))
+			scrollView.addSubview(page)
 			
 			//国旗图片尺寸
 			let flagWidth: CGFloat = 40
@@ -319,150 +315,69 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let moneyLabelHeight: CGFloat = 80
 			
 			// 货币输入框
-			let toMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: toScrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-			toMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-			toMoneyLabel.adjustsFontSizeToFitWidth = true
-			toMoneyLabel.textAlignment = .right
-			toMoneyLabel.text = numberFormat(self.fromMoney)
-			toMoneyLabel.textColor = UIColor.white
-			page.addSubview(toMoneyLabel)
+			let moneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: scrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+			moneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
+			moneyLabel.adjustsFontSizeToFitWidth = true
+			moneyLabel.textAlignment = .right
+			moneyLabel.text = moneyLabelText
+			moneyLabel.textColor = moneyLabelTextColor
+			page.addSubview(moneyLabel)
 			
 			// 输入货币符号容器
-			let toSymbolButton = UIButton(frame: CGRect(x: toMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-			toSymbolButton.tag = 2
-			toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-			page.addSubview(toSymbolButton)
+			let symbolButton = UIButton(frame: CGRect(x: moneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+			symbolButton.tag = symbolButtonTag
+			symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+			page.addSubview(symbolButton)
 			
 			// 输入货币国旗
-			let toImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-			toSymbolButton.addSubview(toImageView)
-			if let toFlagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
-				toImageView.image = UIImage(contentsOfFile: toFlagPath)
+			let flag = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
+			flag.alpha = flagAlpha
+			symbolButton.addSubview(flag)
+			if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
+				flag.image = UIImage(contentsOfFile: path)
 			}
 			
 			// 输入货币缩写标签
-			let toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-			toSymbolLabel.text = symbol
-			toSymbolLabel.textAlignment = .center
-			toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-			toSymbolLabel.textColor = UIColor.white
-			toSymbolButton.addSubview(toSymbolLabel)
+			let symbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
+			symbolLabel.text = symbol
+			symbolLabel.textAlignment = .center
+			symbolLabel.font = UIFont.systemFont(ofSize: 16)
+			symbolLabel.textColor = moneyLabelTextColor
+			symbolButton.addSubview(symbolLabel)
 			
 			// 将组件和类关联
-			if self.toSymbol == symbol {
-				self.toMoneyLabel = toMoneyLabel
-				self.toSymbolLabel = toSymbolLabel
-				self.toImageView = toImageView
+			if type == "from" {
+				if self.fromSymbol == symbol {
+					self.fromMoneyLabel = moneyLabel
+					self.fromSymbolLabel = symbolLabel
+					self.fromImageView = flag
+					contentOffsetX = page.frame.origin.x
+				}
+				
+				fromControllers[seq] = [
+					"moneyLabel": moneyLabel,
+					"symbolLabel": symbolLabel,
+					"imageView": flag
+				]
+			} else {
+				if self.toSymbol == symbol {
+					self.toMoneyLabel = moneyLabel
+					self.toSymbolLabel = symbolLabel
+					self.toImageView = flag
+					contentOffsetX = CGFloat(seq)
+				}
+				
+				toControllers[seq] = [
+					"moneyLabel": moneyLabel,
+					"symbolLabel": symbolLabel,
+					"imageView": flag
+				]
 			}
-			
-			toControllers[seq] = [
-				"moneyLabel": toMoneyLabel,
-				"symbolLabel": toSymbolLabel,
-				"imageView": toImageView
-			]
 		}
 		
-//		let subScreenViewPaddingLeft: CGFloat = 16
-//		let subScreenViewHeight: CGFloat = screenViewHeight / 2
-//
-//		self.fromScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: 0, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
-//		screenView.addSubview(self.fromScreenView)
-//		self.toScreenView = UIView(frame: CGRect(x: subScreenViewPaddingLeft, y: subScreenViewHeight, width: screenView.frame.width - subScreenViewPaddingLeft, height: subScreenViewHeight))
-//		screenView.addSubview(self.toScreenView)
-//
-//		//国旗图片尺寸
-//		let flagWidth: CGFloat = 40
-//		let flagHeight: CGFloat = 30
-//		let flagPaddingTop: CGFloat = 12
-//
-//		let symbolLabelWidth: CGFloat = flagWidth
-//		let symbolLabelHeight: CGFloat = 20
-//		let symbolLabelPaddingTop: CGFloat = 5
-//
-//
-//		//货币容器按钮尺寸
-//		let symbolButtonWidth: CGFloat = 70
-//		let symbolButtonHeight: CGFloat = flagHeight + symbolLabelHeight
-//		let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
-//
-//		let moneyLabelHeight: CGFloat = 80
-//
-//
-//		// 货币输入框
-//		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: fromScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-//		fromMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-//		fromMoneyLabel.adjustsFontSizeToFitWidth = true
-//		fromMoneyLabel.textAlignment = .right
-//		fromMoneyLabel.text = numberFormat(self.fromMoney)
-//		fromMoneyLabel.textColor = UIColor.gray
-//		fromScreenView.addSubview(fromMoneyLabel)
-//
-//		// 输入货币符号容器
-//		fromSymbolButton = UIButton(frame: CGRect(x: fromMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-//		fromSymbolButton.tag = 1
-//		fromSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-//		fromScreenView.addSubview(fromSymbolButton)
-//
-//		// 输入货币国旗
-//		fromImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-//		fromImageView.alpha = 0.5
-//		fromSymbolButton.addSubview(fromImageView)
-//		if let fromFlagPath = Bundle.main.path(forResource: self.fromSymbol, ofType: "png") {
-//			fromImageView.image = UIImage(contentsOfFile: fromFlagPath)
-//		}
-//
-//		// 输入货币缩写标签
-//		fromSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-//		fromSymbolLabel.text = self.fromSymbol
-//		fromSymbolLabel.textAlignment = .center
-//		fromSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-//		fromSymbolLabel.textColor = UIColor.gray
-//		fromSymbolButton.addSubview(fromSymbolLabel)
-//
-//		// 货币输出框
-//		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: toScreenView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-//		toMoneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
-//		toMoneyLabel.adjustsFontSizeToFitWidth = true
-//		toMoneyLabel.textAlignment = .right
-//		toMoneyLabel.text = self.output(self.fromMoney)
-//		toMoneyLabel.textColor = UIColor.white
-//		// 允许响应用户交互（长按出现copy）
-//		toMoneyLabel.isUserInteractionEnabled = true
-//		let longPress = UILongPressGestureRecognizer(target:self, action: #selector(toMoneyLongPress(_:)))
-//		toMoneyLabel.addGestureRecognizer(longPress)
-//		toScreenView.addSubview(toMoneyLabel)
-//
-//		// 输出货币符号容器
-//		toSymbolButton = UIButton(frame: CGRect(x: toMoneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
-//		toSymbolButton.tag = 2
-//		toSymbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
-//		toScreenView.addSubview(toSymbolButton)
-//
-//		// 输出货币国旗
-//		toImageView = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-//		toSymbolButton.addSubview(toImageView)
-//		if let toFlagPath = Bundle.main.path(forResource: self.toSymbol, ofType: "png") {
-//			toImageView.image = UIImage(contentsOfFile: toFlagPath)
-//		}
-//
-//		// 创建输出货币缩写标签
-//		toSymbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-//		toSymbolLabel.textAlignment = .center
-//		toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
-//		toSymbolLabel.textColor = UIColor.white
-//		toSymbolLabel.text = self.toSymbol
-//		if isCustomRate {
-//			toSymbolLabel.text = self.toSymbol + "*"
-//		}
-//		toSymbolButton.addSubview(toSymbolLabel)
-//
-		let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
-		swipeUp.direction = .up
-		screenView.addGestureRecognizer(swipeUp)
-
-		let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
-		swipeDown.direction = .down
-		screenView.addGestureRecognizer(swipeDown)
+		if contentOffsetX > 0 {
+			//scrollView.setContentOffset(CGPoint(x: contentOffsetX, y: 0), animated: true)
+		}
 	}
 	
 	func renderKeyboard() {
@@ -551,6 +466,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 					"fromSymbol": fromSymbol,
 					"toSymbol": toSymbol,
+					"changeType": "swipe",
 					"isCustomRate": false
 				])
 				
@@ -662,7 +578,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				try tapSoundPlayer = AVAudioPlayer(contentsOf: url)
 				tapSoundPlayer.play()
 			} catch {
-				print("Could not load audio file.")
+				print("Failed to load audio file.")
 			}
 		}
 	}
@@ -738,21 +654,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
 		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		//numberFormatter.groupingSeparator = "," //分隔符号
-		//numberFormatter.groupingSize = 4  //分隔位数
-		
 		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
-		//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
-		
-		//numberFormatter.positivePrefix = "$" //自定义前缀
-		//numberFormatter.positiveSuffix = "元" //自定义后缀
-		
-		//numberFormatter.locale = Locale(identifier: "fa_IR")
-		//numberFormatter.locale = Locale(identifier: "ar_EG")
-		//numberFormatter.locale = Locale(identifier: "cs_CZ")
-		//numberFormatter.locale = Locale(identifier: "de_DE")
-		
-		//格式化
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
@@ -773,6 +675,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				}
 				self.fromSymbol = symbol
 				self.setRate()
+				
+				let changeType: String = data["changeType"] as! String
+				if changeType != "scroll" {
+					// 滑动切换货币时不需要更新界面
+					initFavorites(type: "from")
+					renderPagesInScrollView(type: "from")
+				}
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -783,8 +692,22 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				}
 				self.toSymbol = symbol
 				self.setRate()
+
+				let changeType: String = data["changeType"] as! String
+				if changeType != "scroll" {
+					// 滑动切换货币时不需要更新界面
+					initFavorites(type: "to")
+					renderPagesInScrollView(type: "to")
+				}
 			}
-			
+
+			if data.keys.contains("favorites") {
+				initFavorites(type: "from")
+				renderPagesInScrollView(type: "from")
+				initFavorites(type: "to")
+				renderPagesInScrollView(type: "to")
+			}
+		
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
 				DispatchQueue.main.async {
 					self.toMoneyLabel.text = self.output(self.fromMoney)
@@ -811,7 +734,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
 			self.fromImageView = controllers?["imageView"] as? UIImageView
 		} else {
-			print("toControllers:", toControllers)
 			let controllers = toControllers[page]
 			self.toSymbol = newSymbol
 			self.toMoneyLabel = controllers?["moneyLabel"] as? UILabel
@@ -821,6 +743,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			"\(type)Symbol": newSymbol,
+			"changeType": "scroll",
 			"isCustomRate": false
 		])
 	}

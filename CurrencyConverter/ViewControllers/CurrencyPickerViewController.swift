@@ -156,6 +156,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		self.allCurrencies[0] = favorites
 		self.currencyTableView.reloadData()
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"favorites": favorites
+		])
 	}
 	
 	func initCurrencyNames() {
@@ -270,6 +274,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			"isCustomRate": false,
+			"changeType": "pick",
 			key: data
 		])
 		
@@ -335,7 +340,6 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		self.searchResults.removeAll(keepingCapacity: false)
 
 		let keyword:String = searchController.searchBar.text!.uppercased()
-		print(keyword)
 		//从key和value中都找一遍
 		for currency in currencyNames {
 			if currency.key.contains(keyword) || currency.value.uppercased().contains(keyword) {
