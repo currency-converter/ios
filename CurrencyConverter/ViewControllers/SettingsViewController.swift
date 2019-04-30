@@ -30,8 +30,6 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var customRateStepper: UIStepper!
 	@IBOutlet weak var disclaimerLabel: UILabel!
 	
-	let groupId: String = "group.com.zhongzhi.currencyconverter"
-	
 	var sectionHeaders:[String] = [
 		NSLocalizedString("settings.soundsHeader", comment: ""),
 		NSLocalizedString("settings.rateUpdateHeader", comment: ""),
@@ -59,7 +57,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	func onReady(key: String, value: String) {
 		// 更新配置
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(value, forKey: key)
 		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [key: value])
@@ -70,13 +68,13 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			demoLabel.text = self.formatDemoText()
 			
 			self.updateCustomRateDetail(rate: Float(self.customRateStepper.value))
-			let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+			let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 			self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
 		}
 		
 		if key == "rateUpdatedFrequency" {
 			frequencyValue.text = NSLocalizedString("settings.update.\(value)", comment: "")
-			frequencyValue.tag = Int(value) ?? 2
+			frequencyValue.tag = Int(value) ?? Config.defaults["rateUpdatedFrequency"] as! Int
 		}
 	}
 	
@@ -107,17 +105,17 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onKeyboardClicksChanged(_ sender: UISwitch) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "sounds")
 	}
 
 	@IBAction func onAutoUpdateRateChanged(_ sender: UISwitch) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "autoUpdateRate")
 	}
 	
 	@IBAction func onCustomRateSwitchChanged(_ sender: UISwitch) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "isCustomRate")
 		if sender.isOn {
 			shared?.set(self.customRateStepper.value, forKey: "customRate")
@@ -131,7 +129,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onCustomRateStepperClick(_ sender: UIStepper) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(self.customRateStepper.value, forKey: "customRate")
 
 		self.updateCustomRateDetail(rate: Float(sender.value))
@@ -142,7 +140,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
-		let shared = UserDefaults(suiteName: self.groupId)
+		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "usesGroupingSeparator")
 		self.demoLabel.text = self.formatDemoText()
 		
@@ -171,22 +169,22 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		//去除表格上放多余的空隙
 		//self.tableView?.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
 		
-		let shared = UserDefaults(suiteName: self.groupId)
-		let frequency = shared?.string(forKey: "rateUpdatedFrequency") ?? RateUpdatedFrequency.daily.rawValue
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let frequency: Int = shared?.integer(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! Int
 		let frequencyText = NSLocalizedString("settings.update.\(frequency)", comment: "")
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
-		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? false
-		let isAutoUpdateRate: Bool = shared?.bool(forKey: "autoUpdateRate") ?? true
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
-		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? true
-		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
-		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? "USD"
-		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? "CNY"
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
+		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? Config.defaults["sounds"] as! Bool
+		let isAutoUpdateRate: Bool = shared?.bool(forKey: "autoUpdateRate") ?? Config.defaults["autoUpdateRate"] as! Bool
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
+		let rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
+		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
 		
 		var rate: Float = 1.0
 		if rates != nil {
-			let fromRate:Float! = rates![fromSymbol]?.floatValue
-			let toRate:Float! = rates![toSymbol]?.floatValue
+			let fromRate: Float! = Float(truncating: (rates![fromSymbol]! as [String: NSNumber])["a"]!)
+			let toRate: Float! = Float(truncating: (rates![toSymbol]! as [String: NSNumber])["a"]!)
 			rate = toRate/fromRate
 		}
 		
@@ -208,7 +206,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.autoUpdateRateLabel.text = NSLocalizedString("settings.autoUpdateRate", comment: "")
 		//设置初始值
 		self.frequencyValue.text = frequencyText
-		self.frequencyValue.tag = Int(frequency) ?? 2
+		self.frequencyValue.tag = frequency
 		self.updatedAtValue.text = self.formatUpdatedAtText()
 		self.decimalValue.text = decimals.description
 		self.keyboardClicksSwitch.isOn = isSounds
@@ -229,9 +227,8 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func numberFormat(_ s:String) -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? true
-		let decimals = shared?.integer(forKey: "decimals") ?? 2
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
@@ -240,29 +237,15 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let numberFormatter = NumberFormatter()
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
-		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		//numberFormatter.groupingSeparator = "," //分隔符号
-		//numberFormatter.groupingSize = 4  //分隔位数
-		
 		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
-		//numberFormatter.minimumFractionDigits = 5 //设置小数点后最少2位（不足补0）
-		
-		//numberFormatter.positivePrefix = "$" //自定义前缀
-		//numberFormatter.positiveSuffix = "元" //自定义后缀
-		
-		//numberFormatter.locale = Locale(identifier: "fa_IR")
-		//numberFormatter.locale = Locale(identifier: "ar_EG")
-		//numberFormatter.locale = Locale(identifier: "cs_CZ")
-		//numberFormatter.locale = Locale(identifier: "de_DE")
-		
 		//格式化
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
 	
 	func formatUpdatedAtText() -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? 1463637809
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
 		let dateFormatter = DateFormatter()
@@ -282,10 +265,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func updateCustomRateDetail(rate: Float) {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? "USD"
-		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? "CNY"
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? 2
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
+		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
+		let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		let fromMoney: String = String(format: "%.\(String(describing: decimals))f", arguments:[1.0])
 		let toMoney = String(format: "%.\(decimals)f", arguments:[rate])
 

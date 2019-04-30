@@ -11,8 +11,9 @@
 		2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7D7225F4463001B192B /* SettingsViewController.swift */; };
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
+		249265FB2278214F001F9649 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249265FA2278214F001F9649 /* Config.swift */; };
+		249265FC2278214F001F9649 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249265FA2278214F001F9649 /* Config.swift */; };
 		2495A1A02253AE6F0009052D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
-		24996125226FD12D0011711A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24996124226FD12D0011711A /* Config.swift */; };
 		2499658922708B2D0011711A /* DOP.png in Resources */ = {isa = PBXBuildFile; fileRef = 249964E922708B2D0011711A /* DOP.png */; };
 		2499658A22708B2D0011711A /* DOP.png in Resources */ = {isa = PBXBuildFile; fileRef = 249964E922708B2D0011711A /* DOP.png */; };
 		2499658B22708B2D0011711A /* CDF.png in Resources */ = {isa = PBXBuildFile; fileRef = 249964EA22708B2D0011711A /* CDF.png */; };
@@ -390,9 +391,9 @@
 		241CA3542223D13600D5FC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		241CA35B2223D13700D5FC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		241CA3602223D13700D5FC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		249265FA2278214F001F9649 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Config.swift; path = CurrencyConverter/Config.swift; sourceTree = "<group>"; };
 		2495A1A12253AE6F0009052D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2495A1A32253AE720009052D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		24996124226FD12D0011711A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		249964E922708B2D0011711A /* DOP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DOP.png; sourceTree = "<group>"; };
 		249964EA22708B2D0011711A /* CDF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CDF.png; sourceTree = "<group>"; };
 		249964EB22708B2D0011711A /* SYP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SYP.png; sourceTree = "<group>"; };
@@ -660,6 +661,7 @@
 		241CA3482223D13600D5FC5F = {
 			isa = PBXGroup;
 			children = (
+				249265FA2278214F001F9649 /* Config.swift */,
 				249964E822708B2D0011711A /* flags */,
 				2495A1A22253AE6F0009052D /* InfoPlist.strings */,
 				24A4B11F22523F73001D77C2 /* Localizable.strings */,
@@ -682,7 +684,6 @@
 		241CA3532223D13600D5FC5F /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
-				24996124226FD12D0011711A /* Config.swift */,
 				2410D7D2225D83D3001B192B /* CurrencyConverter.entitlements */,
 				24A4B11422523DB8001D77C2 /* ViewControllers */,
 				24D0A6562248F12800BC423B /* Sounds */,
@@ -1377,11 +1378,11 @@
 				24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */,
 				24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
+				249265FB2278214F001F9649 /* Config.swift in Sources */,
 				24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */,
 				249966D22272BB0F0011711A /* CurrencyTableViewCell.swift in Sources */,
 				2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */,
 				241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */,
-				24996125226FD12D0011711A /* Config.swift in Sources */,
 				24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */,
 				24C680102227855A00747FBF /* button.swift in Sources */,
 			);
@@ -1392,6 +1393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24C70A492266E425008CAD04 /* Iconfont.swift in Sources */,
+				249265FC2278214F001F9649 /* Config.swift in Sources */,
 				24D98580225C8CE900AEBA7B /* TodayViewController.swift in Sources */,
 				24C70A472266C502008CAD04 /* Util.swift in Sources */,
 			);

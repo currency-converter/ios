@@ -11,8 +11,6 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding {
 	
-	let groupId: String = "group.com.zhongzhi.currencyconverter"
-	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true
 	
@@ -32,22 +30,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	// 输出货币类型
 	var toSymbol: String!
-	
-	var defaults:[String:Any] = [
-		// 小数位数
-		"decimals": 2,
-		// 使用千位分隔符
-		"usesGroupingSeparator": true,
-		// 是否使用按键声音
-		"sounds": false,
-		"fromSymbol": "USD",
-		"toSymbol": "CNY",
-		"isCustomRate": false,
-		"favorites": ["CNY", "HKD", "JPY", "USD"],
-		"rates": [
-			"AED":3.6728,"AUD":1.4013,"BGN":1.7178,"BHD":0.3769,"BND":1.3485,"BRL":3.7255,"BYN":2.13,"CAD":1.31691,"CHF":0.99505,"CLP":648.93,"CNY":6.6872,"COP":3069,"CRC":605.45,"CZK":22.4794,"DKK":6.54643,"DZD":118.281,"EGP":17.47,"EUR":0.8771,"GBP":0.75226,"HKD":7.8496,"HRK":6.5141,"HUF":277.27,"IDR":14067,"ILS":3.6082,"INR":71.0925,"IQD":1190,"ISK":119.5,"JOD":0.708,"JPY":110.749,"KES":99.85,"KHR":3958,"KRW":1121.95,"KWD":0.3032,"LAK":8565,"LBP":1505.7,"LKR":180.05,"MAD":9.539,"MMK":1499,"MOP":8.0847,"MXN":19.1921,"MYR":4.065,"NOK":8.53527,"NZD":1.4617,"OMR":0.3848,"PHP":51.72,"PLN":3.7801,"QAR":3.6406,"RON":4.1578,"RSD":103.5678,"RUB":65.7806,"SAR":3.75,"SEK":9.19689,"SGD":1.34869,"SYP":514.98,"THB":31.489,"TRY":5.3232,"TWD":30.783,"TZS":2338,"UGX":3668,"USD":1,"VND":23190,"ZAR":13.9727
-		]
-	]
 	
 	// 是否为收起模式
 	var isCompact: Bool = true
@@ -120,8 +102,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func registerSettingsBundle() {
-		let shared = UserDefaults(suiteName: self.groupId)
-		shared?.register(defaults: defaults)
+		let shared = UserDefaults(suiteName: Config.groupId)
+		shared?.register(defaults: Config.defaults)
 	}
 	
 	func clearViews() {
@@ -132,9 +114,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	func initConfig() {
 		// 初始化输入输出货币
-		let shared = UserDefaults(suiteName: self.groupId)
-		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? defaults["fromSymbol"] as! String
-		self.toSymbol = shared?.string(forKey: "toSymbol") ?? defaults["toSymbol"] as! String
+		let shared = UserDefaults(suiteName: Config.groupId)
+		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
+		self.toSymbol = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
 		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
 		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
@@ -242,8 +224,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func renderExpandedMode() {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		
 		let wrapperWidth: CGFloat = self.view.frame.width - expandedPadding * 2
 		let wrapperHeight: CGFloat = expandedHeight - expandedPadding * 2
@@ -410,8 +392,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? self.defaults["isCustomRate"] as! Bool
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
 		let rate: Float = isCustomRate ? customRate : self.rate
 		
@@ -420,9 +402,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	//把 "1234567.89" -> "1,234,567.89"
 	func numberFormat(_ s:String) -> String {
-		let shared = UserDefaults(suiteName: self.groupId)
-		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? self.defaults["usesGroupingSeparator"] as! Bool
-		let decimals = shared?.integer(forKey: "decimals") ?? self.defaults["decimals"] as! Int
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
+		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)

@@ -159,7 +159,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let rateUpdatedAt: Int = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
 		let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! String
 		let autoUpdateRate = shared?.bool(forKey: "autoUpdateRate") ?? Config.defaults["autoUpdateRate"] as! Bool
-		let rates = shared?.object(forKey: "rates") as? Dictionary<String, NSNumber>
+		let rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 
 		return rates == nil ||
 			(autoUpdateRate && rateUpdatedFrequency == RateUpdatedFrequency.realtime.rawValue) ||
