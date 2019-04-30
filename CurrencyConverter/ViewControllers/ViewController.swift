@@ -273,6 +273,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var flagAlpha: CGFloat
 		var contentOffsetX: CGFloat = 0
+		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
 		
 		clearScrollView(type: type)
 		
@@ -292,6 +293,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			symbolButtonTag = 2
 			flagAlpha = 1
 			toControllers.removeAll()
+
+			let shared = UserDefaults(suiteName: Config.groupId)
+			isCustomRate = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		}
 		
 		for (seq, symbol) in favorites.enumerated() {
@@ -323,13 +327,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			moneyLabel.textColor = moneyLabelTextColor
 			page.addSubview(moneyLabel)
 			
-			// 输入货币符号容器
+			// 货币符号容器
 			let symbolButton = UIButton(frame: CGRect(x: moneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
 			symbolButton.tag = symbolButtonTag
 			symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 			page.addSubview(symbolButton)
 			
-			// 输入货币国旗
+			// 货币国旗
 			let flag = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
 			flag.alpha = flagAlpha
 			symbolButton.addSubview(flag)
@@ -337,9 +341,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				flag.image = UIImage(contentsOfFile: path)
 			}
 			
-			// 输入货币缩写标签
+			// 货币缩写标签
 			let symbolLabel = UILabel(frame: CGRect(x: 0, y: flagPaddingTop + flagHeight + symbolLabelPaddingTop, width: symbolLabelWidth, height: symbolLabelHeight))
-			symbolLabel.text = symbol
+			// 如果是自定义汇率则在目标货币符号后加星号
+			symbolLabel.text = symbol + (type == "to"  && self.toSymbol == symbol && isCustomRate ? "*" : "")
 			symbolLabel.textAlignment = .center
 			symbolLabel.font = UIFont.systemFont(ofSize: 16)
 			symbolLabel.textColor = moneyLabelTextColor
@@ -744,6 +749,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let key: String = "\(type)Symbol"
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(newSymbol, forKey: key)
+		shared?.set(false, forKey: "isCustomRate")
 		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			key: newSymbol,
