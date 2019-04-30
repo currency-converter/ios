@@ -741,8 +741,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.toImageView = controllers?["imageView"] as? UIImageView
 		}
 		
+		let key: String = "\(type)Symbol"
+		let shared = UserDefaults(suiteName: Config.groupId)
+		shared?.set(newSymbol, forKey: key)
+		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			"\(type)Symbol": newSymbol,
+			key: newSymbol,
 			"changeType": "scroll",
 			"isCustomRate": false
 		])
