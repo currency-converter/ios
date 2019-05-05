@@ -37,7 +37,7 @@ class Theme {
 		UIStatusBarStyle.lightContent
 	]
 	
-	//
+	//货币选择页用的是自定义导航条，需要自己覆盖状态条背景
 	static let statusBarBackgroundColor: [UIColor] = [
 		UIColor.hex("f7f7f7"),
 		UIColor.hex("171717")
