@@ -45,6 +45,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
 	var currencyPickerType: CurrencyPickerType = CurrencyPickerType.from
 	
+	var themeIndex: Int!
+	
 	// UI 组件
 	var screenView: UIView!
 	var fromScrollView: UIScrollView!
@@ -115,6 +117,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.fromSymbol = shared?.string(forKey: "fromSymbol")
 		self.toSymbol = shared?.string(forKey: "toSymbol")
 		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+		self.themeIndex = shared?.integer(forKey: "theme")
 		
 		if self.rates != nil {
 			self.setRate()
@@ -187,8 +190,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func render() {
-		self.view.backgroundColor = UIColor.appBackgroundColor
-		
+		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
+		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
 		renderScreen()
 		renderKeyboard()
 	}
@@ -250,16 +254,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		renderPagesInScrollView(type: "to")
 	}
 	
-	func clearScrollView(type: String) {
-		let scrollView: UIScrollView = type == "from" ? fromScrollView : toScrollView
-		// 滚动到最开始
-		scrollView.contentOffset.x = 0
-		for subview in scrollView.subviews as [UIView] {
-			subview.removeFromSuperview()
-		}
-	}
-	
-	func clearAll() {
+	func clear(_ view: UIView) {
 		for subview in view.subviews as [UIView] {
 			subview.removeFromSuperview()
 		}
@@ -269,29 +264,26 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var favorites: [String]
 		var scrollView: UIScrollView
 		var moneyLabelText: String
-		var moneyLabelTextColor: UIColor
 		var symbolButtonTag: Int
-		var flagAlpha: CGFloat
 		var contentOffsetX: CGFloat = 0
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
+		let moneyLabelTextColor: UIColor = Theme.toMoneyLabelTextColor[themeIndex]
 		
-		clearScrollView(type: type)
+		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
+		view.contentOffset.x = 0
+		clear(view)
 		
 		if type == "from" {
 			favorites = fromFavorites
 			scrollView = fromScrollView
 			moneyLabelText = numberFormat(fromMoney)
-			moneyLabelTextColor = UIColor.gray
 			symbolButtonTag = 1
-			flagAlpha = 0.5
 			fromControllers.removeAll()
 		} else {
 			favorites = toFavorites
 			scrollView = toScrollView
 			moneyLabelText = output(fromMoney)
-			moneyLabelTextColor = UIColor.white
 			symbolButtonTag = 2
-			flagAlpha = 1
 			toControllers.removeAll()
 
 			let shared = UserDefaults(suiteName: Config.groupId)
@@ -335,7 +327,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			
 			// 货币国旗
 			let flag = UIImageView(frame: CGRect(x: 0, y: flagPaddingTop, width: flagWidth, height: flagHeight))
-			flag.alpha = flagAlpha
 			symbolButton.addSubview(flag)
 			if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
 				flag.image = UIImage(contentsOfFile: path)
@@ -389,17 +380,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		
-		// 创建键盘容器
-		let keyboardView = UIView()
-		self.keyboardView = keyboardView
-		// 坐标
-		keyboardView.frame = CGRect(x: 0, y: viewBounds.height - viewBounds.width - PADDING_BOTTOM, width: viewBounds.width, height: viewBounds.width)
-		// 背景颜色
-		// keyboardView.backgroundColor = UIColor.yellow
-		// 是否切除子视图超出部分
-		keyboardView.clipsToBounds = true
-		// 添加到当前视图控制器
-		self.view.addSubview(keyboardView)
+		if keyboardView == nil {
+			keyboardView = UIView(frame: CGRect(x: 0, y: viewBounds.height - viewBounds.width - PADDING_BOTTOM, width: viewBounds.width, height: viewBounds.width))
+			keyboardView.clipsToBounds = true
+			self.view.addSubview(keyboardView)
+		}
 		
 		let buttonWidth = (keyboardView.frame.size.width - 50) / 4
 		let buttonPadding:CGFloat = 10
@@ -411,7 +396,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			var btn:UIButton
 			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
-			btn.setTitleColor(UIColor.white, for: .normal)
+			btn.setTitleColor(Theme.keyButtonTextColor[themeIndex], for: .normal)
 			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size:32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
@@ -422,10 +407,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				btn.setBackgroundColor(color: UIColor.hex("fefefe"), forState: .selected)
 				btn.setTitleColor(UIColor.hex("fb9601"), for: .selected)
 			case "A":
-				btn.setBackgroundColor(color: UIColor.hex("2c2c2c"), forState: .normal)
-				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:32)
+				btn.setBackgroundColor(color: Theme.settingsButtonBackgroundColor[themeIndex], forState: .normal)
+				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
 			default:
-				btn.setBackgroundColor(color: UIColor.hex("424242"), forState: .normal)
+				btn.setBackgroundColor(color: Theme.keyButtonBackgroundColor[themeIndex], forState: .normal)
 				btn.setBackgroundColor(color: UIColor.hex("646464"), forState: .highlighted)
 			}
 			
@@ -635,9 +620,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		let rate = isCustomRate ? customRate : self.rate
 		
-		return numberFormat(String(Float(money)! * rate))
+		return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
 	}
 	
 	func registerSettingsBundle() {
@@ -646,10 +632,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	//把 "1234567.89" -> "1,234,p567.89"
-	func numberFormat(_ s:String) -> String {
+	func numberFormat(_ s: String, maximumFractionDigits: Int = 20) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
-		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
@@ -659,7 +644,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
 		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+		numberFormatter.maximumFractionDigits = maximumFractionDigits //设置小数点后最多3位
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
@@ -717,6 +702,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				DispatchQueue.main.async {
 					self.toMoneyLabel.text = self.output(self.fromMoney)
 				}
+			}
+			
+			if data.keys.contains("theme") {
+				let themeIndex: Int = data["theme"] as! Int
+				self.themeIndex = themeIndex
+				self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+				renderPagesInScrollView(type: "from")
+				renderPagesInScrollView(type: "to")
+				
+				clear(self.keyboardView)
+				renderKeyboard()
 			}
 		}
 	}
