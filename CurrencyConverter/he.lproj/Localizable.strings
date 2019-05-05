@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "Settings.usesGroupingSeparator" = "משתמש קיבוץ מפריד";
 "settings.decimalPlaces" = "מספר מקומות עשרוניים";
+"settings.theme" = "נושא";
+"settings.themeWhite" = "לבן";
+"settings.themeBlack" = "שחור";
 "settings.disclaimerHeader" = "כתב ויתור";
 "Settings.disclaimer" = "נתוני היישום ניתן למטרות אינפורמטיביות בלבד, ולא לכל מטרה כדי להבטיח את הדיוק, תוקף, זמינות או התאמתו, אפשרות וסיכון.";
 

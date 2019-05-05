@@ -9,6 +9,18 @@
 import UIKit
 
 class SettingsViewController: UITableViewController, CallbackDelegate {
+	@IBOutlet weak var cell0_0: UITableViewCell!
+	@IBOutlet weak var cell1_0: UITableViewCell!
+	@IBOutlet weak var cell1_1: UITableViewCell!
+	@IBOutlet weak var cell1_2: UITableViewCell!
+	@IBOutlet weak var cell1_3: UITableViewCell!
+	@IBOutlet weak var cell2_0: UITableViewCell!
+	@IBOutlet weak var cell2_1: UITableViewCell!
+	@IBOutlet weak var cell3_0: UITableViewCell!
+	@IBOutlet weak var cell3_1: UITableViewCell!
+	@IBOutlet weak var cell3_2: UITableViewCell!
+	@IBOutlet weak var cell3_3: UITableViewCell!
+	@IBOutlet weak var cell4_0: UITableViewCell!
 	@IBOutlet weak var keyboardClicksLabel: UILabel!
 	@IBOutlet weak var autoUpdateRateLabel: UILabel!
 	@IBOutlet weak var updateFrequencyLabel: UILabel!
@@ -29,6 +41,8 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var updateImmediatelyButton: UIButton!
 	@IBOutlet weak var customRateStepper: UIStepper!
 	@IBOutlet weak var disclaimerLabel: UILabel!
+	@IBOutlet weak var themeLabel: UILabel!
+	@IBOutlet weak var themeSegment: UISegmentedControl!
 	
 	var sectionHeaders:[String] = [
 		NSLocalizedString("settings.soundsHeader", comment: ""),
@@ -49,8 +63,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	// 是否正在更新汇率
 	var isUpdating = false
 	
+	var themeIndex: Int!
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		initConfig()
 		render()
 		observe()
 	}
@@ -159,15 +176,62 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		}
 	}
 	
+	@IBAction func onThemeChanged(_ sender: UISegmentedControl) {
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let selectedTheme: Int = sender.selectedSegmentIndex
+		shared?.set(selectedTheme, forKey: "theme")
+		
+		print("Theme Changed:", selectedTheme)
+		
+		setThemeIndex(selectedTheme)
+		
+		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+			"theme": selectedTheme
+		])
+	}
+	
 	func observe() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUpdateRate), name: .didUpdateRate, object: nil)
 	}
 	
+	func initConfig() {
+		// 初始化输入输出货币
+		let shared = UserDefaults(suiteName: Config.groupId)
+		self.themeIndex = shared?.integer(forKey: "theme")
+	}
+	
+	func setThemeIndex(_ themeIndex: Int) {
+		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
+		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
+		
+		self.cell0_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell1_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell1_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell1_2.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell1_3.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell2_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell2_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell3_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell3_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell3_2.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell3_3.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.cell4_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		self.keyboardClicksLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.autoUpdateRateLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.updateFrequencyLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.updatedAtLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.customRateLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.customRateDetailLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.demoLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.use1000SeparatorLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.decimalPlacesLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.themeLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.disclaimerLabel.textColor = Theme.cellTextColor[themeIndex]
+	}
+	
 	func render() {
-		//self.view.backgroundColor = UIColor.hex("000000")
-		//self.tableView.style = .plain
-		//去除表格上放多余的空隙
-		//self.tableView?.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
+		setThemeIndex(themeIndex)
 		
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let frequency: Int = shared?.integer(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! Int
@@ -180,6 +244,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
 		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
+		let selectedTheme: Int = shared?.integer(forKey: "theme") ?? Config.defaults["theme"] as! Int
 		
 		var rate: Float = 1.0
 		if rates != nil {
@@ -204,6 +269,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.customRateLabel.text = NSLocalizedString("settings.customRateHeader", comment: "")
 		self.disclaimerLabel.text = NSLocalizedString("settings.disclaimer", comment: "")
 		self.autoUpdateRateLabel.text = NSLocalizedString("settings.autoUpdateRate", comment: "")
+		self.themeLabel.text = NSLocalizedString("settings.theme", comment: "")
+		self.themeSegment.setTitle(NSLocalizedString("settings.themeWhite", comment: ""), forSegmentAt: 0)
+		self.themeSegment.setTitle(NSLocalizedString("settings.themeBlack", comment: ""), forSegmentAt: 1)
 		//设置初始值
 		self.frequencyValue.text = frequencyText
 		self.frequencyValue.tag = frequency
@@ -220,6 +288,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.use1000SeparatorSwitch.isOn = usesGroupingSeparator
 		self.demoLabel.font = UIFont(name: Config.numberFontName, size: 48)
 		self.demoLabel.text = self.formatDemoText()
+		self.themeSegment.selectedSegmentIndex = selectedTheme
 	}
 	
 	func formatDemoText() -> String {
@@ -231,7 +300,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
-			price = NSNumber(value:myInteger)
+			price = NSNumber(value: myInteger)
 		}
 		//创建一个NumberFormatter对象
 		let numberFormatter = NumberFormatter()
@@ -259,7 +328,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func toggleCustomRateDetail(_ isOn: Bool) {
-		self.customRateDetailLabel.textColor = isOn ? UIColor.white : UIColor.gray
+		self.customRateDetailLabel.textColor = isOn ? Theme.cellTextColor[themeIndex]  : UIColor.gray
 		self.customRateStepper.tintColor = isOn ? UIColor.hex("0078fb") : UIColor.gray
 		self.customRateStepper.isEnabled = isOn
 	}
@@ -303,6 +372,12 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 //		footer.textLabel?.textColor = UIColor.gray
 //		footer.textLabel?.font = UIFont.systemFont(ofSize: 12)
 //		footer.textLabel?.frame = footer.frame
+//	}
+	
+//	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//		let cell = UITableViewCell.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: "CellIdentifier")
+//		//cell.textLabel?.text = Array[indexPath.row]
+//		return cell
 //	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

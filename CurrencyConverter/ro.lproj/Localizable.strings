@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilizează separatorul de grupare";
 "settings.decimalPlaces" = "număr de zecimale";
+"settings.theme" = "temă";
+"settings.themeWhite" = "alb";
+"settings.themeBlack" = "negru";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Datele furnizate în această aplicație sunt doar pentru scopuri informative și nu garantează acuratețea, valabilitatea, disponibilitatea sau adecvarea vreunui scop, pe propriul risc.";
 

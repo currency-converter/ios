@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Використовує сепаратор групування";
 "settings.decimalPlaces" = "кількість десяткових знаків";
+"settings.theme" = "Тема";
+"settings.themeWhite" = "Білий";
+"settings.themeBlack" = "Чорний";
 "settings.disclaimerHeader" = "Відмова від відповідальності";
 "settings.disclaimer" = "Дані, наведені в цій заявці, призначені виключно в інформаційних цілях і не гарантують точність, дійсність, доступність або придатність будь-якої мети на ваш власний ризик.";
 

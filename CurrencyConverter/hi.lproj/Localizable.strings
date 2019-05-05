@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "ग्रुपिंग सेपरेटर का उपयोग करता है";
 "settings.decimalPlaces" = "दशमलव स्थानों की संख्या";
+"settings.theme" = "विषय";
+"settings.themeWhite" = "सफेद";
+"settings.themeBlack" = "काला";
 "settings.disclaimerHeader" = "अस्वीकरण";
 "settings.disc अस्वीकरण" = "इस एप्लिकेशन में प्रदान किया गया डेटा केवल सूचना के उद्देश्यों के लिए है और आपके जोखिम पर किसी भी उद्देश्य की सटीकता, वैधता, उपलब्धता या उपयुक्तता की गारंटी नहीं देता है।";
 

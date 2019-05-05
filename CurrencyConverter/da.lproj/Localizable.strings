@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Bruger Gruppen Separator";
 "settings.decimalPlaces" = "antal decimaler";
+"settings.theme" = "Tema";
+"settings.themeWhite" = "hvid";
+"settings.themeBlack" = "sort";
 "settings.disclaimerHeader" = "Ansvarsfraskrivelse";
 "settings.disclaimer" = "Dataene i denne ansøgning er kun til orienteringsformål og garanterer ikke for nøjagtighed, gyldighed, tilgængelighed eller egnethed til noget formål, for egen risiko.";
 
