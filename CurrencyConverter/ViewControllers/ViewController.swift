@@ -267,7 +267,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var contentOffsetX: CGFloat = 0
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
-		let moneyLabelTextColor: UIColor = Theme.toMoneyLabelTextColor[themeIndex]
+		let moneyLabelTextColor: UIColor = Theme.moneyLabelTextColor[themeIndex]
 		
 		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
 		view.contentOffset.x = 0

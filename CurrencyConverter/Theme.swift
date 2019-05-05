@@ -13,48 +13,65 @@ class Theme {
 	// 0 白
 	// 1 黑
 	
+	// 主背景色
 	static let appBackgroundColor: [UIColor] = [
 		UIColor.hex("efeef4"),
 		UIColor.hex("121212")
 	]
 	
-	static let toMoneyLabelTextColor: [UIColor] = [
+	// 货币文字颜色
+	static let moneyLabelTextColor: [UIColor] = [
 		UIColor.hex("000000"),
 		UIColor.hex("ffffff")
 	]
 	
+	// 导航栏样式
 	static let barStyle: [UIBarStyle] = [
 		UIBarStyle.default,
 		UIBarStyle.blackTranslucent
 	]
 	
+	// 状态栏样式
 	static let statusBarStyle: [UIStatusBarStyle] = [
 		UIStatusBarStyle.default,
 		UIStatusBarStyle.lightContent
 	]
 	
+	//
+	static let statusBarBackgroundColor: [UIColor] = [
+		UIColor.hex("f7f7f7"),
+		UIColor.hex("171717")
+	]
+	
+	// 单元格背景色
 	static let cellBackgroundColor: [UIColor] = [
 		UIColor.white,
 		UIColor.black
 	]
 	
+	// 单元格文字颜色
 	static let cellTextColor: [UIColor] = [
 		UIColor.black,
 		UIColor.white
 	]
 	
+	// 数字按钮背景色
 	static let keyButtonBackgroundColor: [UIColor] = [
 		UIColor.hex("dddddd"),
 		UIColor.hex("424242")
 	]
 	
+	// 数字文字颜色
+	static let keyButtonTextColor: [UIColor] = [
+		UIColor.black,
+		UIColor.white
+	]
+	
+	// 设置按钮背景色
 	static let settingsButtonBackgroundColor: [UIColor] = [
 		UIColor.hex("bbbbbb"),
 		UIColor.hex("2c2c2c")
 	]
 	
-	static let keyButtonTextColor: [UIColor] = [
-		UIColor.black,
-		UIColor.white
-	]
+
 }

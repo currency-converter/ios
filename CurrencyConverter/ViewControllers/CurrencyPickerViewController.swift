@@ -66,12 +66,16 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
 		
-		// 导航条
-		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
-		//navigationBar.barTintColor = UIColor.black
+		// 状态条高度
+		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+		
+		// 给状态条加上背景色
+		let statusBarBackgroundView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: statusBarHeight))
+		statusBarBackgroundView.backgroundColor = Theme.statusBarBackgroundColor[themeIndex]
+		self.view.addSubview(statusBarBackgroundView)
+		
+		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: 44))
 		navigationBar.barStyle = Theme.barStyle[themeIndex]
-		//navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-		//navigationBar.backgroundColor = UIColor.black
 		navigationBar.pushItem(navigationitem, animated: true)
 		self.view.addSubview(navigationBar)
 
@@ -114,11 +118,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.loquatYellow]
 		UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
 		
-		let tableView = UITableView(frame: CGRect(x: 0, y: 64, width: viewBounds.width, height: viewBounds.height-64), style: .plain)
-		//tableView.backgroundColor = UIColor.black
-		//let tableViewBackground = UIView(frame: self.view.bounds)
-		//tableViewBackground.backgroundColor = UIColor.black
-		//tableView.backgroundView = tableViewBackground
+		let tableView = UITableView(frame: CGRect(x: 0, y: statusBarHeight + navigationBar.frame.size.height, width: viewBounds.width, height: viewBounds.height - statusBarHeight - navigationBar.frame.size.height), style: .plain)
+		let tableViewBackground = UIView(frame: self.view.bounds)
+		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		tableView.backgroundView = tableViewBackground
 		tableView.showsVerticalScrollIndicator = true
 		//tableView.isEditing = false
 		//tableView.separatorColor = UIColor.hex("090909")
