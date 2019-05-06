@@ -245,11 +245,11 @@
                                         <rect key="frame" x="0.0" y="720" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VBu-GA-ay4" id="mHf-2E-7eE">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="349" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Decimal Places" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oOf-vO-2bD">
-                                                    <rect key="frame" x="16" y="12" width="116.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="12" width="116.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -305,7 +305,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zKG-cs-5id">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="93.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="93.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <string key="text">The data presented in this app is intended for informational purposes only. There is no guarantee of accuracy, validity, availability, or fitness for any purpose. Use at your own risk.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -368,7 +368,7 @@
             </objects>
             <point key="canvasLocation" x="1744.8" y="148.87556221889056"/>
         </scene>
-        <!--Title-->
+        <!--Decimals-->
         <scene sceneID="1Im-tE-q7c">
             <objects>
                 <tableViewController id="fWe-AT-Vva" customClass="DecimalsViewController" customModule="CurrencyConverter" customModuleProvider="target" sceneMemberID="viewController">
@@ -378,7 +378,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="I6r-Oq-mxn"/>
+                    <navigationItem key="navigationItem" title="Decimals" id="I6r-Oq-mxn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6BT-ek-uwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -402,7 +402,7 @@
             </objects>
             <point key="canvasLocation" x="887.20000000000005" y="148.87556221889056"/>
         </scene>
-        <!--Title-->
+        <!--Update Frequency-->
         <scene sceneID="7BU-dD-h8y">
             <objects>
                 <tableViewController id="mOH-xo-rpc" customClass="FrequencyViewController" customModule="CurrencyConverter" customModuleProvider="target" sceneMemberID="viewController">
@@ -412,7 +412,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="fdg-iQ-GIq"/>
+                    <navigationItem key="navigationItem" title="Update Frequency" id="fdg-iQ-GIq"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4oI-03-uXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
