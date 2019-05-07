@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Χρησιμοποιεί τον διαχωριστή διαχωρισμού";
 "settings.decimalPlaces" = "αριθμός δεκαδικών θέσεων";
+"settings.theme" = "Θέμα";
+"settings.themeWhite" = "Λευκό";
+"settings.themeBlack" = "Μαύρο";
 "settings.disclaimerHeader" = "Αποποίηση ευθυνών";
 "settings.disclaimer" = "Τα δεδομένα που παρουσιάζονται σε αυτήν την εφαρμογή προορίζονται μόνο για ενημερωτικούς σκοπούς. Δεν υπάρχει εγγύηση ακρίβειας, εγκυρότητας, διαθεσιμότητας ή καταλληλότητας για οποιοδήποτε σκοπό. Χρησιμοποιήστε το με δική σας ευθύνη.";
 

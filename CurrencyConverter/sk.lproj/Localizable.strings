@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Používa separátor zoskupenia";
 "settings.decimalPlaces" = "počet desatinných miest";
+"settings.theme" = "téma";
+"settings.themeWhite" = "biela";
+"settings.themeBlack" = "čierna";
 "settings.disclaimerHeader" = "Vyhlásenie";
 "settings.disclaimer" = "Údaje uvedené v tejto aplikácii majú len informatívny charakter a nezaručujú presnosť, platnosť, dostupnosť alebo vhodnosť akéhokoľvek účelu na vlastné riziko.";
 

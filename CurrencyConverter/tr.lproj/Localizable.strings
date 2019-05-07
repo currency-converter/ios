@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Gruplandırma Ayırıcı kullanır";
 "settings.decimalPlaces" = "ondalık basamak sayısı";
+"settings.theme" = "tema";
+"settings.themeWhite" = "beyaz";
+"settings.themeBlack" = "siyah";
 "settings.disclaimerHeader" = "Yasal Uyarı";
 "settings.disclaimer" = "Bu başvuruda sağlanan veriler yalnızca bilgilendirme amaçlıdır ve herhangi bir amacın doğruluğunu, geçerliliğini, kullanılabilirliğini veya uygunluğunu kendi sorumluluğunuzda değildir.";
 

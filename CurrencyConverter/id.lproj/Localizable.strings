@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Gunakan Pemisah Pengelompokan";
 "settings.decimalPlaces" = "jumlah tempat desimal";
+"settings.theme" = "Tema";
+"settings.themeWhite" = "Putih";
+"settings.themeBlack" = "Hitam";
 "settings.disclaimerHeader" = "Penafian";
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini hanya untuk tujuan informasi dan tidak menjamin akurasi, validitas, ketersediaan atau kesesuaian tujuan apa pun, dengan risiko Anda sendiri.";
 

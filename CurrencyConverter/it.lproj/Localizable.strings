@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilizza il separatore di raggruppamento";
 "settings.decimalPlaces" = "numero di posizioni decimali";
+"settings.theme" = "tema";
+"settings.themeWhite" = "bianco";
+"settings.themeBlack" = "nero";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "I dati forniti in questa applicazione sono solo a scopo informativo e non garantiscono l'accuratezza, la validità, la disponibilità o l'adeguatezza di qualsiasi scopo, a proprio rischio.";
 

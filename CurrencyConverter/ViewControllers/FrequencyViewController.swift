@@ -14,6 +14,8 @@ class FrequencyViewController: UITableViewController {
 	
 	var defaultValue: String!
 	
+	var themeIndex: Int!
+	
 	var values: [String] = [
 		NSLocalizedString("settings.update.0", comment: ""),
 		NSLocalizedString("settings.update.1", comment: ""),
@@ -23,12 +25,20 @@ class FrequencyViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		initConfig()
+		
 		render()
 		
 		// Do any additional setup after loading the view.
 	}
 	
+	func initConfig() {
+		let shared = UserDefaults(suiteName: Config.groupId)
+		self.themeIndex = shared?.integer(forKey: "theme")
+	}
+	
 	func render() {
+		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
 		navigationItem.title = NSLocalizedString("settings.updateFrequency", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -51,11 +61,11 @@ class FrequencyViewController: UITableViewController {
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
 		cell.tag = indexPath.row
-		cell.backgroundColor = UIColor.black
+		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		
 		// label
 		cell.textLabel?.text = value
-		cell.textLabel?.textColor = UIColor.white
+		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		
 		// accessory
 		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none

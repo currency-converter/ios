@@ -29,6 +29,9 @@
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Использует группировочный разделитель";
 "settings.decimalPlaces" = "количество десятичных разрядов";
+"settings.theme" = "тема";
+"settings.themeWhite" = "белый";
+"settings.themeBlack" = "черный";
 "settings.disclaimerHeader" = "Отказ от ответственности";
 "settings.disclaimer" = "Данные, представленные в этом приложении, предназначены только для информационных целей и не гарантируют точность, обоснованность, доступность или пригодность для каких-либо целей на ваш страх и риск.";
 

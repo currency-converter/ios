@@ -14,17 +14,27 @@ class DecimalsViewController: UITableViewController {
 	
 	var defaultValue: String!
 	
+	var themeIndex: Int!
+	
 	var values: [String] = ["0", "1", "2", "3", "4"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		initConfig()
 		
 		render()
 
         // Do any additional setup after loading the view.
     }
 	
+	func initConfig() {
+		let shared = UserDefaults(suiteName: Config.groupId)
+		self.themeIndex = shared?.integer(forKey: "theme")
+	}
+	
 	func render() {
+		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
 		navigationItem.title = NSLocalizedString("settings.decimalPlaces", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -46,11 +56,11 @@ class DecimalsViewController: UITableViewController {
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
-		cell.backgroundColor = UIColor.black
+		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		
 		// label
 		cell.textLabel?.text = value
-		cell.textLabel?.textColor = UIColor.white
+		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		
 		// accessory
 		cell.accessoryType = value == defaultValue ? .checkmark : .none
