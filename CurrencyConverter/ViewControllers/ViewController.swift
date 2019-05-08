@@ -146,6 +146,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		IwatchSessionUtil.shareManager.sendMessageToWatch(key: "name", value: "Joe")
+		
 		registerSettingsBundle()
 		
 		createUpdateRateDaemon()

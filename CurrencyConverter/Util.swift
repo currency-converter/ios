@@ -91,6 +91,7 @@ extension Date {
 extension Notification.Name {
 	static let didUpdateRate = Notification.Name("didUpdateRate")
 	static let didUserDefaultsChange = Notification.Name("didUserDefaultsChange")
+	static let didWatchSendMessage = Notification.Name("didWatchSendMessage")
 }
 
 //定义协议
