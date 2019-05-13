@@ -54,29 +54,32 @@ class InterfaceController: WKInterfaceController {
 		
 		// Configure interface objects here.
 		initConfig()
-		//render()
+		render()
 		observe()
-		WatchSessionUtil.sharedManager.sendMessage(key: "city", value: "Beijing")
+		WatchSessionUtil.sharedManager.sendMessage(key: "initConfig", value: "")
     }
 	
 	func initConfig() {
-
+		let shared = UserDefaults(suiteName: Config.groupId)
+		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
+		self.toSymbol = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
+		self.rate = shared?.float(forKey: "rate") ?? 6.7
 	}
 	
 	func render() {
-		if let path = Bundle.main.path(forResource: fromSymbol, ofType: "png") {
-			print("find path")
-			fromFlagImage.setImage(UIImage(contentsOfFile: path))
-		}
-		if let path = Bundle.main.path(forResource: toSymbol, ofType: "png") {
-			toFlagImage.setImage(UIImage(contentsOfFile: path))
-		}
-		
-		fromMoneyLabel.setText(numberFormat(fromMoney))
-		toMoneyLabel.setText(output(fromMoney))
-		
-		fromSymbolLabel.setText(fromSymbol)
-		toSymbolLabel.setText(toSymbol)
+//		if let path = Bundle.main.path(forResource: fromSymbol, ofType: "png") {
+//			print("find path")
+//			fromFlagImage.setImage(UIImage(contentsOfFile: path))
+//		}
+//		if let path = Bundle.main.path(forResource: toSymbol, ofType: "png") {
+//			toFlagImage.setImage(UIImage(contentsOfFile: path))
+//		}
+//
+//		fromMoneyLabel.setText(numberFormat(fromMoney))
+//		toMoneyLabel.setText(output(fromMoney))
+//
+//		fromSymbolLabel.setText(fromSymbol)
+//		toSymbolLabel.setText(toSymbol)
 		
 		let buttonColumns: CGFloat = 4
 		let buttonRows: CGFloat = 3
@@ -118,11 +121,30 @@ class InterfaceController: WKInterfaceController {
 		button2.setHeight(buttonHeight)
 		button3.setHeight(buttonHeight)
 		buttonAC.setHeight(buttonHeight)
+		buttonAC.setBackgroundColor(UIColor.loquatYellow)
 		
 		print("x:",self.contentFrame.origin.x)
 		print("y:",self.contentFrame.origin.y)
 		print("width:",self.contentFrame.width)
 		print("height:",self.contentFrame.height)
+		
+		self.refresh()
+	}
+	
+	func refresh() {
+		if let path = Bundle.main.path(forResource: fromSymbol, ofType: "png") {
+			print("find path")
+			fromFlagImage.setImage(UIImage(contentsOfFile: path))
+		}
+		if let path = Bundle.main.path(forResource: toSymbol, ofType: "png") {
+			toFlagImage.setImage(UIImage(contentsOfFile: path))
+		}
+		
+		fromMoneyLabel.setText(numberFormat(fromMoney))
+		toMoneyLabel.setText(output(fromMoney))
+		
+		fromSymbolLabel.setText(fromSymbol)
+		toSymbolLabel.setText(toSymbol)
 	}
 	
 	func observe() {
@@ -157,7 +179,12 @@ class InterfaceController: WKInterfaceController {
 			self.toSymbol = (data["toSymbol"] as! String)
 			self.rate = (data["rate"] as! NSNumber).floatValue
 			
-			self.render()
+			let shared = UserDefaults(suiteName: Config.groupId)
+			shared?.set(self.fromSymbol, forKey: "fromSymbol")
+			shared?.set(self.toSymbol, forKey: "toSymbol")
+			shared?.set(self.rate, forKey: "rate")
+			
+			self.refresh()
 		}
 	}
 	
