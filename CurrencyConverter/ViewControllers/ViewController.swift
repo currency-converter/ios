@@ -438,13 +438,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				let toSymbol: String = self.fromSymbol
 				//let newToMoney: String = self.fromMoney
 				//反向计算得到原始toMoney
-				let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
+				//let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
 				//更新界面
 				self.fromScrollView.frame.origin.y = 0
 				self.toScrollView.frame.origin.y = 100
 				//fromMoney没有缓存，不能通过UserDefaults事件来派发
-				self.fromMoney = newFromMoney
-				self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
+				//self.fromMoney = newFromMoney
+				//self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
 
 				//更新缓存
 				let shared = UserDefaults(suiteName: Config.groupId)
@@ -498,6 +498,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		case "A":
 			self.onSettingsClick(sender)
 		case "+", "-":
+			// 连加
 			if self.operatorEnd != "0" {
 				var a:Float = 0
 				if self.operatorSymbol == "+" {
