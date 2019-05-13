@@ -498,6 +498,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		case "A":
 			self.onSettingsClick(sender)
 		case "+", "-":
+			if self.operatorEnd != "0" {
+				var a:Float = 0
+				if self.operatorSymbol == "+" {
+					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
+				} else {
+					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
+				}
+				self.fromMoney = "\(a)"
+			}
+			
 			if !self.isEmpty {
 				self.operatorSymbol = n ?? ""
 				self.operatorEnd = "0"
