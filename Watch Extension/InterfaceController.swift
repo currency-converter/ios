@@ -67,20 +67,6 @@ class InterfaceController: WKInterfaceController {
 	}
 	
 	func render() {
-//		if let path = Bundle.main.path(forResource: fromSymbol, ofType: "png") {
-//			print("find path")
-//			fromFlagImage.setImage(UIImage(contentsOfFile: path))
-//		}
-//		if let path = Bundle.main.path(forResource: toSymbol, ofType: "png") {
-//			toFlagImage.setImage(UIImage(contentsOfFile: path))
-//		}
-//
-//		fromMoneyLabel.setText(numberFormat(fromMoney))
-//		toMoneyLabel.setText(output(fromMoney))
-//
-//		fromSymbolLabel.setText(fromSymbol)
-//		toSymbolLabel.setText(toSymbol)
-		
 		let buttonColumns: CGFloat = 4
 		let buttonRows: CGFloat = 3
 		let buttonWidth: CGFloat = (self.contentFrame.width - 4 * (buttonColumns - 1))/buttonColumns
@@ -156,8 +142,6 @@ class InterfaceController: WKInterfaceController {
 	}
 	
 	func numberFormat(_ s: String, maximumFractionDigits: Int = 20) -> String {
-		//let shared = UserDefaults(suiteName: Config.groupId)
-		//let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
