@@ -150,14 +150,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
 		fromScreen.tag = 1
 		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		fromScreen.backgroundColor = UIColor.hex("dddddd")
+		fromScreen.backgroundColor = UIColor.hex("ffffff")
 		fromScreen.layer.cornerRadius = 5
 		screen.addSubview(fromScreen)
 		
 		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
 		toScreen.tag = 2
 		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		toScreen.backgroundColor = UIColor.hex("222222")
+		toScreen.backgroundColor = UIColor.hex("f0f0f0")
 		toScreen.layer.cornerRadius = 5
 		screen.addSubview(toScreen)
 		
@@ -178,12 +178,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let toSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
 		toSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		toSymbol.setTitle(self.toSymbol, for: .normal)
-		toSymbol.setTitleColor(UIColor.white, for: .normal)
+		toSymbol.setTitleColor(UIColor.black, for: .normal)
 		toScreen.addSubview(toSymbol)
 
 		toMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
-		toMoneyLabel.textColor = UIColor.white
+		toMoneyLabel.textColor = UIColor.black
 		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
@@ -210,8 +210,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			var btn: UIButton
 			btn = UIButton.init(frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
-			//btn.layer.borderWidth = 1
-			//btn.layer.borderColor = UIColor.hex("2c2c2c").cgColor
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.backgroundColor = UIColor.hex("2c2c2c")
 			if item == "AC" {
@@ -255,7 +253,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: expandedSymbolHeight, width: moneyLabelWidth, height: expandedSymbolHeight))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
-		toMoneyLabel.textColor = UIColor.white
+		toMoneyLabel.textColor = UIColor.hex("666666")
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
 		wrapper.addSubview(toMoneyLabel)
@@ -263,7 +261,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		toSymbol.tag = 2
 		toSymbol.setTitle(self.toSymbol, for: .normal)
-		toSymbol.setTitleColor(UIColor.white, for: .normal)
+		toSymbol.setTitleColor(UIColor.hex("666666"), for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(toSymbol)
 		
@@ -395,16 +393,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		let rate: Float = isCustomRate ? customRate : self.rate
 		
-		return numberFormat(String(Float(money)! * rate))
+		return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
-	func numberFormat(_ s:String) -> String {
+	func numberFormat(_ s:String, maximumFractionDigits: Int = 20) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
-		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
@@ -414,7 +412,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
 		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+		numberFormatter.maximumFractionDigits = maximumFractionDigits //设置小数点后最多3位
 		
 		//格式化
 		let format = numberFormatter.string(from: price)!

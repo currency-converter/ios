@@ -39,6 +39,7 @@ class FrequencyViewController: UITableViewController {
 	
 	func render() {
 		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
 		navigationItem.title = NSLocalizedString("settings.updateFrequency", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self

@@ -89,9 +89,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		navigationitem.rightBarButtonItem = rightBtn
 		
 		let searchController = UISearchController(searchResultsController: nil)
-		searchController.searchBar.searchBarStyle = .minimal
-		searchController.searchBar.backgroundColor = Theme.appBackgroundColor[themeIndex]
-		// Setup the Search Controller
 		searchController.searchResultsUpdater = self
 		//搜索时，取消背景变模糊
 		//searchController.obscuresBackgroundDuringPresentation = true
@@ -104,11 +101,13 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		// 搜索框
 		let searchBar = searchController.searchBar
+		searchBar.searchBarStyle = .minimal
+		searchBar.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		searchBar.delegate = self
 		guard let searchTextFeild = searchBar.value(forKey: "searchField") as? UITextField else {
 			return
 		}
-		searchTextFeild.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+		//searchTextFeild.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		// 修改输入文字的颜色
 		searchTextFeild.textColor = Theme.cellTextColor[themeIndex]
 		searchTextFeild.tintColor = UIColor.loquatYellow
@@ -123,17 +122,15 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		tableView.backgroundView = tableViewBackground
 		tableView.showsVerticalScrollIndicator = true
-		//tableView.isEditing = false
-		//tableView.separatorColor = UIColor.hex("090909")
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.tableHeaderView = searchController.searchBar
 		//去掉没有数据显示部分多余的分隔线
 		tableView.tableFooterView =  UIView.init(frame: CGRect.zero)
 		//将分隔线offset设为零，即将分割线拉满屏幕
-		//		tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		//tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		//设置分隔线颜色
-		tableView.separatorColor = UIColor.hex("333333")
+		tableView.separatorColor = Theme.cellSeparatorColor[themeIndex]
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(NSClassFromString("CurrencyTableViewCell"), forCellReuseIdentifier: "cellId")
@@ -206,7 +203,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let header = view as! UITableViewHeaderFooterView
 		header.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-		header.subviews[0].backgroundColor = Theme.appBackgroundColor[themeIndex]
+		header.subviews[0].backgroundColor = Theme.tableBackgroundColor[themeIndex]
 	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -227,7 +224,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		cell.selectionStyle = .blue
 		let cellBackgroundView = UIView()
-		cellBackgroundView.backgroundColor = UIColor.hex("333333")
+		cellBackgroundView.backgroundColor = Theme.cellSelectedBackgroundColor[themeIndex]
 		cell.selectedBackgroundView = cellBackgroundView
 
 		// icon

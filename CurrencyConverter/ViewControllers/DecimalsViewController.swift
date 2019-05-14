@@ -35,6 +35,7 @@ class DecimalsViewController: UITableViewController {
 	
 	func render() {
 		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
 		navigationItem.title = NSLocalizedString("settings.decimalPlaces", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self

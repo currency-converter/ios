@@ -205,6 +205,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
 		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
 		
+		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
 		self.cell0_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		self.cell1_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		self.cell1_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
@@ -347,38 +348,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return self.sectionHeaders[section]
 	}
-	
-//	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//		return 30
-//	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		return self.sectionFooters[section]
 	}
-	
-//	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//		return 30
-//	}
-	
-//	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//		guard let header = view as? UITableViewHeaderFooterView else { return }
-//		header.textLabel?.textColor = UIColor.gray
-//		header.textLabel?.font = UIFont.systemFont(ofSize: 12)
-//		header.textLabel?.frame = header.frame
-//	}
-//	
-//	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-//		guard let footer = view as? UITableViewHeaderFooterView else { return }
-//		footer.textLabel?.textColor = UIColor.gray
-//		footer.textLabel?.font = UIFont.systemFont(ofSize: 12)
-//		footer.textLabel?.frame = footer.frame
-//	}
-	
-//	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		let cell = UITableViewCell.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: "CellIdentifier")
-//		//cell.textLabel?.text = Array[indexPath.row]
-//		return cell
-//	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		//更新频率
@@ -406,16 +379,4 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			controller.defaultValue = sender as? String
 		}
 	}
-	
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -15,14 +15,50 @@ class Theme {
 	
 	// 主背景色
 	static let appBackgroundColor: [UIColor] = [
-		UIColor.hex("efeef4"),
-		UIColor.hex("121212")
+		UIColor.white,
+		UIColor.black
 	]
 	
-	// 货币文字颜色
-	static let moneyLabelTextColor: [UIColor] = [
+	// tableview 背景色
+	static let tableBackgroundColor: [UIColor] = [
+		UIColor.hex("efeff4"),
+		UIColor.black
+	]
+	
+	// 单元格背景色
+	static let cellBackgroundColor: [UIColor] = [
+		UIColor.white,
+		UIColor.hex("171717")
+	]
+	
+	// 单元格选中时背景色
+	static let cellSelectedBackgroundColor: [UIColor] = [
+		UIColor.hex("eeeeee"),
+		UIColor.hex("333333")
+	]
+	
+	// 单元格文字颜色
+	static let cellTextColor: [UIColor] = [
+		UIColor.black,
+		UIColor.white
+	]
+	
+	// 单元格分割线颜色
+	static let cellSeparatorColor: [UIColor] = [
+		UIColor.hex("333333"),
+		UIColor.hex("333333")
+	]
+	
+	// 输入货币文字颜色
+	static let fromMoneyLabelTextColor: [UIColor] = [
 		UIColor.hex("000000"),
 		UIColor.hex("ffffff")
+	]
+	
+	// 输出货币文字颜色
+	static let toMoneyLabelTextColor: [UIColor] = [
+		UIColor.hex("666666"),
+		UIColor.hex("999999")
 	]
 	
 	// 导航栏样式
@@ -43,34 +79,46 @@ class Theme {
 		UIColor.hex("171717")
 	]
 	
-	// 单元格背景色
-	static let cellBackgroundColor: [UIColor] = [
-		UIColor.white,
-		UIColor.black
-	]
-	
-	// 单元格文字颜色
-	static let cellTextColor: [UIColor] = [
-		UIColor.black,
-		UIColor.white
-	]
-	
 	// 数字按钮背景色
-	static let keyButtonBackgroundColor: [UIColor] = [
-		UIColor.hex("dddddd"),
+	static let numberButtonBackgroundColor: [UIColor] = [
+		UIColor.hex("f5f5f5"),
 		UIColor.hex("424242")
 	]
 	
 	// 数字文字颜色
-	static let keyButtonTextColor: [UIColor] = [
+	static let numberButtonTextColor: [UIColor] = [
 		UIColor.black,
 		UIColor.white
 	]
 	
+	// 运算符按钮高亮时背景色
+	static let operatorButtonHighlightedBackgroundColor: [UIColor] = [
+		UIColor.hex("fbd5aa"),
+		UIColor.hex("fbd5aa")
+	]
+	
+	// 运算符按钮选中时背景色
+	static let operatorButtonSelectedBackgroundColor: [UIColor] = [
+		UIColor.hex("ffca8e"),
+		UIColor.hex("fefefe")
+	]
+	
+	// 运算符按钮选中时文字颜色
+	static let operatorButtonSelectedTextColor: [UIColor] = [
+		UIColor.hex("ffffff"),
+		UIColor.hex("fb9601")
+	]
+	
 	// 设置按钮背景色
 	static let settingsButtonBackgroundColor: [UIColor] = [
-		UIColor.hex("bbbbbb"),
+		UIColor.hex("e2e2e2"),
 		UIColor.hex("a5a5a5")
+	]
+	
+	// 设置按钮文字颜色
+	static let settingsButtonTextColor: [UIColor] = [
+		UIColor.hex("000000"),
+		UIColor.hex("000000")
 	]
 	
 

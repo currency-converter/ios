@@ -11,6 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController, UIScrollViewDelegate {
 	
+	// 调试开关
 	var isDebug: Bool = false
 	
 	// 当前输入货币是否为空
@@ -210,19 +211,20 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func renderScreen() {
 		//状态栏高度
 		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
-		let screenViewPaddingLeft: CGFloat = 16
-		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewPaddingLeft
-		var screenViewHeight: CGFloat = UIScreen.main.bounds.height - self.keyboardView.frame.size.height - statusBarHeight - PADDING_BOTTOM
+		let messageLabelHeight: CGFloat =  20
+		let screenViewMarginLeft: CGFloat = 16
+		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewMarginLeft
+		var screenViewHeight: CGFloat = UIScreen.main.bounds.height - self.keyboardView.frame.size.height - statusBarHeight - PADDING_BOTTOM - messageLabelHeight
 		// 兼容 x 以后的iphone（6.5 英寸屏幕）展示
 		var screenViewMarginTop: CGFloat = 0
 		if screenViewHeight > SCREEN_VIEW_MAX_HEIGHT {
 			screenViewMarginTop = screenViewHeight - SCREEN_VIEW_MAX_HEIGHT
 			screenViewHeight = SCREEN_VIEW_MAX_HEIGHT
 		}
-		//print("screenViewHeight:", screenViewHeight)
-		
+		let screenViewY: CGFloat = statusBarHeight + screenViewMarginTop + messageLabelHeight
+
 		if screenView == nil {
-			screenView = UIView(frame: CGRect(x: screenViewPaddingLeft, y: statusBarHeight + screenViewMarginTop, width: screenViewWidth, height: screenViewHeight))
+			screenView = UIView(frame: CGRect(x: screenViewMarginLeft, y: screenViewY, width: screenViewWidth, height: screenViewHeight))
 			screenView.clipsToBounds = true
 			self.view.addSubview(screenView)
 			
@@ -287,7 +289,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var contentOffsetX: CGFloat = 0
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
-		let moneyLabelTextColor: UIColor = Theme.moneyLabelTextColor[themeIndex]
+		let moneyLabelTextColor: UIColor = type == "from" ? Theme.fromMoneyLabelTextColor[themeIndex] : Theme.toMoneyLabelTextColor[themeIndex]
 		
 		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
 		view.contentOffset.x = 0
@@ -368,7 +370,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			symbolLabel.text = symbol + (type == "to"  && self.toSymbol == symbol && isCustomRate ? "*" : "")
 			symbolLabel.textAlignment = .center
 			symbolLabel.font = UIFont.systemFont(ofSize: 16)
-			symbolLabel.textColor = moneyLabelTextColor
+			symbolLabel.textColor = Theme.fromMoneyLabelTextColor[themeIndex]
 			symbolButton.addSubview(symbolLabel)
 			
 			// 将组件和类关联
@@ -444,24 +446,24 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			var btn:UIButton
 			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
 			btn.layer.cornerRadius = buttonWidth/2
-			btn.setTitleColor(Theme.keyButtonTextColor[themeIndex], for: .normal)
+			btn.setTitleColor(Theme.numberButtonTextColor[themeIndex], for: .normal)
 			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size:32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
 			case "÷", "×", "+", "-", "=":
 				btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
-				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
-				btn.setBackgroundColor(color: UIColor.hex("fefefe"), forState: .selected)
-				btn.setTitleColor(UIColor.hex("fb9601"), for: .selected)
+				btn.setBackgroundColor(color: Theme.operatorButtonHighlightedBackgroundColor[themeIndex], forState: .highlighted)
+				btn.setBackgroundColor(color: Theme.operatorButtonSelectedBackgroundColor[themeIndex], forState: .selected)
+				btn.setTitleColor(Theme.operatorButtonSelectedTextColor[themeIndex], for: .selected)
 			case "A", "G", "H":
 				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
 				fallthrough
 			case "AC":
-				btn.setTitleColor(UIColor.black, for: .normal)
+				btn.setTitleColor(Theme.settingsButtonTextColor[themeIndex], for: .normal)
 				btn.setBackgroundColor(color: Theme.settingsButtonBackgroundColor[themeIndex], forState: .normal)
 			default:
-				btn.setBackgroundColor(color: Theme.keyButtonBackgroundColor[themeIndex], forState: .normal)
+				btn.setBackgroundColor(color: Theme.numberButtonBackgroundColor[themeIndex], forState: .normal)
 				btn.setBackgroundColor(color: UIColor.hex("646464"), forState: .highlighted)
 			}
 			
