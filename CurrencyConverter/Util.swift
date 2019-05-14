@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
 	
 	// 枇杷黄 - 功能按钮正常背景颜色
-	public static let loquatYellow = UIColor.hex("ff9408")
+	public static let loquatYellow = UIColor.hex("f09a37")
 	
 	// app 背景色
 	public static let appBackgroundColor = UIColor.hex("121212")

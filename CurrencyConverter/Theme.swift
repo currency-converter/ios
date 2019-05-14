@@ -70,7 +70,7 @@ class Theme {
 	// 设置按钮背景色
 	static let settingsButtonBackgroundColor: [UIColor] = [
 		UIColor.hex("bbbbbb"),
-		UIColor.hex("2c2c2c")
+		UIColor.hex("a5a5a5")
 	]
 	
 
