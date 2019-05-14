@@ -11,6 +11,8 @@ import AVFoundation
 
 class ViewController: UIViewController, UIScrollViewDelegate {
 	
+	var isDebug: Bool = false
+	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true
 	
@@ -65,7 +67,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var tapSoundPlayer: AVAudioPlayer!
 	
 	//键盘距离顶部的间距
-	var PADDING_BOTTOM: CGFloat = 20
+	var PADDING_BOTTOM: CGFloat = 0
+	//显示屏高度
+	var SCREEN_VIEW_MAX_HEIGHT: CGFloat = 200
 	
 	public func updateRate() {
 		let newUrlString = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -195,8 +199,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
 		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
 		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
-		renderScreen()
 		renderKeyboard()
+		renderScreen()
 	}
 	
 	func observe() {
@@ -204,13 +208,21 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func renderScreen() {
-		let screenViewPadding: CGFloat = 16
-		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewPadding
-		let screenViewHeight: CGFloat = 200
-		let screenViewY: CGFloat = UIScreen.main.bounds.height - UIScreen.main.bounds.width - screenViewHeight - PADDING_BOTTOM
+		//状态栏高度
+		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+		let screenViewPaddingLeft: CGFloat = 16
+		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewPaddingLeft
+		var screenViewHeight: CGFloat = UIScreen.main.bounds.height - self.keyboardView.frame.size.height - statusBarHeight - PADDING_BOTTOM
+		// 兼容 x 以后的iphone（6.5 英寸屏幕）展示
+		var screenViewMarginTop: CGFloat = 0
+		if screenViewHeight > SCREEN_VIEW_MAX_HEIGHT {
+			screenViewMarginTop = screenViewHeight - SCREEN_VIEW_MAX_HEIGHT
+			screenViewHeight = SCREEN_VIEW_MAX_HEIGHT
+		}
+		//print("screenViewHeight:", screenViewHeight)
 		
 		if screenView == nil {
-			screenView = UIView(frame: CGRect(x: screenViewPadding, y: screenViewY, width: screenViewWidth, height: screenViewHeight))
+			screenView = UIView(frame: CGRect(x: screenViewPaddingLeft, y: statusBarHeight + screenViewMarginTop, width: screenViewWidth, height: screenViewHeight))
 			screenView.clipsToBounds = true
 			self.view.addSubview(screenView)
 			
@@ -225,7 +237,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		initFavorites(type: "from")
 
-		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
+		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2))
+		if isDebug {
+			fromScrollView.backgroundColor = UIColor.red
+		}
 		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromFavorites.count), height: fromScrollView.frame.height)
 		//关闭滚动条显示
 		fromScrollView.showsHorizontalScrollIndicator = false
@@ -241,7 +256,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		initFavorites(type: "to")
 
-		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2)) // Frame属性
+		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2))
+		if isDebug {
+			toScrollView.backgroundColor = UIColor.green
+		}
 		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toFavorites.count), height: toScrollView.frame.height)
 		//关闭滚动条显示
 		toScrollView.showsHorizontalScrollIndicator = false
@@ -311,19 +329,29 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
 			
 			let moneyLabelHeight: CGFloat = 80
+			let moneyLabelMarginTop: CGFloat = (self.screenView.frame.size.height/2 - moneyLabelHeight)/2
 			
 			// 货币输入框
-			let moneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: scrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+			let moneyLabel = UILabel(frame: CGRect(x: 0, y: moneyLabelMarginTop, width: scrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
+			if isDebug {
+				moneyLabel.backgroundColor = UIColor.yellow
+			}
 			moneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
 			moneyLabel.adjustsFontSizeToFitWidth = true
 			moneyLabel.textAlignment = .right
 			moneyLabel.text = moneyLabelText
 			moneyLabel.textColor = moneyLabelTextColor
+			moneyLabel.isUserInteractionEnabled = true
+			let longPressGesture = UILongPressGestureRecognizer.init(target: self, action: #selector(longPressAction))
+			moneyLabel.addGestureRecognizer(longPressGesture)
 			page.addSubview(moneyLabel)
 			
 			// 货币符号容器
-			let symbolButton = UIButton(frame: CGRect(x: moneyLabel.frame.width + symbolButtonPaddingLeft, y: 0, width: symbolButtonWidth, height: symbolButtonHeight))
+			let symbolButton = UIButton(frame: CGRect(x: moneyLabel.frame.width + symbolButtonPaddingLeft, y: moneyLabelMarginTop, width: symbolButtonWidth, height: symbolButtonHeight))
 			symbolButton.tag = symbolButtonTag
+			if isDebug {
+				symbolButton.backgroundColor = UIColor.loquatYellow
+			}
 			symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 			page.addSubview(symbolButton)
 			
@@ -379,19 +407,37 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func renderKeyboard() {
-		// 获取屏幕尺寸
-		let viewBounds:CGRect = UIScreen.main.bounds
-		
+		//按钮列数
+		let columnsNumber: CGFloat = 4
+		//按钮行数
+		let rowsNumber: CGFloat = 5
+		//按钮之间间隔
+		let buttonPadding:CGFloat = 14
+		//键盘宽度
+		let keyboardWidth: CGFloat = UIScreen.main.bounds.width
+		//键盘高度
+		let keyboardHeight: CGFloat = keyboardWidth / columnsNumber * rowsNumber
+		//键盘Y
+		let keyboardY: CGFloat = UIScreen.main.bounds.height - keyboardHeight - PADDING_BOTTOM
+		//按钮宽度
+		let buttonWidth: CGFloat = (keyboardWidth - buttonPadding * (columnsNumber + 1)) / columnsNumber
+
 		if keyboardView == nil {
-			keyboardView = UIView(frame: CGRect(x: 0, y: viewBounds.height - viewBounds.width - PADDING_BOTTOM, width: viewBounds.width, height: viewBounds.width))
+			keyboardView = UIView(frame: CGRect(x: 0, y: keyboardY, width: keyboardWidth, height: keyboardHeight))
+			if isDebug {
+				keyboardView.backgroundColor = UIColor.blue
+			}
 			keyboardView.clipsToBounds = true
 			self.view.addSubview(keyboardView)
 		}
 		
-		let buttonWidth = (keyboardView.frame.size.width - 50) / 4
-		let buttonPadding:CGFloat = 10
-		
-		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
+		let characters:[String] = [
+			"AC", "A", "H", "÷",
+			"7", "8", "9", "×",
+			"4", "5", "6", "-",
+			"1", "2", "3", "+",
+			"0", ".", "G", "="
+		]
 		
 		for (index, item) in characters.enumerated() {
 			// 创建数字按钮
@@ -403,14 +449,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
-			case "=", "+", "-", "AC":
+			case "÷", "×", "+", "-", "=":
 				btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
 				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
 				btn.setBackgroundColor(color: UIColor.hex("fefefe"), forState: .selected)
 				btn.setTitleColor(UIColor.hex("fb9601"), for: .selected)
-			case "A":
-				btn.setBackgroundColor(color: Theme.settingsButtonBackgroundColor[themeIndex], forState: .normal)
+			case "A", "G", "H":
 				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
+				fallthrough
+			case "AC":
+				btn.setTitleColor(UIColor.black, for: .normal)
+				btn.setBackgroundColor(color: Theme.settingsButtonBackgroundColor[themeIndex], forState: .normal)
 			default:
 				btn.setBackgroundColor(color: Theme.keyButtonBackgroundColor[themeIndex], forState: .normal)
 				btn.setBackgroundColor(color: UIColor.hex("646464"), forState: .highlighted)
@@ -428,8 +477,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	@objc func swipe(_ recognizer: UISwipeGestureRecognizer) {
 		if recognizer.direction == .up || recognizer.direction == .down {
+			let offsetY = self.fromScrollView.frame.size.height
 			UIView.animate(withDuration: 0.5, animations: {
-				self.fromScrollView.frame.origin.y = 100
+				self.fromScrollView.frame.origin.y = offsetY
 				self.toScrollView.frame.origin.y = 0
 			}, completion: {
 				(finished:Bool) -> Void in
@@ -441,7 +491,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				//let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
 				//更新界面
 				self.fromScrollView.frame.origin.y = 0
-				self.toScrollView.frame.origin.y = 100
+				self.toScrollView.frame.origin.y = offsetY
 				//fromMoney没有缓存，不能通过UserDefaults事件来派发
 				//self.fromMoney = newFromMoney
 				//self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
@@ -497,16 +547,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.operatorSymbol = ""
 		case "A":
 			self.onSettingsClick(sender)
-		case "+", "-":
+		case "G":
+			self.copyMoney(sender)
+		case "H":
+			self.backspace()
+		case "÷", "×", "+", "-":
 			// 连加
 			if self.operatorEnd != "0" {
-				var a:Float = 0
-				if self.operatorSymbol == "+" {
-					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
-				} else {
-					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
-				}
-				self.fromMoney = "\(a)"
+				self.exec()
 			}
 			
 			if !self.isEmpty {
@@ -517,13 +565,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 		case "=":
 			if self.operatorEnd != "0" {
-				var a:Float = 0
-				if self.operatorSymbol == "+" {
-					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
-				} else {
-					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
-				}
-				self.fromMoney = "\(a)"
+				self.exec()
 			}
 			self.operatorSymbol = ""
 			self.operatorEnd = "0"
@@ -569,6 +611,35 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.playTapSound()
 	}
 	
+	func exec() {
+		var newResult: Float = 0
+		
+		switch self.operatorSymbol {
+		case "÷":
+			newResult = (self.fromMoney as NSString).floatValue / (self.operatorEnd as NSString).floatValue
+		case "×":
+			newResult = (self.fromMoney as NSString).floatValue * (self.operatorEnd as NSString).floatValue
+		case "+":
+			newResult = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
+		case "-":
+			newResult = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
+		default:
+			print("Unknow operator symbol: \(self.operatorSymbol)")
+		}
+		
+		self.fromMoney = "\(newResult)"
+	}
+	
+	func backspace() {
+		if self.operatorSymbol == "" {
+			let length = self.fromMoney.count
+			self.fromMoney = length > 1 ? String(self.fromMoney.prefix(length - 1)) : "0"
+		} else {
+			let length = self.operatorEnd.count
+			self.operatorEnd = length > 1 ? String(self.operatorEnd.prefix(length - 1)) : "0"
+		}
+	}
+	
 	func playTapSound() {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let isSounds: Bool = shared?.bool(forKey: "sounds") ?? Config.defaults["sounds"] as! Bool
@@ -602,7 +673,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		}, completion: nil)
 	}
 	
-	@objc func toMoneyLongPress(_ recognizer: UILongPressGestureRecognizer) {
+	@objc func longPressAction(_ recognizer: UILongPressGestureRecognizer) {
 		self.toMoneyLabel.becomeFirstResponder()
 		let menu = UIMenuController.shared
 		menu.arrowDirection = .down
