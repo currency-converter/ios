@@ -67,10 +67,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var toMoneyLabel: UILabel!
 	var tapSoundPlayer: AVAudioPlayer!
 	
+	var screenViewMarginTop: CGFloat = 0
+	var screenViewHeight: CGFloat = 0
+	var screenViewY: CGFloat = 0
+	var keyboardViewHeight: CGFloat = 0
+	var keyboardViewY: CGFloat = 0
+	var numberButtonWidth: CGFloat = 0
+	var numberButtonHeight: CGFloat = 0
+	//按钮之间间隔
+	let numberButtonPadding:CGFloat = 14
+	//按钮列数
+	let columnsNumber: CGFloat = 4
+	//按钮行数
+	let rowsNumber: CGFloat = 5
+	
 	//键盘距离顶部的间距
 	var PADDING_BOTTOM: CGFloat = 0
 	//显示屏高度
-	var SCREEN_VIEW_MAX_HEIGHT: CGFloat = 200
+	var SCREEN_VIEW_HEIGHT_MAX: CGFloat = 200
+	var SCREEN_VIEW_HEIGHT_MIN: CGFloat = 150
 	
 	public func updateRate() {
 		let newUrlString = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -196,32 +211,63 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.navigationController?.isNavigationBarHidden = true
 	}
 	
+	func getPosition() {
+		//self.layout["marginBetweenScreenAndBoard"]
+		let width: CGFloat = UIScreen.main.bounds.width
+		let height: CGFloat = UIScreen.main.bounds.height
+		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+		
+		if UIDevice.current.userInterfaceIdiom == .pad {
+			//高度不够，只能使用椭圆按钮
+			self.keyboardViewHeight = height / 3 * 2
+			self.screenViewHeight = height / 3
+			self.screenViewY = statusBarHeight
+			self.keyboardViewY = height - self.keyboardViewHeight
+			self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
+			self.numberButtonHeight = (self.keyboardViewHeight - self.numberButtonPadding * (self.rowsNumber + 1)) / self.rowsNumber
+		} else {
+			//竖屏
+			self.keyboardViewHeight = width / self.columnsNumber * self.rowsNumber
+			if height > self.keyboardViewHeight + statusBarHeight + self.SCREEN_VIEW_HEIGHT_MAX {
+				//需要有间距
+				self.screenViewHeight = self.SCREEN_VIEW_HEIGHT_MAX
+				self.screenViewY = height - self.keyboardViewHeight - self.screenViewHeight
+				self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
+				self.numberButtonHeight = self.numberButtonWidth
+				self.keyboardViewY = height - self.keyboardViewHeight
+			} else {
+				//没有间隙，但足够显示圆形按钮
+				self.screenViewHeight = height - statusBarHeight - self.keyboardViewHeight
+				self.screenViewY = statusBarHeight
+				self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
+				self.numberButtonHeight = self.numberButtonWidth
+				self.keyboardViewY = height - self.keyboardViewHeight
+			}
+		}
+	}
+	
 	func render() {
 		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
 		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
 		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
-		renderKeyboard()
+		getPosition()
 		renderScreen()
+		renderKeyboard()
 	}
 	
 	func observe() {
+		//感知设备方向 - 开启监听设备方向
+		if UIDevice.current.userInterfaceIdiom == .pad {
+			UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+			//添加通知，监听设备方向改变
+			NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedRotation), name: UIDevice.orientationDidChangeNotification, object: nil)
+		}
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUserDefaultsChange), name: .didUserDefaultsChange, object: nil)
 	}
 	
 	func renderScreen() {
-		//状态栏高度
-		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
-		let messageLabelHeight: CGFloat =  20
 		let screenViewMarginLeft: CGFloat = 16
 		let screenViewWidth: CGFloat = UIScreen.main.bounds.width - 2 * screenViewMarginLeft
-		var screenViewHeight: CGFloat = UIScreen.main.bounds.height - self.keyboardView.frame.size.height - statusBarHeight - PADDING_BOTTOM - messageLabelHeight
-		// 兼容 x 以后的iphone（6.5 英寸屏幕）展示
-		var screenViewMarginTop: CGFloat = 0
-		if screenViewHeight > SCREEN_VIEW_MAX_HEIGHT {
-			screenViewMarginTop = screenViewHeight - SCREEN_VIEW_MAX_HEIGHT
-			screenViewHeight = SCREEN_VIEW_MAX_HEIGHT
-		}
-		let screenViewY: CGFloat = statusBarHeight + screenViewMarginTop + messageLabelHeight
 
 		if screenView == nil {
 			screenView = UIView(frame: CGRect(x: screenViewMarginLeft, y: screenViewY, width: screenViewWidth, height: screenViewHeight))
@@ -235,6 +281,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 			swipeDown.direction = .down
 			screenView.addGestureRecognizer(swipeDown)
+			
+			if isDebug {
+				screenView.backgroundColor = UIColor.cyan
+			}
 		}
 		
 		initFavorites(type: "from")
@@ -402,30 +452,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				]
 			}
 		}
-		
-		if contentOffsetX > 0 {
-			//scrollView.setContentOffset(CGPoint(x: contentOffsetX, y: 0), animated: true)
-		}
 	}
 	
 	func renderKeyboard() {
-		//按钮列数
-		let columnsNumber: CGFloat = 4
-		//按钮行数
-		let rowsNumber: CGFloat = 5
-		//按钮之间间隔
-		let buttonPadding:CGFloat = 14
-		//键盘宽度
-		let keyboardWidth: CGFloat = UIScreen.main.bounds.width
-		//键盘高度
-		let keyboardHeight: CGFloat = keyboardWidth / columnsNumber * rowsNumber
-		//键盘Y
-		let keyboardY: CGFloat = UIScreen.main.bounds.height - keyboardHeight - PADDING_BOTTOM
-		//按钮宽度
-		let buttonWidth: CGFloat = (keyboardWidth - buttonPadding * (columnsNumber + 1)) / columnsNumber
-
 		if keyboardView == nil {
-			keyboardView = UIView(frame: CGRect(x: 0, y: keyboardY, width: keyboardWidth, height: keyboardHeight))
+			keyboardView = UIView(frame: CGRect(x: 0, y: self.keyboardViewY, width: UIScreen.main.bounds.width, height: self.keyboardViewHeight))
 			if isDebug {
 				keyboardView.backgroundColor = UIColor.blue
 			}
@@ -444,10 +475,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		for (index, item) in characters.enumerated() {
 			// 创建数字按钮
 			var btn:UIButton
-			btn = UIButton.init(frame: CGRect(x:(buttonWidth + buttonPadding) * CGFloat(index % 4) + buttonPadding, y:(buttonWidth + buttonPadding) * CGFloat(floor(Double(index/4))) + buttonPadding, width:buttonWidth, height:buttonWidth))
-			btn.layer.cornerRadius = buttonWidth/2
+			btn = UIButton.init(frame: CGRect(x:(self.numberButtonWidth + self.numberButtonPadding) * CGFloat(index % Int(self.columnsNumber)) + self.numberButtonPadding, y:(self.numberButtonHeight + self.numberButtonPadding) * CGFloat(floor(Double(index/4))) + self.numberButtonPadding, width: self.numberButtonWidth, height: self.numberButtonHeight))
+			btn.layer.cornerRadius = self.numberButtonHeight/2
 			btn.setTitleColor(Theme.numberButtonTextColor[themeIndex], for: .normal)
-			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size:32)
+			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size: 32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
@@ -660,11 +691,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	@objc func onSettingsClick(_ sender: UIButton) {
-//		let settingsView = SettingsViewController()
-//		self.present(settingsView, animated: true, completion: nil)
-		
-//		let settingsView = STC()
-//		self.present(settingsView, animated: true, completion: nil)
 		self.performSegue(withIdentifier: "showSettingsSegue", sender: nil)
 	}
 	
@@ -801,6 +827,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				renderKeyboard()
 			}
 		}
+	}
+	
+	@objc func onReceivedRotation() {
+		DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+			self.clear(self.view)
+			self.screenView = nil
+			self.keyboardView = nil
+			self.render()
+		})
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
