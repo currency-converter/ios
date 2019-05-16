@@ -97,6 +97,12 @@ class Theme {
 		UIColor.hex("424242")
 	]
 	
+	// 数字按钮高亮时背景色
+	static let numberButtonHighlightedBackgroundColor: [UIColor] = [
+		UIColor.hex("cccccc"),
+		UIColor.hex("646464")
+	]
+	
 	// 数字文字颜色
 	static let numberButtonTextColor: [UIColor] = [
 		UIColor.black,
