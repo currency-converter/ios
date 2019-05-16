@@ -92,9 +92,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	let columnsNumber: CGFloat = 4
 	//按钮行数
 	let rowsNumber: CGFloat = 5
-	
-	//键盘距离顶部的间距
-	var PADDING_BOTTOM: CGFloat = 0
 	//显示屏高度
 	var SCREEN_VIEW_HEIGHT_MAX: CGFloat = 200
 	var SCREEN_VIEW_HEIGHT_MIN: CGFloat = 150
@@ -349,7 +346,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var scrollView: UIScrollView
 		var moneyLabelText: String
 		var symbolButtonTag: Int
-		var contentOffsetX: CGFloat = 0
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
 		let moneyLabelTextColor: UIColor = type == "from" ? Theme.fromMoneyLabelEmptyTextColor[themeIndex] : Theme.toMoneyLabelEmptyTextColor[themeIndex]
 		
@@ -441,7 +437,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 					self.fromMoneyLabel = moneyLabel
 					self.fromSymbolLabel = symbolLabel
 					self.fromImageView = flag
-					contentOffsetX = page.frame.origin.x
 				}
 				
 				fromControllers[seq] = [
@@ -454,7 +449,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 					self.toMoneyLabel = moneyLabel
 					self.toSymbolLabel = symbolLabel
 					self.toImageView = flag
-					contentOffsetX = CGFloat(seq)
 				}
 				
 				toControllers[seq] = [
