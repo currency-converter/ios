@@ -51,7 +51,7 @@ class Theme {
 	
 	// 输入货币无输入时文字颜色
 	static let fromMoneyLabelEmptyTextColor: [UIColor] = [
-		UIColor.hex("cccccc"),
+		UIColor.hex("999999"),
 		UIColor.hex("444444")
 	]
 	
@@ -63,7 +63,7 @@ class Theme {
 	
 	// 输出货币无输入时文字颜色
 	static let toMoneyLabelEmptyTextColor: [UIColor] = [
-		UIColor.hex("dddddd"),
+		UIColor.hex("aaaaaa"),
 		UIColor.hex("333333")
 	]
 	

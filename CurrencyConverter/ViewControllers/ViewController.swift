@@ -221,7 +221,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func getPosition() {
-		//self.layout["marginBetweenScreenAndBoard"]
 		let width: CGFloat = UIScreen.main.bounds.width
 		let height: CGFloat = UIScreen.main.bounds.height
 		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
@@ -245,12 +244,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				self.numberButtonHeight = self.numberButtonWidth
 				self.keyboardViewY = height - self.keyboardViewHeight
 			} else {
-				//没有间隙，但足够显示圆形按钮
-				self.screenViewHeight = height - statusBarHeight - self.keyboardViewHeight
-				self.screenViewY = statusBarHeight
-				self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
-				self.numberButtonHeight = self.numberButtonWidth
+				//键盘占屏幕高度的3/5
+				//按钮显示为椭圆形
+				self.keyboardViewHeight = height / 5 * 3
+				self.screenViewHeight = self.SCREEN_VIEW_HEIGHT_MAX
+				self.screenViewY = height - self.keyboardViewHeight - self.screenViewHeight
 				self.keyboardViewY = height - self.keyboardViewHeight
+				self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
+				self.numberButtonHeight = (self.keyboardViewHeight - self.numberButtonPadding * (self.rowsNumber + 1)) / self.rowsNumber
 			}
 		}
 	}
@@ -864,6 +865,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.fromSymbol = newSymbol
 			self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
 			self.fromMoneyLabel?.text = numberFormat(self.fromMoney)
+			//为了触发isEmpty属性监听事件
+			self.isEmpty = true
+			self.isEmpty = self.fromMoney == "100"
 			self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
 			self.fromImageView = controllers?["imageView"] as? UIImageView
 		} else {
