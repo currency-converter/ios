@@ -15,7 +15,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var isDebug: Bool = false
 	
 	// 当前输入货币是否为空
-	var isEmpty: Bool = true
+	var isEmpty: Bool = true {
+		didSet {
+			let isChanged = oldValue != isEmpty
+			if isChanged {
+				self.fromMoneyLabel.textColor = self.isEmpty ?
+					Theme.fromMoneyLabelEmptyTextColor[themeIndex] :
+					Theme.fromMoneyLabelTextColor[themeIndex]
+				self.toMoneyLabel.textColor = self.isEmpty ?
+					Theme.toMoneyLabelEmptyTextColor[themeIndex] :
+					Theme.toMoneyLabelTextColor[themeIndex]
+			}
+		}
+	}
 	
 	// 当前运算符
 	var operatorSymbol:String = ""
@@ -26,7 +38,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var operatorEnd:String = "0"
 	
 	// 输入货币数量
-	var fromMoney: String = "0"
+	var fromMoney: String = "100"
 	
 	// 汇率
 	var rate: Float = 6.777
@@ -339,7 +351,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var contentOffsetX: CGFloat = 0
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
-		let moneyLabelTextColor: UIColor = type == "from" ? Theme.fromMoneyLabelTextColor[themeIndex] : Theme.toMoneyLabelTextColor[themeIndex]
+		let moneyLabelTextColor: UIColor = type == "from" ? Theme.fromMoneyLabelEmptyTextColor[themeIndex] : Theme.toMoneyLabelEmptyTextColor[themeIndex]
 		
 		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
 		view.contentOffset.x = 0
@@ -575,7 +587,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		switch n {
 		case "AC":
 			self.isEmpty = true
-			self.fromMoney = "0"
+			self.fromMoney = "100"
 			self.operatorEnd = "0"
 			self.operatorSymbol = ""
 		case "A":
@@ -604,9 +616,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.operatorEnd = "0"
 		case "0":
 			if self.operatorSymbol == "" {
-				if fromMoney != "0" {
-					self.fromMoney += "0"
+				if self.isEmpty {
+					self.fromMoney = "0"
 					self.isEmpty = false
+				} else {
+					self.fromMoney += "0"
 				}
 			} else {
 				if operatorEnd != "0" {
@@ -615,9 +629,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 		case ".":
 			if self.operatorSymbol == "" {
-				if !self.fromMoney.contains(".") {
-					self.fromMoney += "."
+				if self.isEmpty {
+					self.fromMoney = "0."
 					self.isEmpty = false
+				} else {
+					if !self.fromMoney.contains(".") {
+						self.fromMoney += "."
+					}
 				}
 			} else {
 				if !self.operatorEnd.contains(".") {
@@ -664,7 +682,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func backspace() {
-		if self.operatorSymbol == "" {
+		if self.operatorSymbol == "" && !self.isEmpty {
 			let length = self.fromMoney.count
 			self.fromMoney = length > 1 ? String(self.fromMoney.prefix(length - 1)) : "0"
 		} else {
