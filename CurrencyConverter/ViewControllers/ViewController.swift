@@ -483,6 +483,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			// 创建数字按钮
 			let btn:UIButton = UIButton.init(frame: CGRect(x:(self.numberButtonWidth + self.numberButtonPadding) * CGFloat(index % Int(self.columnsNumber)) + self.numberButtonPadding, y:(self.numberButtonHeight + self.numberButtonPadding) * CGFloat(floor(Double(index/4))) + self.numberButtonPadding, width: self.numberButtonWidth, height: self.numberButtonHeight))
 			btn.layer.cornerRadius = self.numberButtonHeight/2
+			btn.setTitle(item, for: UIControl.State.normal)
 			btn.setTitleColor(Theme.numberButtonTextColor[themeIndex], for: .normal)
 			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size: 32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
@@ -504,7 +505,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				btn.setBackgroundColor(color: Theme.numberButtonHighlightedBackgroundColor[themeIndex], forState: .highlighted)
 			}
 			
-			btn.setTitle(item, for: UIControl.State.normal)
 			keyboardView.addSubview(btn)
 		}
 	}
