@@ -11,10 +11,17 @@ import Foundation
 
 class InterfaceController: WKInterfaceController {
 	
-	var isEmpty: Bool = true
+	var isEmpty: Bool = true {
+		didSet {
+			let isChanged = oldValue != isEmpty
+			if isChanged {
+				self.fromMoneyLabel.setTextColor(self.isEmpty ? UIColor.gray : UIColor.white)
+			}
+		}
+	}
 	
 	// 输入货币数量
-	var fromMoney: String = "0"
+	var fromMoney: String = "100"
 	
 	// 汇率
 	var rate: Float = 6.777
@@ -109,17 +116,11 @@ class InterfaceController: WKInterfaceController {
 		buttonAC.setHeight(buttonHeight)
 		buttonAC.setBackgroundColor(UIColor.loquatYellow)
 		
-		print("x:",self.contentFrame.origin.x)
-		print("y:",self.contentFrame.origin.y)
-		print("width:",self.contentFrame.width)
-		print("height:",self.contentFrame.height)
-		
 		self.refresh()
 	}
 	
 	func refresh() {
 		if let path = Bundle.main.path(forResource: fromSymbol, ofType: "png") {
-			print("find path")
 			fromFlagImage.setImage(UIImage(contentsOfFile: path))
 		}
 		if let path = Bundle.main.path(forResource: toSymbol, ofType: "png") {
@@ -127,7 +128,9 @@ class InterfaceController: WKInterfaceController {
 		}
 		
 		fromMoneyLabel.setText(numberFormat(fromMoney))
+		fromMoneyLabel.setTextColor(UIColor.gray)
 		toMoneyLabel.setText(output(fromMoney))
+		toMoneyLabel.setTextColor(UIColor.gray)
 		
 		fromSymbolLabel.setText(fromSymbol)
 		toSymbolLabel.setText(toSymbol)
@@ -176,16 +179,22 @@ class InterfaceController: WKInterfaceController {
 		switch n {
 		case "AC":
 			self.isEmpty = true
-			self.fromMoney = "0"
+			self.fromMoney = "100"
 		case "0":
-			if fromMoney != "0" {
-				self.fromMoney += "0"
+			if self.isEmpty {
+				self.fromMoney = "0"
 				self.isEmpty = false
+			} else {
+				self.fromMoney += "0"
 			}
 		case ".":
-			if !self.fromMoney.contains(".") {
-				self.fromMoney += "."
+			if self.isEmpty {
+				self.fromMoney = "0."
 				self.isEmpty = false
+			} else {
+				if !self.fromMoney.contains(".") {
+					self.fromMoney += "."
+				}
 			}
 		default:
 			self.fromMoney = self.isEmpty ? n : self.fromMoney + n
