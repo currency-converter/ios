@@ -11,8 +11,26 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding {
 	
+	var fromMoneyLabelTextColor: [UIColor] = [
+		UIColor.hex("dddddd"),
+		UIColor.white
+	]
+	
+	var toMoneyLabelTextColor: [UIColor] = [
+		UIColor.hex("666666"),
+		UIColor.hex("000000")
+	]
+	
 	// 当前输入货币是否为空
-	var isEmpty: Bool = true
+	var isEmpty: Bool = true {
+		didSet {
+			let isChanged = oldValue != isEmpty
+			if isChanged {
+				self.fromMoneyLabel.textColor = fromMoneyLabelTextColor[(isEmpty ? 0 : 1)]
+				self.toMoneyLabel.textColor = toMoneyLabelTextColor[(isEmpty ? 0 : 1)]
+			}
+		}
+	}
 	
 	// 当前运算符
 	var operatorSymbol:String = ""
@@ -23,7 +41,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	var operatorEnd:String = "0"
 	
 	// 输入货币数量
-	var fromMoney: String = "0"
+	var fromMoney: String = "100"
 	
 	// 输入货币类型
 	var fromSymbol: String!
@@ -150,27 +168,27 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
 		fromScreen.tag = 1
 		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		fromScreen.backgroundColor = UIColor.hex("ffffff")
+		fromScreen.backgroundColor = UIColor.black
 		fromScreen.layer.cornerRadius = 5
 		screen.addSubview(fromScreen)
 		
 		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
 		toScreen.tag = 2
 		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-		toScreen.backgroundColor = UIColor.hex("f0f0f0")
+		toScreen.backgroundColor = UIColor.white
 		toScreen.layer.cornerRadius = 5
 		screen.addSubview(toScreen)
 		
 		let fromSymbol = UIButton(frame: CGRect(x: symbolMargin, y: symbolMargin, width: symbolWidth, height: symbolHeight))
 		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.black, for: .normal)
+		fromSymbol.setTitleColor(UIColor.white, for: .normal)
 		fromScreen.addSubview(fromSymbol)
 
 		fromMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.textColor = UIColor.black
+		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[0]
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		fromMoneyLabel.text = numberFormat(self.fromMoney)
 		fromScreen.addSubview(fromMoneyLabel)
@@ -183,7 +201,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		toMoneyLabel = UILabel(frame: CGRect(x: symbolMargin, y: symbolMargin + symbolHeight, width: fromScreen.frame.width - symbolMargin * 2, height: subScreenHeight - symbolHeight - symbolMargin))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
-		toMoneyLabel.textColor = UIColor.black
+		toMoneyLabel.textColor = self.toMoneyLabelTextColor[0]
 		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
@@ -238,7 +256,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: moneyLabelWidth, height: expandedSymbolHeight))
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
-		fromMoneyLabel.textColor = UIColor.black
+		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[0]
 		fromMoneyLabel.textAlignment = .right
 		fromMoneyLabel.text = self.fromMoney
 		wrapper.addSubview(fromMoneyLabel)
@@ -246,14 +264,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: 0, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		fromSymbol.tag = 1
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.black, for: .normal)
+		fromSymbol.setTitleColor(UIColor.white, for: .normal)
 		fromSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(fromSymbol)
 		
 		toMoneyLabel = UILabel(frame: CGRect(x: 0, y: expandedSymbolHeight, width: moneyLabelWidth, height: expandedSymbolHeight))
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
-		toMoneyLabel.textColor = UIColor.hex("666666")
+		toMoneyLabel.textColor = self.toMoneyLabelTextColor[0]
 		toMoneyLabel.textAlignment = .right
 		toMoneyLabel.text = self.output(self.fromMoney)
 		wrapper.addSubview(toMoneyLabel)
@@ -261,7 +279,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
 		toSymbol.tag = 2
 		toSymbol.setTitle(self.toSymbol, for: .normal)
-		toSymbol.setTitleColor(UIColor.hex("666666"), for: .normal)
+		toSymbol.setTitleColor(UIColor.black, for: .normal)
 		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		wrapper.addSubview(toSymbol)
 		
@@ -312,7 +330,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		switch n {
 		case "AC":
 			self.isEmpty = true
-			self.fromMoney = "0"
+			self.fromMoney = "100"
 			self.operatorEnd = "0"
 			self.operatorSymbol = ""
 		case "A":
@@ -338,9 +356,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			self.operatorEnd = "0"
 		case "0":
 			if self.operatorSymbol == "" {
-				if fromMoney != "0" {
-					self.fromMoney += "0"
+				if self.isEmpty {
+					self.fromMoney = "0"
 					self.isEmpty = false
+				} else {
+					self.fromMoney += "0"
 				}
 			} else {
 				if operatorEnd != "0" {
@@ -349,9 +369,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			}
 		case ".":
 			if self.operatorSymbol == "" {
-				if !self.fromMoney.contains(".") {
-					self.fromMoney += "."
+				if self.isEmpty {
+					self.fromMoney = "0."
 					self.isEmpty = false
+				} else {
+					if !self.fromMoney.contains(".") {
+						self.fromMoney += "."
+					}
 				}
 			} else {
 				if !self.operatorEnd.contains(".") {
