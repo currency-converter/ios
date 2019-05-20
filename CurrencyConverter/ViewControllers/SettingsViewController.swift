@@ -298,6 +298,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	func numberFormat(_ s:String) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
+		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
 		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
@@ -307,6 +308,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let numberFormatter = NumberFormatter()
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
+		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
 		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
 		//格式化
 		let format = numberFormatter.string(from: price)!

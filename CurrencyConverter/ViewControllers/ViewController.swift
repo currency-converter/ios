@@ -824,6 +824,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
 				DispatchQueue.main.async {
+					self.fromMoneyLabel.text = self.numberFormat(self.fromMoney)
 					self.toMoneyLabel.text = self.output(self.fromMoney)
 				}
 			}
