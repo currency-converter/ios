@@ -413,7 +413,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			if isDebug {
 				symbolButton.backgroundColor = UIColor.loquatYellow
 			}
-			symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+			//symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
+			let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(showCurrencyPicker))
+			symbolButton.addGestureRecognizer(tapGesture)
 			page.addSubview(symbolButton)
 			
 			// 货币国旗
@@ -555,17 +557,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		}
 	}
 	
-	@objc func showCurrencyPicker(_ sender: UIButton) {
+	@objc func showCurrencyPicker(_ recognizer: UILongPressGestureRecognizer) {
+		let button: UIButton = recognizer.view as! UIButton
 		var currencySymbol: String, currencyType: String
-		
-		if sender.tag == 1 {
+
+		if button.tag == 1 {
 			currencyType = CurrencyPickerType.from.rawValue
 			currencySymbol = self.fromSymbol
 		} else {
 			currencyType = CurrencyPickerType.to.rawValue
 			currencySymbol = self.toSymbol
 		}
-		
+
 		let pickerView = CurrencyPickerViewController()
 		pickerView.currencySymbol = currencySymbol
 		pickerView.currencyType = currencyType
