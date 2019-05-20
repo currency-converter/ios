@@ -131,6 +131,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		//设置分隔线颜色
 		tableView.separatorColor = Theme.cellSeparatorColor[themeIndex]
+		//滚动时隐藏键盘
+		tableView.keyboardDismissMode = .onDrag
 		//进入页面时隐藏searchbar
 		//tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
 		tableView.register(NSClassFromString("CurrencyTableViewCell"), forCellReuseIdentifier: "cellId")
