@@ -414,10 +414,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func flash(button: UIButton) {
+		let originBackgroundColor: UIColor = button.backgroundColor!
 		UIView.animate(withDuration: 0.2) {
 			button.backgroundColor = UIColor.hex("646464")
 			UIView.animate(withDuration: 0.2) {
-				button.backgroundColor = UIColor.hex("424242")
+				button.backgroundColor = originBackgroundColor
 			}
 		}
 	}
