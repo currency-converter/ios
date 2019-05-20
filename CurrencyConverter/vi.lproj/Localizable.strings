@@ -9,8 +9,8 @@
 "home.copy" = "bản sao";
 
 "settings.title" = "Cài đặt";
-"settings.soundHeader" = "âm thanh";
-"settings.soundFooter" = "Âm thanh nút có thể giảm lỗi đầu vào.";
+"settings.soundsHeader" = "âm thanh";
+"settings.soundsFooter" = "Âm thanh nút có thể giảm lỗi đầu vào.";
 "settings.keyboardClicks" = "nút âm thanh";
 "settings.rateUpdateHeader" = "Cập nhật tỷ giá hối đoái";
 "settings.rateUpdateFooter" = "Tỷ giá hối đoái mới nhất đảm bảo chuyển đổi chính xác hơn.";
@@ -21,29 +21,29 @@
 "settings.update.2" = "được cập nhật mỗi ngày";
 "settings.updateImmediately" = "Cập nhật ngay";
 "settings.updateSuccess" = "Cập nhật thành công";
-"settings.updateFails" = "Cập nhật thất bại";
+"settings.updateFailed" = "Cập nhật thất bại";
 "settings.updatedAt" = "cập nhật lần cuối";
 "settings.customRateHeader" = "Tỷ giá hối đoái tùy chỉnh";
 "settings.customRateFooter" = "Khi thay đổi loại tiền tệ, công tắc tỷ giá hối đoái tùy chỉnh sẽ bị tắt.";
 "settings.displayHeader" = "hiển thị";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Sử dụng phân tách nhóm";
-"settings.decimalPftime" = "số vị trí thập phân";
+"settings.decimalPlaces" = "Địa điểm thập phân";
 "settings.theme" = "Chủ đề";
 "settings.themeWhite" = "Trắng";
 "settings.themeBlack" = "Đen";
 "settings.disclaimerHeader" = "Tuyên bố từ chối trách nhiệm";
 "settings.disclaimer" = "Dữ liệu được cung cấp trong ứng dụng này chỉ nhằm mục đích cung cấp thông tin và không đảm bảo tính chính xác, hợp lệ, tính sẵn có hoặc tính phù hợp của bất kỳ mục đích nào, có nguy cơ của riêng bạn.";
 
-"tệPicker.title" = "Chọn tiền tệ";
-"tệPicker.favoriteCurrencies" = "Favorites";
-"tệPicker.allCurrencies" = "Tất cả các loại tiền tệ";
-"tệPicker.noResults" = "không có kết quả";
-"tệPicker.unknow" = "Không xác định";
+"currencyPicker.title" = "Chọn vận động";
+"currencyPicker.favoriteCurrencies" = "Ngân phiếu ưa thích";
+"currencyPicker.allCurrencies" = "Tất cả";
+"currencyPicker.noResults" = "Chưa có kết quả";
+"currencyPicker.unknow" = "Không";
 
 "AED" = "Các tiểu vương quốc Ả Rập thống nhất";
 "AFN" = "Afghanistan";
-"TẤT CẢ" = "May mắn Albania";
+"ALL" = "May mắn Albania";
 "AMD" = "Kịch Armenia";
 "ANG" = "Lá chắn Antilles của Hà Lan";
 "AOA" = "Angolan Kwanza";
@@ -77,7 +77,7 @@
 "CUC" = "peso chuyển đổi Cuba";
 "CUP" = "Cuba pô";
 "CVE" = "Mũi đất Escudo";
-"Kč" = "Krone Séc";
+"CZK" = "Krone Séc";
 "DJF" = "Djibouti Franc";
 "DKK" = "Krone Đan Mạch";
 "DOP" = "Peso Dominican";
@@ -146,7 +146,7 @@
 "NIO" = "Nicaragua New Cordoba";
 "NOK" = "Krone Na Uy";
 "NPR" = "Rupee Nepal";
-"New Zealand" = "Đô la New Zealand";
+"NZD" = "Đô la New Zealand";
 "OMR" = "Rial Ô-man";
 "PAB" = "Bal Bal Panama";
 "PEN" = "Peru Sol";
@@ -178,7 +178,7 @@
 "TJS" = "Tajikistan Somoni";
 "TMT" = "Turkmenistan Manat";
 "TND" = "Dinar Tunisia";
-"HÀNG ĐẦU" = "Tonga Panga";
+"TOP" = "Tonga Panga";
 "TRY" = "Lira Thổ Nhĩ Kỳ";
 "TTD" = "Đô la Trinidad Tobago";
 "TWD" = "Nhân dân tệ Đài Loan";

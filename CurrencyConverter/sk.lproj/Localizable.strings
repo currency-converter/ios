@@ -19,7 +19,7 @@
 "settings.update.0" = "aktualizovať každú minútu";
 "settings.update.1" = "aktualizovaná každú hodinu";
 "settings.update.2" = "každý deň aktualizované";
-"settings.updateImmedantly" = "Aktualizovať teraz";
+"settings.updateImmediately" = "Aktualizovať teraz";
 "settings.updateSuccess" = "Aktualizácia bola úspešná";
 "settings.updateFailed" = "Aktualizácia zlyhala";
 "settings.updatedAt" = "posledná aktualizácia";

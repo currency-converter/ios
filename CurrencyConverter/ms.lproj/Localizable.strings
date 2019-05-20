@@ -1,7 +1,7 @@
 /*
  Localizable.strings
  CurrencyConverter
- 
+
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
@@ -36,7 +36,7 @@
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini adalah untuk tujuan maklumat sahaja dan tidak menjamin ketepatan, kesahihan, ketersediaan atau kesesuaian sebarang tujuan, atas risiko anda sendiri";
 
 "currencyPicker.title" = "Pilih mata wang";
-"currencyPicker.favorite money" = "Favorites";
+"currencyPicker.favoriteCurrencies" = "Favorites";
 "currencyPicker.allCurrencies" = "Semua mata wang";
 "currencyPicker.noResults" = "no result";
 "currencyPicker.unknow" = "Tidak diketahui";

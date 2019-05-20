@@ -1,7 +1,7 @@
 /*
  Localizable.strings
  CurrencyConverter
- 
+
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
@@ -19,7 +19,7 @@
 "settings.update.0" = "עדכון כל דקה";
 "settings.update.1" = "עדכון כל שעה";
 "settings.update.2" = "מעודכן מדי יום";
-"settings.updateImmediate" = "עדכן כעת";
+"settings.updateImmediately" = "עדכן כעת";
 "settings.updateSuccess" = "עדכון מוצלח";
 "settings.updateFailed" = "העדכון נכשל";
 "settings.updatedAt" = "עודכן לאחרונה";
@@ -36,7 +36,7 @@
 "Settings.disclaimer" = "נתוני היישום ניתן למטרות אינפורמטיביות בלבד, ולא לכל מטרה כדי להבטיח את הדיוק, תוקף, זמינות או התאמתו, אפשרות וסיכון.";
 
 "currencyPicker.title" = "בחר מטבע";
-"currencyPicker.favorite מטבעות" = "מועדפים";
+"currencyPicker.favoriteCurrencies" = "מטבעות מועדפים";
 "currencyPicker.allCurrencies" = "כל המטבעות";
 "currencyPicker.noResults" = "אין תוצאה";
 "currencyPicker.unknow" = "לא ידוע";
@@ -59,7 +59,7 @@
 "BIF" = "פרנק בורונדי";
 "BMD" = "ברמודה דולר";
 "BND" = "ברוניי דולר";
-"בוב" = "בוליביאנו";
+"BOB" = "בוליביאנו";
 "BRL" = "ברזיל אמיתי";
 "BSD" = "איי בהאמה";
 "BTN" = "Bhutan Nuzam";
@@ -68,7 +68,7 @@
 "BZD" = "דולר בליז";
 "CAD" = "דולר קנדי";
 "CDF" = "פרנק קונגולי";
-"פרנק שוויצרי" = "פרנק שוויצרי";
+"CHF" = "פרנק שוויצרי";
 "CLF" = "החוק הצ 'יליאני";
 "CLP" = "פזו צ 'ילי";
 "CNY" = "יואן";
@@ -96,19 +96,19 @@
 "GNF" = "פרנק גינאה";
 "GTQ" = "גואטמלה קצאל";
 "GYD" = "גיאנה יואן";
-"HKD" = "HKD";
+"HKD" = "דולר הונג קונגי";
 "HNL" = "הונדורס למפירה";
 "HRK" = "קונה קרואטית";
 "HTG" = "האיטי גודי";
 "HUF" = "פורינט הונגרי";
 "IDR" = "מגן אינדונזי";
-"שקל" = "שקל ישראלי";
+"ILS" = "שקל ישראלי";
 "INR" = "רופי הודי";
 "IQD" = "דינר עיראקי";
 "IRR" = "ריאל איראני";
 "ISK" = "כתר איסלנדי";
 "JMD" = "דולר ג'מייקה";
-"ג'נרל" = "דינר ירדני";
+"JOD" = "דינר ירדני";
 "JPY" = "ין";
 "KES" = "קניה שילינג";
 "KGS" = "קירגיזסטן סום";
@@ -116,7 +116,7 @@
 "KMF" = "פרנק קומורו";
 "KPW" = "קוריאנית זכה";
 "KRW" = "קוריאנית";
-"KD" = "כווית דינה";
+"KWD" = "דינר כוויתי";
 "KYD" = "דולר קיימן";
 "KZT" = "קזח טנג";
 "LAK" = "לאו קיפ";

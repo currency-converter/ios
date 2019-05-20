@@ -19,7 +19,7 @@
 "settings.update.0" = "aktualizuj co minutę";
 "settings.update.1" = "aktualizacja co godzinę";
 "settings.update.2" = "aktualizowany codziennie";
-"settings.updateImmedually" = "Aktualizuj teraz";
+"settings.updateImmediately" = "Aktualizuj teraz";
 "settings.updateSuccess" = "Aktualizacja powiodła się";
 "settings.updateFailed" = "Aktualizacja nie powiodła się";
 "settings.updatedAt" = "ostatnia aktualizacja";

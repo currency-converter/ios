@@ -19,7 +19,7 @@
 "settings.update.0" = "update elke minuut";
 "settings.update.1" = "elk uur bijgewerkt";
 "settings.update.2" = "elke dag bijgewerkt";
-"settings.updateOnmiddellijk" = "Nu bijwerken";
+"settings.updateImmediately" = "Nu bijwerken";
 "settings.updateSuccess" = "Update succesvol";
 "settings.updateFailed" = "Update mislukt";
 "settings.updatedAt" = "laatst bijgewerkt";

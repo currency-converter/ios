@@ -37,7 +37,7 @@
 
 "currencyPicker.title" = "Valitse valuutta";
 "currencyPicker.favoriteCurrencies" = "Suosikit";
-"currencyPicker.allValuutat" = "Kaikki valuutat";
+"currencyPicker.allCurrencies" = "Kaikki valuutat";
 "currencyPicker.noResults" = "ei tulosta";
 "currencyPicker.unknow" = "Tuntematon";
 
@@ -59,7 +59,7 @@
 "BIF" = "Burundi Franc";
 "BMD" = "Bermudan dollari";
 "BND" = "Brunei dollari";
-"ROP" = "Boliviano";
+"BOB" = "Boliviano";
 "BRL" = "Brasilia Real";
 "BSD" = "Bahama";
 "BTN" = "Bhutan Nuzam";

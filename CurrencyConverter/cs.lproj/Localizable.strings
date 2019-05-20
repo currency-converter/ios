@@ -6,7 +6,7 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copy";
+"home.copy" = "kopie";
 
 "settings.title" = "Nastavení";
 "settings.soundsHeader" = "zvuk";
@@ -19,7 +19,7 @@
 "settings.update.0" = "aktualizovat každou minutu";
 "settings.update.1" = "aktualizováno každou hodinu";
 "settings.update.2" = "každý den aktualizováno";
-"settings.updateImmedantly" = "Aktualizovat";
+"settings.updateImmediately" = "Aktualizovat okamžitě";
 "settings.updateSuccess" = "Aktualizace úspěšná";
 "settings.updateFailed" = "Aktualizace se nezdařila";
 "settings.updatedAt" = "poslední aktualizace";

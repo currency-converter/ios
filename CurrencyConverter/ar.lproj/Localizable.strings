@@ -36,8 +36,8 @@
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
 
 "currencyPicker.title" = "اختر عملة";
-"currencyPicker.favoriteCurrency" = "Favorites";
-"currencyPicker.allCurrency" = "جميع العملات";
+"currencyPicker.favoriteCurrencies" = "العملات المفضل";
+"currencyPicker.allCurrencies" = "جميع العملات";
 "currencyPicker.noResults" = "لا توجد نتائج";
 "currencyPicker.unknow" = "Unknown";
 

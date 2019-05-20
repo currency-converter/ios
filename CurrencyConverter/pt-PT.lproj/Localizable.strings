@@ -75,7 +75,7 @@
 "COP" = "Peso colombiano";
 "CRC" = "Costa Rica Colon";
 "CUC" = "peso conversível cubano";
-"COPA" = "Peso de Cuba";
+"CUP" = "Peso de Cuba";
 "CVE" = "Escudo Cabo-verdiano";
 "CZK" = "Coroa Tcheca";
 "DJF" = "Franco do Djibuti";
@@ -166,7 +166,7 @@
 "SDG" = "Libra do Sudão";
 "SEK" = "coroa sueca";
 "SGD" = "Dólar de Cingapura";
-"PCH" = "Libra de Santa Helena";
+"SHP" = "Libra de Santa Helena";
 "SLL" = "Serra Leoa";
 "SOS" = "Xelim Somali";
 "SRD" = "Suriname";

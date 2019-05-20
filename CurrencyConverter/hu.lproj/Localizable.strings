@@ -36,8 +36,8 @@
 "settings.disclaimer" = "Az ebben az alkalmazásban megadott adatok csak tájékoztató jellegűek, és nem garantálják a saját felelősségére semmilyen cél, pontosság, rendelkezésre állást vagy alkalmasságot.";
 
 "currencyPicker.title" = "Valuta kiválasztása";
-"currencyPicker.favoriteCurrencies" = "Kedvencek";
-"currencyPicker.allCounterencies" = "Valuták";
+"currencyPicker.favoriteCurrencies" = "Kedvenc pénznemek";
+"currencyPicker.allCurrencies" = "Minden pénznem";
 "currencyPicker.noResults" = "nincs eredmény";
 "currencyPicker.unknow" = "Ismeretlen";
 
