@@ -331,6 +331,9 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	// 设置 cell 是否允许移动
 	func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
 		// 只允许收藏的货币排序
+		if self.searchResults.count > 0 {
+			return false
+		}
 		return indexPath.section == 0
 	}
 	
