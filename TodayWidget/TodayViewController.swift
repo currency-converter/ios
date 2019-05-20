@@ -326,16 +326,28 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	@objc func onInput(_ sender: UIButton) {
 		let n = sender.currentTitle
+		self.operatorButton?.backgroundColor = UIColor.hex("da8009")
+		self.operatorButton?.setTitleColor(UIColor.white, for: .normal)
 		
 		switch n {
 		case "AC":
+			self.flash(button: sender)
 			self.isEmpty = true
 			self.fromMoney = "100"
 			self.operatorEnd = "0"
 			self.operatorSymbol = ""
 		case "A":
+			self.flash(button: sender)
 			self.onSettingsClick()
-		case "+", "-":
+		case "÷", "×", "+", "-":
+			sender.backgroundColor = UIColor.white
+			sender.setTitleColor(UIColor.hex("da8009"), for: .normal)
+			
+			// 连加
+			if self.operatorEnd != "0" {
+				self.exec()
+			}
+			
 			if !self.isEmpty {
 				self.operatorSymbol = n ?? ""
 				self.operatorEnd = "0"
@@ -343,19 +355,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 				sender.isSelected = true
 			}
 		case "=":
+			self.flash(button: sender)
 			if self.operatorEnd != "0" {
-				var a:Float = 0
-				if self.operatorSymbol == "+" {
-					a = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
-				} else {
-					a = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
-				}
-				self.fromMoney = "\(a)"
+				self.exec()
 			}
 			self.operatorSymbol = ""
 			self.operatorEnd = "0"
 		case "0":
 			if self.operatorSymbol == "" {
+				self.flash(button: sender)
 				if self.isEmpty {
 					self.fromMoney = "0"
 					self.isEmpty = false
@@ -364,11 +372,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 				}
 			} else {
 				if operatorEnd != "0" {
+					self.flash(button: sender)
 					self.operatorEnd += "0"
 				}
 			}
 		case ".":
 			if self.operatorSymbol == "" {
+				self.flash(button: sender)
 				if self.isEmpty {
 					self.fromMoney = "0."
 					self.isEmpty = false
@@ -378,11 +388,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 					}
 				}
 			} else {
+				self.flash(button: sender)
 				if !self.operatorEnd.contains(".") {
 					self.operatorEnd += "."
 				}
 			}
 		default:
+			self.flash(button: sender)
+			
 			if self.operatorSymbol == "" {
 				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
 				self.isEmpty = false
@@ -398,6 +411,34 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			fromMoneyLabel.text = numberFormat(self.fromMoney)
 			toMoneyLabel.text = self.output(self.fromMoney)
 		}
+	}
+	
+	func flash(button: UIButton) {
+		UIView.animate(withDuration: 0.2) {
+			button.backgroundColor = UIColor.hex("646464")
+			UIView.animate(withDuration: 0.2) {
+				button.backgroundColor = UIColor.hex("424242")
+			}
+		}
+	}
+	
+	func exec() {
+		var newResult: Float = 0
+		
+		switch self.operatorSymbol {
+		case "÷":
+			newResult = (self.fromMoney as NSString).floatValue / (self.operatorEnd as NSString).floatValue
+		case "×":
+			newResult = (self.fromMoney as NSString).floatValue * (self.operatorEnd as NSString).floatValue
+		case "+":
+			newResult = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
+		case "-":
+			newResult = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
+		default:
+			print("Unknow operator symbol: \(self.operatorSymbol)")
+		}
+		
+		self.fromMoney = "\(newResult)"
 	}
 	
 	@objc func onSettingsClick() {
