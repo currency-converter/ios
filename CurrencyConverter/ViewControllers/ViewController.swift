@@ -714,6 +714,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	@objc func longPressAction(_ recognizer: UILongPressGestureRecognizer) {
+		// 如果 Menu 已经被创建那就不再重复创建 menu
+		if (UIMenuController.shared.isMenuVisible){
+			return
+		}
 		self.toMoneyLabel.becomeFirstResponder()
 		let menu = UIMenuController.shared
 		menu.arrowDirection = .down
