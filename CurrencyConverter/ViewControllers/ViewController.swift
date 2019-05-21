@@ -375,14 +375,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func formatUpdatedAtText() -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
-		print("timeStamp:", timeStamp)
 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
 		let dateFormatter = DateFormatter()
 		//dateFormatter.locale = Locale(identifier: "ar_EG")
 		dateFormatter.dateStyle = .short
 		dateFormatter.timeStyle = .short
-		//let date = Date()
 		let stringOfDate = dateFormatter.string(from: date)
 		
 		return stringOfDate
@@ -524,7 +522,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			"7", "8", "9", "×",
 			"4", "5", "6", "-",
 			"1", "2", "3", "+",
-			"0", ".", "G", "="
+			"0", ".", "B", "="
 		]
 		
 		for (index, item) in characters.enumerated() {
@@ -542,7 +540,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				btn.setBackgroundColor(color: Theme.operatorButtonHighlightedBackgroundColor[themeIndex], forState: .highlighted)
 				btn.setBackgroundColor(color: Theme.operatorButtonSelectedBackgroundColor[themeIndex], forState: .selected)
 				btn.setTitleColor(Theme.operatorButtonSelectedTextColor[themeIndex], for: .selected)
-			case "A", "G", "H":
+			case "A", "B", "H":
 				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
 				fallthrough
 			case "AC":
@@ -635,8 +633,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.operatorSymbol = ""
 		case "A":
 			self.onSettingsClick(sender)
-		case "G":
-			self.copyMoney(sender)
+		case "B":
+			self.updateRate()
 		case "H":
 			self.backspace()
 		case "÷", "×", "+", "-":
