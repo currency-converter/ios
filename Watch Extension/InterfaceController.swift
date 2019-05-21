@@ -26,6 +26,8 @@ class InterfaceController: WKInterfaceController {
 	// 汇率
 	var rate: Float = 6.777
 	
+	var favorites: [String]!
+	
 	// 输入货币类型
 	var fromSymbol: String!
 	
@@ -162,14 +164,27 @@ class InterfaceController: WKInterfaceController {
 	@objc func onDidWatchSendMessage(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
 			print("Notification data:", data)
-			self.fromSymbol = data["fromSymbol"] as? String
-			self.toSymbol = (data["toSymbol"] as! String)
-			self.rate = (data["rate"] as! NSNumber).floatValue
-			
+
 			let shared = UserDefaults(suiteName: Config.groupId)
-			shared?.set(self.fromSymbol, forKey: "fromSymbol")
-			shared?.set(self.toSymbol, forKey: "toSymbol")
-			shared?.set(self.rate, forKey: "rate")
+
+			if let fromSymbol = data["fromSymbol"] as? String {
+				self.fromSymbol = fromSymbol
+				shared?.set(self.fromSymbol, forKey: "fromSymbol")
+			}
+			
+			if let toSymbol = data["toSymbol"] as? String {
+				self.toSymbol = toSymbol
+				shared?.set(self.toSymbol, forKey: "toSymbol")
+			}
+			
+			if let rate = data["rate"] as? NSNumber {
+				self.rate = rate.floatValue
+				shared?.set(self.rate, forKey: "rate")
+			}
+			
+			if let favorites = data["favorites"] as? [String] {
+				shared?.set(favorites, forKey: "favorites")
+			}
 			
 			self.refresh()
 		}
@@ -241,4 +256,11 @@ class InterfaceController: WKInterfaceController {
 	@IBAction func inputAC() {
 		onInput("AC")
 	}
+	@IBAction func pickToSymbol(_ sender: Any) {
+		presentController(withName: "Currency", context: ["toSymbol", self.toSymbol])
+	}
+	@IBAction func pickFromSymbol(_ sender: Any) {
+		presentController(withName: "Currency", context: ["fromSymbol", self.fromSymbol])
+	}
+
 }

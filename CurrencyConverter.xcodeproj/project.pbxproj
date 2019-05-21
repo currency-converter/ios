@@ -12,6 +12,10 @@
 		2418E624227BB7B700EC540B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2418E623227BB7B700EC540B /* Theme.swift */; };
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
+		245EE99E2293A70E002F504B /* CurrencyInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245EE99D2293A70E002F504B /* CurrencyInterfaceController.swift */; };
+		245EE9A02293A9C7002F504B /* CurrencyRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245EE99F2293A9C7002F504B /* CurrencyRowController.swift */; };
+		245EE9A22293AC63002F504B /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245EE9A12293AC63002F504B /* Currency.swift */; };
+		245EE9A32293B386002F504B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 24A4B11F22523F73001D77C2 /* Localizable.strings */; };
 		247FC2C822826AC200B81031 /* IwatchSessionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC2C722826AC200B81031 /* IwatchSessionUtil.swift */; };
 		247FC2CA22826B3B00B81031 /* WatchSessionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC2C922826B3B00B81031 /* WatchSessionUtil.swift */; };
 		247FC2CB228307D400B81031 /* BYR.png in Resources */ = {isa = PBXBuildFile; fileRef = 249966CC2272A8A70011711A /* BYR.png */; };
@@ -599,6 +603,9 @@
 		241CA3542223D13600D5FC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		241CA35B2223D13700D5FC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		241CA3602223D13700D5FC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		245EE99D2293A70E002F504B /* CurrencyInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInterfaceController.swift; sourceTree = "<group>"; };
+		245EE99F2293A9C7002F504B /* CurrencyRowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRowController.swift; sourceTree = "<group>"; };
+		245EE9A12293AC63002F504B /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		247FC2C722826AC200B81031 /* IwatchSessionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IwatchSessionUtil.swift; sourceTree = "<group>"; };
 		247FC2C922826B3B00B81031 /* WatchSessionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionUtil.swift; sourceTree = "<group>"; };
 		249265FA2278214F001F9649 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Config.swift; path = CurrencyConverter/Config.swift; sourceTree = "<group>"; };
@@ -1153,6 +1160,9 @@
 				24E206ED228131F200A32337 /* Assets.xcassets */,
 				24E206EF228131F200A32337 /* Info.plist */,
 				247FC2C922826B3B00B81031 /* WatchSessionUtil.swift */,
+				245EE99D2293A70E002F504B /* CurrencyInterfaceController.swift */,
+				245EE99F2293A9C7002F504B /* CurrencyRowController.swift */,
+				245EE9A12293AC63002F504B /* Currency.swift */,
 			);
 			path = "Watch Extension";
 			sourceTree = "<group>";
@@ -1777,6 +1787,7 @@
 				247FC33A228307D400B81031 /* GMD.png in Resources */,
 				247FC342228307D400B81031 /* CUC.png in Resources */,
 				247FC324228307D400B81031 /* FKP.png in Resources */,
+				245EE9A32293B386002F504B /* Localizable.strings in Resources */,
 				247FC316228307D400B81031 /* MYR.png in Resources */,
 				247FC2F3228307D400B81031 /* SAR.png in Resources */,
 				247FC2DF228307D400B81031 /* DZD.png in Resources */,
@@ -1896,6 +1907,9 @@
 			files = (
 				24E206EC228131F100A32337 /* ExtensionDelegate.swift in Sources */,
 				247FC2CA22826B3B00B81031 /* WatchSessionUtil.swift in Sources */,
+				245EE9A02293A9C7002F504B /* CurrencyRowController.swift in Sources */,
+				245EE99E2293A70E002F504B /* CurrencyInterfaceController.swift in Sources */,
+				245EE9A22293AC63002F504B /* Currency.swift in Sources */,
 				24E206EA228131F100A32337 /* InterfaceController.swift in Sources */,
 				24E206FB22815E7E00A32337 /* Config.swift in Sources */,
 				24E206FC22815EF100A32337 /* Util.swift in Sources */,

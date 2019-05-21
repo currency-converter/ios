@@ -789,19 +789,21 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 			
 			if data.keys.contains("fromSymbol") {
-				let symbol: String = data["fromSymbol"] as! String
-				self.fromSymbolLabel.text = symbol
-				if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
-					fromImageView.image = UIImage(contentsOfFile: path)
-				}
-				self.fromSymbol = symbol
-				self.setRate()
-				
-				let changeType: String = data["changeType"] as! String
-				if changeType != "scroll" {
-					// 滑动切换货币时不需要更新界面
-					initFavorites(type: "from")
-					renderPagesInScrollView(type: "from")
+				DispatchQueue.main.async {
+					let symbol: String = data["fromSymbol"] as! String
+					self.fromSymbolLabel.text = symbol
+					if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
+						self.fromImageView.image = UIImage(contentsOfFile: path)
+					}
+					self.fromSymbol = symbol
+					self.setRate()
+					
+					let changeType: String = data["changeType"] as! String
+					if changeType != "scroll" {
+						// 滑动切换货币时不需要更新界面
+						self.initFavorites(type: "from")
+						self.renderPagesInScrollView(type: "from")
+					}
 				}
 			}
 			
@@ -827,6 +829,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				renderPagesInScrollView(type: "from")
 				initFavorites(type: "to")
 				renderPagesInScrollView(type: "to")
+				
+				//通知iwatch
+				let favorites: [String] = data["favorites"] as! [String]
+				IwatchSessionUtil.shareManager.sendMessageToWatch(key: "favorites", value: favorites)
 			}
 		
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {

@@ -8,6 +8,7 @@
 
 import UIKit
 import WatchConnectivity
+
 class IwatchSessionUtil: NSObject, WCSessionDelegate {
 	//静态单例
 	static let shareManager = IwatchSessionUtil()
@@ -44,17 +45,37 @@ class IwatchSessionUtil: NSObject, WCSessionDelegate {
 		print("didReceiveMessage from watch:", message)
 		// 初始化输入输出货币
 		let shared = UserDefaults(suiteName: Config.groupId)
-		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
-		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
+		var fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
+		if message["fromSymbol"] != nil {
+			fromSymbol = message["fromSymbol"] as! String
+			shared?.set(fromSymbol, forKey: "fromSymbol")
+			NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+				"fromSymbol": fromSymbol,
+				"changeType": "pick"
+			])
+		}
+		
+		var toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
+		if message["toSymbol"] != nil {
+			toSymbol = message["toSymbol"] as! String
+			shared?.set(toSymbol, forKey: "toSymbol")
+			NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+				"toSymbol": toSymbol,
+				"changeType": "pick"
+			])
+		}
+		
 		let rates: [String: [String: NSNumber]] = shared?.object(forKey: "rates") as? [String: [String: NSNumber]] ?? Config.defaults["toSymbol"] as! [String: [String: NSNumber]]
 		let fromRate: Float! = Float(truncating: (rates[fromSymbol]! as [String: NSNumber])["a"]!)
 		let toRate: Float! = Float(truncating: (rates[toSymbol]! as [String: NSNumber])["a"]!)
 		let rate: Float = toRate/fromRate
-
+		let favorites: [String] = shared?.array(forKey: "favorites") as? [String] ?? Config.defaults["favorites"] as! [String]
+		
 		replyHandler([
 			"fromSymbol": fromSymbol,
 			"toSymbol": toSymbol,
-			"rate": rate
+			"rate": rate,
+			"favorites": favorites
 		])
 		// 在这里，我们接收到watch发送过来的数据，可以用代理、代码块或者通知中心传值到ViewController，做出一系列操作。
 		// 注！！：watch侧发送过来信息，iPhone回复直接在这个函数里回复replyHandler([String : Any])（replyHandler(数据)），这样watch侧发送数据的函数对应的reply才能接收到数据，别跟sendMessage这个函数混淆了。如果用sendMessage回复，那watch侧接收到信息就是didReceiveMessage的函数。

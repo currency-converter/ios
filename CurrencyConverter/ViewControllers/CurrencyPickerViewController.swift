@@ -216,8 +216,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
 		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
-		//let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
-		//let unicode: String = isFav ? "B" : "C"
 
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
 		cell.preservesSuperviewLayoutMargins = false
@@ -228,13 +226,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let cellBackgroundView = UIView()
 		cellBackgroundView.backgroundColor = Theme.cellSelectedBackgroundColor[themeIndex]
 		cell.selectedBackgroundView = cellBackgroundView
-
-		// icon
-//		cell.imageView?.image = UIImage.iconFont(fontSize: 40, unicode: unicode, color: .white)
-//		cell.imageView?.accessibilityLabel = currency
-//		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleFavorite))
-//		cell.imageView?.addGestureRecognizer(singleTapGesture)
-//		cell.imageView?.isUserInteractionEnabled = true
 
 		if let flagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
 			cell.imageView?.image = UIImage(contentsOfFile: flagPath)
@@ -255,20 +246,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.accessoryType = cell.textLabel?.text == currencySymbol ? .checkmark : .none
 		cell.tintColor = UIColor.loquatYellow
 		return cell
-		
-//		let cell = CurrencyTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
-//
-//		//cell.setValueForCell(model: dataArr![indexPath.row])
-//		let currency = Currency()
-//		currency.symbol = symbol
-//		currency.name = self.currencyNames[symbol ?? ""]
-//		currency.rate = (self.rates[symbol!] as! [String: NSNumber])["a"]
-//		currency.isFav = isFav
-//		cell.setValueForCell(currency: currency, isSelected: self.currencySymbol == symbol)
-//		//cell.setValueForCell(symbol: currency ?? "", country: self.currencyNames[currency ?? ""] ?? "", rate: "319.529", index: indexPath.row)
-//		cell.delegate = self
-		
-//		return cell
 	}
 	
 	//选中cell时触发这个代理

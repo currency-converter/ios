@@ -23,6 +23,13 @@
                                     <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
                                 </label>
                             </items>
+                            <gestureRecognizers>
+                                <tapGestureRecognizer id="jbI-b1-5uZ">
+                                    <connections>
+                                        <action selector="pickFromSymbol:" destination="AgC-eL-Hgc" id="ZLo-zv-qcc"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                            </gestureRecognizers>
                         </group>
                         <group width="1" height="19" alignment="right" radius="0.0" id="7iB-bD-FwB">
                             <items>
@@ -33,6 +40,13 @@
                                     <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
                                 </label>
                             </items>
+                            <gestureRecognizers>
+                                <tapGestureRecognizer id="tRN-Yd-ues">
+                                    <connections>
+                                        <action selector="pickToSymbol:" destination="AgC-eL-Hgc" id="EK3-rA-6EK"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                            </gestureRecognizers>
                         </group>
                         <group width="1" height="39" alignment="left" id="a2q-TQ-5ZC">
                             <items>
@@ -134,7 +148,53 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="22.913043478260867" y="34.910714285714285"/>
+            <point key="canvasLocation" x="1" y="35"/>
+        </scene>
+        <!--Currency-->
+        <scene sceneID="Yh1-Zu-Ogi">
+            <objects>
+                <controller identifier="Currency" id="1uY-Fq-EAc" customClass="CurrencyInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <table alignment="left" id="NrW-3I-KtW">
+                            <items>
+                                <tableRow identifier="CurrencyRow" id="MxB-zN-NO5" customClass="CurrencyRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" height="42" alignment="left" id="lOT-Yd-puI">
+                                        <items>
+                                            <group width="40" height="30" alignment="left" verticalAlignment="center" id="v9Y-wt-Skq">
+                                                <items>
+                                                    <imageView width="40" height="30" alignment="left" image="AED" id="FjH-Xj-wBc"/>
+                                                </items>
+                                            </group>
+                                            <group height="39" alignment="left" verticalAlignment="center" layout="vertical" id="wKW-6L-xZm">
+                                                <items>
+                                                    <label alignment="left" text="CNY" id="CYu-PK-uov">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                                    </label>
+                                                    <label alignment="left" text="Label" id="NWX-mf-51G">
+                                                        <color key="textColor" red="0.23442406562666307" green="1" blue="0.18661553030662392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                                    </label>
+                                                </items>
+                                                <edgeInsets key="margins" left="5" right="0.0" top="0.0" bottom="0.0"/>
+                                            </group>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="flagImage" destination="FjH-Xj-wBc" id="ULW-Zh-hcA"/>
+                                        <outlet property="itemGroup" destination="lOT-Yd-puI" id="z4b-OA-ui9"/>
+                                        <outlet property="nameLabel" destination="NWX-mf-51G" id="P2k-Ej-dhq"/>
+                                        <outlet property="symbolLabel" destination="CYu-PK-uov" id="3xl-Ga-0qp"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="currenciesTable" destination="NrW-3I-KtW" id="M5o-J3-JVq"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="272" y="34.910714285714285"/>
         </scene>
     </scenes>
 </document>

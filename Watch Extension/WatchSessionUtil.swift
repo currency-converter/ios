@@ -36,6 +36,7 @@ class WatchSessionUtil: NSObject,WCSessionDelegate {
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 		// 这里也可以通过通知中心发送通知给InterfaceController，进行页面操作，至于用什么方法大家随意。注意事项iPhone的代码里提到了，一样的性质，这里就不写了。
 		print("didReceiveMessage from iphone:", message)
+		NotificationCenter.default.post(name: .didWatchSendMessage, object: self, userInfo: message)
 	}
 	
 	// 向iPhone侧发送信息
