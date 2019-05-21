@@ -16,12 +16,12 @@
                     <items>
                         <group width="1" height="24" alignment="left" radius="0.0" id="ef7-C9-rgi">
                             <items>
-                                <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="OCi-sn-tv0"/>
                                 <label alignment="right" verticalAlignment="center" id="9yd-R9-Hvp"/>
                                 <label alignment="right" verticalAlignment="center" textAlignment="left" id="G0v-Pl-o91">
                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
                                 </label>
+                                <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="OCi-sn-tv0"/>
                             </items>
                             <gestureRecognizers>
                                 <tapGestureRecognizer id="jbI-b1-5uZ">
@@ -33,12 +33,12 @@
                         </group>
                         <group width="1" height="19" alignment="right" radius="0.0" id="7iB-bD-FwB">
                             <items>
-                                <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="iyZ-QU-B0s"/>
                                 <label alignment="right" verticalAlignment="center" id="XH7-MK-aem"/>
                                 <label alignment="right" verticalAlignment="center" id="0iF-G2-8F2">
                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
                                 </label>
+                                <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="iyZ-QU-B0s"/>
                             </items>
                             <gestureRecognizers>
                                 <tapGestureRecognizer id="tRN-Yd-ues">

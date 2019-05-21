@@ -63,6 +63,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var themeIndex: Int!
 	
 	// UI 组件
+	var updatedAtLabel: UILabel!
 	var screenView: UIView!
 	var fromScrollView: UIScrollView!
 	var toScrollView: UIScrollView!
@@ -94,7 +95,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	let rowsNumber: CGFloat = 5
 	//显示屏高度
 	var SCREEN_VIEW_HEIGHT_MAX: CGFloat = 200
-	var SCREEN_VIEW_HEIGHT_MIN: CGFloat = 150
+	//更新时间高度
+	var updatedAtLabelHeight: CGFloat = 40
 	
 	public func updateRate() {
 		let newUrlString = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -122,14 +124,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				}
 				
 				let now = Date().timeStamp
-				//汇率更新后，需要主动更新app中正使用的汇率
-				self.setRate()
 
 				//更新缓存数据
 				let shared = UserDefaults(suiteName: Config.groupId)
 				shared?.set(now, forKey: "rateUpdatedAt")
 				shared?.set(rates, forKey: "rates")
 				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
+				//汇率更新后，需要主动更新app中正使用的汇率
+				self.setRate()
 			} else {
 				print("Rate update failed.")
 				NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 1])
@@ -205,6 +207,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
 		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
 		self.rate = toRate/fromRate
+		self.showUpdatedAtLabel()
 	}
 	
 	func createUpdateRateDaemon() {
@@ -227,8 +230,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		if UIDevice.current.userInterfaceIdiom == .pad {
 			//高度不够，只能使用椭圆按钮
-			self.keyboardViewHeight = height / 3 * 2
-			self.screenViewHeight = height / 3
+			self.keyboardViewHeight = (height - statusBarHeight) / 3 * 2
+			self.screenViewHeight = (height - statusBarHeight) / 3
 			self.screenViewY = statusBarHeight
 			self.keyboardViewY = height - self.keyboardViewHeight
 			self.numberButtonWidth = (width - self.numberButtonPadding * (self.columnsNumber + 1)) / self.columnsNumber
@@ -273,6 +276,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedRotation), name: UIDevice.orientationDidChangeNotification, object: nil)
 		}
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUserDefaultsChange), name: .didUserDefaultsChange, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
 	}
 	
 	func renderScreen() {
@@ -299,7 +304,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		initFavorites(type: "from")
 
-		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: screenView.frame.height/2))
+		let scrollViewHeight: CGFloat = (screenView.frame.height - self.updatedAtLabelHeight)/2
+		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: scrollViewHeight))
 		if isDebug {
 			fromScrollView.backgroundColor = UIColor.red
 		}
@@ -318,7 +324,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		initFavorites(type: "to")
 
-		toScrollView = UIScrollView(frame: CGRect(x: 0, y: screenView.frame.height/2, width: screenView.frame.width, height: screenView.frame.height/2))
+		toScrollView = UIScrollView(frame: CGRect(x: 0, y: scrollViewHeight, width: screenView.frame.width, height: scrollViewHeight))
 		if isDebug {
 			toScrollView.backgroundColor = UIColor.green
 		}
@@ -334,12 +340,52 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		screenView.addSubview(toScrollView)
 
 		renderPagesInScrollView(type: "to")
+		
+		updatedAtLabel = UILabel(frame: CGRect(x: 0, y: screenView.frame.height - updatedAtLabelHeight, width: screenView.frame.width, height: updatedAtLabelHeight))
+		if isDebug {
+			updatedAtLabel.backgroundColor = UIColor.orange
+		}
+		updatedAtLabel.alpha = 0
+		updatedAtLabel.textColor = UIColor.gray
+		updatedAtLabel.textAlignment = .right
+		updatedAtLabel.font = UIFont.systemFont(ofSize: 14)
+		screenView.addSubview(updatedAtLabel)
+		
+		showUpdatedAtLabel()
+	}
+	
+	func showUpdatedAtLabel() {
+		DispatchQueue.main.async {
+			self.updatedAtLabel?.alpha = 1
+			self.updatedAtLabel?.text = NSLocalizedString("settings.updatedAt", comment: "") + " " +  self.formatUpdatedAtText()
+			Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (start) in
+				UIView.animate(withDuration: 3) {
+					self.updatedAtLabel?.alpha = 0
+				}
+			}
+		}
 	}
 	
 	func clear(_ view: UIView) {
 		for subview in view.subviews as [UIView] {
 			subview.removeFromSuperview()
 		}
+	}
+	
+	func formatUpdatedAtText() -> String {
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
+		print("timeStamp:", timeStamp)
+		let timeInterval:TimeInterval = TimeInterval(timeStamp)
+		let date = Date(timeIntervalSince1970: timeInterval)
+		let dateFormatter = DateFormatter()
+		//dateFormatter.locale = Locale(identifier: "ar_EG")
+		dateFormatter.dateStyle = .short
+		dateFormatter.timeStyle = .short
+		//let date = Date()
+		let stringOfDate = dateFormatter.string(from: date)
+		
+		return stringOfDate
 	}
 	
 	func renderPagesInScrollView(type: String) {
@@ -862,6 +908,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			self.keyboardView = nil
 			self.render()
 		})
+	}
+	
+	@objc func onBecomeActive() {
+		self.showUpdatedAtLabel()
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
