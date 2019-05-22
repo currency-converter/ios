@@ -300,13 +300,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		self.toggleFavorite(symbol: symbol ?? "")
 	}
 	
-//	func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
-//		print("move")
-//		let content=self.data[sourceIndexPath.row]
-//		self.data.removeAtIndex(sourceIndexPath.row)
-//		self.data.insert(content, atIndex: destinationIndexPath.row)
-//	}
-	
 	// 设置 cell 是否允许移动
 	func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
 		// 只允许收藏的货币排序
