@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "Copy";
-
 "settings.title" = "Settings";
 "settings.soundsHeader" = "Sounds";
 "settings.soundsFooter" = "Keyboard sound can reduce input errors.";

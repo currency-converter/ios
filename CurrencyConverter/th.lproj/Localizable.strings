@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "คัดลอก";
-
 "settings.title" = "การตั้งค่า";
 "settings.soundsHeader" = "เสียง";
 "settings.soundsFooter" = "เสียงของปุ่มสามารถลดข้อผิดพลาดในการป้อนข้อมูล";

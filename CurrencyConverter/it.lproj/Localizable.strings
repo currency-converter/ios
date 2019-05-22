@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copia";
-
 "settings.title" = "Impostazioni";
 "settings.soundsHeader" = "suono";
 "settings.soundsFooter" = "Il suono del pulsante può ridurre gli errori di input.";

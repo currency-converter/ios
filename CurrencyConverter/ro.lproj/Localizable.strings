@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copie";
-
 "settings.title" = "Setări";
 "settings.soundsHeader" = "sunet";
 "settings.soundsFooter" = "Sunetul butonului poate reduce erorile de intrare.";

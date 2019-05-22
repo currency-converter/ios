@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "kopiëren";
-
 "settings.title" = "Instellingen";
 "settings.soundsHeader" = "geluid";
 "settings.soundsFooter" = "Het knopgeluid kan invoerfouten verminderen.";

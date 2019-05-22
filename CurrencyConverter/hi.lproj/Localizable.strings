@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "कॉपी";
-
 "settings.title" = "सेटिंग्स";
 "settings.soundsHeader" = "ध्वनि";
 "settings.soundsFooter" = "बटन ध्वनि इनपुट त्रुटियों को कम कर सकती है।";

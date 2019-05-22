@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "複製";
-
 "settings.title" = "設定";
 "settings.soundsHeader" = "聲音";
 "settings.soundsFooter" = "按鍵聲音能减少輸入錯誤。";

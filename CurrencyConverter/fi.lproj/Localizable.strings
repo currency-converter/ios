@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "kopio";
-
 "settings.title" = "Asetukset";
 "settings.soundsHeader" = "ääni";
 "settings.soundsFooter" = "Painikkeen ääni voi vähentää syöttövirheitä.";

@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copy";
-
 "settings.title" = "Tetapan";
 "settings.soundsHeader" = "bunyi";
 "settings.soundsFooter" = "Bunyi butang boleh mengurangkan ralat masukan.";

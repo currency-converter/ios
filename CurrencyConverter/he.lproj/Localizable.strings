@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "העתק";
-
 "settings.title" = "הגדרות";
 "settings.soundsHeader" = "sound";
 "settings.soundsFooter" = "צליל הלחצנים יכול להפחית את שגיאות הקלט.";

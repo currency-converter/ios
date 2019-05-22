@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "Kopie";
-
 "settings.title" = "Einstellungen";
 "settings.soundsHeader" = "Ton";
 "settings.soundsFooter" = "Der Tastenton kann Eingabefehler reduzieren.";

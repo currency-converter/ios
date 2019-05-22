@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copy";
-
 "settings.title" = "Indstillinger";
 "settings.soundsHeader" = "sound";
 "settings.soundsFooter" = "Knappen lyd kan reducere inputfejl.";

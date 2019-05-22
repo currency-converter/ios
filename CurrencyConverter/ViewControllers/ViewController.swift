@@ -278,6 +278,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUserDefaultsChange), name: .didUserDefaultsChange, object: nil)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidHideEditMenu), name: UIMenuController.didHideMenuNotification, object: nil)
+
 	}
 	
 	func renderScreen() {
@@ -434,21 +437,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let symbolButtonPaddingLeft: CGFloat = (symbolButtonWidth - flagWidth) / 2
 			
 			let moneyLabelHeight: CGFloat = 80
-			let moneyLabelMarginTop: CGFloat = (self.screenView.frame.size.height/2 - moneyLabelHeight)/2
+			let moneyLabelMarginTop: CGFloat = ((self.screenView.frame.size.height - self.updatedAtLabelHeight)/2 - moneyLabelHeight)/2
 			
 			// 货币输入框
 			let moneyLabel = UILabel(frame: CGRect(x: 0, y: moneyLabelMarginTop, width: scrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
 			if isDebug {
 				moneyLabel.backgroundColor = UIColor.yellow
 			}
+			moneyLabel.layer.masksToBounds = true
+			moneyLabel.layer.cornerRadius = 10
 			moneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
 			moneyLabel.adjustsFontSizeToFitWidth = true
 			moneyLabel.textAlignment = .right
 			moneyLabel.text = moneyLabelText
 			moneyLabel.textColor = moneyLabelTextColor
 			moneyLabel.isUserInteractionEnabled = true
-			let longPressGesture = UILongPressGestureRecognizer.init(target: self, action: #selector(longPressAction))
-			moneyLabel.addGestureRecognizer(longPressGesture)
+			if type == "to" {
+				let longPressGesture = UILongPressGestureRecognizer.init(target: self, action: #selector(longPressAction))
+				moneyLabel.addGestureRecognizer(longPressGesture)
+			}
 			page.addSubview(moneyLabel)
 			
 			// 货币符号容器
@@ -766,15 +773,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			return
 		}
 		self.toMoneyLabel.becomeFirstResponder()
+		self.toMoneyLabel.backgroundColor = UIColor.darkGray
 		let menu = UIMenuController.shared
 		menu.arrowDirection = .down
-		menu.menuItems = [ UIMenuItem.init(title: NSLocalizedString("home.copy", comment: ""), action: #selector(copyMoney(_:))) ]
-		let rect = CGRect(x: self.toMoneyLabel.frame.width-50, y: 10, width: 50, height: 50)
+		let rect = CGRect(x: (self.toMoneyLabel.frame.width-50)/2, y: 10, width: 50, height: 50)
 		menu.setTargetRect(rect, in: self.toMoneyLabel)
 		menu.setMenuVisible(true, animated: true)
 	}
 
-	@objc func copyMoney(_ sender: AnyObject?) {
+	override func copy(_ sender: Any?) {
 		let paste = UIPasteboard.general
 		paste.string = self.toMoneyLabel.text
 	}
@@ -784,7 +791,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-		if action == #selector(self.copyMoney) {
+		if action == #selector(UIResponderStandardEditActions.copy(_:)) {
 			return true
 		}
 		return false
@@ -910,6 +917,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	@objc func onBecomeActive() {
 		self.showUpdatedAtLabel()
+	}
+	
+	@objc func onDidHideEditMenu() {
+		self.fromMoneyLabel.backgroundColor = .clear
+		self.toMoneyLabel.backgroundColor = .clear
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

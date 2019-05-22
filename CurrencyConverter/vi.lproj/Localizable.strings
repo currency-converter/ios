@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "bản sao";
-
 "settings.title" = "Cài đặt";
 "settings.soundsHeader" = "âm thanh";
 "settings.soundsFooter" = "Âm thanh nút có thể giảm lỗi đầu vào.";

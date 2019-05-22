@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copy";
-
 "settings.title" = "Настройки";
 "settings.soundsHeader" = "звук";
 "settings.soundsFooter" = "Звук кнопки может уменьшить ошибки ввода.";

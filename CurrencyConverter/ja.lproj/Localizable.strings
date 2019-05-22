@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "コピー";
-
 "settings.title" = "設定";
 "settings.soundsHeader" = "サウンド";
 "settings.soundsFooter" = "ボタンの音は入力エラーを減らすことができます。";

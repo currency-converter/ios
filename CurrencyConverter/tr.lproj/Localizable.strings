@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "kopya";
-
 "settings.title" = "Ayarlar";
 "settings.soundsHeader" = "ses";
 "settings.soundsFooter" = "Düğme sesi giriş hatalarını azaltabilir.";

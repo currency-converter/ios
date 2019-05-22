@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "másolat";
-
 "settings.title" = "Beállítások";
 "settings.soundsHeader" = "hang";
 "settings.soundsFooter" = "A gomb hangja csökkentheti a bemeneti hibákat.";

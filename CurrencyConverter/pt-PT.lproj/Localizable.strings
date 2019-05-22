@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "copy";
-
 "settings.title" = "Configurações";
 "settings.soundsHeader" = "som";
 "settings.soundsFooter" = "O som do botão pode reduzir erros de entrada.";

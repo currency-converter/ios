@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "kopie";
-
 "settings.title" = "Nastavení";
 "settings.soundsHeader" = "zvuk";
 "settings.soundsFooter" = "Zvuk tlačítka může snížit vstupní chyby.";

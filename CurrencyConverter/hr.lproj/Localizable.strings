@@ -6,8 +6,6 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"home.copy" = "kopiraj";
-
 "settings.title" = "Postavke";
 "settings.soundsHeader" = "zvuk";
 "settings.soundsFooter" = "Zvuk gumba može smanjiti ulazne pogreške.";
