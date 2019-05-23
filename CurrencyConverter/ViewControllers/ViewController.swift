@@ -533,11 +533,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		}
 		
 		let characters:[String] = [
-			"AC", "A", "H", "÷",
+			"AC", "H", "B", "÷",
 			"7", "8", "9", "×",
 			"4", "5", "6", "-",
 			"1", "2", "3", "+",
-			"0", ".", "B", "="
+			"0", ".", "A", "="
 		]
 		
 		for (index, item) in characters.enumerated() {
