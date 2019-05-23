@@ -395,7 +395,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var moneyLabelText: String
 		var symbolButtonTag: Int
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
-		let moneyLabelTextColor: UIColor = type == "from" ? Theme.fromMoneyLabelEmptyTextColor[themeIndex] : Theme.toMoneyLabelEmptyTextColor[themeIndex]
+		let moneyLabelTextColor: UIColor = type == "from" ?
+			self.isEmpty ?
+				Theme.fromMoneyLabelEmptyTextColor[themeIndex] :
+				Theme.fromMoneyLabelTextColor[themeIndex] :
+			self.isEmpty ?
+				Theme.toMoneyLabelEmptyTextColor[themeIndex] :
+				Theme.toMoneyLabelEmptyTextColor[themeIndex]
 		
 		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
 		view.contentOffset.x = 0
@@ -578,15 +584,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				
 				let fromSymbol: String = self.toSymbol
 				let toSymbol: String = self.fromSymbol
-				//let newToMoney: String = self.fromMoney
-				//反向计算得到原始toMoney
-				//let newFromMoney: String = String(Float(self.fromMoney)! * self.rate)
 				//更新界面
 				self.fromScrollView.frame.origin.y = 0
 				self.toScrollView.frame.origin.y = offsetY
-				//fromMoney没有缓存，不能通过UserDefaults事件来派发
-				//self.fromMoney = newFromMoney
-				//self.fromMoneyLabel.text = self.numberFormat(newFromMoney)
 
 				//更新缓存
 				let shared = UserDefaults(suiteName: Config.groupId)
