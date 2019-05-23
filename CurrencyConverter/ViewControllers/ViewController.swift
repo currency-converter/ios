@@ -395,6 +395,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var moneyLabelText: String
 		var symbolButtonTag: Int
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
+		var view: UIScrollView
 		let moneyLabelTextColor: UIColor = type == "from" ?
 			self.isEmpty ?
 				Theme.fromMoneyLabelEmptyTextColor[themeIndex] :
@@ -403,17 +404,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				Theme.toMoneyLabelEmptyTextColor[themeIndex] :
 				Theme.toMoneyLabelEmptyTextColor[themeIndex]
 		
-		let view: UIScrollView = type == "from" ? fromScrollView : toScrollView
-		view.contentOffset.x = 0
-		clear(view)
-		
 		if type == "from" {
+			view = fromScrollView
 			favorites = fromFavorites
 			scrollView = fromScrollView
 			moneyLabelText = numberFormat(fromMoney)
 			symbolButtonTag = 1
 			fromControllers.removeAll()
 		} else {
+			view = toScrollView
 			favorites = toFavorites
 			scrollView = toScrollView
 			moneyLabelText = output(fromMoney)
@@ -423,6 +422,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let shared = UserDefaults(suiteName: Config.groupId)
 			isCustomRate = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		}
+		clear(view)
+		view.contentOffset.x = 0
+		view.contentSize = CGSize(width: view.frame.width * CGFloat(favorites.count), height: view.frame.height)
 		
 		for (seq, symbol) in favorites.enumerated() {
 			let page = UIView(frame: CGRect(x: CGFloat(seq) * scrollView.frame.width, y: 0, width: scrollView.frame.width, height: scrollView.frame.height))
