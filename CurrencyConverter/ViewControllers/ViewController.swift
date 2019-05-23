@@ -934,34 +934,37 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		let newSymbol: String = favorites[page]
 		
-		if type == "from" {
-			let controllers = fromControllers[page]
-			self.fromSymbol = newSymbol
-			self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
-			self.fromMoneyLabel?.text = numberFormat(self.fromMoney)
-			//为了触发isEmpty属性监听事件
-			self.isEmpty = true
-			self.isEmpty = self.fromMoney == "100"
-			self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
-			self.fromImageView = controllers?["imageView"] as? UIImageView
-		} else {
-			let controllers = toControllers[page]
-			self.toSymbol = newSymbol
-			self.toMoneyLabel = controllers?["moneyLabel"] as? UILabel
-			self.toSymbolLabel = controllers?["symbolLabel"] as? UILabel
-			self.toImageView = controllers?["imageView"] as? UIImageView
+		//只有翻页才更新界面
+		if (type == "from" && self.fromSymbol != newSymbol) || (type == "to" && self.toSymbol != newSymbol) {
+			if type == "from" {
+				let controllers = fromControllers[page]
+				self.fromSymbol = newSymbol
+				self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
+				self.fromMoneyLabel?.text = numberFormat(self.fromMoney)
+				//为了触发isEmpty属性监听事件
+				self.isEmpty = true
+				self.isEmpty = self.fromMoney == "100"
+				self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
+				self.fromImageView = controllers?["imageView"] as? UIImageView
+			} else {
+				let controllers = toControllers[page]
+				self.toSymbol = newSymbol
+				self.toMoneyLabel = controllers?["moneyLabel"] as? UILabel
+				self.toSymbolLabel = controllers?["symbolLabel"] as? UILabel
+				self.toImageView = controllers?["imageView"] as? UIImageView
+			}
+			
+			let key: String = "\(type)Symbol"
+			let shared = UserDefaults(suiteName: Config.groupId)
+			shared?.set(newSymbol, forKey: key)
+			shared?.set(false, forKey: "isCustomRate")
+			
+			NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+				key: newSymbol,
+				"changeType": "scroll",
+				"isCustomRate": false
+			])
 		}
-		
-		let key: String = "\(type)Symbol"
-		let shared = UserDefaults(suiteName: Config.groupId)
-		shared?.set(newSymbol, forKey: key)
-		shared?.set(false, forKey: "isCustomRate")
-		
-		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			key: newSymbol,
-			"changeType": "scroll",
-			"isCustomRate": false
-		])
 	}
 }
 
