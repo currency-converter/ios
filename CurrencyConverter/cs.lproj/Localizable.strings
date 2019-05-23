@@ -69,7 +69,7 @@
 "CHF" = "Švýcarský frank";
 "CLF" = "chilské právo";
 "CLP" = "Chile Peso";
-"CNY" = "RMB";
+"CNY" = "Renminbi";
 "COP" = "kolumbijské peso";
 "CRC" = "Costa Rica Colon";
 "CUC" = "kubánské konvertibilní peso";
@@ -86,7 +86,7 @@
 "EUR" = "Euro";
 "FJD" = "dolar Fidži";
 "FKP" = "Fokklandská libra";
-"GBP" = "GBP";
+"GBP" = "Sterling";
 "GEL" = "Gruzie Larry";
 "GHS" = "Ghana Cedi";
 "GIP" = "Gibraltarská libra";
@@ -94,7 +94,7 @@
 "GNF" = "Guinea Franc";
 "GTQ" = "Guatemala Quetzal";
 "GYD" = "Guyana Yuan";
-"HKD" = "HKD";
+"HKD" = "Hong Kong dolar";
 "HNL" = "Honduras Lempira";
 "HRK" = "chorvatská kuna";
 "HTG" = "Haiti Goode";

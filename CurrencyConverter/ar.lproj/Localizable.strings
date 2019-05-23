@@ -6,10 +6,10 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 
-"settings.title" = "Settings";
-"settings.soundsHeader" = "sound";
+"settings.title" = "نصب";
+"settings.soundsHeader" = "صوت";
 "settings.soundsFooter" = "يمكن أن يقلل صوت الزر من أخطاء الإدخال.";
-"settings.keyboardClicks" = "button button";
+"settings.keyboardClicks" = "زر الصوت";
 "settings.rateUpdateHeader" = "تحديث سعر الصرف";
 "settings.rateUpdateFooter" = "أحدث سعر صرف يضمن تحويل أكثر دقة.";
 "settings.autoUpdateRate" = "التحديث التلقائي";
@@ -23,21 +23,21 @@
 "settings.updatedAt" = "آخر تحديث";
 "settings.customRateHeader" = "سعر صرف مخصص";
 "settings.customRateFooter" = "عند تغيير نوع العملة ، سيتم إيقاف تشغيل مفتاح سعر الصرف المخصص.";
-"settings.displayHeader" = "display";
+"settings.displayHeader" = "عرض";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "يستخدم فاصل التجميع";
 "settings.decimalPlaces" = "عدد المنازل العشرية";
 "settings.theme" = "موضوع";
 "settings.themeWhite" = "الأبيض";
 "settings.themeBlack" = "أسود";
-"settings.disclaimerHeader" = "Disclaimer";
+"settings.disclaimerHeader" = "تنصل";
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
 
 "currencyPicker.title" = "اختر عملة";
 "currencyPicker.favoriteCurrencies" = "العملات المفضل";
 "currencyPicker.allCurrencies" = "جميع العملات";
 "currencyPicker.noResults" = "لا توجد نتائج";
-"currencyPicker.unknow" = "Unknown";
+"currencyPicker.unknow" = "غير معروف";
 
 "AED" = "درهم الإمارات العربية المتحدة";
 "AFN" = "أفغانستان";
@@ -69,7 +69,7 @@
 "CHF" = "الفرنك السويسري";
 "CLF" = "القانون التشيلي";
 "CLP" = "بيزو تشيلي";
-"CNY" = "RMB";
+"CNY" = "الرنمينبي";
 "COP" = "البيزو الكولومبي";
 "CRC" = "كوستاريكا كولون";
 "CUC" = "البيزو الكوبي القابل للتحويل";
@@ -86,7 +86,7 @@
 "EUR" = "اليورو";
 "FJD" = "فيجي الدولار";
 "FKP" = "فوكلاند باوند";
-"GBP" = "GBP";
+"GBP" = "الجنيه الإسترليني";
 "GEL" = "جورجيا لاري";
 "GHS" = "غانا سيدي";
 "GIP" = "جبل طارق الجنيه";
@@ -94,7 +94,7 @@
 "GNF" = "فرنك غينيا";
 "GTQ" = "غواتيمالا كويتزال";
 "GYD" = "غيانا يوان";
-"HKD" = "HKD";
+"HKD" = "دولار هونج كونج";
 "HNL" = "هندوراس لمبيرا";
 "HRK" = "كونا الكرواتية";
 "HTG" = "هايتي غود";
@@ -167,7 +167,7 @@
 "SHP" = "سانت هيلانة باوند";
 "SLL" = "سيرا ليون";
 "SOS" = "شلن صومالي";
-"SRD" = "Surinamen";
+"SRD" = "الدولار سورينامي";
 "STD" = "ساو دوم دوبرا";
 "SVC" = "السلفادور كولون";
 "SYP" = "الليرة السورية";
@@ -188,7 +188,7 @@
 "UZS" = "اوزبكستان سوم";
 "VEF" = "فنزويلا بوليفار";
 "VND" = "الدرع الفيتنامي";
-"VUV" = "Vanuatuwatu";
+"VUV" = "فانواتو فاتو";
 "WST" = "ساموا الغربية تارا";
 "XAF" = "التعاون المالي بين الصين وأفريقيا";
 "XCD" = "دولار شرق الكاريبي";

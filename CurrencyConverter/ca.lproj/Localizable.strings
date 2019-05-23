@@ -7,7 +7,7 @@
  */
 
 "settings.title" = "Configuració";
-"settings.soundsHeader" = "sound";
+"settings.soundsHeader" = "So";
 "settings.soundsFooter" = "El so del botó pot reduir els errors d’entrada.";
 "settings.keyboardClicks" = "so del botó";
 "settings.rateUpdateHeader" = "Actualització del tipus de canvi";
@@ -23,7 +23,7 @@
 "settings.updatedAt" = "última actualització";
 "settings.customRateHeader" = "Taxa de canvi personalitzada";
 "settings.customRateFooter" = "Quan canvieu el tipus de moneda, el commutador de tipus de canvi personalitzat es desactivarà.";
-"settings.displayHeader" = "display";
+"settings.displayHeader" = "Visualització";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilitza l'agrupació del separador";
 "settings.decimalPlaces" = "nombre de llocs decimals";
@@ -69,7 +69,7 @@
 "CHF" = "franc suís";
 "CLF" = "llei xilena";
 "CLP" = "Xile Pes";
-"CNY" = "RMB";
+"CNY" = "Renminbi";
 "COP" = "Pes colombià";
 "CRC" = "Costa Rica Colon";
 "CUC" = "Pes convertible cubà";
@@ -86,7 +86,7 @@
 "EUR" = "Euro";
 "FJD" = "Dòlar de Fiji";
 "FKP" = "Fokkland Pound";
-"GBP" = "GBP";
+"GBP" = "Lliure";
 "GEL" = "Georgia Larry";
 "GHS" = "Ghana Cedi";
 "GIP" = "Gibraltar Libra";
@@ -94,7 +94,7 @@
 "GNF" = "Guinea Franc";
 "GTQ" = "Guatemala Quetzal";
 "GYD" = "Guyana Yuan";
-"HKD" = "HKD";
+"HKD" = "Dòlar de Hong Kong";
 "HNL" = "Hondures Lempira";
 "HRK" = "Kuna croata";
 "HTG" = "Haiti Goode";

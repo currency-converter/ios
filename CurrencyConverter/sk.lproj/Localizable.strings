@@ -23,7 +23,7 @@
 "settings.updatedAt" = "posledná aktualizácia";
 "settings.customRateHeader" = "Vlastný výmenný kurz";
 "settings.customRateFooter" = "Pri zmene typu meny sa vypne vlastný prepínač výmenného kurzu.";
-"settings.displayHeader" = "display";
+"settings.displayHeader" = "zobraziť";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Používa separátor zoskupenia";
 "settings.decimalPlaces" = "počet desatinných miest";
@@ -86,7 +86,7 @@
 "EUR" = "Euro";
 "FJD" = "dolár Fidži";
 "FKP" = "Fokklandova libra";
-"GBP" = "GBP";
+"GBP" = "rýdze";
 "GEL" = "Gruzínsko Larry";
 "GHS" = "Ghana Cedi";
 "GIP" = "Gibraltárska libra";
@@ -94,7 +94,7 @@
 "GNF" = "Guinea Franc";
 "GTQ" = "Guatemala Quetzal";
 "GYD" = "Guyana Yuan";
-"HKD" = "HKD";
+"HKD" = "Hongkonský dolár";
 "HNL" = "Honduras Lempira";
 "HRK" = "chorvátska kuna";
 "HTG" = "Haiti Goode";
