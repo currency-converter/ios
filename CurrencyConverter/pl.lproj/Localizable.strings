@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.entry" = "Zaczynać";
 "guide.0" = "Przesuń walutę wymiany w górę iw dół";
 "guide.1" = "Przesuń w lewo i w prawo, aby zmienić waluty";
 

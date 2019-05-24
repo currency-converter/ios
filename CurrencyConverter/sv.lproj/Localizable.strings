@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.entry" = "Kom igång";
 "guide.0" = "Skjut växelvalutan upp och ner";
 "guide.1" = "Dra åt vänster och höger för att växla valutor";
 

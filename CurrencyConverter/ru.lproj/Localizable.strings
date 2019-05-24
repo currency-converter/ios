@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.entry" = "Начать";
 "guide.0" = "Сдвиньте валюту вверх и вниз";
 "guide.1" = "Проведите пальцем влево и вправо для переключения валют";
 

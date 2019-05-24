@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if (!(UserDefaults.standard.bool(forKey: "everLaunched"))) {
 			UserDefaults.standard.set(true, forKey:"everLaunched")
 			let guideViewController = GuideViewController()
-			self.window!.rootViewController = guideViewController;
+			self.window!.rootViewController = guideViewController
 			print("guideview launched!")
 		}
 		

@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.entry" = "Почати";
 "guide.0" = "Пересуньте обмінну валюту вгору і вниз";
 "guide.1" = "Проведіть ліворуч і праворуч, щоб змінити валюту";
 

@@ -68,6 +68,21 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 				imgView.image = UIImage(contentsOfFile: path)
 			}
 			scrollView.addSubview(imgView)
+			
+			// 最后一页加上进入按钮
+			if i == numOfPages - 1 {
+				let entryButtonWidth: CGFloat = 150
+				let entryButtonHeight: CGFloat = 50
+				let entryButtonMargin: CGFloat = 0
+				let entryButton: UIButton = UIButton(frame: CGRect(x: frame.size.width*CGFloat(i) + (frame.size.width - entryButtonWidth)/2, y: self.view.bounds.height - pageControlHeight - entryButtonHeight - entryButtonMargin, width: entryButtonWidth, height: entryButtonHeight))
+				entryButton.setTitle(NSLocalizedString("guide.entry", comment: ""), for: .normal)
+				entryButton.layer.cornerRadius = 5
+				entryButton.backgroundColor = .loquatYellow
+				let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(onEntryButtonTap))
+				entryButton.addGestureRecognizer(tapGesture)
+				
+				scrollView.addSubview(entryButton)
+			}
 		}
 		scrollView.contentOffset = CGPoint.zero
 		self.view.addSubview(scrollView)
@@ -85,10 +100,14 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 		let twidth = CGFloat(numOfPages-1) * self.view.bounds.size.width
 		//如果在最后一个页面继续滑动的话就会跳转到主页面
 		if scrollView.contentOffset.x > twidth {
-			let mainStoryboard = UIStoryboard(name:"Main", bundle:nil)
-			let viewController: UIViewController = mainStoryboard.instantiateInitialViewController()!
-			self.present(viewController, animated: true, completion: nil)
+			self.entry()
 		}
+	}
+	
+	func entry() {
+		let mainStoryboard = UIStoryboard(name:"Main", bundle:nil)
+		let viewController: UIViewController = mainStoryboard.instantiateInitialViewController()!
+		self.present(viewController, animated: true, completion: nil)
 	}
 	
 	//UIScrollViewDelegate方法，每次滚动结束后调用
@@ -97,6 +116,10 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 		let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
 		//设置pageController的当前页
 		pageControl.currentPage = page
+	}
+	
+	@objc func onEntryButtonTap() {
+		self.entry()
 	}
 	
 }

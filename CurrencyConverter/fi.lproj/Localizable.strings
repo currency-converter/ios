@@ -5,6 +5,7 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.entry" = "Aloita";
 "guide.0" = "Liu'uta vaihtovaluutta ylös ja alas";
 "guide.1" = "Pyyhkäise vasemmalle ja oikealle vaihtaaksesi valuuttoja";
 
