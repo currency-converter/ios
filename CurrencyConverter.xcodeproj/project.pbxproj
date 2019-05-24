@@ -127,7 +127,6 @@
 		247FC335228307D400B81031 /* MOP.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655222708B2D0011711A /* MOP.png */; };
 		247FC336228307D400B81031 /* MXN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655322708B2D0011711A /* MXN.png */; };
 		247FC337228307D400B81031 /* MVR.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655422708B2D0011711A /* MVR.png */; };
-		247FC338228307D400B81031 /* ZWL.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655522708B2D0011711A /* ZWL.png */; };
 		247FC339228307D400B81031 /* TZS.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655622708B2D0011711A /* TZS.png */; };
 		247FC33A228307D400B81031 /* GMD.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655722708B2D0011711A /* GMD.png */; };
 		247FC33B228307D400B81031 /* NGN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655822708B2D0011711A /* NGN.png */; };
@@ -398,8 +397,6 @@
 		2499665E22708B2E0011711A /* MXN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655322708B2D0011711A /* MXN.png */; };
 		2499665F22708B2E0011711A /* MVR.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655422708B2D0011711A /* MVR.png */; };
 		2499666022708B2E0011711A /* MVR.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655422708B2D0011711A /* MVR.png */; };
-		2499666122708B2E0011711A /* ZWL.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655522708B2D0011711A /* ZWL.png */; };
-		2499666222708B2E0011711A /* ZWL.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655522708B2D0011711A /* ZWL.png */; };
 		2499666322708B2E0011711A /* TZS.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655622708B2D0011711A /* TZS.png */; };
 		2499666422708B2E0011711A /* TZS.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655622708B2D0011711A /* TZS.png */; };
 		2499666522708B2E0011711A /* GMD.png in Resources */ = {isa = PBXBuildFile; fileRef = 2499655722708B2D0011711A /* GMD.png */; };
@@ -722,7 +719,6 @@
 		2499655222708B2D0011711A /* MOP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MOP.png; sourceTree = "<group>"; };
 		2499655322708B2D0011711A /* MXN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MXN.png; sourceTree = "<group>"; };
 		2499655422708B2D0011711A /* MVR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MVR.png; sourceTree = "<group>"; };
-		2499655522708B2D0011711A /* ZWL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZWL.png; sourceTree = "<group>"; };
 		2499655622708B2D0011711A /* TZS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TZS.png; sourceTree = "<group>"; };
 		2499655722708B2D0011711A /* GMD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GMD.png; sourceTree = "<group>"; };
 		2499655822708B2D0011711A /* NGN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NGN.png; sourceTree = "<group>"; };
@@ -1059,7 +1055,6 @@
 				2499655222708B2D0011711A /* MOP.png */,
 				2499655322708B2D0011711A /* MXN.png */,
 				2499655422708B2D0011711A /* MVR.png */,
-				2499655522708B2D0011711A /* ZWL.png */,
 				2499655622708B2D0011711A /* TZS.png */,
 				2499655722708B2D0011711A /* GMD.png */,
 				2499655822708B2D0011711A /* NGN.png */,
@@ -1533,7 +1528,6 @@
 				24ADE842222ED4AB00B4C046 /* Main.storyboard in Resources */,
 				249965C522708B2D0011711A /* XPF.png in Resources */,
 				249965B922708B2D0011711A /* KGS.png in Resources */,
-				2499666122708B2E0011711A /* ZWL.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1692,7 +1686,6 @@
 				249965B422708B2D0011711A /* HUF.png in Resources */,
 				249965E022708B2D0011711A /* ALL.png in Resources */,
 				2499660422708B2E0011711A /* MAD.png in Resources */,
-				2499666222708B2E0011711A /* ZWL.png in Resources */,
 				2499664422708B2E0011711A /* NPR.png in Resources */,
 				2499661C22708B2E0011711A /* XCD.png in Resources */,
 				249966C822708B2E0011711A /* ARS.png in Resources */,
@@ -1731,7 +1724,6 @@
 				247FC2E2228307D400B81031 /* QAR.png in Resources */,
 				247FC302228307D400B81031 /* ANG.png in Resources */,
 				247FC354228307D400B81031 /* PGK.png in Resources */,
-				247FC338228307D400B81031 /* ZWL.png in Resources */,
 				247FC303228307D400B81031 /* LRD.png in Resources */,
 				247FC35A228307D400B81031 /* SLL.png in Resources */,
 				247FC2D1228307D400B81031 /* LVL.png in Resources */,
