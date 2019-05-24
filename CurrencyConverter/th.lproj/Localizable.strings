@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "เลื่อนสกุลเงินแลกเปลี่ยนขึ้นและลง";
+"guide.1" = "ปัดไปทางซ้ายและขวาเพื่อสลับสกุลเงิน";
 
 "settings.title" = "การตั้งค่า";
 "settings.soundsHeader" = "เสียง";

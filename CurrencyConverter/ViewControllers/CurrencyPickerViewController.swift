@@ -318,7 +318,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		shared?.set(allCurrencies[0], forKey: "favorites")
 		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			"favorites": allCurrencies[0]
+			"favorites": allCurrencies[0]!
 		])
 	}
 }

@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "Сдвиньте валюту вверх и вниз";
+"guide.1" = "Проведите пальцем влево и вправо для переключения валют";
 
 "settings.title" = "Настройки";
 "settings.soundsHeader" = "звук";

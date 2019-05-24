@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "Schieben Sie die Wechselwährung nach oben und unten.";
+"guide.1" = "Streichen Sie nach links und rechts, um die Währung zu wechseln.";
 
 "settings.title" = "Einstellungen";
 "settings.soundsHeader" = "Ton";

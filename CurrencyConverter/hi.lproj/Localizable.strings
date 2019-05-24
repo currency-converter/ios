@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "विनिमय मुद्रा को ऊपर और नीचे स्लाइड करें";
+"guide.1" = "मुद्राओं को स्विच करने के लिए बाएं और दाएं स्वाइप करें";
 
 "settings.title" = "सेटिंग्स";
 "settings.soundsHeader" = "ध्वनि";

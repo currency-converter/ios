@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
 		IwatchSessionUtil.shareManager.startSession()
+		
+		//这里判断是否第一次启动APP
+		if (!(UserDefaults.standard.bool(forKey: "everLaunched"))) {
+			UserDefaults.standard.set(true, forKey:"everLaunched")
+			let guideViewController = GuideViewController()
+			self.window!.rootViewController = guideViewController;
+			print("guideview launched!")
+		}
+		
         return true
     }
 	

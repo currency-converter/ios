@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "Σύρετε το νόμισμα ανταλλαγής προς τα πάνω και προς τα κάτω";
+"guide.1" = "Σύρετε αριστερά και δεξιά για να αλλάξετε νομίσματα";
 
 "settings.title" = "Ρυθμίσεις";
 "settings.soundsHeader" = "ήχος";

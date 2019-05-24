@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "Pomaknite valutu za promjenu gore i dolje";
+"guide.1" = "Prijeđite prstima lijevo i desno da biste promijenili valute";
 
 "settings.title" = "Postavke";
 "settings.soundsHeader" = "zvuk";

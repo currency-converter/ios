@@ -5,6 +5,8 @@
  Created by zhi.zhong on 2019/3/30.
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
+"guide.0" = "Döviz para birimini yukarı ve aşağı kaydırın";
+"guide.1" = "Para birimleri arasında geçiş yapmak için sola ve sağa kaydırın";
 
 "settings.title" = "Ayarlar";
 "settings.soundsHeader" = "ses";
