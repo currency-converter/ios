@@ -201,3 +201,5 @@
 "YER" = "Jemen Rial";
 "ZAR" = "Dél-afrikai rand";
 "ZMW" = "Zambiai Kwacha";
+
+"alias" = "CNY=Kína&HKD=Hong Kong, Kína&MOP=Makaó, Kína&TWD=Tajvan, Kína&EUR = Ausztria,Belgium,Finnország,Franciaország,Németország,Görögország,Írország,Olaszország,Luxemburg,Hollandia,Portugália,Spanyolország,Észtország,Andorra,Vatikán,Montenegró,Lettország,Litvánia,Málta,Ciprus,San Marino,Szlovákia,Szlovénia&USD = Kelet-Timor,Ecuador,Marshall-szigetek,Mikronézia,Palau&NZD = Niue,Cook-szigetek&AUD = Nauru,Kiribati&XAF = Egyenlítői-Guinea,Kongó,Gabon,Kamerun,Csád,Közép-Afrika&XOF = Benin,Burkina Faso,Togo,Bissau-Guinea,Elefántcsontpart,Mali,Niger,Szenegál&CHF = Liechtenstein";

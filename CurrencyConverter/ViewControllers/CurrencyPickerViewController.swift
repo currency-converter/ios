@@ -22,6 +22,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		NSLocalizedString("currencyPicker.allCurrencies", comment: "")
 	]
 	
+	var alias: [String: String] = [:]
+	
 	var currencyNames: [String:String] = [:]
 	
 	var currencyTableView: UITableView!
@@ -58,6 +60,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		self.themeIndex = shared?.integer(forKey: "theme")
 		
 		self.initCurrencyNames()
+		self.initAlias()
 	}
 	
 	func render() {
@@ -179,6 +182,17 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		currencyNames[""] = NSLocalizedString("currencyPicker.unknow", comment: "")
 		for currency in allCurrencies[1]! {
 			currencyNames[currency] = NSLocalizedString(currency, comment: "")
+		}
+	}
+	
+	func initAlias() {
+		let a: String = NSLocalizedString("alias", comment: "")
+		let b: [String] = a.components(separatedBy: "&")
+		for c in b {
+			let d: [String] = c.trimmingCharacters(in: .whitespaces).components(separatedBy: "=")
+			if d.count == 2 {
+				self.alias[d[0].trimmingCharacters(in: .whitespaces)] = d[1].trimmingCharacters(in: .whitespaces)
+			}
 		}
 	}
 	
@@ -334,6 +348,12 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		for currency in currencyNames {
 			if currency.key.contains(keyword) || currency.value.uppercased().contains(keyword) {
 				self.searchResults.append(currency.key)
+			}
+		}
+		
+		for a in self.alias {
+			if a.value.uppercased().contains(keyword) && !self.searchResults.contains(a.key) {
+				self.searchResults.append(a.key)
 			}
 		}
 

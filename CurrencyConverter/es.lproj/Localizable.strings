@@ -201,3 +201,5 @@
 "YER" = "Rial de Yemen";
 "ZAR" = "Rand sudafricano";
 "ZMW" = "Kwacha de Zambia";
+
+"alias" = "CNY=China&HKD=Hong Kong,China&MOP=Macao,China&TWD=Taiwán, china&EUR=Austria,Bélgica,Finlandia,Francia,Alemania,Grecia,Irlanda,Italia,Luxemburgo,Holanda,Portugal ,España,Estonia,Andorra,Vaticano,Montenegro,Letonia,Lituania,Malta,Chipre,San Marino,Eslovaquia,Eslovenia&USD=Timor Oriental,Ecuador,Islas Marshall,Micronesia,Palau&NZD=Niue,Islas Cook&AUD=Nauru,Kiribati&XAF=Guinea Ecuatorial,Congo,Gabón,Camerún,Chad,África Central&XOF=Benin,Burkina Faso,Togo,Guinea-Bissau,Costa de Marfil,Malí,Níger,Senegal&CHF=Liechtenstein";

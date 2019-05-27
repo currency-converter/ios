@@ -201,3 +201,5 @@
 "YER" = "Rial Yemen";
 "ZAR" = "Rand Nam Phi";
 "ZMW" = "Zambian Kwacha";
+
+"alias" = "CNY=Trung quốc&HKD=Hồng Kông, Trung Quốc&MOP=Ma Cao, Trung Quốc&TWD=Đài Loan, trung quốc&EUR=Áo,Bỉ,Phần Lan,Pháp,Đức,Hy Lạp,Ireland,Ý,Luxembourg,Hà Lan,Bồ Đào Nha,Tây Ban Nha,Estonia,Andorra,Vatican,Montenegro,Latvia,Litva,Malta,Síp,San Marino,Slovakia,Slovenia&USD=Đông Timor,Ecuador,Quần đảo Marshall,Micronesia,Palau&NZD=Niue,Quần đảo Cook&AUD=Nauru,Kiribati&XAF=Equatorial Guinea,Congo,Gabon,Cameroon,Chad,Trung Phi&XOF=Bénin,Burkina Faso,Togo,Guinea-Bissau,Côte d'Ivoire,Mali,Nigeria,Senegal&CHF=Liechtenstein";
