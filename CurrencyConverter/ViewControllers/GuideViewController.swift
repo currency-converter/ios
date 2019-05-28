@@ -29,7 +29,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 	func render() {
 		let frame = self.view.bounds
 		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
-		let marginLeft: CGFloat = 10
+		let marginLeft: CGFloat = 50
 		let pageControlWidth: CGFloat = 70
 		let pageControlHeight: CGFloat = 50
 
@@ -72,7 +72,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 			// 最后一页加上进入按钮
 			if i == numOfPages - 1 {
 				let entryButtonWidth: CGFloat = 150
-				let entryButtonHeight: CGFloat = 50
+				let entryButtonHeight: CGFloat = 40
 				let entryButtonMargin: CGFloat = 0
 				let entryButton: UIButton = UIButton(frame: CGRect(x: frame.size.width*CGFloat(i) + (frame.size.width - entryButtonWidth)/2, y: self.view.bounds.height - pageControlHeight - entryButtonHeight - entryButtonMargin, width: entryButtonWidth, height: entryButtonHeight))
 				entryButton.setTitle(NSLocalizedString("guide.entry", comment: ""), for: .normal)
