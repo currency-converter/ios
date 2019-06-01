@@ -335,6 +335,23 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 			"favorites": allCurrencies[0]!
 		])
 	}
+	
+	/// 限制跨分区移动
+	///
+	/// - Parameters: 参数
+	///   - tableView: tableView对象，代理的委托人
+	///   - sourceIndexPath: 移动之前cell位置
+	///   - proposedDestinationIndexPath: 移动之后cell的位置
+	/// - Returns: cell移动之后最后位置
+	func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+		//根据分区下标判断分区是否允许移动，当前后的位置在同一个分区，允许移动，返回移动之后的位置，当前后位置不在同一个分区，不允许移动，返回移动之前的位置
+		if sourceIndexPath.section == proposedDestinationIndexPath.section {
+			return proposedDestinationIndexPath
+		} else {
+			return sourceIndexPath
+		}
+		
+	}
 }
 
 

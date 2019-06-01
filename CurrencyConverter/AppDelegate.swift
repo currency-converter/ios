@@ -19,12 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		IwatchSessionUtil.shareManager.startSession()
 		
 		//这里判断是否第一次启动APP
-		//if (!(UserDefaults.standard.bool(forKey: "everLaunched"))) {
+		if (!(UserDefaults.standard.bool(forKey: "everLaunched"))) {
 			UserDefaults.standard.set(true, forKey:"everLaunched")
 			let guideViewController = GuideViewController()
 			self.window!.rootViewController = guideViewController
 			print("guideview launched!")
-		//}
+		}
 		
         return true
     }
