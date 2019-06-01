@@ -5,4 +5,4 @@
   Created by zhi.zhong on 2019/4/2.
   Copyright © 2019 zhi.zhong. All rights reserved.
 */
-CFBundleDisplayName = "Convertisseur de devises";
+CFBundleDisplayName = "Conversion du taux de change";
