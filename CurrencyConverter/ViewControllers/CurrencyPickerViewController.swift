@@ -269,7 +269,8 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		//获取当前选中的单元格
 		let cell: UITableViewCell! = tableView.cellForRow(at: indexPath)
-		let data: String = (cell.textLabel?.text)! //(cell as! CurrencyTableViewCell).symbol.text!
+		let data: String = (cell.textLabel?.text)!
+		self.searchController.isActive = false
 		let key: String = "\(currencyType)Symbol"
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(data, forKey: key)
@@ -281,7 +282,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 			"changeType": "pick",
 			key: data
 		])
-		
+
 		self.close()
 	}
 	
