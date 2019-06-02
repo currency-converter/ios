@@ -28,7 +28,6 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var updatedAtValue: UILabel!
 	@IBOutlet weak var frequencyValue: UILabel!
 	@IBOutlet weak var customRateLabel: UILabel!
-	@IBOutlet weak var customRateDetailLabel: UILabel!
 	@IBOutlet weak var demoLabel: UILabel!
 	@IBOutlet weak var use1000SeparatorLabel: UILabel!
 	@IBOutlet weak var decimalPlacesLabel: UILabel!
@@ -39,10 +38,14 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	@IBOutlet weak var use1000SeparatorSwitch: UISwitch!
 	@IBOutlet weak var loading: UIActivityIndicatorView!
 	@IBOutlet weak var updateImmediatelyButton: UIButton!
-	@IBOutlet weak var customRateStepper: UIStepper!
 	@IBOutlet weak var disclaimerLabel: UILabel!
 	@IBOutlet weak var themeLabel: UILabel!
 	@IBOutlet weak var themeSegment: UISegmentedControl!
+	@IBOutlet weak var customRateFrom: UILabel!
+	@IBOutlet weak var customRateTo: UILabel!
+	@IBOutlet weak var customRateTextField: UITextField!
+	@IBOutlet weak var customRate1: UILabel!
+	@IBOutlet weak var customRateEqual: UILabel!
 	
 	var sectionHeaders:[String] = [
 		NSLocalizedString("settings.soundsHeader", comment: ""),
@@ -83,10 +86,6 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		if key == "decimals" {
 			decimalValue.text = value
 			demoLabel.text = self.formatDemoText()
-			
-			self.updateCustomRateDetail(rate: Float(self.customRateStepper.value))
-			let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
-			self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
 		}
 		
 		if key == "rateUpdatedFrequency" {
@@ -135,7 +134,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "isCustomRate")
 		if sender.isOn {
-			shared?.set(self.customRateStepper.value, forKey: "customRate")
+			shared?.set(self.customRateTextField.text, forKey: "customRate")
 		} else {
 			shared?.removeObject(forKey: "customRate")
 		}
@@ -145,17 +144,15 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		])
 	}
 	
-	@IBAction func onCustomRateStepperClick(_ sender: UIStepper) {
+	@IBAction func onCustomRateTextfieldChanged(_ sender: UITextField) {
 		let shared = UserDefaults(suiteName: Config.groupId)
-		shared?.set(self.customRateStepper.value, forKey: "customRate")
+		shared?.set(self.customRateTextField.text, forKey: "customRate")
 
-		self.updateCustomRateDetail(rate: Float(sender.value))
-		
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			"isCustomRate": true
 		])
 	}
-	
+
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.set(sender.isOn, forKey: "usesGroupingSeparator")
@@ -223,7 +220,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.updateFrequencyLabel.textColor = Theme.cellTextColor[themeIndex]
 		self.updatedAtLabel.textColor = Theme.cellTextColor[themeIndex]
 		self.customRateLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.customRateDetailLabel.textColor = Theme.cellTextColor[themeIndex]
+		self.customRate1.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateFrom.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateEqual.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateTo.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		//self.customRateDetailLabel.textColor = Theme.cellTextColor[themeIndex]
 		self.demoLabel.textColor = Theme.cellTextColor[themeIndex]
 		self.use1000SeparatorLabel.textColor = Theme.cellTextColor[themeIndex]
 		self.decimalPlacesLabel.textColor = Theme.cellTextColor[themeIndex]
@@ -282,10 +283,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.autoUpdateRateSwitch.isOn = isAutoUpdateRate
 		self.customRateSwitch.isOn = isCustomRate
 		self.toggleCustomRateDetail(self.customRateSwitch.isOn)
-		self.updateCustomRateDetail(rate: rate)
-		self.customRateStepper.isContinuous = true
-		self.customRateStepper.value = Double(rate)
-		self.customRateStepper.stepValue = 1/pow(10, Double(decimals))
+		self.customRateTextField.text = "\(rate)"
+		self.customRateTo.text = toSymbol
+		self.customRateFrom.text = fromSymbol
 		self.use1000SeparatorSwitch.isOn = usesGroupingSeparator
 		self.demoLabel.font = UIFont(name: Config.numberFontName, size: 48)
 		self.demoLabel.text = self.formatDemoText()
@@ -331,20 +331,12 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func toggleCustomRateDetail(_ isOn: Bool) {
-		self.customRateDetailLabel.textColor = isOn ? Theme.cellTextColor[themeIndex]  : UIColor.gray
-		self.customRateStepper.tintColor = isOn ? UIColor.hex("0078fb") : UIColor.gray
-		self.customRateStepper.isEnabled = isOn
-	}
-	
-	func updateCustomRateDetail(rate: Float) {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		let fromSymbol: String = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
-		let toSymbol: String = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
-		let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
-		let fromMoney: String = String(format: "%.\(String(describing: decimals))f", arguments:[1.0])
-		let toMoney = String(format: "%.\(decimals)f", arguments:[rate])
-
-		self.customRateDetailLabel.text = "\(fromMoney) \(fromSymbol) = \(toMoney) \(toSymbol)"
+		self.customRateTextField.isEnabled = isOn
+		self.customRateTextField.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRate1.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateFrom.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateEqual.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+		self.customRateTo.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

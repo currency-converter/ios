@@ -179,20 +179,44 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.00 JPY = 0.06 CNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sV6-Is-kyl">
-                                                    <rect key="frame" x="16" y="14" width="240" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kq8-5m-W1Z">
+                                                    <rect key="frame" x="324" y="14" width="35" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100000" id="V4n-KU-nIj">
-                                                    <rect key="frame" x="270" y="10" width="94" height="29"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9qs-mq-3S4">
+                                                    <rect key="frame" x="16" y="14" width="32" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CNY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LZN-kr-2Uj">
+                                                    <rect key="frame" x="56" y="14" width="35" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VZP-2e-vVs">
+                                                    <rect key="frame" x="105" y="14" width="11" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" text="100.12" textAlignment="right" minimumFontSize="11" id="t9g-FH-zAN">
+                                                    <rect key="frame" x="179" y="13" width="137" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="onCustomRateStepperClick:" destination="C4h-y4-Exl" eventType="valueChanged" id="Ge0-tD-dXY"/>
+                                                        <action selector="onCustomRateTextfieldChanged:" destination="C4h-y4-Exl" eventType="editingChanged" id="wEL-CY-2nE"/>
                                                     </connections>
-                                                </stepper>
+                                                </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -245,11 +269,11 @@
                                         <rect key="frame" x="0.0" y="720" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VBu-GA-ay4" id="mHf-2E-7eE">
-                                            <rect key="frame" x="0.0" y="0.0" width="349" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Decimal Places" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oOf-vO-2bD">
-                                                    <rect key="frame" x="15" y="12" width="116.5" height="20.5"/>
+                                                    <rect key="frame" x="16" y="12" width="116.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -340,10 +364,13 @@
                         <outlet property="cell3_2" destination="VBu-GA-ay4" id="EOg-XP-YQ8"/>
                         <outlet property="cell3_3" destination="iBu-wm-rc4" id="yno-tF-QoV"/>
                         <outlet property="cell4_0" destination="HSH-50-rt4" id="03p-Yp-pH8"/>
-                        <outlet property="customRateDetailLabel" destination="sV6-Is-kyl" id="zVw-F9-0Wl"/>
+                        <outlet property="customRate1" destination="9qs-mq-3S4" id="Y4x-Ar-Zlz"/>
+                        <outlet property="customRateEqual" destination="VZP-2e-vVs" id="kjL-YP-KAD"/>
+                        <outlet property="customRateFrom" destination="LZN-kr-2Uj" id="Dtm-2T-7s5"/>
                         <outlet property="customRateLabel" destination="Q5Z-CB-S7u" id="FeW-Oh-okv"/>
-                        <outlet property="customRateStepper" destination="V4n-KU-nIj" id="za6-7a-xP2"/>
                         <outlet property="customRateSwitch" destination="A4I-2F-GBf" id="HnH-Wy-oxh"/>
+                        <outlet property="customRateTextField" destination="t9g-FH-zAN" id="y9d-rN-cpH"/>
+                        <outlet property="customRateTo" destination="Kq8-5m-W1Z" id="dzV-ud-KeK"/>
                         <outlet property="decimalPlacesLabel" destination="oOf-vO-2bD" id="saR-Tr-vvO"/>
                         <outlet property="decimalValue" destination="aGg-Iw-apV" id="P4p-0E-lVw"/>
                         <outlet property="demoLabel" destination="G0j-WV-l9C" id="Y72-Dj-c9M"/>
