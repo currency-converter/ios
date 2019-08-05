@@ -208,6 +208,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
 		self.rate = toRate/fromRate
 		self.showUpdatedAtLabel()
+		// #25 主动触发默认汇率界面更新
+		DispatchQueue.main.async {
+			self.toMoneyLabel?.text = self.output(self.fromMoney)
+		}
 	}
 	
 	func createUpdateRateDaemon() {
