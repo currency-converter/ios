@@ -738,10 +738,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func backspace() {
 		if self.operatorSymbol == "" && !self.isEmpty {
 			let length = self.fromMoney.count
-			self.fromMoney = length > 1 ? String(self.fromMoney.prefix(length - 1)) : "0"
+			let n = length > 1 ? String(self.fromMoney.prefix(length - 1)) : "0"
+			self.fromMoney = n != "-" ? n : "0"
 		} else {
 			let length = self.operatorEnd.count
-			self.operatorEnd = length > 1 ? String(self.operatorEnd.prefix(length - 1)) : "0"
+			let n = length > 1 ? String(self.operatorEnd.prefix(length - 1)) : "0"
+			self.operatorEnd = n != "-" ? n : "0"
 		}
 	}
 	
