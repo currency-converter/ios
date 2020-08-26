@@ -213,14 +213,14 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return searchController.searchBar.text != "" ? 1 : self.allCurrencies.count
 	}
-	
-	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		view.tintColor = Theme.cellTextColor[themeIndex]
-		let header = view as! UITableViewHeaderFooterView
-		header.textLabel?.textColor = Theme.cellTextColor[themeIndex]
-		header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-		header.subviews[0].backgroundColor = Theme.tableBackgroundColor[themeIndex]
-	}
+    
+    // 分组背景色和分组文字颜色
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.contentView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
+            headerView.textLabel?.textColor = Theme.cellTextColor[themeIndex]
+        }
+    }
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 30
