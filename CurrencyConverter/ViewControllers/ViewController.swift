@@ -813,7 +813,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		let rate = isCustomRate ? customRate : self.rate
 		
-		return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
+		return numberFormat(String(Float(money) ?? 0 * rate), maximumFractionDigits: decimals)
 	}
 	
 	func registerSettingsBundle() {
