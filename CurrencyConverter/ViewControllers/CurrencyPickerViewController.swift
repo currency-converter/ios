@@ -229,7 +229,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	//cell
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sectionId:Int = indexPath.section
-		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let symbol = searchController.searchBar.text != "" && self.searchResults.count > indexPath.row ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
 		cell.preservesSuperviewLayoutMargins = false
@@ -302,7 +302,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	// 设置单元格的编辑的样式
 	func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
 		let sectionId:Int = indexPath.section
-		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+        let symbol = searchController.searchBar.text != "" && self.searchResults.count > indexPath.row ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
 
 		return isFav ? UITableViewCell.EditingStyle.delete : UITableViewCell.EditingStyle.insert
@@ -311,7 +311,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	// 单元格编辑后的响应方法
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		let sectionId:Int = indexPath.section
-		let symbol = searchController.searchBar.text != "" ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
+		let symbol = searchController.searchBar.text != "" && self.searchResults.count > indexPath.row ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
 		self.toggleFavorite(symbol: symbol ?? "")
 	}
 	
