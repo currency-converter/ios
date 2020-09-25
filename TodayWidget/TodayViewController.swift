@@ -186,7 +186,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
 		fromScreen.tag = 1
-		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+//		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		if isDebug {
 			fromScreen.backgroundColor = UIColor.green
 		}
@@ -194,7 +194,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
 		toScreen.tag = 2
-		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+//		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		if isDebug {
 			toScreen.backgroundColor = UIColor.yellow
 		}
@@ -526,7 +526,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	@objc func onCurrencyPickerClick(_ recognizer: UILongPressGestureRecognizer) {
-		let button: UIButton = recognizer.view as! UIButton
+        let button: UIButton = recognizer.view as! UIButton
 		let type = button.tag == 1 ? "from" : "to"
 		let currency: String = button.tag == 1 ? self.fromSymbol : self.toSymbol
 		let url: URL = URL.init(string: "currencyconverter://currencypicker/\(type)/\(currency)")!
