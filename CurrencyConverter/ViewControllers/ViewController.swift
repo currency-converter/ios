@@ -807,13 +807,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
-		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
-		let rate = isCustomRate ? customRate : self.rate
-		
-		return numberFormat(String(Float(money) ?? 0 * rate), maximumFractionDigits: decimals)
+        if !money.isEmpty {
+            let shared = UserDefaults(suiteName: Config.groupId)
+            let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+            let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+            let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
+            let rate = isCustomRate ? customRate : self.rate
+            return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
+        }
+        return ""
 	}
 	
 	func registerSettingsBundle() {

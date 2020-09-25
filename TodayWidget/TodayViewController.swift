@@ -148,7 +148,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
 		self.toSymbol = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
-		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+        self.rates = (shared?.object(forKey: "rates") ?? Config.defaults["rates"] as! [String: [String: NSNumber]]) as? [String: [String: NSNumber]]
 		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
 		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
 		self.rate = toRate/fromRate
