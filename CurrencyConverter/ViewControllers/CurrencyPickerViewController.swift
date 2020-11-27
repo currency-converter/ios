@@ -70,14 +70,14 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let viewBounds:CGRect = UIScreen.main.bounds
 		
 		// 状态条高度
-		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+//		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
 		
 		// 给状态条加上背景色
-		let statusBarBackgroundView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: statusBarHeight))
-		statusBarBackgroundView.backgroundColor = Theme.statusBarBackgroundColor[themeIndex]
-		self.view.addSubview(statusBarBackgroundView)
+//		let statusBarBackgroundView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: statusBarHeight))
+//        statusBarBackgroundView.backgroundColor = UIColor.hex("0000f7") // Theme.statusBarBackgroundColor[themeIndex]
+//		self.view.addSubview(statusBarBackgroundView)
 		
-		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: 44))
+		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
 		navigationBar.barStyle = Theme.barStyle[themeIndex]
 		navigationBar.pushItem(navigationitem, animated: true)
 		self.view.addSubview(navigationBar)
@@ -120,7 +120,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.loquatYellow]
 		UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
 		
-		let tableView = UITableView(frame: CGRect(x: 0, y: statusBarHeight + navigationBar.frame.size.height, width: viewBounds.width, height: viewBounds.height - statusBarHeight - navigationBar.frame.size.height), style: .plain)
+		let tableView = UITableView(frame: CGRect(x: 0, y: 0 + navigationBar.frame.size.height, width: viewBounds.width, height: viewBounds.height - navigationBar.frame.size.height), style: .plain)
 		let tableViewBackground = UIView(frame: self.view.bounds)
 		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		tableView.backgroundView = tableViewBackground

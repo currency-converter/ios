@@ -375,7 +375,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	func clear(_ view: UIView) {
 		for subview in view.subviews as [UIView] {
-			subview.removeFromSuperview()
+            subview.removeFromSuperview()
 		}
 	}
 	
