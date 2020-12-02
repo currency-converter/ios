@@ -21,14 +21,14 @@ class Theme {
 	
 	// tableview 背景色
 	static let tableBackgroundColor: [UIColor] = [
-		UIColor.hex("efeff4"),
-		UIColor.black
+		UIColor.hex("efefef"),
+		UIColor.hex("171717")
 	]
 	
 	// 单元格背景色
 	static let cellBackgroundColor: [UIColor] = [
 		UIColor.white,
-		UIColor.hex("171717")
+		UIColor.hex("101010")
 	]
 	
 	// 单元格选中时背景色
