@@ -20,7 +20,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	var toMoneyLabelTextColor: [UIColor] = [
 		UIColor.hex("cccccc"),
-		UIColor.hex("000000")
+        UIColor.white
 	]
 	
 	// 当前输入货币是否为空
