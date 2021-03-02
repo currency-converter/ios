@@ -316,15 +316,19 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	func formatUpdatedAtText() -> String {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
-		let timeInterval:TimeInterval = TimeInterval(timeStamp)
+        let shared = UserDefaults(suiteName: Config.groupId)
+        let fromSymbol = shared?.string(forKey: "fromSymbol")
+        let toSymbol = shared?.string(forKey: "toSymbol")
+        let rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+        let fromRateUpdateAt: Int = (rates![fromSymbol!]?["b"]) as! Int
+        let toRateUpdateAt: Int = rates![toSymbol!]?["b"] as! Int
+        // 以更新慢的那个汇率的更新时间为当前汇率更新时间
+        let timeStamp: Int = [fromRateUpdateAt, toRateUpdateAt].min()!
+ 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
 		let dateFormatter = DateFormatter()
-		//dateFormatter.locale = Locale(identifier: "ar_EG")
 		dateFormatter.dateStyle = .short
 		dateFormatter.timeStyle = .short
-		//let date = Date()
 		let stringOfDate = dateFormatter.string(from: date)
 		
 		return stringOfDate

@@ -125,46 +125,37 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 let task = session.dataTask(with: request) { (data,response,error) in
                     if(error == nil) {
                         print("Request succeeded.")
-    //                    print("======")
-    //                    print(data!)
+                        // 新浪财经返回的数据是gbk格式
                         let cfEncoding = CFStringEncodings.GB_18030_2000
                         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEncoding.rawValue))
                         //从GBK编码的Data里初始化NSString, 返回的NSString是UTF-16编码
                         if let str = NSString(data: data!, encoding: encoding) {
                             let jsString = str as String
-    //                        print(jsString)
                             let lines = jsString.components(separatedBy: "\n")
-    //                        print(lines.count)
                             for line in lines {
                                 let array = line.components(separatedBy: ",")
-    //                            print(array.count)
                                 if (array.count == 18) { // 过滤无效数据
                                     let rate = array[1]
                                     let symbol = array[0].suffix(13).prefix(3).uppercased()
-    //                                print(symbol)
                                     let time = array[0].suffix(8)
                                     let characterSet = CharacterSet(charactersIn: "\";")
                                     let date = array[array.count-1].trimmingCharacters(in: characterSet)
-    //                                print(rate)
-    //                                print(date)
-    //                                print(time)
                                     
                                     let isoDate = "\(date)T\(time)+0800"
                                     let dateFormatter = ISO8601DateFormatter()
                                     let timestamp = dateFormatter.date(from:isoDate)!.timeIntervalSince1970
                                     let newRate = Double(rate)
-    //                                print("原始值：")
-    //                                print(self.rates[symbol]?["a"])
                                     self.rates[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
                                     self.rates[symbol]?["b"] = NSNumber(value: timestamp)
-    //                                print(self.rates[symbol]?["a"])
                                 }
                             }
                             
-                            let now = Date().timeStamp
+                            // 美元是中间货币，每次更新汇率都需要更新美元的更新时间
+                            let now = Date()
+                            let timeInterval:TimeInterval = now.timeIntervalSince1970
+                            self.rates["USD"]?["b"] = NSNumber(value: Int(timeInterval))
                             //更新缓存数据
                             let shared = UserDefaults(suiteName: Config.groupId)
-                            shared?.set(now, forKey: "rateUpdatedAt")
                             shared?.set(self.rates, forKey: "rates")
                             NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
                             //汇率更新后，需要主动更新app中正使用的汇率
@@ -175,8 +166,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                         print("Rate update failed.")
                         NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 1])
                     }
-                    
-                    
                     
                 }
                 
@@ -238,7 +227,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func isNeedUpdateRate() -> Bool {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let rateUpdatedAt: Int = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
-		let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! String
+        let rateUpdatedFrequency: String = shared?.string(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! String
 		let autoUpdateRate = shared?.bool(forKey: "autoUpdateRate") ?? Config.defaults["autoUpdateRate"] as! Bool
 		let rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 
@@ -425,12 +414,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func formatUpdatedAtText() -> String {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		let timeStamp = shared?.integer(forKey: "rateUpdatedAt") ?? Config.defaults["rateUpdatedAt"] as! Int
+        let fromRateUpdateAt: Int = (self.rates[self.fromSymbol]?["b"]) as! Int
+        let toRateUpdateAt: Int = self.rates[self.toSymbol]?["b"] as! Int
+        // 以更新慢的那个汇率的更新时间为当前汇率更新时间
+        let timeStamp: Int = [fromRateUpdateAt, toRateUpdateAt].min()!
 		let timeInterval:TimeInterval = TimeInterval(timeStamp)
 		let date = Date(timeIntervalSince1970: timeInterval)
 		let dateFormatter = DateFormatter()
-		//dateFormatter.locale = Locale(identifier: "ar_EG")
 		dateFormatter.dateStyle = .short
 		dateFormatter.timeStyle = .short
 		let stringOfDate = dateFormatter.string(from: date)
