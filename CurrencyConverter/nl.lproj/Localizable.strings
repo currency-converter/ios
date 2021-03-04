@@ -26,6 +26,7 @@
 "settings.updatedAt" = "laatst bijgewerkt";
 "settings.customRateHeader" = "Aangepaste Wisselkoers";
 "settings.customRateFooter" = "Als u het valutatype wijzigt, wordt de aangepaste wisselkoersschakelaar uitgeschakeld.";
+"settings.customRateCheckFailed" = "De wisselkoers kan alleen een decimaal zijn";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Gebruikt groepenscheiding";

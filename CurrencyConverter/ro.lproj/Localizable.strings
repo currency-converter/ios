@@ -26,6 +26,7 @@
 "settings.updatedAt" = "ultima actualizare";
 "settings.customRateHeader" = "Rata de schimb personalizată";
 "settings.customRateFooter" = "La schimbarea tipului de valută, comutatorul cursului de schimb personalizat va fi oprit.";
+"settings.customRateCheckFailed" = "Cursul de schimb poate fi doar zecimal";
 "settings.displayHeader" = "afișare";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilizează separatorul de grupare";

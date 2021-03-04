@@ -26,6 +26,7 @@
 "settings.updatedAt" = "viimeksi päivitetty";
 "settings.customRateHeader" = "Mukautettu valuuttakurssi";
 "settings.customRateFooter" = "Valuuttatyyppiä muutettaessa mukautettu vaihtokurssikytkin sammuu.";
+"settings.customRateCheckFailed" = "Vaihtokurssi voi olla vain desimaali";
 "settings.displayHeader" = "näyttö";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Käyttää ryhmittelyerotinta";

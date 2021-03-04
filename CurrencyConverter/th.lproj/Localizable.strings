@@ -26,6 +26,7 @@
 "settings.updatedAt" = "อัปเดตล่าสุด";
 "settings.customRateHeader" = "อัตราแลกเปลี่ยนที่กำหนดเอง";
 "settings.customRateFooter" = "เมื่อเปลี่ยนประเภทสกุลเงินสวิตช์อัตราแลกเปลี่ยนแบบกำหนดเองจะถูกปิด";
+"settings.customRateCheckFailed" = "మార్పిడి రేటు దశాంశం మాత్రమే";
 "settings.displayHeader" = "จอแสดงผล";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "ใช้ตัวแยกการจัดกลุ่ม";

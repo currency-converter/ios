@@ -26,6 +26,7 @@
 "settings.updatedAt" = "terakhir diperbarui";
 "settings.customRateHeader" = "Nilai Tukar Kustom";
 "settings.customRateFooter" = "Saat mengubah jenis mata uang, sakelar nilai tukar khusus akan dimatikan.";
+"settings.customRateCheckFailed" = "Nilai tukar hanya dapat berupa desimal";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Gunakan Pemisah Pengelompokan";

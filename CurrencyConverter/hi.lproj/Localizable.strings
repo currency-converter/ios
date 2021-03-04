@@ -26,6 +26,7 @@
 "settings.updatedAt" = "अंतिम अद्यतन";
 "settings.customRateHeader" = "कस्टम एक्सचेंज रेट";
 "settings.customRateFooter" = "जब मुद्रा प्रकार बदल रहा है, तो कस्टम विनिमय दर स्विच बंद हो जाएगा";
+"settings.customRateCheckFailed" = "विनिमय दर केवल एक दशमलव हो सकती है";
 "settings.displayHeader" = "प्रदर्शन";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "ग्रुपिंग सेपरेटर का उपयोग करता है";

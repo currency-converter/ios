@@ -26,6 +26,7 @@
 "settings.updatedAt" = "Last Update";
 "settings.customRateHeader" = "Custom Rate";
 "settings.customRateFooter" = "When changing the currency type, the custom exchange rate switch will be turned off.";
+"settings.customRateCheckFailed" = "Le taux de change ne peut être qu'une décimale";
 "settings.displayHeader" = "Display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilise le séparateur de groupe";

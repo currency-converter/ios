@@ -26,6 +26,7 @@
 "settings.updatedAt" = "posljednji put ažurirano";
 "settings.customRateHeader" = "prilagođeni tečaj";
 "settings.customRateFooter" = "Kada mijenjate vrstu valute, prilagođena prekidač tečaja će biti isključena.";
+"settings.customRateCheckFailed" = "Tečajna lista može biti samo decimalna";
 "settings.displayHeader" = "prikaz";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Koristi separator grupiranja";

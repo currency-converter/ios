@@ -26,6 +26,7 @@
 "settings.updatedAt" = "última actualització";
 "settings.customRateHeader" = "Taxa de canvi personalitzada";
 "settings.customRateFooter" = "Quan canvieu el tipus de moneda, el commutador de tipus de canvi personalitzat es desactivarà.";
+"settings.customRateCheckFailed" = "El tipus de canvi només pot ser un decimal";
 "settings.displayHeader" = "Visualització";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilitza l'agrupació del separador";

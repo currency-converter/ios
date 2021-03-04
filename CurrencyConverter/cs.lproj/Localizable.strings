@@ -26,6 +26,7 @@
 "settings.updatedAt" = "poslední aktualizace";
 "settings.customRateHeader" = "Vlastní směnný kurz";
 "settings.customRateFooter" = "Při změně typu měny bude vypnut vlastní přepínač směnného kurzu.";
+"settings.customRateCheckFailed" = "Směnný kurz může být pouze desetinný";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Používá separátor seskupení";

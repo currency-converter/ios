@@ -26,6 +26,7 @@
 "settings.updatedAt" = "Utolsó frissítés";
 "settings.customRateHeader" = "Egyéni árfolyam";
 "settings.customRateFooter" = "A pénznem típusának megváltoztatásakor az egyéni árfolyamkapcsoló kikapcsol.";
+"settings.customRateCheckFailed" = "Az árfolyam csak tizedes lehet";
 "settings.displayHeader" = "kijelző";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Csoportosító elválasztó használata";

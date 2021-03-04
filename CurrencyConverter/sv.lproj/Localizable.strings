@@ -26,6 +26,7 @@
 "settings.updatedAt" = "senast uppdaterad";
 "settings.customRateHeader" = "Anpassad växelkurs";
 "settings.customRateFooter" = "När du ändrar valutatypen stängs den anpassade växelkursomkopplaren av.";
+"settings.customRateCheckFailed" = "Växelkursen kan bara vara ett decimal";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Använder gruppering av separator";

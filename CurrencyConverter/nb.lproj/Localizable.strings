@@ -26,6 +26,7 @@
 "settings.updatedAt" = "sist oppdatert";
 "settings.customRateHeader" = "Tilpasset Exchange Rate";
 "settings.customRateFooter" = "Når du endrer valutatype, vil den tilpassede valutakursbryteren bli slått av.";
+"settings.customRateCheckFailed" = "Valutakursen kan bare være en desimal";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Bruker gruppering av separator";

@@ -26,6 +26,7 @@
 "settings.updatedAt" = "last updated";
 "settings.customRateHeader" = "Tipo de cambio personalizado";
 "settings.customRateFooter" = "Al cambiar el tipo de moneda, el interruptor de tipo de cambio personalizado se desactivará.";
+"settings.customRateCheckFailed" = "El tipo de cambio solo puede ser un decimal";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Usa separador de agrupación";

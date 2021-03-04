@@ -26,6 +26,7 @@
 "settings.updatedAt" = "cập nhật lần cuối";
 "settings.customRateHeader" = "Tỷ giá hối đoái tùy chỉnh";
 "settings.customRateFooter" = "Khi thay đổi loại tiền tệ, công tắc tỷ giá hối đoái tùy chỉnh sẽ bị tắt.";
+"settings.customRateCheckFailed" = "Tỷ giá hối đoái chỉ có thể là số thập phân";
 "settings.displayHeader" = "hiển thị";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Sử dụng phân tách nhóm";

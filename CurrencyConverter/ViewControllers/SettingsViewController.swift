@@ -145,12 +145,24 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onCustomRateTextfieldChanged(_ sender: UITextField) {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		shared?.set(self.customRateTextField.text, forKey: "customRate")
+        // 校验自定义汇率的合法性
+        let customRate:String = self.customRateTextField.text ?? "1"
+        if Float(customRate) != nil {
+            let shared = UserDefaults(suiteName: Config.groupId)
+            shared?.set(customRate, forKey: "customRate")
 
-		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			"isCustomRate": true
-		])
+            NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+                "isCustomRate": true
+            ])
+        } else {
+            let alertController = UIAlertController(title: NSLocalizedString("settings.customRateCheckFailed", comment: ""), message: nil, preferredStyle: .alert)
+            //显示提示框
+            self.present(alertController, animated: true, completion: nil)
+            //1秒钟后自动消失
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.presentedViewController?.dismiss(animated: false, completion: nil)
+            }
+        }
 	}
 
 	@IBAction func onUse1000SeparatorChanged(_ sender: UISwitch) {
@@ -284,6 +296,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.customRateSwitch.isOn = isCustomRate
 		self.toggleCustomRateDetail(self.customRateSwitch.isOn)
 		self.customRateTextField.text = "\(rate)"
+        self.customRateTextField.keyboardType = UIKeyboardType.decimalPad
 		self.customRateTo.text = toSymbol
 		self.customRateFrom.text = fromSymbol
 		self.use1000SeparatorSwitch.isOn = usesGroupingSeparator

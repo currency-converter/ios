@@ -26,6 +26,7 @@
 "settings.updatedAt" = "最終更新日";
 "settings.customRateHeader" = "カスタム為替レート";
 "settings.customRateFooter" = "通貨タイプを変更すると、カスタム為替レートスイッチがオフになります。";
+"settings.customRateCheckFailed" = "為替レートは小数のみにすることができます";
 "settings.displayHeader" = "ディスプレイ";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "グループ化区切りを使用";

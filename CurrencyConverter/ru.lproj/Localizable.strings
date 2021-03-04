@@ -26,6 +26,7 @@
 "settings.updatedAt" = "последнее обновление";
 "settings.customRateHeader" = "Пользовательский курс обмена";
 "settings.customRateFooter" = "При изменении типа валюты переключение пользовательского курса будет отключено.";
+"settings.customRateCheckFailed" = "Обменный курс может быть только десятичным.";
 "settings.displayHeader" = "дисплей";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Использует группировочный разделитель";

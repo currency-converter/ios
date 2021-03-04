@@ -26,6 +26,7 @@
 "settings.updatedAt" = "最后更新";
 "settings.customRateHeader" = "自定义汇率";
 "settings.customRateFooter" = "改变货币类型时，自定义汇率将关闭。";
+"settings.customRateCheckFailed" = "汇率只能是小数";
 "settings.displayHeader" = "显示";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "使用分组分隔符";

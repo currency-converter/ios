@@ -26,6 +26,7 @@
 "settings.updatedAt" = "letzte Aktualisierung";
 "settings.customRateHeader" = "Benutzerdefinierter Wechselkurs";
 "settings.customRateFooter" = "Wenn Sie den Währungstyp ändern, wird der benutzerdefinierte Wechselkursschalter deaktiviert.";
+"settings.customRateCheckFailed" = "Der Wechselkurs kann nur eine Dezimalzahl sein";
 "settings.displayHeader" = "Anzeige";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Verwendet Gruppierungstrennzeichen";

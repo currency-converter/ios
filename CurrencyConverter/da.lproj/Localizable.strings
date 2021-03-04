@@ -26,6 +26,7 @@
 "settings.updatedAt" = "sidst opdateret";
 "settings.customRateHeader" = "Brugerdefineret valutakurs";
 "settings.customRateFooter" = "Når du ændrer valuta type, vil den brugerdefinerede valutakurskontakt blive slået fra.";
+"settings.customRateCheckFailed" = "Vekselkursen kan kun være en decimal";
 "settings.displayHeader" = "display";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Bruger Gruppen Separator";

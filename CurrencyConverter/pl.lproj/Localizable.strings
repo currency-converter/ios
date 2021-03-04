@@ -26,6 +26,7 @@
 "settings.updatedAt" = "ostatnia aktualizacja";
 "settings.customRateHeader" = "Niestandardowy kurs wymiany";
 "settings.customRateFooter" = "Zmieniając typ waluty, niestandardowy przełącznik kursu wymiany zostanie wyłączony.";
+"settings.customRateCheckFailed" = "Kurs wymiany może być tylko ułamkiem dziesiętnym";
 "settings.displayHeader" = "wyświetlacz";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Używa separatora grupowania";

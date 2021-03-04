@@ -26,6 +26,7 @@
 "settings.updatedAt" = "terakhir dikemas kini";
 "settings.customRateHeader" = "Kadar Pertukaran Kustom";
 "settings.customRateFooter" = "Apabila menukar jenis mata wang, suis kadar pertukaran adat akan dimatikan.";
+"settings.customRateCheckFailed" = "Nilai tukar hanya boleh menjadi perpuluhan";
 "settings.displayHeader" = "paparan";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Menggunakan Pengasingan Pemasukan";

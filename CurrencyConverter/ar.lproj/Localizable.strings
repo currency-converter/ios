@@ -26,6 +26,7 @@
 "settings.updatedAt" = "آخر تحديث";
 "settings.customRateHeader" = "سعر صرف مخصص";
 "settings.customRateFooter" = "عند تغيير نوع العملة ، سيتم إيقاف تشغيل مفتاح سعر الصرف المخصص.";
+"settings.customRateCheckFailed" = "لا يمكن أن يكون سعر الصرف سوى رقم عشري";
 "settings.displayHeader" = "عرض";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "يستخدم فاصل التجميع";

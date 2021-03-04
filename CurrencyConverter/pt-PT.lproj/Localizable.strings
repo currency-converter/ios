@@ -26,6 +26,7 @@
 "settings.updatedAt" = "última atualização";
 "settings.customRateHeader" = "Taxa de câmbio personalizada";
 "settings.customRateFooter" = "Ao alterar o tipo de moeda, a opção de taxa de câmbio personalizada será desativada.";
+"settings.customRateCheckFailed" = "A taxa de câmbio só pode ser uma casa decimal";
 "settings.displayHeader" = "exibir";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Usa o Separador de Agrupamento";

@@ -26,6 +26,7 @@
 "settings.updatedAt" = "останнє оновлення";
 "settings.customRateHeader" = "Спеціальний обмінний курс";
 "settings.customRateFooter" = "При зміні типу валюти вимикається користувальницький перемикач курсу.";
+"settings.customRateCheckFailed" = "Обмінний курс може бути лише десятковим";
 "settings.displayHeader" = "відображення";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Використовує сепаратор групування";

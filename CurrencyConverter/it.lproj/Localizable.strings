@@ -26,6 +26,7 @@
 "settings.updatedAt" = "ultimo aggiornamento";
 "settings.customRateHeader" = "Tasso di cambio personalizzato";
 "settings.customRateFooter" = "Quando si modifica il tipo di valuta, l'opzione del tasso di cambio personalizzato verrà disattivata.";
+"settings.customRateCheckFailed" = "Il tasso di cambio può essere solo un decimale";
 "settings.displayHeader" = "visualizza";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Utilizza il separatore di raggruppamento";

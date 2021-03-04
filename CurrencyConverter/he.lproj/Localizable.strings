@@ -26,6 +26,7 @@
 "settings.updatedAt" = "עודכן לאחרונה";
 "settings.customRateHeader" = "שער חליפין מותאם אישית";
 "Settings.customRateFooter" = "כאשר משנים את סוג המטבע, מטבע מותאם אישית לכבות.";
+"settings.customRateCheckFailed" = "שער החליפין יכול להיות רק עשרוני";
 "settings.displayHeader" = "הצג";
 "settings.displayFooter" = "";
 "Settings.usesGroupingSeparator" = "משתמש קיבוץ מפריד";

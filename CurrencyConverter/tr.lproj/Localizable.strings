@@ -26,6 +26,7 @@
 "settings.updatedAt" = "en son güncelleme";
 "settings.customRateHeader" = "Özel Döviz Kuru";
 "settings.customRateFooter" = "Para birimi türünü değiştirirken, özel döviz kuru anahtarı kapatılacaktır.";
+"settings.customRateCheckFailed" = "Döviz kuru yalnızca ondalık olabilir";
 "settings.displayHeader" = "ekran";
 "settings.displayFooter" = "";
 "settings.usesGroupingSeparator" = "Gruplandırma Ayırıcı kullanır";

@@ -26,6 +26,7 @@
 "settings.updatedAt"= "마지막 업데이트";
 "settings.customRateHeader"= "맞춤 환율";
 "settings.customRateFooter"= "통화 유형을 변경하면 맞춤 환율이 전환됩니다.";
+"settings.customRateCheckFailed" = "환율은 십진수 만 가능합니다.";
 "settings.displayHeader"= "표시";
 "settings.displayFooter"= "";
 "settings.usesGroupingSeparator"= "그룹화 구분 기호 사용";
