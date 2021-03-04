@@ -885,23 +885,23 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 			
 			if data.keys.contains("fromSymbol") {
-				DispatchQueue.main.async {
-					let symbol: String = data["fromSymbol"] as! String
-					self.fromSymbolLabel.text = symbol
-					if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
-						self.fromImageView.image = UIImage(contentsOfFile: path)
-					}
-					self.fromSymbol = symbol
+                let symbol: String = data["fromSymbol"] as! String
+                self.fromSymbolLabel.text = symbol
+                if let path = Bundle.main.path(forResource: symbol, ofType: "png") {
+                    self.fromImageView.image = UIImage(contentsOfFile: path)
+                }
+                self.fromSymbol = symbol
+                
+                let changeType: String = data["changeType"] as! String
+                if changeType == "scroll" {
+                    // 滑动时需要更新汇率
                     self.updateRate()
-					self.setRate()
-					
-					let changeType: String = data["changeType"] as! String
-					if changeType != "scroll" {
-						// 滑动切换货币时不需要更新界面
-						self.initFavorites(type: "from")
-						self.renderPagesInScrollView(type: "from")
-					}
-				}
+                    self.setRate()
+                } else {
+                    // 交换时更新界面
+                    self.initFavorites(type: "from")
+                    self.renderPagesInScrollView(type: "from")
+                }
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -911,15 +911,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 					toImageView.image = UIImage(contentsOfFile: path)
 				}
 				self.toSymbol = symbol
-                self.updateRate()
-				self.setRate()
 
 				let changeType: String = data["changeType"] as! String
-				if changeType != "scroll" {
-					// 滑动切换货币时不需要更新界面
-					initFavorites(type: "to")
-					renderPagesInScrollView(type: "to")
-				}
+				if changeType == "scroll" {
+                    // 滑动时需要更新汇率
+                    self.updateRate()
+                    self.setRate()
+                } else {
+                    // 交换时更新界面
+                    initFavorites(type: "to")
+                    renderPagesInScrollView(type: "to")
+                }
 			}
 
 			if data.keys.contains("favorites") {
