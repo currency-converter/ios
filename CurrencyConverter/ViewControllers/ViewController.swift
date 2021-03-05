@@ -896,12 +896,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 if changeType == "scroll" {
                     // 滑动时需要更新汇率
                     self.updateRate()
-                    self.setRate()
                 } else {
                     // 交换时更新界面
                     self.initFavorites(type: "from")
                     self.renderPagesInScrollView(type: "from")
                 }
+                
+                self.setRate()
 			}
 			
 			if data.keys.contains("toSymbol") {
@@ -916,12 +917,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				if changeType == "scroll" {
                     // 滑动时需要更新汇率
                     self.updateRate()
-                    self.setRate()
                 } else {
                     // 交换时更新界面
                     initFavorites(type: "to")
                     renderPagesInScrollView(type: "to")
                 }
+                
+                self.setRate()
 			}
 
 			if data.keys.contains("favorites") {
