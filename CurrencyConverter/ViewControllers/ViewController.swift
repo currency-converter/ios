@@ -157,6 +157,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                             //更新缓存数据
                             let shared = UserDefaults(suiteName: Config.groupId)
                             shared?.set(self.rates, forKey: "rates")
+                            shared?.set(Int(timeInterval), forKey: "rateUpdatedAt")
                             NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
                             //汇率更新后，需要主动更新app中正使用的汇率
                             self.setRate()
@@ -249,7 +250,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func createUpdateRateDaemon() {
-		Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { (start) in
+		Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (start) in
 			if self.isNeedUpdateRate() {
 				self.updateRate()
 			}
