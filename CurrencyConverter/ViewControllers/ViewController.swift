@@ -99,6 +99,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var updatedAtLabelHeight: CGFloat = 40
 	
 	public func updateRate() {
+        // 模拟的UA
+        let userAgent: [String] = [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:86.0) Gecko/20100101 Firefox/86.0"
+        ]
+        
         let newUrlString: String = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 		// 创建请求配置
 		let config = URLSessionConfiguration.default
@@ -113,7 +121,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             if url != nil {
                 // 创建请求实例
                 var request = URLRequest(url: url)
-                request.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36", forHTTPHeaderField: "User-Agent")
+                let rand: Int = Int.random(in: 0..<userAgent.count)
+                request.addValue(userAgent[rand], forHTTPHeaderField: "User-Agent")
+                //
                 request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
                 request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
                 request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
