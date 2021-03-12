@@ -97,8 +97,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var SCREEN_VIEW_HEIGHT_MAX: CGFloat = 200
 	//更新时间高度
 	var updatedAtLabelHeight: CGFloat = 40
-	
-    public func updateRate(_ isClickEvent: Bool = false) {
+    
+    private func createRequest(url: URL) -> URLRequest {
         // 模拟的UA
         let userAgent: [String] = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
@@ -106,6 +106,61 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:86.0) Gecko/20100101 Firefox/86.0"
         ]
+        
+        var request = URLRequest(url: url)
+        let rand: Int = Int.random(in: 0..<userAgent.count)
+        request.addValue(userAgent[rand], forHTTPHeaderField: "User-Agent")
+        request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
+        request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
+        request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
+        request.addValue("no-cache", forHTTPHeaderField: "Pragma")
+        request.addValue("1", forHTTPHeaderField: "Upgrade-Insecure-Requests")
+        return request
+    }
+    
+    private func success(_ data: Data?, isClickEvent: Bool) {
+        print("Request succeeded.")
+        // 新浪财经返回的数据是gbk格式
+        let cfEncoding = CFStringEncodings.GB_18030_2000
+        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEncoding.rawValue))
+        //从GBK编码的Data里初始化NSString, 返回的NSString是UTF-16编码
+        if let str = NSString(data: data!, encoding: encoding) {
+            let jsString = str as String
+            let lines = jsString.components(separatedBy: "\n")
+            for line in lines {
+                let array = line.components(separatedBy: ",")
+                if (array.count == 18) { // 过滤无效数据
+                    let rate = array[1]
+                    let symbol = array[0].suffix(13).prefix(3).uppercased()
+                    let time = array[0].suffix(8)
+                    let characterSet = CharacterSet(charactersIn: "\";")
+                    let date = array[array.count-1].trimmingCharacters(in: characterSet)
+                    
+                    let isoDate = "\(date)T\(time)+0800"
+                    let dateFormatter = ISO8601DateFormatter()
+                    let timestamp = dateFormatter.date(from:isoDate)!.timeIntervalSince1970
+                    let newRate = Double(rate)
+                    self.rates[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
+                    self.rates[symbol]?["b"] = NSNumber(value: timestamp)
+                }
+            }
+            
+            // 美元是中间货币，每次更新汇率都需要更新美元的更新时间
+            let now = Date()
+            let timeInterval:TimeInterval = now.timeIntervalSince1970
+            self.rates["USD"]?["b"] = NSNumber(value: Int(timeInterval))
+            //更新缓存数据
+            let shared = UserDefaults(suiteName: Config.groupId)
+            shared?.set(self.rates, forKey: "rates")
+            shared?.set(Int(timeInterval), forKey: "rateUpdatedAt")
+            NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": false, "isClickEvent": isClickEvent])
+            //汇率更新后，需要主动更新app中正使用的汇率
+            self.setRate()
+            print("Rate update succeeded.")
+        }
+    }
+	
+    public func updateRate(_ isClickEvent: Bool = false) {
         
         let newUrlString: String = Config.updateRateUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 		// 创建请求配置
@@ -119,59 +174,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             let url: URL! = URL(string: fullUrl)
             print(fullUrl)
             if url != nil {
-                // 创建请求实例
-                var request = URLRequest(url: url)
-                let rand: Int = Int.random(in: 0..<userAgent.count)
-                request.addValue(userAgent[rand], forHTTPHeaderField: "User-Agent")
-                //
-                request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
-                request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
-                request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
-                request.addValue("no-cache", forHTTPHeaderField: "Pragma")
-                request.addValue("1", forHTTPHeaderField: "Upgrade-Insecure-Requests")
                 // 创建请求Session
                 let session = URLSession(configuration: config)
                 // 创建请求任务
-                let task = session.dataTask(with: request) { (data,response,error) in
+                let task = session.dataTask(with: createRequest(url: url)) { (data, response, error) in
                     if(error == nil) {
-                        print("Request succeeded.")
-                        // 新浪财经返回的数据是gbk格式
-                        let cfEncoding = CFStringEncodings.GB_18030_2000
-                        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEncoding.rawValue))
-                        //从GBK编码的Data里初始化NSString, 返回的NSString是UTF-16编码
-                        if let str = NSString(data: data!, encoding: encoding) {
-                            let jsString = str as String
-                            let lines = jsString.components(separatedBy: "\n")
-                            for line in lines {
-                                let array = line.components(separatedBy: ",")
-                                if (array.count == 18) { // 过滤无效数据
-                                    let rate = array[1]
-                                    let symbol = array[0].suffix(13).prefix(3).uppercased()
-                                    let time = array[0].suffix(8)
-                                    let characterSet = CharacterSet(charactersIn: "\";")
-                                    let date = array[array.count-1].trimmingCharacters(in: characterSet)
-                                    
-                                    let isoDate = "\(date)T\(time)+0800"
-                                    let dateFormatter = ISO8601DateFormatter()
-                                    let timestamp = dateFormatter.date(from:isoDate)!.timeIntervalSince1970
-                                    let newRate = Double(rate)
-                                    self.rates[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
-                                    self.rates[symbol]?["b"] = NSNumber(value: timestamp)
-                                }
-                            }
-                            
-                            // 美元是中间货币，每次更新汇率都需要更新美元的更新时间
-                            let now = Date()
-                            let timeInterval:TimeInterval = now.timeIntervalSince1970
-                            self.rates["USD"]?["b"] = NSNumber(value: Int(timeInterval))
-                            //更新缓存数据
-                            let shared = UserDefaults(suiteName: Config.groupId)
-                            shared?.set(self.rates, forKey: "rates")
-                            shared?.set(Int(timeInterval), forKey: "rateUpdatedAt")
-                            NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": false, "isClickEvent": isClickEvent])
-                            //汇率更新后，需要主动更新app中正使用的汇率
-                            self.setRate()
-                            print("Rate update succeeded.")
+                        if (data != nil) {
+                            self.success(data, isClickEvent: isClickEvent)
+                        } else {
+                            NSLog("request data is null:\(fullUrl)")
                         }
                     } else {
                         NSLog("Rate update failed:\(fullUrl)")
