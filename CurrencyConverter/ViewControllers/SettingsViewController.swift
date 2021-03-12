@@ -120,7 +120,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
                     self.present(alertController, animated: true, completion: nil)
                     //2秒钟后自动消失
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
+                        self.presentedViewController?.dismiss(animated: true, completion: nil) // 这一行会产生报警
                     }
                 }
             }

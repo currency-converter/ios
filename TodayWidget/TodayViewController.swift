@@ -14,13 +14,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	let isDebug: Bool = false
 	
 	var fromMoneyLabelTextColor: [UIColor] = [
-		UIColor.hex("cccccc"),
-		UIColor.white
+		UIColor.hex("333333"),
+		UIColor.black
 	]
 	
 	var toMoneyLabelTextColor: [UIColor] = [
-		UIColor.hex("cccccc"),
-        UIColor.white
+		UIColor.hex("333333"),
+        UIColor.black
 	]
 	
 	// 当前输入货币是否为空
@@ -143,16 +143,22 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			self.expandedHeight = widgetMaxHeight
 		}
 		self.wrapperHeight = self.expandedHeight - self.expandedPadding * 2
-
-		// 初始化输入输出货币
-		let shared = UserDefaults(suiteName: Config.groupId)
-		self.fromSymbol = shared?.string(forKey: "fromSymbol") ?? Config.defaults["fromSymbol"] as! String
-		self.toSymbol = shared?.string(forKey: "toSymbol") ?? Config.defaults["toSymbol"] as! String
-        self.rates = (shared?.object(forKey: "rates") ?? Config.defaults["rates"] as! [String: [String: NSNumber]]) as? [String: [String: NSNumber]]
-		let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
-		let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
-		self.rate = toRate/fromRate
+        
+        let shared = UserDefaults(suiteName: Config.groupId)
+        self.fromSymbol = shared?.string(forKey: "fromSymbol")
+        self.toSymbol = shared?.string(forKey: "toSymbol")
+        self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
+        
+        if self.rates != nil {
+            self.setRate()
+        }
 	}
+    
+    func setRate() {
+        let fromRate: Float! = Float(truncating: (rates![self.fromSymbol]! as [String: NSNumber])["a"]!)
+        let toRate: Float! = Float(truncating: (rates![self.toSymbol]! as [String: NSNumber])["a"]!)
+        self.rate = toRate/fromRate
+    }
 	
 	func renderCompactMode() {
 		let shared = UserDefaults(suiteName: Config.groupId)
