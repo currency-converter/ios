@@ -14,13 +14,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	let isDebug: Bool = false
 	
 	var fromMoneyLabelTextColor: [UIColor] = [
-		UIColor.hex("333333"),
-        UIColor.black
+		UIColor.hex("cccccc"),
+		UIColor.white
 	]
 	
 	var toMoneyLabelTextColor: [UIColor] = [
-		UIColor.hex("333333"),
-        UIColor.black
+		UIColor.hex("cccccc"),
+        UIColor.white
 	]
 	
 	// 当前输入货币是否为空
@@ -52,7 +52,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	var toSymbol: String!
 	
 	// 是否为收起模式
-//	var isCompact: Bool = true
+	var isCompact: Bool = true
 	
 	var rate: Float!
 	
@@ -74,7 +74,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	//展开时高度(运行时会修改)
 	var expandedHeight: CGFloat!
 	//收起时高度，不能小于110
-//	var compactHeight: CGFloat!
+	var compactHeight: CGFloat!
 	var wrapperWidth: CGFloat!
 	var wrapperHeight: CGFloat!
 	//货币数字字体大小
@@ -88,53 +88,53 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		self.initConfig()
 		
-//		if self.isCompact {
-//			renderCompactMode()
-//		} else {
-			render()
-//		}
+		if self.isCompact {
+			renderCompactMode()
+		} else {
+			renderExpandedMode()
+		}
 		
-//		if ProcessInfo().isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 10, minorVersion: 0, patchVersion: 0)) {
-//			//在ios10 中支持折叠
-//			self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
-//		}
-//
-		self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: expandedHeight)
+		if ProcessInfo().isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 10, minorVersion: 0, patchVersion: 0)) {
+			//在ios10 中支持折叠
+			self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
+		}
+		
+		self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: compactHeight)
 	}
 	
 	//折叠change size
-//	func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-//		self.clearViews()
-//
-//		if activeDisplayMode == NCWidgetDisplayMode.compact {
-//			self.isCompact = true
-//			self.preferredContentSize = CGSize(width: maxSize.width, height: compactHeight);
-//
-//			//延时2秒，让切换效果更加自然
-//			DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
-//				self.renderCompactMode()
-//			})
-//		} else {
-//			self.isCompact = false
-//			self.preferredContentSize = CGSize(width: maxSize.width, height: expandedHeight);
-//			renderExpandedMode()
-//		}
-//	}
+	func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+		self.clearViews()
+		
+		if activeDisplayMode == NCWidgetDisplayMode.compact {
+			self.isCompact = true
+			self.preferredContentSize = CGSize(width: maxSize.width, height: compactHeight);
+			
+			//延时2秒，让切换效果更加自然
+			DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
+				self.renderCompactMode()
+			})
+		} else {
+			self.isCompact = false
+			self.preferredContentSize = CGSize(width: maxSize.width, height: expandedHeight);
+			renderExpandedMode()
+		}
+	}
 	
 	func registerSettingsBundle() {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		shared?.register(defaults: Config.defaults)
 	}
 	
-//	func clearViews() {
-//		for v in self.view.subviews as [UIView] {
-//			v.removeFromSuperview()
-//		}
-//	}
+	func clearViews() {
+		for v in self.view.subviews as [UIView] {
+			v.removeFromSuperview()
+		}
+	}
 	
 	func initConfig() {
 		self.wrapperWidth = (self.extensionContext?.widgetMaximumSize(for: .compact).width ?? 0) - self.expandedPadding * 2
-//        self.compactHeight = self.extensionContext?.widgetMaximumSize(for: .expanded).height
+		self.compactHeight = self.extensionContext?.widgetMaximumSize(for: .compact).height
 		self.expandedHeight = self.expandedSymbolHeight * 2 + self.expandedKeyboardMarginTop + self.wrapperWidth + self.expandedPadding * 2
 
 		let widgetMaxHeight: CGFloat = (self.extensionContext?.widgetMaximumSize(for: .expanded).height)!
@@ -154,7 +154,117 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		self.rate = toRate/fromRate
 	}
 	
-	func render() {
+	func renderCompactMode() {
+		let shared = UserDefaults(suiteName: Config.groupId)
+		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+		
+		//整体间距
+		let margin: CGFloat = 10
+		//屏幕宽度
+		let screenWidth: CGFloat = 110
+		//屏幕高度
+		let screenHeight: CGFloat = compactHeight - margin * 2
+		//两个小屏幕之间的间距
+		let screenMargin: CGFloat = 2
+		//小屏幕高度
+		let subScreenHeight: CGFloat = (screenHeight - screenMargin) / 2
+		
+		let symbolHeight: CGFloat = 15
+		let symbolWidth: CGFloat = 40
+		
+		let moneyLabelMarginLeft: CGFloat = 5
+		
+		//键盘宽度
+		let keyboardWidth: CGFloat = self.view.frame.width - screenWidth - margin * 3
+		let keyboardHeight: CGFloat = screenHeight
+		
+		let screen: UIView = UIView(frame: CGRect(x: margin, y: margin, width: screenWidth, height: screenHeight))
+		if isDebug {
+			screen.backgroundColor = UIColor.red
+		}
+		self.view.addSubview(screen)
+		
+		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
+		fromScreen.tag = 1
+//		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+		if isDebug {
+			fromScreen.backgroundColor = UIColor.green
+		}
+		screen.addSubview(fromScreen)
+		
+		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
+		toScreen.tag = 2
+//		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+		if isDebug {
+			toScreen.backgroundColor = UIColor.yellow
+		}
+		screen.addSubview(toScreen)
+		
+		let fromSymbol = UIButton(frame: CGRect(x: 0, y: 0, width: symbolWidth, height: symbolHeight))
+		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+		fromSymbol.setTitle(self.fromSymbol, for: .normal)
+		fromSymbol.setTitleColor(UIColor.white, for: .normal)
+		fromSymbol.contentHorizontalAlignment = .left
+		fromScreen.addSubview(fromSymbol)
+
+		fromMoneyLabel = UILabel(frame: CGRect(x: moneyLabelMarginLeft, y: symbolHeight, width: fromScreen.frame.width - moneyLabelMarginLeft, height: subScreenHeight - symbolHeight))
+		fromMoneyLabel.adjustsFontSizeToFitWidth = true
+		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[self.isEmpty ? 0 : 1]
+		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
+		fromMoneyLabel.text = numberFormat(self.fromMoney)
+		fromScreen.addSubview(fromMoneyLabel)
+
+		let toSymbol = UIButton(frame: CGRect(x: 0, y: 0, width: symbolWidth, height: symbolHeight))
+		toSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+		toSymbol.setTitle(self.toSymbol + (isCustomRate ? "*" : ""), for: .normal)
+		toSymbol.setTitleColor(UIColor.black, for: .normal)
+		toSymbol.contentHorizontalAlignment = .left
+		toScreen.addSubview(toSymbol)
+
+		toMoneyLabel = UILabel(frame: CGRect(x: moneyLabelMarginLeft, y: symbolHeight, width: fromScreen.frame.width - moneyLabelMarginLeft, height: subScreenHeight - symbolHeight))
+		toMoneyLabel.adjustsFontSizeToFitWidth = true
+		toMoneyLabel.textColor = self.toMoneyLabelTextColor[self.isEmpty ? 0 : 1]
+		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
+		//toMoneyLabel.textAlignment = .right
+		toMoneyLabel.text = self.output(self.fromMoney)
+		toScreen.addSubview(toMoneyLabel)
+		
+		let keyboard = UIView(frame: CGRect(x: screenWidth + margin * 2, y: margin, width: keyboardWidth, height: keyboardHeight))
+		keyboard.clipsToBounds = true
+		if isDebug {
+			keyboard.backgroundColor = UIColor.blue
+		}
+		self.view.addSubview(keyboard)
+		
+		//每行显示按钮个数
+		let numberOfButtonsPerLine: CGFloat = 6
+		//按钮左右间距
+		let buttonMarginLeft: CGFloat = 5
+		let buttonMarginTop: CGFloat = 1
+		//按钮宽度
+		let buttonWidth: CGFloat = (keyboard.frame.width - buttonMarginLeft * (numberOfButtonsPerLine - 1)) / numberOfButtonsPerLine
+		let buttonHeight: CGFloat = subScreenHeight - buttonMarginTop
+		let characters:[String] = ["4", "5", "6", "7", "8", "9", "0", "1", "2", "3", ".", "AC"]
+		
+		for (index, item) in characters.enumerated() {
+			// 创建数字按钮
+			let columnIndex: CGFloat = CGFloat(index % Int(numberOfButtonsPerLine))
+			let x: CGFloat = (buttonWidth + buttonMarginLeft) * columnIndex
+			let y: CGFloat = index < Int(numberOfButtonsPerLine) ? 0 : subScreenHeight + buttonMarginTop
+			let btn: UIButton = UIButton.init(frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonHeight))
+			btn.layer.cornerRadius = 5//min(buttonWidth, buttonHeight)/2
+			btn.setTitleColor(UIColor.white, for: .normal)
+			btn.backgroundColor = UIColor.hex("2c2c2c")
+			if item == "AC" {
+				btn.backgroundColor = UIColor.hex("da8009")
+			}
+			btn.setTitle(item, for: UIControl.State.normal)
+			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+			keyboard.addSubview(btn)
+		}
+	}
+	
+	func renderExpandedMode() {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
 		let wrapper = UIView(frame: CGRect(x: self.expandedPadding, y: self.expandedPadding, width: self.wrapperWidth, height: self.wrapperHeight))
@@ -245,6 +355,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toSymbolLabel.font = UIFont.systemFont(ofSize: 16)
 		toSymbolLabel.textColor = UIColor.black
 		toSymbolButton.addSubview(toSymbolLabel)
+
+//		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
+//		toSymbol.tag = 2
+//		toSymbol.setTitle(self.toSymbol + (isCustomRate ? "*" : ""), for: .normal)
+//		toSymbol.setTitleColor(UIColor.black, for: .normal)
+//		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
+//		if isDebug {
+//			toSymbol.backgroundColor = UIColor.red
+//		}
+//		wrapper.addSubview(toSymbol)
 
 		let keyboardY :CGFloat = expandedSymbolHeight * 2 + expandedKeyboardMarginTop
 		let keyboard = UIView(frame: CGRect(x: 0, y: keyboardY, width: wrapper.frame.width, height: wrapper.frame.height - keyboardY))
