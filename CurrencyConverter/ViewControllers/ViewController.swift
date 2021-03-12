@@ -98,7 +98,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	//更新时间高度
 	var updatedAtLabelHeight: CGFloat = 40
 	
-	public func updateRate() {
+    public func updateRate(_ isClickEvent: Bool = false) {
         // 模拟的UA
         let userAgent: [String] = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
@@ -168,14 +168,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                             let shared = UserDefaults(suiteName: Config.groupId)
                             shared?.set(self.rates, forKey: "rates")
                             shared?.set(Int(timeInterval), forKey: "rateUpdatedAt")
-                            NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 0])
+                            NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": false, "isClickEvent": isClickEvent])
                             //汇率更新后，需要主动更新app中正使用的汇率
                             self.setRate()
                             print("Rate update succeeded.")
                         }
                     } else {
-                        print("Rate update failed.")
-                        NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": 1])
+                        NSLog("Rate update failed:\(fullUrl)")
+                        NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": true, "isClickEvent": isClickEvent])
                     }
                     
                 }

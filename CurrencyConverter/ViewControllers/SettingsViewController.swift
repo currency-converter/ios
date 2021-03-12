@@ -74,6 +74,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		render()
 		observe()
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //显示导航条
+        self.navigationController?.isNavigationBarHidden = false
+    }
 	
 	func onReady(key: String, value: String) {
 		// 更新配置
@@ -98,26 +103,30 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		isUpdating = false
 		
 		var title: String = NSLocalizedString("settings.updateSuccess", comment: "")
-		if let data = notification.userInfo as? [String: Int] {
-			if data["error"]?.description == "1" {
+		if let data = notification.userInfo as? [String: Bool] {
+            if data["error"]! {
 				title = NSLocalizedString("settings.updateFailed", comment: "")
 			}
+            
+            if data["isClickEvent"]! {
+                //避免出现非主线程更新UI的警告
+                DispatchQueue.main.async {
+                    self.updatedAtValue.text = self.formatUpdatedAtText()
+                    self.updateImmediatelyButton.tintColor = UIColor.hex("0067d8")
+                    self.loading.stopAnimating()
+
+                    let alertController = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+                    //显示提示框
+                    self.present(alertController, animated: true, completion: nil)
+                    //2秒钟后自动消失
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                        self.presentedViewController?.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
 		}
 		
-		//避免出现非主线程更新UI的警告
-		DispatchQueue.main.async {
-			self.updatedAtValue.text = self.formatUpdatedAtText()
-			self.updateImmediatelyButton.tintColor = UIColor.hex("0067d8")
-			self.loading.stopAnimating()
-			
-			let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-			//显示提示框
-			self.present(alertController, animated: true, completion: nil)
-			//1秒钟后自动消失
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-				self.presentedViewController?.dismiss(animated: false, completion: nil)
-			}
-		}
+		
 	}
 	
 	@IBAction func onKeyboardClicksChanged(_ sender: UISwitch) {
@@ -181,7 +190,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 			updateImmediatelyButton.tintColor = UIColor.gray
 			loading.startAnimating()
 			let viewController = navigationController?.children[0] as! ViewController
-			viewController.updateRate()
+			viewController.updateRate(true)
 		}
 	}
 	
