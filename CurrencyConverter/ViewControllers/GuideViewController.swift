@@ -105,9 +105,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func entry() {
-		let mainStoryboard = UIStoryboard(name:"Main", bundle:nil)
-		let viewController: UIViewController = mainStoryboard.instantiateInitialViewController()!
-		self.present(viewController, animated: true, completion: nil)
+        UIApplication.shared.keyWindow?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
 	}
 	
 	//UIScrollViewDelegate方法，每次滚动结束后调用
