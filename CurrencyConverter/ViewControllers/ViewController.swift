@@ -915,7 +915,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 self.fromSymbol = symbol
                 
                 let changeType: String = data["changeType"] as! String
-                if changeType == "scroll" {
+                if ["scroll", "pick"].contains(changeType) {
                     // 滑动时需要更新汇率
                     self.updateRate()
                 } else {
@@ -936,7 +936,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				self.toSymbol = symbol
 
 				let changeType: String = data["changeType"] as! String
-				if changeType == "scroll" {
+                if ["scroll", "pick"].contains(changeType) {
                     // 滑动时需要更新汇率
                     self.updateRate()
                 } else {
