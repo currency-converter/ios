@@ -424,13 +424,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	func showUpdatedAtLabel() {
 		DispatchQueue.main.async {
-			self.updatedAtLabel?.alpha = 1
-			self.updatedAtLabel?.text = NSLocalizedString("settings.updatedAt", comment: "") + " " +  self.formatUpdatedAtText()
-			Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (start) in
-				UIView.animate(withDuration: 3) {
-					self.updatedAtLabel?.alpha = 0
-				}
-			}
+            if self.rates[self.fromSymbol]?["b"] != nil && self.rates[self.toSymbol]?["b"] != nil {
+                self.updatedAtLabel?.alpha = 1
+                self.updatedAtLabel?.text = NSLocalizedString("settings.updatedAt", comment: "") + " " +  self.formatUpdatedAtText()
+                Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (start) in
+                    UIView.animate(withDuration: 3) {
+                        self.updatedAtLabel?.alpha = 0
+                    }
+                }
+            }
 		}
 	}
 	
