@@ -873,9 +873,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func output(_ money:String) -> String {
         if !money.isEmpty {
             let shared = UserDefaults(suiteName: Config.groupId)
-            let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+            let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
             let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-            let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
+            let decimals = shared?.integer(forKey: "decimals") ?? 2
             let rate = isCustomRate ? customRate : self.rate
             return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
         }
