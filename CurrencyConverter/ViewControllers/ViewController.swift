@@ -153,7 +153,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             // 美元是中间货币，每次更新汇率都需要更新美元的更新时间
             let now = Date()
             let timeInterval:TimeInterval = now.timeIntervalSince1970
-            self.rates["USD"]?["b"] = NSNumber(value: Int(timeInterval))
+            self.rates?["USD"]?["b"] = NSNumber(value: Int(timeInterval))
             //更新缓存数据
             let shared = UserDefaults(suiteName: Config.groupId)
             shared?.set(self.rates, forKey: "rates")
