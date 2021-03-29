@@ -30,12 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 		if url.host == nil {
-			return true;
+			return true
 		}
 
 		//获取url以及参数
 		let urlString = url.absoluteString
 		let queryArray = urlString.components(separatedBy: "/")
+        
+        if self.window!.rootViewController is GuideViewController {
+            // 在引导页退出app并打开today widget，点击设置或国旗，会崩溃
+            return true
+        }
 		let navigationController: UINavigationController = self.window!.rootViewController as! UINavigationController
 		let rootView = navigationController.visibleViewController as! ViewController
 
