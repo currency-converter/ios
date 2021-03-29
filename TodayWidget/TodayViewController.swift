@@ -54,7 +54,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	// 是否为收起模式
 	var isCompact: Bool = true
 	
-	var rate: Float!
+    // 汇率
+    var rate: Float = 6.777
 	
 	var rates: [String: [String: NSNumber]]!
 	
@@ -541,13 +542,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	// 格式化输出换算结果
 	func output(_ money:String) -> String {
-		let shared = UserDefaults(suiteName: Config.groupId)
-		let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
-		let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
-		let rate: Float = isCustomRate ? customRate : self.rate
-		
-		return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
+        if !money.isEmpty {
+            let shared = UserDefaults(suiteName: Config.groupId)
+            let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? Config.defaults["isCustomRate"] as! Bool
+            let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
+            let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
+            let rate = isCustomRate ? customRate : self.rate
+            return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
+        }
+        return ""
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
