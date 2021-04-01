@@ -27,6 +27,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
     }
 	
 	func render() {
+//        self.view.backgroundColor = .yellow
 		let frame = self.view.bounds
 		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
 		let marginLeft: CGFloat = 50
@@ -68,13 +69,22 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 				imgView.image = UIImage(contentsOfFile: path)
 			}
 			scrollView.addSubview(imgView)
+            
+            // 显示导航小圆点
+            for j in 0..<numOfPages {
+                let padding:Int = 14
+                let dotLabel = UILabel(frame: CGRect(x: frame.size.width*CGFloat(i) + frame.size.width/2 + CGFloat(j*padding) - CGFloat(padding/2*numOfPages), y: self.view.bounds.height - 90, width: 150, height: 64))
+                dotLabel.text = "."
+                dotLabel.textColor = i == j ? .white : .gray
+                dotLabel.font = UIFont.systemFont(ofSize: 64)
+                scrollView.addSubview(dotLabel)
+            }
 			
 			// 最后一页加上进入按钮
 			if i == numOfPages - 1 {
 				let entryButtonWidth: CGFloat = 150
 				let entryButtonHeight: CGFloat = 40
-				let entryButtonMargin: CGFloat = 0
-				let entryButton: UIButton = UIButton(frame: CGRect(x: frame.size.width*CGFloat(i) + (frame.size.width - entryButtonWidth)/2, y: self.view.bounds.height - pageControlHeight - entryButtonHeight - entryButtonMargin, width: entryButtonWidth, height: entryButtonHeight))
+				let entryButton: UIButton = UIButton(frame: CGRect(x: frame.size.width*CGFloat(i) + (frame.size.width - entryButtonWidth)/2, y: self.view.bounds.height - 100, width: entryButtonWidth, height: entryButtonHeight))
 				entryButton.setTitle(NSLocalizedString("guide.entry", comment: ""), for: .normal)
 				entryButton.layer.cornerRadius = 5
 				entryButton.backgroundColor = .loquatYellow
@@ -82,11 +92,11 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 				entryButton.addGestureRecognizer(tapGesture)
 				
 				scrollView.addSubview(entryButton)
-			}
+            }
 		}
 		scrollView.contentOffset = CGPoint.zero
 		self.view.addSubview(scrollView)
-		
+
 		//顶部对齐
 		let pageControlX: CGFloat = (self.view.bounds.width - pageControlWidth)/2
 		let pageControlY: CGFloat = self.view.bounds.height - pageControlHeight
