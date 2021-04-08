@@ -548,7 +548,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
             let decimals = shared?.integer(forKey: "decimals") ?? 2
             let rate = isCustomRate ? customRate : self.rate
-            return numberFormat(String(Float(money)! * rate), maximumFractionDigits: decimals)
+            if let moneyNum = Float(money) {
+                return numberFormat(String(moneyNum * rate), maximumFractionDigits: decimals)
+            }
+            return ""
         }
         return ""
 	}
