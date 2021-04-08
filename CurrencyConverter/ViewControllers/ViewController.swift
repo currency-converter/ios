@@ -142,8 +142,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                     if let updatedAt = dateFormatter.date(from:isoDate) {
                         let timestamp = updatedAt.timeIntervalSince1970
                         let newRate = Double(rate)
-                        self.rates[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
-                        self.rates[symbol]?["b"] = NSNumber(value: timestamp)
+                        self.rates?[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
+                        self.rates?[symbol]?["b"] = NSNumber(value: timestamp)
                     } else {
                         NSLog("invalid update time: \(isoDate)")
                     }
