@@ -424,7 +424,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	func showUpdatedAtLabel() {
 		DispatchQueue.main.async {
-            if self.rates[self.fromSymbol]?["b"] != nil && self.rates[self.toSymbol]?["b"] != nil {
+            if self.rates?[self.fromSymbol]?["b"] != nil && self.rates?[self.toSymbol]?["b"] != nil {
                 self.updatedAtLabel?.alpha = 1
                 self.updatedAtLabel?.text = NSLocalizedString("settings.updatedAt", comment: "") + " " +  self.formatUpdatedAtText()
                 Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (start) in
