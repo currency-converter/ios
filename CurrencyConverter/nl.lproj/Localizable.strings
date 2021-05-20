@@ -34,6 +34,7 @@
 "settings.theme" = "thema";
 "settings.themeWhite" = "wit";
 "settings.themeBlack" = "zwart";
+"settings.themeAuto" = "Standaard";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "De gegevens in deze applicatie zijn uitsluitend voor informatieve doeleinden en garanderen niet de juistheid, geldigheid, beschikbaarheid of geschiktheid van enig doel, op eigen risico.";
 

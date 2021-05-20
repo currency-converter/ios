@@ -34,6 +34,7 @@
 "settings.theme" = "téma";
 "settings.themeWhite" = "biela";
 "settings.themeBlack" = "čierna";
+"settings.themeAuto" = "Predvolené";
 "settings.disclaimerHeader" = "Vyhlásenie";
 "settings.disclaimer" = "Údaje uvedené v tejto aplikácii majú len informatívny charakter a nezaručujú presnosť, platnosť, dostupnosť alebo vhodnosť akéhokoľvek účelu na vlastné riziko.";
 

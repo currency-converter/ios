@@ -24,22 +24,25 @@ class FrequencyViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		initConfig()
-		
 		render()
-		
-		// Do any additional setup after loading the view.
 	}
 	
 	func initConfig() {
 		let shared = UserDefaults(suiteName: Config.groupId)
-		self.themeIndex = shared?.integer(forKey: "theme")
+        self.themeIndex = shared?.integer(forKey: "theme")
+        switch self.themeIndex {
+            case 0:
+                overrideUserInterfaceStyle = .light
+            case 1:
+                overrideUserInterfaceStyle = .dark
+            default:
+                print("")
+        }
 	}
 	
 	func render() {
-		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
-		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
+        self.view.backgroundColor = UIColor(named: "BackgroundColor")
 		navigationItem.title = NSLocalizedString("settings.updateFrequency", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -62,11 +65,9 @@ class FrequencyViewController: UITableViewController {
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
 		cell.tag = indexPath.row
-		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		
 		// label
 		cell.textLabel?.text = value
-		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		
 		// accessory
 		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none

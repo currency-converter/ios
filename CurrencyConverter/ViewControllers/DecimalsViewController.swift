@@ -20,22 +20,26 @@ class DecimalsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		
+        
 		initConfig()
-		
 		render()
-
-        // Do any additional setup after loading the view.
     }
 	
 	func initConfig() {
 		let shared = UserDefaults(suiteName: Config.groupId)
-		self.themeIndex = shared?.integer(forKey: "theme")
+        self.themeIndex = shared?.integer(forKey: "theme")
+        switch self.themeIndex {
+            case 0:
+                overrideUserInterfaceStyle = .light
+            case 1:
+                overrideUserInterfaceStyle = .dark
+            default:
+                print("")
+        }
 	}
 	
 	func render() {
-		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
-		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
+        self.view.backgroundColor = UIColor(named: "BackgroundColor")
 		navigationItem.title = NSLocalizedString("settings.decimalPlaces", comment: "")
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -57,11 +61,9 @@ class DecimalsViewController: UITableViewController {
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.selectionStyle = .none
-		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		
 		// label
 		cell.textLabel?.text = value
-		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		
 		// accessory
 		cell.accessoryType = value == defaultValue ? .checkmark : .none
@@ -84,16 +86,5 @@ class DecimalsViewController: UITableViewController {
 			self.delegate?.onReady(key: "decimals", value: data)
 		}
 	}
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

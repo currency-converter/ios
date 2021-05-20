@@ -34,6 +34,7 @@
 "settings.theme" = "Thème";
 "settings.themeWhite" = "Blanc";
 "settings.themeBlack" = "Noir";
+"settings.themeAuto" = "Auto";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "The data presented in this app is intended for informational purposes only. There is no guarantee of accuracy, validity, availability, or fitness for any purpose. Use at your own risk.";
 

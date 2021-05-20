@@ -79,6 +79,32 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
         //显示导航条
         self.navigationController?.isNavigationBarHidden = false
     }
+    
+    func changeInterfaceStyle(_ themeIndex: Int) {
+        self.view.backgroundColor = UIColor(named: "BackgroundColor")
+        
+        
+        var barStyle: UIStatusBarStyle;
+        
+        switch themeIndex {
+            case 0:
+                overrideUserInterfaceStyle = .light
+                self.navigationController?.navigationBar.barStyle = .default
+                barStyle = .darkContent
+            case 1:
+                overrideUserInterfaceStyle = .dark
+                self.navigationController?.navigationBar.barStyle = .black
+                barStyle = .lightContent
+            default:
+                overrideUserInterfaceStyle = .unspecified
+                self.navigationController?.navigationBar.barStyle = .default
+                barStyle = .default
+        }
+        
+        UIApplication.shared.statusBarStyle = barStyle
+        
+        
+    }
 	
 	func onReady(key: String, value: String) {
 		// 更新配置
@@ -195,17 +221,16 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onThemeChanged(_ sender: UISegmentedControl) {
+        let selectedTheme: Int = sender.selectedSegmentIndex
+        changeInterfaceStyle(selectedTheme)
+        
 		let shared = UserDefaults(suiteName: Config.groupId)
-		let selectedTheme: Int = sender.selectedSegmentIndex
 		shared?.set(selectedTheme, forKey: "theme")
-		
-		print("Theme Changed:", selectedTheme)
-		
-		setThemeIndex(selectedTheme)
-		
+        
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			"theme": selectedTheme
 		])
+        
 	}
 	
 	func observe() {
@@ -215,46 +240,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	func initConfig() {
 		// 初始化输入输出货币
 		let shared = UserDefaults(suiteName: Config.groupId)
-		self.themeIndex = shared?.integer(forKey: "theme")
-	}
-	
-	func setThemeIndex(_ themeIndex: Int) {
-		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
-		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
-		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
-		
-		self.tableView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
-		self.cell0_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell1_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell1_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell1_2.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell1_3.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell2_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell2_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell3_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell3_1.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell3_2.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell3_3.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.cell4_0.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		self.keyboardClicksLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.autoUpdateRateLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.updateFrequencyLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.updatedAtLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.customRateLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.customRate1.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateFrom.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateEqual.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateTo.textColor = self.customRateSwitch.isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		//self.customRateDetailLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.demoLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.use1000SeparatorLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.decimalPlacesLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.themeLabel.textColor = Theme.cellTextColor[themeIndex]
-		self.disclaimerLabel.textColor = Theme.cellTextColor[themeIndex]
+        self.themeIndex = shared?.integer(forKey: "theme")
 	}
 	
 	func render() {
-		setThemeIndex(themeIndex)
+        changeInterfaceStyle(self.themeIndex)
 		
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let frequency: Int = shared?.integer(forKey: "rateUpdatedFrequency") ?? Config.defaults["rateUpdatedFrequency"] as! Int
@@ -293,8 +283,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.disclaimerLabel.text = NSLocalizedString("settings.disclaimer", comment: "")
 		self.autoUpdateRateLabel.text = NSLocalizedString("settings.autoUpdateRate", comment: "")
 		self.themeLabel.text = NSLocalizedString("settings.theme", comment: "")
-		self.themeSegment.setTitle(NSLocalizedString("settings.themeWhite", comment: ""), forSegmentAt: 0)
+        self.themeSegment.setTitle(NSLocalizedString("settings.themeWhite", comment: ""), forSegmentAt: 0)
 		self.themeSegment.setTitle(NSLocalizedString("settings.themeBlack", comment: ""), forSegmentAt: 1)
+        self.themeSegment.setTitle(NSLocalizedString("settings.themeAuto", comment: ""), forSegmentAt: 2)
+//        self.themeSegment.setTitle("auto", forSegmentAt: 2)
 		//设置初始值
 		self.frequencyValue.text = frequencyText
 		self.frequencyValue.tag = frequency
@@ -358,11 +350,11 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	
 	func toggleCustomRateDetail(_ isOn: Bool) {
 		self.customRateTextField.isEnabled = isOn
-		self.customRateTextField.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRate1.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateFrom.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateEqual.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
-		self.customRateTo.textColor = isOn ? Theme.cellTextColor[themeIndex] : UIColor.gray
+        self.customRateTextField.textColor = isOn ? UIColor.label : UIColor.gray
+		self.customRate1.textColor = isOn ? UIColor.label : UIColor.gray
+		self.customRateFrom.textColor = isOn ? UIColor.label : UIColor.gray
+		self.customRateEqual.textColor = isOn ? UIColor.label : UIColor.gray
+		self.customRateTo.textColor = isOn ? UIColor.label : UIColor.gray
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -64,7 +64,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	}
 	
 	func render() {
-		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
+		self.view.backgroundColor = UIColor(named: "BackgroundColor")
 		
 		// 获取屏幕尺寸
 		let viewBounds:CGRect = UIScreen.main.bounds
@@ -78,7 +78,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 //		self.view.addSubview(statusBarBackgroundView)
 		
 		let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
-		navigationBar.barStyle = Theme.barStyle[themeIndex]
+//		navigationBar.barStyle = Theme.barStyle[themeIndex]
 		navigationBar.pushItem(navigationitem, animated: true)
 		self.view.addSubview(navigationBar)
 
@@ -105,14 +105,14 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		// 搜索框
 		let searchBar = searchController.searchBar
 		searchBar.searchBarStyle = .minimal
-		searchBar.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+//		searchBar.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		searchBar.delegate = self
 		guard let searchTextFeild = searchBar.value(forKey: "searchField") as? UITextField else {
 			return
 		}
 		//searchTextFeild.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		// 修改输入文字的颜色
-		searchTextFeild.textColor = Theme.cellTextColor[themeIndex]
+//		searchTextFeild.textColor = Theme.cellTextColor[themeIndex]
 		searchTextFeild.tintColor = UIColor.loquatYellow
 		// 输入内容大写
 		//searchTextFeild.autocapitalizationType = .allCharacters
@@ -122,7 +122,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		
 		let tableView = UITableView(frame: CGRect(x: 0, y: 0 + navigationBar.frame.size.height, width: viewBounds.width, height: viewBounds.height - navigationBar.frame.size.height), style: .plain)
 		let tableViewBackground = UIView(frame: self.view.bounds)
-		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+//		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		tableView.backgroundView = tableViewBackground
 		tableView.showsVerticalScrollIndicator = true
 		tableView.delegate = self
@@ -133,7 +133,7 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		//将分隔线offset设为零，即将分割线拉满屏幕
 		//tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		//设置分隔线颜色
-		tableView.separatorColor = Theme.cellSeparatorColor[themeIndex]
+//		tableView.separatorColor = Theme.cellSeparatorColor[themeIndex]
 		//滚动时隐藏键盘
 		tableView.keyboardDismissMode = .onDrag
 		//进入页面时隐藏searchbar
@@ -216,10 +216,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
     
     // 分组背景色和分组文字颜色
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if let headerView = view as? UITableViewHeaderFooterView {
-            headerView.contentView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
-            headerView.textLabel?.textColor = Theme.cellTextColor[themeIndex]
-        }
+//        if let headerView = view as? UITableViewHeaderFooterView {
+//            headerView.contentView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
+//            headerView.textLabel?.textColor = Theme.cellTextColor[themeIndex]
+//        }
     }
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -235,10 +235,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 		cell.preservesSuperviewLayoutMargins = false
 		cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		cell.layoutMargins = UIEdgeInsets.zero
-		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+//		cell.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		cell.selectionStyle = .blue
 		let cellBackgroundView = UIView()
-		cellBackgroundView.backgroundColor = Theme.cellSelectedBackgroundColor[themeIndex]
+//		cellBackgroundView.backgroundColor = Theme.cellSelectedBackgroundColor[themeIndex]
 		cell.selectedBackgroundView = cellBackgroundView
 
 		if let flagPath = Bundle.main.path(forResource: symbol, ofType: "png") {
@@ -247,11 +247,11 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 
 		// label
 		cell.textLabel?.text = symbol
-		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
+//		cell.textLabel?.textColor = Theme.cellTextColor[themeIndex]
 		//cell.textLabel?.highlightedTextColor = UIColor.black
 
 		// detail
-		cell.detailTextLabel?.textColor = Theme.cellTextColor[themeIndex]
+//		cell.detailTextLabel?.textColor = Theme.cellTextColor[themeIndex]
 		//cell.detailTextLabel?.highlightedTextColor = UIColor.black
 		cell.detailTextLabel?.text = self.currencyNames[symbol ?? ""]
 		cell.detailTextLabel?.textAlignment = .natural
@@ -382,14 +382,14 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 			let noDataLabel = UILabel(frame: self.currencyTableView.frame)
 			noDataLabel.text = NSLocalizedString("currencyPicker.noResults", comment: "")
 			noDataLabel.textAlignment = .center
-			noDataLabel.textColor = Theme.cellTextColor[themeIndex]
+//			noDataLabel.textColor = Theme.cellTextColor[themeIndex]
 			noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
-			noDataLabel.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+//			noDataLabel.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 			self.currencyTableView.separatorStyle = .none
 			self.currencyTableView.backgroundView = noDataLabel
 		} else {
 			let tableViewBackground = UIView(frame: self.view.bounds)
-			tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
+//			tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 			self.currencyTableView.backgroundView = tableViewBackground
 		}
 	}

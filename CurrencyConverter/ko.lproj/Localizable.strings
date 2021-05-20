@@ -33,6 +33,7 @@
 "settings.decimalPlaces"= "소수 자릿수";
 "settings.theme" = "테마";
 "settings.themeWhite" = "화이트";
+"settings.themeAuto" = "기본";
 "settings.themeBlack" = "블랙";
 "settings.disclaimerHeader"= "면책 조항";
 "settings.disclaimer"= "이 응용 프로그램에 제공된 데이터는 정보 제공 목적으로 만 제공되며 귀하가 감수해야하는 모든 목적의 정확성, 유효성, 가용성 또는 적합성을 보장하지 않습니다.";

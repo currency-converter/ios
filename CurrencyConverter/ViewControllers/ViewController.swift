@@ -19,12 +19,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		didSet {
 			let isChanged = oldValue != isEmpty
 			if isChanged {
-				self.fromMoneyLabel.textColor = self.isEmpty ?
-					Theme.fromMoneyLabelEmptyTextColor[themeIndex] :
-					Theme.fromMoneyLabelTextColor[themeIndex]
+                self.fromMoneyLabel.textColor = self.isEmpty ? UIColor(named: "FromMoneyLabelEmptyTextColor") : UIColor(named: "FromMoneyLabelTextColor")
 				self.toMoneyLabel.textColor = self.isEmpty ?
-					Theme.toMoneyLabelEmptyTextColor[themeIndex] :
-					Theme.toMoneyLabelTextColor[themeIndex]
+					UIColor(named: "ToMoneyLabelEmptyTextColor") : UIColor(named: "ToMoneyLabelTextColor")
 			}
 		}
 	}
@@ -210,7 +207,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.toSymbol = shared?.string(forKey: "toSymbol")
 		self.rates = shared?.object(forKey: "rates") as? [String: [String: NSNumber]]
 		self.themeIndex = shared?.integer(forKey: "theme")
-		
+        
 		if self.rates != nil {
 			self.setRate()
 		}
@@ -234,11 +231,21 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			toFavorites.insert(self.toSymbol, at: 0)
 		}
 	}
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            let selectedTheme = UITraitCollection.current.userInterfaceStyle == .light ? 0 : 1;
+            NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
+                "theme": selectedTheme
+            ])
+        }
+    }
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		IwatchSessionUtil.shareManager.sendMessageToWatch(key: "name", value: "Joe")
+        
+        IwatchSessionUtil.shareManager.sendMessageToWatch(key: "name", value: "Joe")
 		
 		registerSettingsBundle()
         
@@ -287,6 +294,26 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//显示前隐藏导航条
 		self.navigationController?.isNavigationBarHidden = true
 	}
+    
+    func changeInterfaceStyle() {
+        self.view.backgroundColor = UIColor(named: "BackgroundColor")
+        
+        var barStyle: UIStatusBarStyle;
+        
+        switch self.themeIndex {
+            case 0:
+                overrideUserInterfaceStyle = .light
+                barStyle = .darkContent
+            case 1:
+                overrideUserInterfaceStyle = .dark
+                barStyle = .lightContent
+            default:
+                overrideUserInterfaceStyle = .unspecified
+                barStyle = .default
+        }
+        
+        UIApplication.shared.statusBarStyle = barStyle
+    }
 	
 	func getPosition() {
 		let width: CGFloat = UIScreen.main.bounds.width
@@ -325,9 +352,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func render() {
-		self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
-		self.navigationController?.navigationBar.barStyle = Theme.barStyle[themeIndex]
-		UIApplication.shared.statusBarStyle = Theme.statusBarStyle[themeIndex]
+        changeInterfaceStyle()
 		getPosition()
 		renderScreen()
 		renderKeyboard()
@@ -464,13 +489,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
 		var view: UIScrollView
-		let moneyLabelTextColor: UIColor = type == "from" ?
-			self.isEmpty ?
-				Theme.fromMoneyLabelEmptyTextColor[themeIndex] :
-				Theme.fromMoneyLabelTextColor[themeIndex] :
-			self.isEmpty ?
-				Theme.toMoneyLabelEmptyTextColor[themeIndex] :
-				Theme.toMoneyLabelEmptyTextColor[themeIndex]
+        let moneyLabelTextColor: UIColor = ((type == "from" ?
+                                                (self.isEmpty ?
+                                                    UIColor(named: "FromMoneyLabelEmptyTextColor") : UIColor(named: "FromMoneyLabelTextColor")) :
+                                                self.isEmpty ?
+                                                UIColor(named: "ToMoneyLabelEmptyTextColor") : UIColor(named: "ToMoneyLabelTextColor"))!)
 		
 		if type == "from" {
 			view = fromScrollView
@@ -558,7 +581,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			symbolLabel.text = symbol + (type == "to"  && self.toSymbol == symbol && isCustomRate ? "*" : "")
 			symbolLabel.textAlignment = .center
 			symbolLabel.font = UIFont.systemFont(ofSize: 16)
-			symbolLabel.textColor = Theme.fromMoneyLabelTextColor[themeIndex]
 			symbolButton.addSubview(symbolLabel)
 			
 			// 将组件和类关联
@@ -613,25 +635,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let btn:UIButton = UIButton.init(frame: CGRect(x:(self.numberButtonWidth + self.numberButtonPadding) * CGFloat(index % Int(self.columnsNumber)) + self.numberButtonPadding, y:(self.numberButtonHeight + self.numberButtonPadding) * CGFloat(floor(Double(index/4))) + self.numberButtonPadding, width: self.numberButtonWidth, height: self.numberButtonHeight))
 			btn.layer.cornerRadius = self.numberButtonHeight/2
 			btn.setTitle(item, for: UIControl.State.normal)
-			btn.setTitleColor(Theme.numberButtonTextColor[themeIndex], for: .normal)
+			btn.setTitleColor(UIColor(named: "NumberButtonTextColor"), for: .normal)
 			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size: 32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
 			
 			switch item {
 			case "÷", "×", "+", "-", "=":
 				btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
-				btn.setBackgroundColor(color: Theme.operatorButtonHighlightedBackgroundColor[themeIndex], forState: .highlighted)
-				btn.setBackgroundColor(color: Theme.operatorButtonSelectedBackgroundColor[themeIndex], forState: .selected)
-				btn.setTitleColor(Theme.operatorButtonSelectedTextColor[themeIndex], for: .selected)
+				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
+				btn.setBackgroundColor(color: UIColor.hex("ffca8e"), forState: .selected)
+				btn.setTitleColor(UIColor.hex("ffffff"), for: .selected)
 			case "A", "B", "H":
 				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
 				fallthrough
 			case "AC":
-				btn.setTitleColor(Theme.settingsButtonTextColor[themeIndex], for: .normal)
-				btn.setBackgroundColor(color: Theme.settingsButtonBackgroundColor[themeIndex], forState: .normal)
+				btn.setTitleColor(UIColor.hex("000000"), for: .normal)
+				btn.setBackgroundColor(color: UIColor.hex("e2e2e2"), forState: .normal)
 			default:
-				btn.setBackgroundColor(color: Theme.numberButtonBackgroundColor[themeIndex], forState: .normal)
-				btn.setBackgroundColor(color: Theme.numberButtonHighlightedBackgroundColor[themeIndex], forState: .highlighted)
+                btn.setBackgroundColor(color: UIColor.systemGray, forState: .normal)
+                btn.setBackgroundColor(color: UIColor.systemGray3, forState: .highlighted)
 			}
 			
 			keyboardView.addSubview(btn)
@@ -910,7 +932,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
-			print("Notification data:", data)
 			if data.keys.contains("isCustomRate") {
 				let isCustomRate: Bool = data["isCustomRate"] as! Bool
 				self.toSymbolLabel.text = self.toSymbol + (isCustomRate ? "*" : "")
@@ -979,12 +1000,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			if data.keys.contains("theme") {
 				let themeIndex: Int = data["theme"] as! Int
 				self.themeIndex = themeIndex
-				self.view.backgroundColor = Theme.appBackgroundColor[themeIndex]
-				renderPagesInScrollView(type: "from")
-				renderPagesInScrollView(type: "to")
-				
-				clear(self.keyboardView)
-				renderKeyboard()
+                changeInterfaceStyle()
+//				renderPagesInScrollView(type: "from")
+//				renderPagesInScrollView(type: "to")
+//
+//				clear(self.keyboardView)
+//				renderKeyboard()
 			}
 		}
 	}

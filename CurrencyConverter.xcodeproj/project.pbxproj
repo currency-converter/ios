@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2410D7D4225EDB18001B192B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2495A1A22253AE6F0009052D /* InfoPlist.strings */; };
 		2410D7D8225F4463001B192B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D7D7225F4463001B192B /* SettingsViewController.swift */; };
-		2418E624227BB7B700EC540B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2418E623227BB7B700EC540B /* Theme.swift */; };
 		241CA3552223D13600D5FC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241CA3542223D13600D5FC5F /* AppDelegate.swift */; };
 		241CA35C2223D13700D5FC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241CA35B2223D13700D5FC5F /* Assets.xcassets */; };
 		245EE99E2293A70E002F504B /* CurrencyInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245EE99D2293A70E002F504B /* CurrencyInterfaceController.swift */; };
@@ -598,7 +597,6 @@
 		2410D7D2225D83D3001B192B /* CurrencyConverter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CurrencyConverter.entitlements; sourceTree = "<group>"; };
 		2410D7D3225E0B42001B192B /* TodayWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWidget.entitlements; sourceTree = "<group>"; };
 		2410D7D7225F4463001B192B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		2418E623227BB7B700EC540B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		241CA3512223D13600D5FC5F /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		241CA3542223D13600D5FC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		241CA35B2223D13700D5FC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -937,7 +935,6 @@
 				24C6800F2227855A00747FBF /* button.swift */,
 				24ADE834222AAE3900B4C046 /* Iconfont.swift */,
 				24EAA6252231ACAB00ACF074 /* Util.swift */,
-				2418E623227BB7B700EC540B /* Theme.swift */,
 				247FC2C722826AC200B81031 /* IwatchSessionUtil.swift */,
 			);
 			path = CurrencyConverter;
@@ -1889,7 +1886,6 @@
 				24ADE835222AAE3900B4C046 /* Iconfont.swift in Sources */,
 				24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */,
 				24A4B11922523DB8001D77C2 /* CurrencyPickerViewController.swift in Sources */,
-				2418E624227BB7B700EC540B /* Theme.swift in Sources */,
 				24EAA6262231ACAB00ACF074 /* Util.swift in Sources */,
 				249265FB2278214F001F9649 /* Config.swift in Sources */,
 				24A4B11822523DB8001D77C2 /* ViewController.swift in Sources */,
@@ -2181,7 +2177,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2205,7 +2201,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

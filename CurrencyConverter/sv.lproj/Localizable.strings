@@ -34,6 +34,7 @@
 "settings.theme" = "tema";
 "settings.themeWhite" = "vit";
 "settings.themeBlack" = "svart";
+"settings.themeAuto" = "Standard";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "De uppgifter som tillhandahålls i denna applikation är endast av informativa skäl och garanterar inte för exakthet, validitet, tillgänglighet eller lämplighet för något ändamål, på egen risk.";
 

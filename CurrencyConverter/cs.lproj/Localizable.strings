@@ -34,6 +34,7 @@
 "settings.theme" = "Téma";
 "settings.themeWhite" = "Bílá";
 "settings.themeBlack" = "Černá";
+"settings.themeAuto" = "Výchozí";
 "settings.disclaimerHeader" = "Disclaimer";
 "settings.disclaimer" = "Data uvedená v této aplikaci slouží pouze pro informační účely a nezaručují správnost, platnost, dostupnost nebo vhodnost jakéhokoliv účelu, na vlastní riziko.";
 

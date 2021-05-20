@@ -34,6 +34,7 @@
 "settings.theme" = "テーマ";
 "settings.themeWhite" = "白";
 "settings.themeBlack" = "黒";
+"settings.themeAuto" = "自動";
 "settings.disclaimerHeader" = "免責事項";
 "settings.disclaimer" = "このアプリケーションで提供されるデータは情報提供のみを目的としており、自己の責任において、いかなる目的の正確性、妥当性、可用性、または適合性を保証するものでもありません。";
 

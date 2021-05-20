@@ -34,6 +34,7 @@
 "settings.theme" = "موضوع";
 "settings.themeWhite" = "الأبيض";
 "settings.themeBlack" = "أسود";
+"settings.themeAuto" = "تقصير";
 "settings.disclaimerHeader" = "تنصل";
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
 

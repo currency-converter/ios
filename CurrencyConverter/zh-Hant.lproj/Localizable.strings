@@ -34,6 +34,7 @@
 "settings.theme" = "主題";
 "settings.themeWhite" = "白";
 "settings.themeBlack" = "黑";
+"settings.themeAuto" = "自動";
 "settings.disclaimerHeader" = "免責聲明";
 "settings.disclaimer" = "此應用程序中提供的數據僅供參考，不能保證任何目的的準確性、有效性、可用性或適合性，自行承擔使用風險。";
 

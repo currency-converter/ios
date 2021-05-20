@@ -34,6 +34,7 @@
 "settings.theme" = "Tema";
 "settings.themeWhite" = "Branco";
 "settings.themeBlack" = "Preto";
+"settings.themeAuto" = "Padrão";
 "settings.disclaimerHeader" = "Isenção de responsabilidade";
 "settings.disclaimer" = "Os dados apresentados nesta aplicação são apenas para fins informativos e não garantem a precisão, validade, disponibilidade ou adequação de qualquer finalidade, por sua conta e risco.";
 

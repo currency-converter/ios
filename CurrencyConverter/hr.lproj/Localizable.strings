@@ -34,6 +34,7 @@
 "settings.theme" = "tema";
 "settings.themeWhite" = "bijela";
 "settings.themeBlack" = "crna";
+"settings.themeAuto" = "Zadano";
 "settings.disclaimerHeader" = "Odricanje od odgovornosti";
 "settings.disclaimer" = "Podaci navedeni u ovoj aplikaciji služe samo u informativne svrhe i ne jamče točnost, valjanost, dostupnost ili prikladnost bilo koje svrhe, na vlastitu odgovornost.";
 

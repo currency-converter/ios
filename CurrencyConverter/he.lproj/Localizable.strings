@@ -34,6 +34,7 @@
 "settings.theme" = "נושא";
 "settings.themeWhite" = "לבן";
 "settings.themeBlack" = "שחור";
+"settings.themeAuto" = "בְּרִירַת מֶחדָל";
 "settings.disclaimerHeader" = "כתב ויתור";
 "Settings.disclaimer" = "נתוני היישום ניתן למטרות אינפורמטיביות בלבד, ולא לכל מטרה כדי להבטיח את הדיוק, תוקף, זמינות או התאמתו, אפשרות וסיכון.";
 

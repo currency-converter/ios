@@ -34,6 +34,7 @@
 "settings.theme" = "Tema";
 "settings.themeWhite" = "Putih";
 "settings.themeBlack" = "Hitam";
+"settings.themeAuto" = "Default";
 "settings.disclaimerHeader" = "Penafian";
 "settings.disclaimer" = "Data yang disediakan dalam aplikasi ini hanya untuk tujuan informasi dan tidak menjamin akurasi, validitas, ketersediaan atau kesesuaian tujuan apa pun, dengan risiko Anda sendiri.";
 
