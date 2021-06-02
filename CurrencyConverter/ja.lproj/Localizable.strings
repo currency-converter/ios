@@ -32,7 +32,7 @@
 "settings.usesGroupingSeparator" = "グループ化区切りを使用";
 "settings.decimalPlaces" = "小数点以下の桁数";
 "settings.theme" = "テーマ";
-"settings.themeWhite" = "白";
+"settings.themeWhite" = "白い";
 "settings.themeBlack" = "黒";
 "settings.themeAuto" = "自動";
 "settings.disclaimerHeader" = "免責事項";

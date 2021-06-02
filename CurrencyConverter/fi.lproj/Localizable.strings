@@ -34,7 +34,7 @@
 "settings.theme" = "teema";
 "settings.themeWhite" = "valkoinen";
 "settings.themeBlack" = "musta";
-"settings.themeAuto" = "Oletus";
+"settings.themeAuto" = "Automaattinen";
 "settings.disclaimerHeader" = "Vastuuvapauslauseke";
 "settings.disclaimer" = "Tässä hakemuksessa annetut tiedot ovat vain tiedoksi ja eivät takaa tarkkuutta, pätevyyttä, käytettävyyttä tai tarkoituksenmukaisuutta omalla vastuullasi.";
 
