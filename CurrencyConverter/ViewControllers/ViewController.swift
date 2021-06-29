@@ -38,7 +38,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var fromMoney: String = "100"
 	
 	// 汇率
-	var rate: Float = 6.777
+	var rate: Float = 6.4589
 	
 	var rates: [String: [String: NSNumber]]!
 	
