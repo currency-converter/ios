@@ -231,16 +231,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			toFavorites.insert(self.toSymbol, at: 0)
 		}
 	}
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            let selectedTheme = UITraitCollection.current.userInterfaceStyle == .light ? 0 : 1;
-            NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-                "theme": selectedTheme
-            ])
-        }
-    }
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -1001,11 +991,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				let themeIndex: Int = data["theme"] as! Int
 				self.themeIndex = themeIndex
                 changeInterfaceStyle()
-//				renderPagesInScrollView(type: "from")
-//				renderPagesInScrollView(type: "to")
-//
-//				clear(self.keyboardView)
-//				renderKeyboard()
 			}
 		}
 	}
