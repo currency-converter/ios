@@ -640,9 +640,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				fallthrough
 			case "AC":
 				btn.setTitleColor(UIColor.hex("000000"), for: .normal)
-				btn.setBackgroundColor(color: UIColor.hex("e2e2e2"), forState: .normal)
+				btn.setBackgroundColor(color: UIColor.hex("a4a5a6"), forState: .normal)
 			default:
-                btn.setBackgroundColor(color: UIColor.systemGray, forState: .normal)
+                btn.setBackgroundColor(color: UIColor.systemFill, forState: .normal)
                 btn.setBackgroundColor(color: UIColor.systemGray3, forState: .highlighted)
 			}
 			
