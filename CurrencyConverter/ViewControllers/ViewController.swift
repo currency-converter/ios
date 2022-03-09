@@ -107,11 +107,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         var request = URLRequest(url: url)
         let rand: Int = Int.random(in: 0..<userAgent.count)
         request.addValue(userAgent[rand], forHTTPHeaderField: "User-Agent")
-        request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
-        request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
-        request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
-        request.addValue("no-cache", forHTTPHeaderField: "Pragma")
-        request.addValue("1", forHTTPHeaderField: "Upgrade-Insecure-Requests")
+//        request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
+//        request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
+//        request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
+//        request.addValue("no-cache", forHTTPHeaderField: "Pragma")
+//        request.addValue("1", forHTTPHeaderField: "Upgrade-Insecure-Requests")
+        request.addValue("http://vip.stock.finance.sina.com.cn/", forHTTPHeaderField: "Referer")
         return request
     }
     
@@ -190,13 +191,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                         NSLog("Rate update failed:\(fullUrl)")
                         NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": true, "isClickEvent": isClickEvent])
                     }
-                    
+
                 }
-                
+
                 // 激活请求任务
                 task.resume()
             }
-        
+
         }
 	}
 	
@@ -479,11 +480,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		var symbolButtonTag: Int
 		var isCustomRate: Bool = Config.defaults["isCustomRate"] as! Bool
 		var view: UIScrollView
-        let moneyLabelTextColor: UIColor = ((type == "from" ?
+        let moneyLabelTextColor: UIColor? = ((type == "from" ?
                                                 (self.isEmpty ?
                                                     UIColor(named: "FromMoneyLabelEmptyTextColor") : UIColor(named: "FromMoneyLabelTextColor")) :
                                                 self.isEmpty ?
-                                                UIColor(named: "ToMoneyLabelEmptyTextColor") : UIColor(named: "ToMoneyLabelTextColor"))!)
+                                                UIColor(named: "ToMoneyLabelEmptyTextColor") : UIColor(named: "ToMoneyLabelTextColor")))
 		
 		if type == "from" {
 			view = fromScrollView
