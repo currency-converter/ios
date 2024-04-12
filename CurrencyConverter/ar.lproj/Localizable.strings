@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "البدء";
-"guide.0" = "حرك عملة الصرف لأعلى ولأسفل";
-"guide.1" = "انتقد اليسار واليمين للتبديل العملات";
+"guide.0" = "قم بتغيير نوع العملة بالنقر على العلم";
+"guide.1" = "التبديل بين العملات المفضلة عن طريق التمرير إلى اليسار أو اليمين";
+"guide.2" = "قم بتبديل العملات الأصلية والعملات المستهدفة عن طريق التمرير لأعلى أو لأسفل";
 
 "settings.title" = "نصب";
 "settings.soundsHeader" = "صوت";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "البيانات المقدمة في هذا التطبيق هي لأغراض إعلامية فقط ولا تضمن دقة أو صلاحية أو توفر أو ملاءمة أي غرض على مسؤوليتك الخاصة.";
 
 "currencyPicker.title" = "اختر عملة";
-"currencyPicker.favoriteCurrencies" = "العملات المفضل";
+"currencyPicker.favoriteCurrencies" = "المفضلة";
 "currencyPicker.allCurrencies" = "جميع العملات";
 "currencyPicker.noResults" = "لا توجد نتائج";
 "currencyPicker.unknow" = "غير معروف";

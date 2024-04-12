@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Započnite";
-"guide.0" = "Pomaknite valutu za promjenu gore i dolje";
-"guide.1" = "Prijeđite prstima lijevo i desno da biste promijenili valute";
+"guide.0" = "Promijenite vrstu valute klikom na zastavicu";
+"guide.1" = "Prebacivanje između omiljenih valuta povlačenjem lijevo ili desno";
+"guide.2" = "Zamijenite izvornu i ciljnu valutu povlačenjem gore ili dolje";
 
 "settings.title" = "Postavke";
 "settings.soundsHeader" = "zvuk";

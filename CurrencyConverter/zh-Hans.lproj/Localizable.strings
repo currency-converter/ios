@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "开始使用";
-"guide.0" = "上下交换货币";
-"guide.1" = "左右滑动切换货币";
+"guide.0" = "通过点击国旗来改变货币类型";
+"guide.1" = "通过左右滑动来切换收藏的货币";
+"guide.2" = "通过上下滑动来交换原始货币和目标货币";
 
 "settings.title" = "设置";
 "settings.soundsHeader" = "声音";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "此应用程序中提供的数据仅供参考，不能保证任何目的的准确性、有效性、可用性或适合性，自行承担使用风险。";
 
 "currencyPicker.title" = "选择货币";
-"currencyPicker.favoriteCurrencies" = "收藏货币";
+"currencyPicker.favoriteCurrencies" = "收藏夹";
 "currencyPicker.allCurrencies" = "所有货币";
 "currencyPicker.noResults" = "无结果";
 "currencyPicker.unknow" = "未知";

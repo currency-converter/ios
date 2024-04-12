@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Başlamak";
-"guide.0" = "Döviz para birimini yukarı ve aşağı kaydırın";
-"guide.1" = "Para birimleri arasında geçiş yapmak için sola ve sağa kaydırın";
+"guide.0" = "Bayrağa tıklayarak para birimi türünü değiştirin";
+"guide.1" = "Sola veya sağa kaydırarak favori para birimleri arasında geçiş yapın";
+"guide.2" = "Yukarı veya aşağı kaydırarak orijinal ve hedef para birimlerini değiştirin";
 
 "settings.title" = "Ayarlar";
 "settings.soundsHeader" = "ses";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "Bu başvuruda sağlanan veriler yalnızca bilgilendirme amaçlıdır ve herhangi bir amacın doğruluğunu, geçerliliğini, kullanılabilirliğini veya uygunluğunu kendi sorumluluğunuzda değildir.";
 
 "currencyPicker.title" = "Para birimini seçin";
-"currencyPicker.favoriteCurrencies" = "Sık Kullanılanlar";
+"currencyPicker.favoriteCurrencies" = "Favoriler";
 "currencyPicker.allCurrencies" = "Tüm para birimleri";
 "currencyPicker.noResults" = "sonuç yok";
 "currencyPicker.unknow" = "Bilinmiyor";

@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "はじめに";
-"guide.0" = "交換通貨を上下にスライドさせる";
-"guide.1" = "通貨を切り替えるには左右にスワイプ";
+"guide.0" = "フラグをクリックして通貨の種類を変更します";
+"guide.1" = "左または右にスワイプして、お気に入りの通貨を切り替えます";
+"guide.2" = "上下にスワイプして元の通貨とターゲット通貨を交換します";
 
 "settings.title" = "設定";
 "settings.soundsHeader" = "サウンド";

@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Bắt đầu";
-"guide.0" = "Trượt tiền tệ trao đổi lên xuống";
-"guide.1" = "Vuốt sang trái và phải để chuyển đổi tiền tệ";
+"guide.0" = "Thay đổi loại tiền tệ bằng cách nhấp vào cờ";
+"guide.1" = "Chuyển đổi giữa các loại tiền tệ yêu thích bằng cách vuốt sang trái hoặc sang phải";
+"guide.2" = "Hoán đổi tiền tệ gốc và tiền tệ mục tiêu bằng cách vuốt lên hoặc xuống";
 
 "settings.title" = "Cài đặt";
 "settings.soundsHeader" = "âm thanh";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "Dữ liệu được cung cấp trong ứng dụng này chỉ nhằm mục đích cung cấp thông tin và không đảm bảo tính chính xác, hợp lệ, tính sẵn có hoặc tính phù hợp của bất kỳ mục đích nào, có nguy cơ của riêng bạn.";
 
 "currencyPicker.title" = "Chọn vận động";
-"currencyPicker.favoriteCurrencies" = "Ngân phiếu ưa thích";
+"currencyPicker.favoriteCurrencies" = "Yêu thích";
 "currencyPicker.allCurrencies" = "Tất cả";
 "currencyPicker.noResults" = "Chưa có kết quả";
 "currencyPicker.unknow" = "Không";

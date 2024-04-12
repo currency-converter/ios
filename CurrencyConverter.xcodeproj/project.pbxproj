@@ -512,8 +512,6 @@
 		24C70A482266E0FF008CAD04 /* cc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24ADE830222909E600B4C046 /* cc.ttf */; };
 		24C70A492266E425008CAD04 /* Iconfont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ADE834222AAE3900B4C046 /* Iconfont.swift */; };
 		24CD437922978FF900C138F1 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CD437822978FF900C138F1 /* GuideViewController.swift */; };
-		24CD438122979AB900C138F1 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CD437E22979AB900C138F1 /* 1.png */; };
-		24CD438222979AB900C138F1 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CD437F22979AB900C138F1 /* 0.png */; };
 		24D0A6572248F12900BC423B /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 24D0A6562248F12800BC423B /* Sounds */; };
 		24D9857D225C8CE900AEBA7B /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D9857C225C8CE900AEBA7B /* NotificationCenter.framework */; };
 		24D98580225C8CE900AEBA7B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9857F225C8CE900AEBA7B /* TodayViewController.swift */; };
@@ -528,6 +526,9 @@
 		24E206F2228131F200A32337 /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 24E206D8228131F000A32337 /* Watch.app */; };
 		24E206FB22815E7E00A32337 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249265FA2278214F001F9649 /* Config.swift */; };
 		24E206FC22815EF100A32337 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
+		24E6587F2BC8C36F005E25F7 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E6587C2BC8C36E005E25F7 /* 1.png */; };
+		24E658802BC8C36F005E25F7 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E6587D2BC8C36E005E25F7 /* 2.png */; };
+		24E658832BC8C457005E25F7 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E658822BC8C457005E25F7 /* 0.png */; };
 		24EAA6262231ACAB00ACF074 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAA6252231ACAB00ACF074 /* Util.swift */; };
 		24EF906A22606CF8005D6130 /* DecimalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906922606CF8005D6130 /* DecimalsViewController.swift */; };
 		24EF906C22609FEC005D6130 /* FrequencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF906B22609FEC005D6130 /* FrequencyViewController.swift */; };
@@ -841,8 +842,6 @@
 		24C70A892269F154008CAD04 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		24C70A8A2269F154008CAD04 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		24CD437822978FF900C138F1 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
-		24CD437E22979AB900C138F1 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		24CD437F22979AB900C138F1 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		24D0A6562248F12800BC423B /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		24D9857A225C8CE900AEBA7B /* TodayWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		24D9857C225C8CE900AEBA7B /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -861,6 +860,9 @@
 		24E206FD2281861800A32337 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS5.1.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
 		24E206FF2281868900A32337 /* Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Watch Extension.entitlements"; sourceTree = "<group>"; };
 		24E20700228186EA00A32337 /* Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Watch.entitlements; sourceTree = "<group>"; };
+		24E6587C2BC8C36E005E25F7 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		24E6587D2BC8C36E005E25F7 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		24E658822BC8C457005E25F7 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		24EAA6252231ACAB00ACF074 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		24EF906922606CF8005D6130 /* DecimalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalsViewController.swift; sourceTree = "<group>"; };
 		24EF906B22609FEC005D6130 /* FrequencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyViewController.swift; sourceTree = "<group>"; };
@@ -1123,8 +1125,9 @@
 		24CD437C22979AB900C138F1 /* Guides */ = {
 			isa = PBXGroup;
 			children = (
-				24CD437E22979AB900C138F1 /* 1.png */,
-				24CD437F22979AB900C138F1 /* 0.png */,
+				24E658822BC8C457005E25F7 /* 0.png */,
+				24E6587C2BC8C36E005E25F7 /* 1.png */,
+				24E6587D2BC8C36E005E25F7 /* 2.png */,
 			);
 			path = Guides;
 			sourceTree = "<group>";
@@ -1413,7 +1416,6 @@
 				249966A922708B2E0011711A /* GEL.png in Resources */,
 				2495A1A02253AE6F0009052D /* InfoPlist.strings in Resources */,
 				249966A522708B2E0011711A /* SLL.png in Resources */,
-				24CD438222979AB900C138F1 /* 0.png in Resources */,
 				2499665F22708B2E0011711A /* MVR.png in Resources */,
 				249965D122708B2D0011711A /* BZD.png in Resources */,
 				2499661122708B2E0011711A /* RON.png in Resources */,
@@ -1426,7 +1428,6 @@
 				2499662122708B2E0011711A /* HKD.png in Resources */,
 				249966BD22708B2E0011711A /* LAK.png in Resources */,
 				2499667122708B2E0011711A /* AZN.png in Resources */,
-				24CD438122979AB900C138F1 /* 1.png in Resources */,
 				249965DD22708B2D0011711A /* TJS.png in Resources */,
 				2499669922708B2E0011711A /* PGK.png in Resources */,
 				249966BF22708B2E0011711A /* SOS.png in Resources */,
@@ -1494,6 +1495,7 @@
 				249965A522708B2D0011711A /* BYN.png in Resources */,
 				2499662F22708B2E0011711A /* BRL.png in Resources */,
 				2499658D22708B2D0011711A /* SYP.png in Resources */,
+				24E658832BC8C457005E25F7 /* 0.png in Resources */,
 				2499669322708B2E0011711A /* NZD.png in Resources */,
 				2499667F22708B2E0011711A /* MMK.png in Resources */,
 				249965C722708B2D0011711A /* PKR.png in Resources */,
@@ -1501,6 +1503,7 @@
 				249965A922708B2D0011711A /* GIP.png in Resources */,
 				249966C322708B2E0011711A /* SCR.png in Resources */,
 				249966A122708B2E0011711A /* TRY.png in Resources */,
+				24E658802BC8C36F005E25F7 /* 2.png in Resources */,
 				2499658B22708B2D0011711A /* CDF.png in Resources */,
 				2499664122708B2E0011711A /* KWD.png in Resources */,
 				249966A322708B2E0011711A /* THB.png in Resources */,
@@ -1511,6 +1514,7 @@
 				249965EF22708B2E0011711A /* AOA.png in Resources */,
 				2499668922708B2E0011711A /* TWD.png in Resources */,
 				249965F522708B2E0011711A /* ANG.png in Resources */,
+				24E6587F2BC8C36F005E25F7 /* 1.png in Resources */,
 				249965BD22708B2D0011711A /* LYD.png in Resources */,
 				249965BB22708B2D0011711A /* NOK.png in Resources */,
 				249965A322708B2D0011711A /* BBD.png in Resources */,
@@ -2174,7 +2178,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2182,7 +2186,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2198,7 +2202,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2206,7 +2210,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2266,11 +2270,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2287,11 +2291,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2308,7 +2312,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2316,7 +2320,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -2333,7 +2337,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PP779DWHHM;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2341,7 +2345,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.16;
+				MARKETING_VERSION = 1.2.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongzhi.currencyconverter.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;

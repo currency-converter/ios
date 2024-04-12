@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "iniciar";
-"guide.0" = "Deslize a moeda de troca para cima e para baixo";
-"guide.1" = "Deslize para a esquerda e para a direita para trocar moedas";
+"guide.0" = "Altere o tipo de moeda clicando na bandeira";
+"guide.1" = "Alterne entre moedas favoritas deslizando para a esquerda ou para a direita";
+"guide.2" = "Troque as moedas original e de destino deslizando para cima ou para baixo";
 
 "settings.title" = "Configurações";
 "settings.soundsHeader" = "som";

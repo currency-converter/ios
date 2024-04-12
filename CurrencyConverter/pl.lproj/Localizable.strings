@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Zaczynać";
-"guide.0" = "Przesuń walutę wymiany w górę iw dół";
-"guide.1" = "Przesuń w lewo i w prawo, aby zmienić waluty";
+"guide.0" = "Zmień typ waluty, klikając flagę";
+"guide.1" = "Przełączaj ulubione waluty, przesuwając palcem w lewo lub w prawo";
+"guide.2" = "Zamień walutę oryginalną i docelową, przesuwając w górę lub w dół";
 
 "settings.title" = "Ustawienia";
 "settings.soundsHeader" = "dźwięk";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "Dane podane w tej aplikacji mają wyłącznie charakter informacyjny i nie gwarantują dokładności, ważności, dostępności ani przydatności do jakiegokolwiek celu, na własne ryzyko.";
 
 "currencyPicker.title" = "Wybierz walutę";
-"currencyPicker.favoriteCurrencies" = "Favorites";
+"currencyPicker.favoriteCurrencies" = "Ulubione";
 "currencyPicker.allCurrencies" = "Wszystkie waluty";
 "currencyPicker.noResults" = "brak wyniku";
 "currencyPicker.unknow" = "Nieznany";

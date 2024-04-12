@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry"= "시작하다";
-"guide.0"= "교환 통화를 위아래로 밀기";
-"guide.1"= "통화를 전환하려면 왼쪽 및 오른쪽으로 스 와이프";
+"guide.0" = "국기를 클릭하여 통화 종류를 변경하세요";
+"guide.1" = "왼쪽이나 오른쪽으로 쓸어넘겨서 즐겨찾는 통화 간에 전환하세요";
+"guide.2" = "위나 아래로 쓸어넘겨 원래 통화와 대상 통화를 교환하세요";
 
 "settings.title"= "설정";
 "settings.soundsHeader"= "소리";
@@ -39,7 +40,7 @@
 "settings.disclaimer"= "이 응용 프로그램에 제공된 데이터는 정보 제공 목적으로 만 제공되며 귀하가 감수해야하는 모든 목적의 정확성, 유효성, 가용성 또는 적합성을 보장하지 않습니다.";
 
 "currencyPicker.title"= "통화 선택";
-"currencyPicker.favoriteCurrencies"= "즐겨 찾기";
+"currencyPicker.favoriteCurrencies"= "즐겨찾기";
 "currencyPicker.allCurrencies"= "모든 통화";
 "currencyPicker.noResults"= "결과 없음";
 "currencyPicker.unknow"= "알 수 없음";

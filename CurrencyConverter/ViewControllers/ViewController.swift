@@ -107,11 +107,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         var request = URLRequest(url: url)
         let rand: Int = Int.random(in: 0..<userAgent.count)
         request.addValue(userAgent[rand], forHTTPHeaderField: "User-Agent")
-//        request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", forHTTPHeaderField: "Accept")
-//        request.addValue("zh-CN,zh;q=0.9", forHTTPHeaderField: "Accept-Language")
-//        request.addValue("no-cache", forHTTPHeaderField: "Cache-Control")
-//        request.addValue("no-cache", forHTTPHeaderField: "Pragma")
-//        request.addValue("1", forHTTPHeaderField: "Upgrade-Insecure-Requests")
         request.addValue("http://vip.stock.finance.sina.com.cn/", forHTTPHeaderField: "Referer")
         return request
     }
@@ -247,7 +242,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		render()
 		
 		observe()
+        
+        onboarding()
 	}
+    
+    func onboarding() {
+        if (!(UserDefaults.standard.bool(forKey: "hasOnboarding"))) {
+            // UserDefaults.standard.set(true, forKey:"hasOnboarding")
+            // 在页面加载完成后显示提示信息
+        
+        }
+        
+        
+    }
 	
 	func isNeedUpdateRate() -> Bool {
 		let shared = UserDefaults(suiteName: Config.groupId)
@@ -289,27 +296,39 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     func changeInterfaceStyle() {
         self.view.backgroundColor = UIColor(named: "BackgroundColor")
         
-        var barStyle: UIStatusBarStyle;
-        
         switch self.themeIndex {
-            case 0:
-                overrideUserInterfaceStyle = .light
-                barStyle = .darkContent
-            case 1:
-                overrideUserInterfaceStyle = .dark
-                barStyle = .lightContent
-            default:
-                overrideUserInterfaceStyle = .unspecified
-                barStyle = .default
+        case 0:
+            overrideUserInterfaceStyle = .light
+        case 1:
+            overrideUserInterfaceStyle = .dark
+        default:
+            overrideUserInterfaceStyle = .unspecified
         }
         
-        UIApplication.shared.statusBarStyle = barStyle
+        setNeedsStatusBarAppearanceUpdate()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        switch self.themeIndex {
+        case 0:
+            return .darkContent
+        case 1:
+            return .lightContent
+        default:
+            return .default
+        }
     }
 	
 	func getPosition() {
 		let width: CGFloat = UIScreen.main.bounds.width
 		let height: CGFloat = UIScreen.main.bounds.height
-		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+//		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight: CGFloat = {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                return windowScene.statusBarManager?.statusBarFrame.height ?? 0
+            }
+            return 0
+        }()
 		
 		if UIDevice.current.userInterfaceIdiom == .pad {
 			//高度不够，只能使用椭圆按钮
@@ -845,25 +864,32 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.performSegue(withIdentifier: "showSettingsSegue", sender: nil)
 	}
 	
-	
 	@objc func onSettingsDone(_ sender: UIButton) {
 		UIView.animate(withDuration: 0.5, animations: {
 			self.settingsView.frame.origin.y = UIScreen.main.bounds.height
 		}, completion: nil)
 	}
 	
+    // 长按拷贝换算结果
 	@objc func longPressAction(_ recognizer: UILongPressGestureRecognizer) {
 		// 如果 Menu 已经被创建那就不再重复创建 menu
 		if (UIMenuController.shared.isMenuVisible){
 			return
 		}
 		self.toMoneyLabel.becomeFirstResponder()
-		self.toMoneyLabel.backgroundColor = UIColor.darkGray
-		let menu = UIMenuController.shared
-		menu.arrowDirection = .down
-		let rect = CGRect(x: (self.toMoneyLabel.frame.width-50)/2, y: 10, width: 50, height: 50)
-		menu.setTargetRect(rect, in: self.toMoneyLabel)
-		menu.setMenuVisible(true, animated: true)
+        self.toMoneyLabel.backgroundColor = UIColor.hex("cccccc")
+        // 获取文字的实际宽度
+//        let actualWidth = self.toMoneyLabel.actualWidth()
+        // 计算文字的实际宽度
+        let size = self.toMoneyLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: self.toMoneyLabel.frame.size.height))
+
+        let x = self.toMoneyLabel.frame.width-size.width + size.width/2
+        let y = 20.0 // self.toMoneyLabel.frame.height
+        let rect = CGRect(x: x, y: y, width: 50, height: 50)
+        
+        let menu = UIMenuController.shared
+        menu.arrowDirection = .up
+        menu.showMenu(from: self.toMoneyLabel, rect: rect)
 	}
 
 	override func copy(_ sender: Any?) {

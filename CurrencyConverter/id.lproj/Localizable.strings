@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Mulai";
-"guide.0" = "Geser mata uang pertukaran naik dan turun";
-"guide.1" = "Geser ke kiri dan kanan untuk beralih mata uang";
+"guide.0" = "Ubah jenis mata uang dengan mengklik bendera";
+"guide.1" = "Beralih di antara mata uang favorit dengan menggeser ke kiri atau kanan";
+"guide.2" = "Tukar mata uang asli dan target dengan menggeser ke atas atau ke bawah";
 
 "settings.title" = "Pengaturan";
 "settings.soundsHeader" = "sound";

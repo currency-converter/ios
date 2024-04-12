@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Începeți";
-"guide.0" = "Glisați moneda de schimb în sus și în jos";
-"guide.1" = "Glisați la stânga și la dreapta pentru a comuta valutele";
+"guide.0" = "Schimbați tipul monedei făcând clic pe steag";
+"guide.1" = "Comută între monedele preferate glisând la stânga sau la dreapta";
+"guide.2" = "Schimbați monedele originale și monedele țintă glisând în sus sau în jos";
 
 "settings.title" = "Setări";
 "settings.soundsHeader" = "sunet";

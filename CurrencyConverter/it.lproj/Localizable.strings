@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Iniziare";
-"guide.0" = "Fai scorrere verso l'alto e verso il basso la valuta di scambio";
-"guide.1" = "Scorri verso sinistra e verso destra per cambiare valuta";
+"guide.0" = "Cambia tipo di valuta facendo clic sulla bandiera";
+"guide.1" = "Passa da una valuta preferita all'altra scorrendo verso sinistra o destra";
+"guide.2" = "Scambia la valuta originale e quella di destinazione scorrendo verso l'alto o verso il basso";
 
 "settings.title" = "Impostazioni";
 "settings.soundsHeader" = "suono";

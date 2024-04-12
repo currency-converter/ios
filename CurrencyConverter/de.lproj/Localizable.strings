@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Loslegen";
-"guide.0" = "Schieben Sie die Wechselwährung nach oben und unten.";
-"guide.1" = "Streichen Sie nach links und rechts, um die Währung zu wechseln.";
+"guide.0" = "Währungstyp ändern, indem Sie auf die Flagge klicken";
+"guide.1" = "Wechseln Sie zwischen den Lieblingswährungen, indem Sie nach links oder rechts wischen";
+"guide.2" = "Original- und Zielwährung durch Wischen nach oben oder unten tauschen";
 
 "settings.title" = "Einstellungen";
 "settings.soundsHeader" = "Ton";

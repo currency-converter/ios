@@ -17,7 +17,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 	
 	
 	//页面数量
-	var numOfPages = 2
+	var numOfPages = 3
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +115,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func entry() {
+        UserDefaults.standard.set(true, forKey:"hideGuide")
         UIApplication.shared.keyWindow?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
 	}
 	

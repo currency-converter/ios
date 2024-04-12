@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		//这里判断是否第一次启动APP
 //        UserDefaults.standard.removeObject(forKey: "everLaunched")
-		if (!(UserDefaults.standard.bool(forKey: "everLaunched"))) {
-			UserDefaults.standard.set(true, forKey:"everLaunched")
+		if (!(UserDefaults.standard.bool(forKey: "hideGuide"))) {
 			self.window!.rootViewController = GuideViewController()
 		}
 		

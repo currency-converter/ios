@@ -67,7 +67,7 @@ class DecimalsViewController: UITableViewController {
 		
 		// accessory
 		cell.accessoryType = value == defaultValue ? .checkmark : .none
-		cell.tintColor = UIColor.loquatYellow
+//		cell.tintColor = UIColor.loquatYellow
 		return cell
 	}
 	

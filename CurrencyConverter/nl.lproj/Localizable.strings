@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Begin";
-"guide.0" = "Schuif de wisselvaluta op en neer";
-"guide.1" = "Veeg naar links en rechts om van valuta te wisselen";
+"guide.0" = "Wijzig het valutatype door op de vlag te klikken";
+"guide.1" = "Schakelaar tussen favoriete valuta's door naar links of rechts te vegen";
+"guide.2" = "Wissel oorspronkelijke valuta en doelvaluta door omhoog of omlaag te vegen";
 
 "settings.title" = "Instellingen";
 "settings.soundsHeader" = "geluid";

@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Začínáme";
-"guide.0" = "Posunout měnu výměny nahoru a dolů";
-"guide.1" = "Posunutím doleva a doprava přepnete měny";
+"guide.0" = "Změňte typ měny kliknutím na vlajku";
+"guide.1" = "Přepínání mezi oblíbenými měnami přejetím doleva nebo doprava";
+"guide.2" = "Vyměňte původní a cílovou měnu přejetím nahoru nebo dolů";
 
 "settings.title" = "Nastavení";
 "settings.soundsHeader" = "zvuk";

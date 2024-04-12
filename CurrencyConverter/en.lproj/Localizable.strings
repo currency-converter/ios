@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Get started";
-"guide.0" = "Slide the exchange currency up and down";
-"guide.1" = "Swipe left and right to switch currencies";
+"guide.0" = "Change currency type by clicking on the flag";
+"guide.1" = "Switch between favorite currencies by swiping left or right";
+"guide.2" = "Swap original and target currencies by swiping up or down";
 
 "settings.title" = "Settings";
 "settings.soundsHeader" = "Sounds";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "The data presented in this app is intended for informational purposes only. There is no guarantee of accuracy, validity, availability, or fitness for any purpose. Use at your own risk.";
 
 "currencyPicker.title" = "Choose Currency";
-"currencyPicker.favoriteCurrencies" = "Favorite Currencies";
+"currencyPicker.favoriteCurrencies" = "Favorites";
 "currencyPicker.allCurrencies" = "All Currencies";
 "currencyPicker.noResults" = "No Results";
 "currencyPicker.unknow" = "Unknow";

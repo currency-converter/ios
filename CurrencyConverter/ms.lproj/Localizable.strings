@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Bermula";
-"guide.0" = "Slide currency exchange up and down";
-"guide.1" = "Leret ke kiri dan kanan untuk menukar matawang";
+"guide.0" = "Tukar jenis mata wang dengan mengklik pada bendera";
+"guide.1" = "Bertukar antara mata wang kegemaran dengan meleret ke kiri atau kanan";
+"guide.2" = "Tukar mata wang asal dan sasaran dengan meleret ke atas atau ke bawah";
 
 "settings.title" = "Tetapan";
 "settings.soundsHeader" = "bunyi";

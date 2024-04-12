@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Kom i gang";
-"guide.0" = "Skyv valutaen opp og ned";
-"guide.1" = "Sveip til venstre og høyre for å bytte valutaer";
+"guide.0" = "Endre valutatype ved å klikke på flagget";
+"guide.1" = "Bytt mellom favorittvalutaer ved å sveipe til venstre eller høyre";
+"guide.2" = "Bytt original- og målvaluta ved å sveipe opp eller ned";
 
 "settings.title" = "Innstillinger";
 "settings.soundsHeader" = "sound";

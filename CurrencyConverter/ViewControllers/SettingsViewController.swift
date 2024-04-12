@@ -83,29 +83,30 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
     func changeInterfaceStyle(_ themeIndex: Int) {
         self.view.backgroundColor = UIColor(named: "BackgroundColor")
         
-        
-        var barStyle: UIStatusBarStyle;
-        
         switch themeIndex {
             case 0:
                 overrideUserInterfaceStyle = .light
                 self.navigationController?.navigationBar.barStyle = .default
-                barStyle = .darkContent
             case 1:
                 overrideUserInterfaceStyle = .dark
                 self.navigationController?.navigationBar.barStyle = .black
-                barStyle = .lightContent
             default:
                 overrideUserInterfaceStyle = .unspecified
                 self.navigationController?.navigationBar.barStyle = .default
-                barStyle = .default
         }
-        
-        UIApplication.shared.statusBarStyle = barStyle
-        
-        
     }
-	
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        switch self.themeIndex {
+        case 0:
+            return .darkContent
+        case 1:
+            return .lightContent
+        default:
+            return .default
+        }
+    }
+
 	func onReady(key: String, value: String) {
 		// 更新配置
 		let shared = UserDefaults(suiteName: Config.groupId)
@@ -138,7 +139,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
                 //避免出现非主线程更新UI的警告
                 DispatchQueue.main.async {
                     self.updatedAtValue.text = self.formatUpdatedAtText()
-                    self.updateImmediatelyButton.tintColor = UIColor.hex("0067d8")
+                    self.updateImmediatelyButton.isHidden = false
                     self.loading.stopAnimating()
 
                     let alertController = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
@@ -205,15 +206,18 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		shared?.set(sender.isOn, forKey: "usesGroupingSeparator")
 		self.demoLabel.text = self.formatDemoText()
 		
-		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-			"usesGroupingSeparator": sender.isOn
-		])
+		NotificationCenter.default.post(
+            name: .didUserDefaultsChange,
+            object: self,
+            userInfo: ["usesGroupingSeparator": sender.isOn]
+        )
 	}
 
 	@IBAction func onUpdateImmediatelyClick(_ sender: UIButton) {
 		if !isUpdating {
 			isUpdating = true
-			updateImmediatelyButton.tintColor = UIColor.gray
+            updateImmediatelyButton.isHidden = true
+            loading.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
 			loading.startAnimating()
 			let viewController = navigationController?.children[0] as! ViewController
 			viewController.updateRate(true)
@@ -230,7 +234,6 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
 			"theme": selectedTheme
 		])
-        
 	}
 	
 	func observe() {

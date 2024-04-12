@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Kom igang";
-"guide.0" = "Skub valutaen op og ned";
-"guide.1" = "Stryg venstre og højre for at skifte valutaer";
+"guide.0" = "Skift valutatype ved at klikke på flaget";
+"guide.1" = "Skift mellem foretrukne valutaer ved at stryge til venstre eller højre";
+"guide.2" = "Skift original- og målvaluta ved at stryge op eller ned";
 
 "settings.title" = "Indstillinger";
 "settings.soundsHeader" = "sound";
@@ -39,7 +40,7 @@
 "settings.disclaimer" = "Dataene i denne ansøgning er kun til orienteringsformål og garanterer ikke for nøjagtighed, gyldighed, tilgængelighed eller egnethed til noget formål, for egen risiko.";
 
 "currencyPicker.title" = "Vælg valuta";
-"currencyPicker.favoriteCurrencies" = "Favorites";
+"currencyPicker.favoriteCurrencies" = "Favoritter";
 "currencyPicker.allCurrencies" = "Alle valutaer";
 "currencyPicker.noResults" = "Intet resultat";
 "currencyPicker.unknow" = "Unknown";

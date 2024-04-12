@@ -71,7 +71,7 @@ class FrequencyViewController: UITableViewController {
 		
 		// accessory
 		cell.accessoryType = indexPath.row.description == defaultValue ? .checkmark : .none
-		cell.tintColor = UIColor.loquatYellow
+//		cell.tintColor = UIColor.loquatYellow
 		return cell
 	}
 	

@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Začíname";
-"guide.0" = "Posunúť výmennú menu nahor a nadol";
-"guide.1" = "Posunutím doľava a doprava prepnete meny";
+"guide.0" = "Zmeňte typ meny kliknutím na vlajku";
+"guide.1" = "Prepínanie medzi obľúbenými menami potiahnutím doľava alebo doprava";
+"guide.2" = "Vymeňte pôvodnú a cieľovú menu potiahnutím prstom nahor alebo nadol";
 
 "settings.title" = "Nastavenia";
 "settings.soundsHeader" = "zvuk";

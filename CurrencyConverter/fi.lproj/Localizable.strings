@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Aloita";
-"guide.0" = "Liu'uta vaihtovaluutta ylös ja alas";
-"guide.1" = "Pyyhkäise vasemmalle ja oikealle vaihtaaksesi valuuttoja";
+"guide.0" = "Vaihda valuuttatyyppiä napsauttamalla lippua";
+"guide.1" = "Vaihda suosikkivaluuttojen välillä pyyhkäisemällä vasemmalle tai oikealle";
+"guide.2" = "Vaihda alkuperäinen ja kohdevaluutta pyyhkäisemällä ylös tai alas";
 
 "settings.title" = "Asetukset";
 "settings.soundsHeader" = "ääni";

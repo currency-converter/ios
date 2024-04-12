@@ -6,8 +6,9 @@
  Copyright © 2019 zhi.zhong. All rights reserved.
  */
 "guide.entry" = "Comenceu";
-"guide.0" = "Feu lliscar la moneda de canvi cap amunt i avall";
-"guide.1" = "Gireu cap a l'esquerra i la dreta per canviar les monedes";
+"guide.0" = "Canvia el tipus de moneda fent clic a la bandera";
+"guide.1" = "Canvia entre les monedes preferides fent lliscar el dit cap a l'esquerra o la dreta";
+"guide.2" = "Canviar monedes originals i monedes de destinació fent lliscar cap amunt o cap avall";
 
 "settings.title" = "Configuració";
 "settings.soundsHeader" = "So";
