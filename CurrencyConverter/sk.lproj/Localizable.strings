@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Vybrať menu";
 "currencyPicker.favoriteCurrencies" = "Obľúbené";
 "currencyPicker.allCurrencies" = "Všetky meny";
+"currencyPicker.searchResults" = "Výsledky vyhľadávania";
 "currencyPicker.noResults" = "žiadny výsledok";
 "currencyPicker.unknow" = "Neznámy";
 

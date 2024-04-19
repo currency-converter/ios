@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Choose Currency";
 "currencyPicker.favoriteCurrencies" = "Favoris";
 "currencyPicker.allCurrencies" = "All Currencies";
+"currencyPicker.searchResults" = "Résultats de la recherche";
 "currencyPicker.noResults" = "No Results";
 "currencyPicker.unknow" = "Unknow";
 

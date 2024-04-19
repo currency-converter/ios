@@ -42,6 +42,7 @@
 "currencyPicker.title" = "เลือกสกุลเงิน";
 "currencyPicker.favoriteCurrencies" = "รายการโปรด";
 "currencyPicker.allCurrencies" = "ทุกสกุลเงิน";
+"currencyPicker.searchResults" = "ผลการค้นหา";
 "currencyPicker.noResults" = "ไม่มีผลลัพธ์";
 "currencyPicker.unknow" = "ไม่ทราบ";
 

@@ -12,6 +12,9 @@ import NotificationCenter
 class TodayViewController: UIViewController, NCWidgetProviding {
 	
 	let isDebug: Bool = false
+    
+    // 当前是否为计算结果
+    var isResult: Bool = false
 	
 	var fromMoneyLabelTextColor: [UIColor] = [
 		UIColor.hex("333333"),
@@ -33,17 +36,23 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			}
 		}
 	}
+    
+    var zero: String = NumberFormatter().string(from: 0)!
 	
 	// 当前运算符
 	var operatorSymbol:String = ""
 	
 	var operatorButton:UIButton!
 	
-	// 被操作的数
-	var operatorEnd:String = "0"
-	
-	// 输入货币数量
-	var fromMoney: String = "100"
+    // 左操作数真实值
+    var leftOperand: String = "0"
+    // 左操作数显示值
+    var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
+    
+    // 右操作数真实值
+    var rightOperand: String = ""
+    // 右操作数显示值
+    var rightOperandDisplayValue: String = ""
 	
 	// 输入货币类型
 	var fromSymbol: String!
@@ -210,7 +219,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		let fromSymbol = UIButton(frame: CGRect(x: 0, y: 0, width: symbolWidth, height: symbolHeight))
 		fromSymbol.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		fromSymbol.setTitle(self.fromSymbol, for: .normal)
-		fromSymbol.setTitleColor(UIColor.white, for: .normal)
+		fromSymbol.setTitleColor(UIColor.black, for: .normal)
 		fromSymbol.contentHorizontalAlignment = .left
 		fromScreen.addSubview(fromSymbol)
 
@@ -218,7 +227,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		fromMoneyLabel.text = numberFormat(self.fromMoney)
+		fromMoneyLabel.text = self.leftOperandDisplayValue
 		fromScreen.addSubview(fromMoneyLabel)
 
 		let toSymbol = UIButton(frame: CGRect(x: 0, y: 0, width: symbolWidth, height: symbolHeight))
@@ -232,8 +241,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toMoneyLabel.adjustsFontSizeToFitWidth = true
 		toMoneyLabel.textColor = self.toMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		toMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		//toMoneyLabel.textAlignment = .right
-		toMoneyLabel.text = self.output(self.fromMoney)
+		toMoneyLabel.text = self.output(self.leftOperand)
 		toScreen.addSubview(toMoneyLabel)
 		
 		let keyboard = UIView(frame: CGRect(x: screenWidth + margin * 2, y: margin, width: keyboardWidth, height: keyboardHeight))
@@ -259,14 +267,20 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			let x: CGFloat = (buttonWidth + buttonMarginLeft) * columnIndex
 			let y: CGFloat = index < Int(numberOfButtonsPerLine) ? 0 : subScreenHeight + buttonMarginTop
 			let btn: UIButton = UIButton.init(frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonHeight))
-			btn.layer.cornerRadius = 5//min(buttonWidth, buttonHeight)/2
+			btn.layer.cornerRadius = 5
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.backgroundColor = UIColor.hex("2c2c2c")
+            btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+            btn.accessibilityHint = item
+            
 			if item == "AC" {
 				btn.backgroundColor = UIColor.hex("da8009")
-			}
-			btn.setTitle(item, for: UIControl.State.normal)
-			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
+                btn.setTitle(item, for: UIControl.State.normal)
+            } else if item == "." {
+                btn.setTitle(NumberFormatter().decimalSeparator, for: UIControl.State.normal)
+            } else {
+                btn.setTitle(numberFormat(item), for: UIControl.State.normal)
+            }
 			keyboard.addSubview(btn)
 		}
 	}
@@ -288,7 +302,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
 		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.text = self.fromMoney
+		fromMoneyLabel.text = leftOperandDisplayValue
 		if isDebug {
 			fromMoneyLabel.backgroundColor = UIColor.gray
 		}
@@ -332,7 +346,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
 		toMoneyLabel.textColor = self.toMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		toMoneyLabel.textAlignment = .right
-		toMoneyLabel.text = self.output(self.fromMoney)
+		toMoneyLabel.text = self.output(self.leftOperand)
 		if isDebug {
 			toMoneyLabel.backgroundColor = UIColor.yellow
 		}
@@ -363,16 +377,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		toSymbolLabel.textColor = UIColor.black
 		toSymbolButton.addSubview(toSymbolLabel)
 
-//		let toSymbol = UIButton(frame: CGRect(x: moneyLabelWidth, y: expandedSymbolHeight, width: expandedSymbolWidth, height: expandedSymbolHeight))
-//		toSymbol.tag = 2
-//		toSymbol.setTitle(self.toSymbol + (isCustomRate ? "*" : ""), for: .normal)
-//		toSymbol.setTitleColor(UIColor.black, for: .normal)
-//		toSymbol.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
-//		if isDebug {
-//			toSymbol.backgroundColor = UIColor.red
-//		}
-//		wrapper.addSubview(toSymbol)
-
 		let keyboardY :CGFloat = expandedSymbolHeight * 2 + expandedKeyboardMarginTop
 		let keyboard = UIView(frame: CGRect(x: 0, y: keyboardY, width: wrapper.frame.width, height: wrapper.frame.height - keyboardY))
 		if isDebug {
@@ -382,7 +386,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
 		let buttonWidth: CGFloat = (keyboard.frame.width - expandedButtonMargin * 3) / 4
 		let buttonHeight: CGFloat = (keyboard.frame.height - expandedButtonMargin * 3) / 4
-		let characters:[String] = ["7", "8", "9", "=", "4", "5", "6", "+", "1", "2", "3", "-", "A", "0", ".", "AC"]
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal  // 小数形式
+        let decimalSeparator = String(numberFormatter.decimalSeparator)
+		let characters:[Any] = [7, 8, 9, "AC", 4, 5, 6, "-", 1, 2, 3, "+", 0, ".", "A", "="]
 
 		for (index, item) in characters.enumerated() {
 			let columnIndex: CGFloat = CGFloat(index % 4)
@@ -392,110 +399,146 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			btn.layer.cornerRadius = min(buttonWidth, buttonHeight) / 2
 			btn.setTitleColor(UIColor.white, for: .normal)
 			btn.titleLabel?.font = UIFont(name:"Avenir", size: 28)
-			btn.setTitle(item, for: UIControl.State.normal)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
-
-			switch item {
-			case "=", "+", "-", "AC":
-				btn.backgroundColor = UIColor.hex("da8009")
-			case "A":
-				btn.backgroundColor = UIColor.hex("2c2c2c")
-				btn.titleLabel?.font = UIFont(name:"CurrencyConverter", size:28)
-			default:
-				btn.backgroundColor = UIColor.hex("424242")
-			}
+            
+            if let stringItem = item as? String {
+                // 如果元素是字符串类型,即功能按钮
+                switch stringItem {
+                case "+", "-", "=", "AC":
+                    btn.backgroundColor = UIColor.hex("da8009")
+                    btn.accessibilityHint = stringItem
+                    btn.setTitle(stringItem, for: UIControl.State.normal)
+                case "A":
+                    btn.backgroundColor = UIColor.hex("2c2c2c")
+                    btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 28)
+                    btn.accessibilityHint = stringItem
+                    btn.setTitle(stringItem, for: UIControl.State.normal)
+                default:
+                    // 小数点
+                    btn.backgroundColor = UIColor.hex("424242")
+                    btn.accessibilityHint = "."
+                    btn.setTitle(decimalSeparator, for: UIControl.State.normal)
+                }
+                
+            } else if let numberItem = item as? Int {
+                // 如果元素是整数类型，即数字按钮
+                // 如果是阿拉伯语言需要转换为阿拉伯字符
+                let numberFormatter = NumberFormatter()
+                let format = numberFormatter.string(from: NSNumber(value: numberItem))!
+                btn.setTitle(format, for: UIControl.State.normal)
+                btn.accessibilityHint = String(numberItem)
+                btn.backgroundColor = UIColor.hex("424242")
+            }
 
 			keyboard.addSubview(btn)
 		}
 	}
 	
 	@objc func onInput(_ sender: UIButton) {
-		let n = sender.currentTitle
+        // 真实值
+        let plainValue = sender.accessibilityHint!
+        // 显示值
+        let labelValue = sender.currentTitle!
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal  // 小数形式
+        let decimalSeparator = String(numberFormatter.decimalSeparator)
 		self.operatorButton?.backgroundColor = UIColor.hex("da8009")
 		self.operatorButton?.setTitleColor(UIColor.white, for: .normal)
 		
-		switch n {
+		switch plainValue {
 		case "AC":
 			self.flash(button: sender)
 			self.isEmpty = true
-			self.fromMoney = "100"
-			self.operatorEnd = "0"
+            self.isResult = false
+            self.leftOperand = "0"
+			self.leftOperandDisplayValue = zero
+            self.rightOperand = ""
+            self.rightOperandDisplayValue = ""
 			self.operatorSymbol = ""
 		case "A":
 			self.flash(button: sender)
 			self.onSettingsClick()
-		case "÷", "×", "+", "-":
-			sender.backgroundColor = UIColor.white
-			sender.setTitleColor(UIColor.hex("da8009"), for: .normal)
-			
-			// 连加
-			if self.operatorEnd != "0" {
-				self.exec()
-			}
-			
-			if !self.isEmpty {
-				self.operatorSymbol = n ?? ""
-				self.operatorEnd = "0"
+		case "+", "-":
+            if !self.isEmpty {
+                sender.backgroundColor = UIColor.white
+                sender.setTitleColor(UIColor.hex("da8009"), for: .normal)
+                
+                // 连加
+                if self.rightOperand != "" {
+                    self.exec()
+                }
+                if (isResult) {
+                    isResult = false
+                }
+                self.operatorSymbol = plainValue
 				self.operatorButton = sender
 				sender.isSelected = true
 			}
 		case "=":
 			self.flash(button: sender)
-			if self.operatorEnd != "0" {
-				self.exec()
-			}
-			self.operatorSymbol = ""
-			self.operatorEnd = "0"
+            if self.rightOperand != "" {
+                self.exec()
+            }
 		case "0":
-			if self.operatorSymbol == "" {
-				self.flash(button: sender)
-				if self.isEmpty {
-					self.fromMoney = "0"
-					self.isEmpty = false
-				} else {
-					self.fromMoney += "0"
-				}
-			} else {
-				if operatorEnd != "0" {
-					self.flash(button: sender)
-					self.operatorEnd += "0"
-				}
-			}
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    if !self.isEmpty {
+                        self.leftOperand += "0"
+                        self.leftOperandDisplayValue += zero
+                    }
+                } else {
+                    if rightOperand != "0" {
+                        self.rightOperand += "0"
+                        self.rightOperandDisplayValue += zero
+                    }
+                }
+            }
 		case ".":
-			if self.operatorSymbol == "" {
-				self.flash(button: sender)
-				if self.isEmpty {
-					self.fromMoney = "0."
-					self.isEmpty = false
-				} else {
-					if !self.fromMoney.contains(".") {
-						self.fromMoney += "."
-					}
-				}
-			} else {
-				self.flash(button: sender)
-				if !self.operatorEnd.contains(".") {
-					self.operatorEnd += "."
-				}
-			}
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    if self.isEmpty {
+                        self.leftOperand = "0."
+                        self.leftOperandDisplayValue = zero + decimalSeparator
+                        self.isEmpty = false
+                    } else {
+                        if !self.leftOperand.contains(".") {
+                            self.leftOperand += "."
+                            self.leftOperandDisplayValue += decimalSeparator
+                        }
+                    }
+                } else {
+                    if !self.rightOperand.contains(".") {
+                        self.rightOperand += "."
+                        self.rightOperandDisplayValue += decimalSeparator
+                    }
+                    if self.rightOperand.hasPrefix(".") {
+                        self.rightOperand = "0\(self.rightOperand)"
+                        self.rightOperandDisplayValue = zero + self.rightOperandDisplayValue
+                    }
+                }
+            }
 		default:
 			self.flash(button: sender)
 			
-			if self.operatorSymbol == "" {
-				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
-				self.isEmpty = false
-			} else {
-				self.operatorEnd += n!
-			}
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    self.leftOperand = self.isEmpty ? plainValue : self.leftOperand + plainValue
+                    self.leftOperandDisplayValue = self.isEmpty ? labelValue : self.leftOperandDisplayValue + labelValue
+                    self.isEmpty = false
+                } else {
+                    self.rightOperand = self.rightOperand == "0" ? plainValue : self.rightOperand + plainValue
+                    self.rightOperandDisplayValue = self.rightOperandDisplayValue == zero ? labelValue : self.rightOperandDisplayValue + labelValue
+                }
+            }
 		}
 
-		if self.operatorSymbol != "" && self.operatorEnd != "0" {
-			fromMoneyLabel.text = numberFormat(self.operatorEnd)
-			toMoneyLabel.text = self.output(self.operatorEnd)
-		} else {
-			fromMoneyLabel.text = numberFormat(self.fromMoney)
-			toMoneyLabel.text = self.output(self.fromMoney)
-		}
+        if self.operatorSymbol != "" && self.rightOperand != "" {
+            fromMoneyLabel.text = self.rightOperandDisplayValue
+            toMoneyLabel.text = self.output(self.rightOperand)
+        } else {
+            fromMoneyLabel.text = self.leftOperandDisplayValue
+            toMoneyLabel.text = self.output(self.leftOperand)
+        }
 	}
 	
 	func flash(button: UIButton) {
@@ -509,22 +552,29 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	func exec() {
-		var newResult: Float = 0
-		
-		switch self.operatorSymbol {
-		case "÷":
-			newResult = (self.fromMoney as NSString).floatValue / (self.operatorEnd as NSString).floatValue
-		case "×":
-			newResult = (self.fromMoney as NSString).floatValue * (self.operatorEnd as NSString).floatValue
-		case "+":
-			newResult = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
-		case "-":
-			newResult = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
-		default:
-			print("Unknow operator symbol: \(self.operatorSymbol)")
-		}
-		
-		self.fromMoney = "\(newResult)"
+        var newResult: Float = 0
+        
+        switch self.operatorSymbol {
+        case "÷":
+            newResult = (self.leftOperand as NSString).floatValue / (self.rightOperand as NSString).floatValue
+        case "×":
+            newResult = (self.leftOperand as NSString).floatValue * (self.rightOperand as NSString).floatValue
+        case "+":
+            newResult = (self.leftOperand as NSString).floatValue + (self.rightOperand as NSString).floatValue
+        case "-":
+            newResult = (self.leftOperand as NSString).floatValue - (self.rightOperand as NSString).floatValue
+        default:
+            print("Unknow operator symbol: \(self.operatorSymbol)")
+        }
+        
+        self.leftOperand = "\(newResult)"
+        self.leftOperandDisplayValue = numberFormat(String(newResult))
+        
+        isResult = true
+        
+        self.operatorSymbol = ""
+        self.rightOperand = ""
+        self.rightOperandDisplayValue = ""
 	}
 	
 	@objc func onSettingsClick() {
@@ -546,10 +596,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             let shared = UserDefaults(suiteName: Config.groupId)
             let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
             let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-            let decimals = shared?.integer(forKey: "decimals") ?? 2
             let rate = isCustomRate ? customRate : self.rate
             if let moneyNum = Float(money) {
-                return numberFormat(String(moneyNum * rate), maximumFractionDigits: decimals)
+                return numberFormat(String(moneyNum * rate))
             }
             return ""
         }
@@ -557,23 +606,25 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	}
 	
 	//把 "1234567.89" -> "1,234,567.89"
-	func numberFormat(_ s:String, maximumFractionDigits: Int = 20) -> String {
+	func numberFormat(_ s:String, minimumFractionDigits: Int = 0) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
+        let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
 		}
-		//创建一个NumberFormatter对象
-		let numberFormatter = NumberFormatter()
-		//设置number显示样式
-		numberFormatter.numberStyle = .decimal  // 小数形式
-		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		numberFormatter.maximumFractionDigits = maximumFractionDigits //设置小数点后最多3位
-		
-		//格式化
-		let format = numberFormatter.string(from: price)!
-		return format
+        //创建一个NumberFormatter对象
+        let numberFormatter = NumberFormatter()
+        //设置number显示样式
+        numberFormatter.numberStyle = .decimal  // 小数形式
+        numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
+        if ((minimumFractionDigits) != 0) {
+            numberFormatter.minimumFractionDigits = min(minimumFractionDigits, decimals)
+        }
+        numberFormatter.maximumFractionDigits = decimals //设置保留小数点位数
+        let format = numberFormatter.string(from: price)!
+        return format
 	}
         
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {

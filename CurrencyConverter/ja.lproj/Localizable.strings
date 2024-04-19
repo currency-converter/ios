@@ -42,6 +42,7 @@
 "currencyPicker.title" = "通貨を選択";
 "currencyPicker.favoriteCurrencies" = "お気に入り";
 "currencyPicker.allCurrencies" = "すべての通貨";
+"currencyPicker.searchResults" = "検索結果";
 "currencyPicker.noResults" = "結果なし";
 "currencyPicker.unknow" = "不明";
 

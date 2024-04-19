@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Επιλογή νομίσματος";
 "currencyPicker.favoriteCurrencies" = "Αγαπημένα";
 "currencyPicker.allCurrencies" = "Όλα τα νομίσματα";
+"currencyPicker.searchResults" = "Αποτελέσματα αναζήτησης";
 "currencyPicker.noResults" = "κανένα αποτέλεσμα";
 "currencyPicker.unknow" = "Άγνωστο";
 

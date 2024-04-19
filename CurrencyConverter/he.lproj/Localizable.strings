@@ -42,6 +42,7 @@
 "currencyPicker.title" = "בחר מטבע";
 "currencyPicker.favoriteCurrencies" = "מטבעות מועדפים";
 "currencyPicker.allCurrencies" = "כל המטבעות";
+"currencyPicker.searchResults" = "תוצאות חיפוש";
 "currencyPicker.noResults" = "אין תוצאה";
 "currencyPicker.unknow" = "לא ידוע";
 

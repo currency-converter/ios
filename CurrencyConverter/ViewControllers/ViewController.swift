@@ -10,10 +10,6 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, UIScrollViewDelegate {
-	
-	// 调试开关
-	var isDebug: Bool = false
-	
 	// 当前输入货币是否为空
 	var isEmpty: Bool = true {
 		didSet {
@@ -25,20 +21,29 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 		}
 	}
+    
+    var zero: String = NumberFormatter().string(from: 0)!
+    
+    // 当前是否为计算结果
+    var isResult: Bool = false
 	
-	// 当前运算符
-	var operatorSymbol:String = ""
+	// 运算符
+	var operatorSymbol: String = ""
 	
-	var operatorButton:UIButton!
+	var operatorButton: UIButton!
 	
-	// 被操作的数
-	var operatorEnd:String = "0"
-	
-	// 输入货币数量
-	var fromMoney: String = "100"
+	// 左操作数真实值
+	var leftOperand: String = "0"
+    // 左操作数显示值
+    var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
+    
+    // 右操作数真实值
+    var rightOperand: String = ""
+    // 右操作数显示值
+    var rightOperandDisplayValue: String = ""
 	
 	// 汇率
-	var rate: Float = 6.4589
+	var rate: Float = 1
 	
 	var rates: [String: [String: NSNumber]]!
 	
@@ -170,7 +175,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         // 如果from/to都是美元，就不发请求
         if (fullUrl != newUrlString + ",") {
             let url: URL! = URL(string: fullUrl)
-            print(fullUrl)
             if url != nil {
                 // 创建请求Session
                 let session = URLSession(configuration: config)
@@ -242,19 +246,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		render()
 		
 		observe()
-        
-        onboarding()
 	}
-    
-    func onboarding() {
-        if (!(UserDefaults.standard.bool(forKey: "hasOnboarding"))) {
-            // UserDefaults.standard.set(true, forKey:"hasOnboarding")
-            // 在页面加载完成后显示提示信息
-        
-        }
-        
-        
-    }
 	
 	func isNeedUpdateRate() -> Bool {
 		let shared = UserDefaults(suiteName: Config.groupId)
@@ -276,7 +268,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		self.showUpdatedAtLabel()
 		// #25 主动触发默认汇率界面更新
 		DispatchQueue.main.async {
-			self.toMoneyLabel?.text = self.output(self.fromMoney)
+			self.toMoneyLabel?.text = self.output(self.leftOperand)
 		}
 	}
 	
@@ -322,7 +314,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func getPosition() {
 		let width: CGFloat = UIScreen.main.bounds.width
 		let height: CGFloat = UIScreen.main.bounds.height
-//		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
         let statusBarHeight: CGFloat = {
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 return windowScene.statusBarManager?.statusBarFrame.height ?? 0
@@ -376,11 +367,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedRotation), name: UIDevice.orientationDidChangeNotification, object: nil)
 		}
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidUserDefaultsChange), name: .didUserDefaultsChange, object: nil)
-		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.onDidHideEditMenu), name: UIMenuController.didHideMenuNotification, object: nil)
-
 	}
 	
 	func renderScreen() {
@@ -399,19 +387,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipe(_:)))
 			swipeDown.direction = .down
 			screenView.addGestureRecognizer(swipeDown)
-			
-			if isDebug {
-				screenView.backgroundColor = UIColor.cyan
-			}
 		}
 		
 		initFavorites(type: "from")
 
 		let scrollViewHeight: CGFloat = (screenView.frame.height - self.updatedAtLabelHeight)/2
 		fromScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: scrollViewHeight))
-		if isDebug {
-			fromScrollView.backgroundColor = UIColor.red
-		}
 		fromScrollView.contentSize = CGSize(width: fromScrollView.frame.width * CGFloat(fromFavorites.count), height: fromScrollView.frame.height)
 		//关闭滚动条显示
 		fromScrollView.showsHorizontalScrollIndicator = false
@@ -428,9 +409,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		initFavorites(type: "to")
 
 		toScrollView = UIScrollView(frame: CGRect(x: 0, y: scrollViewHeight, width: screenView.frame.width, height: scrollViewHeight))
-		if isDebug {
-			toScrollView.backgroundColor = UIColor.green
-		}
 		toScrollView.contentSize = CGSize(width: toScrollView.frame.width * CGFloat(toFavorites.count), height: toScrollView.frame.height)
 		//关闭滚动条显示
 		toScrollView.showsHorizontalScrollIndicator = false
@@ -445,9 +423,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		renderPagesInScrollView(type: "to")
 		
 		updatedAtLabel = UILabel(frame: CGRect(x: 0, y: screenView.frame.height - updatedAtLabelHeight, width: screenView.frame.width, height: updatedAtLabelHeight))
-		if isDebug {
-			updatedAtLabel.backgroundColor = UIColor.orange
-		}
 		updatedAtLabel.alpha = 0
 		updatedAtLabel.textColor = UIColor.gray
 		updatedAtLabel.textAlignment = .right
@@ -509,14 +484,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			view = fromScrollView
 			favorites = fromFavorites
 			scrollView = fromScrollView
-			moneyLabelText = numberFormat(fromMoney)
+            moneyLabelText = leftOperandDisplayValue
 			symbolButtonTag = 1
 			fromControllers.removeAll()
 		} else {
 			view = toScrollView
 			favorites = toFavorites
 			scrollView = toScrollView
-			moneyLabelText = output(fromMoney)
+			moneyLabelText = output(leftOperand)
 			symbolButtonTag = 2
 			toControllers.removeAll()
 
@@ -550,9 +525,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			
 			// 货币输入框
 			let moneyLabel = UILabel(frame: CGRect(x: 0, y: moneyLabelMarginTop, width: scrollView.frame.width - symbolButtonWidth, height: moneyLabelHeight))
-			if isDebug {
-				moneyLabel.backgroundColor = UIColor.yellow
-			}
 			moneyLabel.layer.masksToBounds = true
 			moneyLabel.layer.cornerRadius = 10
 			moneyLabel.font = UIFont(name: Config.numberFontName, size: 72)
@@ -570,9 +542,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			// 货币符号容器
 			let symbolButton = UIButton(frame: CGRect(x: moneyLabel.frame.width + symbolButtonPaddingLeft, y: moneyLabelMarginTop, width: symbolButtonWidth, height: symbolButtonHeight))
 			symbolButton.tag = symbolButtonTag
-			if isDebug {
-				symbolButton.backgroundColor = UIColor.loquatYellow
-			}
 			//symbolButton.addTarget(self, action: #selector(showCurrencyPicker(_:)), for: .touchDown)
 			let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(showCurrencyPicker))
 			symbolButton.addGestureRecognizer(tapGesture)
@@ -625,46 +594,63 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	func renderKeyboard() {
 		if keyboardView == nil {
 			keyboardView = UIView(frame: CGRect(x: 0, y: self.keyboardViewY, width: UIScreen.main.bounds.width, height: self.keyboardViewHeight))
-			if isDebug {
-				keyboardView.backgroundColor = UIColor.blue
-			}
 			keyboardView.clipsToBounds = true
 			self.view.addSubview(keyboardView)
 		}
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal  // 小数形式
+        let decimalSeparator = String(numberFormatter.decimalSeparator)
 		
-		let characters:[String] = [
+		let characters:[Any] = [
 			"AC", "H", "B", "÷",
-			"7", "8", "9", "×",
-			"4", "5", "6", "-",
-			"1", "2", "3", "+",
-			"0", ".", "A", "="
+			7, 8, 9, "×",
+			4, 5, 6, "-",
+			1, 2, 3, "+",
+			0, decimalSeparator, "A", "="
 		]
 		
-		for (index, item) in characters.enumerated() {
-			// 创建数字按钮
+        for (index, item) in characters.enumerated() {
+			// 创建数字按钮，并设置公共样式
 			let btn:UIButton = UIButton.init(frame: CGRect(x:(self.numberButtonWidth + self.numberButtonPadding) * CGFloat(index % Int(self.columnsNumber)) + self.numberButtonPadding, y:(self.numberButtonHeight + self.numberButtonPadding) * CGFloat(floor(Double(index/4))) + self.numberButtonPadding, width: self.numberButtonWidth, height: self.numberButtonHeight))
 			btn.layer.cornerRadius = self.numberButtonHeight/2
-			btn.setTitle(item, for: UIControl.State.normal)
 			btn.setTitleColor(UIColor(named: "NumberButtonTextColor"), for: .normal)
 			btn.titleLabel?.font = UIFont(name: Config.numberFontName, size: 32)
 			btn.addTarget(self, action:#selector(onInput(_:)), for: UIControl.Event.touchDown)
-			
-			switch item {
-			case "÷", "×", "+", "-", "=":
-				btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
-				btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
-				btn.setBackgroundColor(color: UIColor.hex("ffca8e"), forState: .selected)
-				btn.setTitleColor(UIColor.hex("ffffff"), for: .selected)
-			case "A", "B", "H":
-				btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
-				fallthrough
-			case "AC":
-				btn.setTitleColor(UIColor.hex("000000"), for: .normal)
-				btn.setBackgroundColor(color: UIColor.hex("a4a5a6"), forState: .normal)
-			default:
+            
+            if let stringItem = item as? String {
+                // 如果元素是字符串类型,即功能按钮
+                switch stringItem {
+                case "÷", "×", "+", "-", "=":
+                    btn.setBackgroundColor(color: UIColor.loquatYellow, forState: .normal)
+                    btn.setBackgroundColor(color: UIColor.hex("fbd5aa"), forState: .highlighted)
+                    btn.setBackgroundColor(color: UIColor.hex("ffca8e"), forState: .selected)
+                    btn.setTitleColor(UIColor.hex("ffffff"), for: .selected)
+                    btn.accessibilityHint = stringItem
+                case "A", "B", "H":
+                    btn.titleLabel?.font = UIFont(name: "CurrencyConverter", size: 32)
+                    fallthrough
+                case "AC":
+                    btn.setTitleColor(UIColor.hex("000000"), for: .normal)
+                    btn.setBackgroundColor(color: UIColor.hex("a4a5a6"), forState: .normal)
+                    btn.accessibilityHint = stringItem
+                default:
+                    // 小数点
+                    btn.setBackgroundColor(color: UIColor.systemFill, forState: .normal)
+                    btn.setBackgroundColor(color: UIColor.systemGray3, forState: .highlighted)
+                    btn.accessibilityHint = "."
+                }
+                btn.setTitle(stringItem, for: UIControl.State.normal)
+            } else if let numberItem = item as? Int {
+                // 如果元素是整数类型，即数字按钮
+                // 如果是阿拉伯语言需要转换为阿拉伯字符
+                let numberFormatter = NumberFormatter()
+                let format = numberFormatter.string(from: NSNumber(value: numberItem))!
+                btn.setTitle(format, for: UIControl.State.normal)
+                btn.accessibilityHint = String(numberItem)
                 btn.setBackgroundColor(color: UIColor.systemFill, forState: .normal)
                 btn.setBackgroundColor(color: UIColor.systemGray3, forState: .highlighted)
-			}
+            }
 			
 			keyboardView.addSubview(btn)
 		}
@@ -729,84 +715,105 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	@objc func onInput(_ sender: UIButton) {
-		let n = sender.currentTitle
+        // 真实值
+        let plainValue = sender.accessibilityHint!
+        // 显示值
+        let labelValue = sender.currentTitle!
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal  // 小数形式
+        let decimalSeparator = String(numberFormatter.decimalSeparator)
 		
 		//清除+-的选中状态
 		self.operatorButton?.isSelected = false
 		
-		switch n {
-		case "AC":
-			self.isEmpty = true
-			self.fromMoney = "100"
-			self.operatorEnd = "0"
-			self.operatorSymbol = ""
-		case "A":
-			self.onSettingsClick(sender)
-		case "B":
-			self.updateRate()
-		case "H":
-			self.backspace()
-		case "÷", "×", "+", "-":
-			// 连加
-			if self.operatorEnd != "0" {
-				self.exec()
-			}
-			
-			if !self.isEmpty {
-				self.operatorSymbol = n ?? ""
-				self.operatorEnd = "0"
-				self.operatorButton = sender
-				sender.isSelected = true
-			}
-		case "=":
-			if self.operatorEnd != "0" {
-				self.exec()
-			}
-			self.operatorSymbol = ""
-			self.operatorEnd = "0"
-		case "0":
-			if self.operatorSymbol == "" {
-				if self.isEmpty {
-					self.fromMoney = "0"
-					self.isEmpty = false
-				} else {
-					self.fromMoney += "0"
-				}
-			} else {
-				if operatorEnd != "0" {
-					self.operatorEnd += "0"
-				}
-			}
+        switch plainValue {
+        case "AC":
+            self.isEmpty = true
+            self.isResult = false
+            self.leftOperand = "0"
+            self.leftOperandDisplayValue = zero
+            self.rightOperand = ""
+            self.rightOperandDisplayValue = ""
+            self.operatorSymbol = ""
+        case "A":
+            self.onSettingsClick(sender)
+        case "B":
+            self.updateRate()
+        case "H":
+            self.backspace()
+        case "÷", "×", "+", "-":
+            if !self.isEmpty {
+                if (self.rightOperand != "") {
+                    self.exec()
+                }
+                if (isResult) {
+                    isResult = false
+                }
+                self.operatorSymbol = plainValue
+                self.operatorButton = sender
+                sender.isSelected = true
+            }
+        case "=":
+            if (self.rightOperand != "") {
+                self.exec()
+            }
+        case "0":
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    if !self.isEmpty {
+                        self.leftOperand += "0"
+                        self.leftOperandDisplayValue += zero
+                    }
+                } else {
+                    if rightOperand != "0" {
+                        self.rightOperand += "0"
+                        self.rightOperandDisplayValue += zero
+                    }
+                }
+            }
 		case ".":
-			if self.operatorSymbol == "" {
-				if self.isEmpty {
-					self.fromMoney = "0."
-					self.isEmpty = false
-				} else {
-					if !self.fromMoney.contains(".") {
-						self.fromMoney += "."
-					}
-				}
-			} else {
-				if !self.operatorEnd.contains(".") {
-					self.operatorEnd += "."
-				}
-			}
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    if self.isEmpty {
+                        self.leftOperand = "0."
+                        self.leftOperandDisplayValue = zero + decimalSeparator
+                        self.isEmpty = false
+                    } else {
+                        if !self.leftOperand.contains(".") {
+                            self.leftOperand += "."
+                            self.leftOperandDisplayValue += decimalSeparator
+                        }
+                    }
+                } else {
+                    if !self.rightOperand.contains(".") {
+                        self.rightOperand += "."
+                        self.rightOperandDisplayValue += decimalSeparator
+                    }
+                    if self.rightOperand.hasPrefix(".") {
+                        self.rightOperand = "0\(self.rightOperand)"
+                        self.rightOperandDisplayValue = zero + self.rightOperandDisplayValue
+                    }
+                }
+            }
 		default:
-			if self.operatorSymbol == "" {
-				self.fromMoney = self.isEmpty ? n! : self.fromMoney + n!
-				self.isEmpty = false
-			} else {
-				self.operatorEnd += n!
-			}
+            if (!isResult) {
+                if self.operatorSymbol == "" {
+                    self.leftOperand = self.isEmpty ? plainValue : self.leftOperand + plainValue
+                    self.leftOperandDisplayValue = self.isEmpty ? labelValue : self.leftOperandDisplayValue + labelValue
+                    self.isEmpty = false
+                } else {
+                    self.rightOperand = self.rightOperand == "0" ? plainValue : self.rightOperand + plainValue
+                    self.rightOperandDisplayValue = self.rightOperandDisplayValue == zero ? labelValue : self.rightOperandDisplayValue + labelValue
+                }
+            }
 		}
 		
-		if self.operatorSymbol != "" && self.operatorEnd != "0" {
-			fromMoneyLabel.text = numberFormat(self.operatorEnd)
-			toMoneyLabel.text = self.output(self.operatorEnd)
+		if self.operatorSymbol != "" && self.rightOperand != "" {
+			fromMoneyLabel.text = self.rightOperandDisplayValue
+			toMoneyLabel.text = self.output(self.rightOperand)
 		} else {
-			fromMoneyLabel.text = numberFormat(self.fromMoney)
-			toMoneyLabel.text = self.output(self.fromMoney)
+			fromMoneyLabel.text = self.leftOperandDisplayValue
+			toMoneyLabel.text = self.output(self.leftOperand)
 		}
 		
 		self.playTapSound()
@@ -817,30 +824,51 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 		switch self.operatorSymbol {
 		case "÷":
-			newResult = (self.fromMoney as NSString).floatValue / (self.operatorEnd as NSString).floatValue
+			newResult = (self.leftOperand as NSString).floatValue / (self.rightOperand as NSString).floatValue
 		case "×":
-			newResult = (self.fromMoney as NSString).floatValue * (self.operatorEnd as NSString).floatValue
+			newResult = (self.leftOperand as NSString).floatValue * (self.rightOperand as NSString).floatValue
 		case "+":
-			newResult = (self.fromMoney as NSString).floatValue + (self.operatorEnd as NSString).floatValue
+			newResult = (self.leftOperand as NSString).floatValue + (self.rightOperand as NSString).floatValue
 		case "-":
-			newResult = (self.fromMoney as NSString).floatValue - (self.operatorEnd as NSString).floatValue
+			newResult = (self.leftOperand as NSString).floatValue - (self.rightOperand as NSString).floatValue
 		default:
 			print("Unknow operator symbol: \(self.operatorSymbol)")
 		}
 		
-		self.fromMoney = "\(newResult)"
+		self.leftOperand = "\(newResult)"
+        self.leftOperandDisplayValue = numberFormat(String(newResult))
+        
+        isResult = true
+        
+        self.operatorSymbol = ""
+        self.rightOperand = ""
+        self.rightOperandDisplayValue = ""
 	}
 	
 	func backspace() {
-		if self.operatorSymbol == "" && !self.isEmpty {
-			let length = self.fromMoney.count
-			let n = length > 1 ? String(self.fromMoney.prefix(length - 1)) : "0"
-			self.fromMoney = n != "-" ? n : "0"
-		} else {
-			let length = self.operatorEnd.count
-			let n = length > 1 ? String(self.operatorEnd.prefix(length - 1)) : "0"
-			self.operatorEnd = n != "-" ? n : "0"
-		}
+        if (!isResult) {
+            if self.operatorSymbol == "" && !self.isEmpty {
+                let length = self.leftOperand.count
+                let n = length > 1 ? String(self.leftOperand.prefix(length - 1)) : "0"
+                self.leftOperand = n
+                
+                let n2 = length > 1 ? String(self.leftOperandDisplayValue.prefix(length - 1)) : zero
+                self.leftOperandDisplayValue = n2
+                if (self.leftOperandDisplayValue == zero) {
+                    self.isEmpty = true
+                }
+            } else {
+                let length = self.rightOperand.count
+                let n = length > 1 ? String(self.rightOperand.prefix(length - 1)) : ""
+                self.rightOperand = n
+                
+                let n2 = length > 1 ? String(self.rightOperandDisplayValue.prefix(length - 1)) : ""
+                self.rightOperandDisplayValue = n2
+                if (self.rightOperandDisplayValue == "" && self.operatorSymbol != "") {
+                    self.operatorButton?.isSelected = true
+                }
+            }
+        }
 	}
 	
 	func playTapSound() {
@@ -914,10 +942,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             let shared = UserDefaults(suiteName: Config.groupId)
             let isCustomRate: Bool = shared?.bool(forKey: "isCustomRate") ?? false
             let customRate: Float = shared?.float(forKey: "customRate") ?? 1.0
-            let decimals = shared?.integer(forKey: "decimals") ?? 2
             let rate = isCustomRate ? customRate : self.rate
             if let moneyNum = Float(money) {
-                return numberFormat(String(moneyNum * rate), maximumFractionDigits: decimals)
+                return numberFormat(String(moneyNum * rate))
             }
             return ""
         }
@@ -929,10 +956,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		shared?.register(defaults: Config.defaults)
 	}
 	
-	//把 "1234567.89" -> "1,234,p567.89"
-	func numberFormat(_ s: String, maximumFractionDigits: Int = 20) -> String {
+	//把 "1234567.89" -> "1,234,567.89"
+	func numberFormat(_ s: String, minimumFractionDigits: Int = 0) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
+        let decimals: Int = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value:myInteger)
@@ -942,7 +970,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
 		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		numberFormatter.maximumFractionDigits = maximumFractionDigits //设置小数点后最多3位
+        if ((minimumFractionDigits) != 0) {
+            numberFormatter.minimumFractionDigits = min(minimumFractionDigits, decimals)
+        }
+		numberFormatter.maximumFractionDigits = decimals //设置保留小数点位数
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
@@ -1009,8 +1040,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
 				DispatchQueue.main.async {
-					self.fromMoneyLabel.text = self.numberFormat(self.fromMoney)
-					self.toMoneyLabel.text = self.output(self.fromMoney)
+					self.fromMoneyLabel.text = self.leftOperandDisplayValue
+					self.toMoneyLabel.text = self.output(self.leftOperand)
 				}
 			}
 			
@@ -1056,10 +1087,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				let controllers = fromControllers[page]
 				self.fromSymbol = newSymbol
 				self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
-				self.fromMoneyLabel?.text = numberFormat(self.fromMoney)
+                self.fromMoneyLabel?.text = self.leftOperandDisplayValue
 				//为了触发isEmpty属性监听事件
 				self.isEmpty = true
-				self.isEmpty = self.fromMoney == "100"
+				self.isEmpty = self.leftOperand == "0"
 				self.fromSymbolLabel = controllers?["symbolLabel"] as? UILabel
 				self.fromImageView = controllers?["imageView"] as? UIImageView
 			} else {

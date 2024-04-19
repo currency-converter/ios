@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Selectați moneda";
 "currencyPicker.favoriteCurrencies" = "Favorite";
 "currencyPicker.allCurrencies" = "Toate monedele";
+"currencyPicker.searchResults" = "Rezultatele căutării";
 "currencyPicker.noResults" = "fără rezultat";
 "currencyPicker.unknow" = "Necunoscut";
 

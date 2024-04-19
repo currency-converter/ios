@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Pilih mata uang";
 "currencyPicker.favoriteCurrencies" = "Favorit";
 "currencyPicker.allCurrencies" = "Semua mata uang";
+"currencyPicker.searchResults" = "Hasil Pencarian";
 "currencyPicker.noResults" = "tidak ada hasil";
 "currencyPicker.unknow" = "Tidak Dikenal";
 

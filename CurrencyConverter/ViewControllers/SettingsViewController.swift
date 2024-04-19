@@ -181,8 +181,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 	}
 	
 	@IBAction func onCustomRateTextfieldChanged(_ sender: UITextField) {
+        let number = NumberFormatter()
         // 校验自定义汇率的合法性
-        let customRate:String = self.customRateTextField.text ?? "1"
+        let customRate:String = (self.customRateTextField.text ?? "1").replacingOccurrences(of: number.decimalSeparator, with: ".")
         if Float(customRate) != nil {
             let shared = UserDefaults(suiteName: Config.groupId)
             shared?.set(customRate, forKey: "customRate")
@@ -299,7 +300,7 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		self.autoUpdateRateSwitch.isOn = isAutoUpdateRate
 		self.customRateSwitch.isOn = isCustomRate
 		self.toggleCustomRateDetail(self.customRateSwitch.isOn)
-		self.customRateTextField.text = "\(rate)"
+		self.customRateTextField.text = numberFormat(String(rate), formatDigits: false)
         self.customRateTextField.keyboardType = UIKeyboardType.decimalPad
 		self.customRateTo.text = toSymbol
 		self.customRateFrom.text = fromSymbol
@@ -313,10 +314,10 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		return numberFormat("12345.67890")
 	}
 	
-	func numberFormat(_ s:String) -> String {
+    func numberFormat(_ s:String, formatDigits: Bool? = true) -> String {
 		let shared = UserDefaults(suiteName: Config.groupId)
 		let usesGroupingSeparator: Bool = shared?.bool(forKey: "usesGroupingSeparator") ?? Config.defaults["usesGroupingSeparator"] as! Bool
-		let decimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
+		let defaultDecimals = shared?.integer(forKey: "decimals") ?? Config.defaults["decimals"] as! Int
 		var price: NSNumber = 0
 		if let myInteger = Double(s) {
 			price = NSNumber(value: myInteger)
@@ -326,7 +327,9 @@ class SettingsViewController: UITableViewController, CallbackDelegate {
 		//设置number显示样式
 		numberFormatter.numberStyle = .decimal  // 小数形式
 		numberFormatter.usesGroupingSeparator = usesGroupingSeparator //设置用组分隔
-		numberFormatter.maximumFractionDigits = decimals //设置小数点后最多3位
+        if (formatDigits ?? true) {
+            numberFormatter.maximumFractionDigits = defaultDecimals // 使用默认值
+        }
 		//格式化
 		let format = numberFormatter.string(from: price)!
 		return format

@@ -42,6 +42,7 @@
 "currencyPicker.title" = "选择货币";
 "currencyPicker.favoriteCurrencies" = "收藏夹";
 "currencyPicker.allCurrencies" = "所有货币";
+"currencyPicker.searchResults" = "搜索结果";
 "currencyPicker.noResults" = "无结果";
 "currencyPicker.unknow" = "未知";
 

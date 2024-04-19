@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14490.70" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch44" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="32700.99.1234" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch44"/>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14490.21"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="22609"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -14,12 +12,10 @@
             <objects>
                 <controller hidesWhenLoading="NO" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch" customModuleProvider="target">
                     <items>
-                        <group width="1" height="24" alignment="left" radius="0.0" id="ef7-C9-rgi">
+                        <group width="1" alignment="left" contentMode="top" radius="0.0" id="ef7-C9-rgi">
                             <items>
-                                <label alignment="right" verticalAlignment="center" id="9yd-R9-Hvp"/>
-                                <label alignment="right" verticalAlignment="center" textAlignment="left" id="G0v-Pl-o91">
-                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                <label alignment="right" verticalAlignment="center" text="0" id="9yd-R9-Hvp">
+                                    <color key="textColor" name="FromMoneyLabelTextColor"/>
                                 </label>
                                 <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="OCi-sn-tv0"/>
                             </items>
@@ -30,13 +26,13 @@
                                     </connections>
                                 </tapGestureRecognizer>
                             </gestureRecognizers>
+                            <color key="backgroundColor" red="0.86596929541533285" green="0.8880801796913147" blue="0.62064521774906389" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <edgeInsets key="margins" left="5" right="5" top="0.0" bottom="0.0"/>
                         </group>
-                        <group width="1" height="19" alignment="right" radius="0.0" id="7iB-bD-FwB">
+                        <group width="1" alignment="right" contentMode="top" radius="0.0" spacing="0.0" id="7iB-bD-FwB">
                             <items>
-                                <label alignment="right" verticalAlignment="center" id="XH7-MK-aem"/>
-                                <label alignment="right" verticalAlignment="center" id="0iF-G2-8F2">
-                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                <label alignment="right" verticalAlignment="center" text="0" id="XH7-MK-aem">
+                                    <color key="textColor" name="FromMoneyLabelTextColor"/>
                                 </label>
                                 <imageView width="20" height="15" alignment="left" verticalAlignment="center" id="iyZ-QU-B0s"/>
                             </items>
@@ -47,8 +43,10 @@
                                     </connections>
                                 </tapGestureRecognizer>
                             </gestureRecognizers>
+                            <color key="backgroundColor" red="0.60479384147579973" green="0.79712871168100552" blue="0.96611279249191284" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <edgeInsets key="margins" left="5" right="5" top="0.0" bottom="0.0"/>
                         </group>
-                        <group width="1" height="39" alignment="left" id="a2q-TQ-5ZC">
+                        <group width="1" alignment="left" id="a2q-TQ-5ZC">
                             <items>
                                 <button width="43" alignment="left" title="7" id="8cZ-xJ-TtP">
                                     <connections>
@@ -72,7 +70,7 @@
                                 </button>
                             </items>
                         </group>
-                        <group width="1" height="39" alignment="left" id="lBE-D5-eEg">
+                        <group width="1" alignment="left" id="lBE-D5-eEg">
                             <items>
                                 <button width="43" alignment="left" title="4" id="4Pr-ie-8dc">
                                     <connections>
@@ -96,7 +94,7 @@
                                 </button>
                             </items>
                         </group>
-                        <group width="1" height="39" alignment="left" id="1Fu-Pc-BNP">
+                        <group alignment="left" id="1Fu-Pc-BNP">
                             <items>
                                 <button width="43" alignment="left" title="1" id="se3-cQ-nhx">
                                     <connections>
@@ -136,7 +134,6 @@
                         <outlet property="buttonDot" destination="aFw-gs-2TT" id="2lQ-Pz-HMj"/>
                         <outlet property="fromFlagImage" destination="OCi-sn-tv0" id="seX-IH-G7X"/>
                         <outlet property="fromMoneyLabel" destination="9yd-R9-Hvp" id="OyS-0h-Mht"/>
-                        <outlet property="fromSymbolLabel" destination="G0v-Pl-o91" id="vrZ-OC-Ode"/>
                         <outlet property="group1" destination="ef7-C9-rgi" id="Hh2-ZO-1te"/>
                         <outlet property="group2" destination="7iB-bD-FwB" id="O7h-Od-5df"/>
                         <outlet property="group3" destination="a2q-TQ-5ZC" id="TR9-B1-otG"/>
@@ -144,7 +141,6 @@
                         <outlet property="group5" destination="1Fu-Pc-BNP" id="ZNg-Md-MAH"/>
                         <outlet property="toFlagImage" destination="iyZ-QU-B0s" id="ySf-8f-mVS"/>
                         <outlet property="toMoneyLabel" destination="XH7-MK-aem" id="HN2-xr-WQQ"/>
-                        <outlet property="toSymbolLabel" destination="0iF-G2-8F2" id="d8G-97-0QI"/>
                     </connections>
                 </controller>
             </objects>
@@ -197,4 +193,10 @@
             <point key="canvasLocation" x="272" y="34.910714285714285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AED" width="48" height="36"/>
+        <namedColor name="FromMoneyLabelTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

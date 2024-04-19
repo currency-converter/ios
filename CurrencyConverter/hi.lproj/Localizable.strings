@@ -42,6 +42,7 @@
 "CurrencyPicker.title" = "मुद्रा का चयन करें";
 "CurrencyPicker.favoriteCurrencies" = "पसंदीदा";
 "CurrencyPicker.allCurrencies" = "सभी मुद्राएँ";
+"currencyPicker.searchResults" = "खोज परिणाम";
 "CurrencyPicker.noResults" = "कोई परिणाम नहीं";
 "CurrencyPicker.unknow" = "अज्ञात";
 

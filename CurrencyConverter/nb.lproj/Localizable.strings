@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Velg valuta";
 "currencyPicker.favoriteCurrencies" = "Favoritter";
 "currencyPicker.allCurrencies" = "Alle valutaer";
+"currencyPicker.searchResults" = "Søkeresultater";
 "currencyPicker.noResults" = "ingen resultat";
 "currencyPicker.unknow" = "Unknown";
 

@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Chọn vận động";
 "currencyPicker.favoriteCurrencies" = "Yêu thích";
 "currencyPicker.allCurrencies" = "Tất cả";
+"currencyPicker.searchResults" = "Kết quả tìm kiếm";
 "currencyPicker.noResults" = "Chưa có kết quả";
 "currencyPicker.unknow" = "Không";
 

@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Вибрати валюту";
 "currencyPicker.favoriteCurrencies" = "Вибране";
 "currencyPicker.allCurrencies" = "Усі валюти";
+"currencyPicker.searchResults" = "Результати пошуку";
 "currencyPicker.noResults" = "немає результату";
 "currencyPicker.unknow" = "Невідомо";
 

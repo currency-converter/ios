@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Välj valuta";
 "currencyPicker.favoriteCurrencies" = "Favoriter";
 "currencyPicker.allCurrencies" = "Alla valutor";
+"currencyPicker.searchResults" = "Sökresultat";
 "currencyPicker.noResults" = "inget resultat";
 "currencyPicker.unknow" = "Okänt";
 

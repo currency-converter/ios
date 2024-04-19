@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Vybrat měnu";
 "currencyPicker.favoriteCurrencies" = "Oblíbené";
 "currencyPicker.allCurrencies" = "Všechny měny";
+"currencyPicker.searchResults" = "Výsledky hledání";
 "currencyPicker.noResults" = "žádný výsledek";
 "currencyPicker.unknow" = "Neznámý";
 

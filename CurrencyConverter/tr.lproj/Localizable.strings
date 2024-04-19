@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Para birimini seçin";
 "currencyPicker.favoriteCurrencies" = "Favoriler";
 "currencyPicker.allCurrencies" = "Tüm para birimleri";
+"currencyPicker.searchResults" = "Arama Sonuçları";
 "currencyPicker.noResults" = "sonuç yok";
 "currencyPicker.unknow" = "Bilinmiyor";
 

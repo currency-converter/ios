@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Valitse valuutta";
 "currencyPicker.favoriteCurrencies" = "Suosikit";
 "currencyPicker.allCurrencies" = "Kaikki valuutat";
+"currencyPicker.searchResults" = "Hakutulokset";
 "currencyPicker.noResults" = "ei tulosta";
 "currencyPicker.unknow" = "Tuntematon";
 

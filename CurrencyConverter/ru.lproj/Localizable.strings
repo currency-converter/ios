@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Выбрать валюту";
 "currencyPicker.favoriteCurrencies" = "Избранное";
 "currencyPicker.allCurrencies" = "Все валюты";
+"currencyPicker.searchResults" = "Результаты поиска";
 "currencyPicker.noResults" = "нет результата";
 "currencyPicker.unknow" = "Неизвестно";
 

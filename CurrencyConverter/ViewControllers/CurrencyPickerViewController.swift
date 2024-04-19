@@ -101,25 +101,12 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
         if let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField {
             textFieldInsideSearchBar.textColor = self.themeIndex == 1 ? UIColor.white : UIColor.black // UIColor(named: "FromMoneyLabelTextColor")
         }
-//		searchBar.backgroundColor = Theme.cellBackgroundColor[themeIndex]
 		searchBar.delegate = self
         guard searchBar.value(forKey: "searchField") is UITextField else {
 			return
 		}
-		//searchTextFeild.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		// 修改输入文字的颜色
-//		searchTextFeild.textColor = Theme.cellTextColor[themeIndex]
-//		searchTextFeild.tintColor = UIColor.loquatYellow
-		// 输入内容大写
-		//searchTextFeild.autocapitalizationType = .allCharacters
-		// 设置取消按钮字体颜色
-//		let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.loquatYellow]
-//		UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
 		
 		let tableView = UITableView(frame: CGRect(x: 0, y: 0 + navigationBar.frame.size.height, width: viewBounds.width, height: viewBounds.height - navigationBar.frame.size.height), style: .plain)
-		let tableViewBackground = UIView(frame: self.view.bounds)
-//		tableViewBackground.backgroundColor = Theme.cellBackgroundColor[themeIndex]
-		tableView.backgroundView = tableViewBackground
 		tableView.showsVerticalScrollIndicator = true
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -147,8 +134,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
     // 在点击事件的处理方法中处理点击事件
     @objc func labelTapped(_ sender: UIButton) {
         if let value = sender.accessibilityHint {
-            // optionalValue 包含值
-//            print("Value is: \(value)")
             toggleFavorite(symbol: value)
         }
     }
@@ -208,14 +193,6 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return searchController.searchBar.text != "" ? 1 : self.allCurrencies.count
 	}
-    
-    // 分组背景色和分组文字颜色
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        if let headerView = view as? UITableViewHeaderFooterView {
-//            headerView.contentView.backgroundColor = Theme.tableBackgroundColor[themeIndex]
-//            headerView.textLabel?.textColor = Theme.cellTextColor[themeIndex]
-//        }
-    }
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 30
@@ -293,65 +270,10 @@ class CurrencyPickerViewController: UIViewController, UITableViewDelegate, UITab
 	// UITableViewDataSource协议中的方法，该方法的返回值决定指定分区的头部
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if searchController.searchBar.text != "" {
-			return ""
+			return self.searchResults.count == 0 ? NSLocalizedString("currencyPicker.noResults", comment: "") : NSLocalizedString("currencyPicker.searchResults", comment: "")
 		}
 		return self.adHeaders[section]
 	}
-	
-	// 设置单元格的编辑的样式
-//	func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//		let sectionId:Int = indexPath.section
-//        let symbol = searchController.searchBar.text != "" && self.searchResults.count > indexPath.row ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
-//		let isFav: Bool = allCurrencies[0]?.contains(symbol ?? "") ?? false
-//
-//		return isFav ? UITableViewCell.EditingStyle.delete : UITableViewCell.EditingStyle.insert
-//	}
-//	
-//	// 单元格编辑后的响应方法
-//	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//		let sectionId:Int = indexPath.section
-//		let symbol = searchController.searchBar.text != "" && self.searchResults.count > indexPath.row ? self.searchResults[indexPath.row] : allCurrencies[sectionId]?[indexPath.row]
-//		self.toggleFavorite(symbol: symbol ?? "")
-//	}
-//	
-//	// 设置 cell 是否允许移动
-//	func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//		// 只允许收藏的货币排序
-//		if self.searchResults.count > 0 {
-//			return false
-//		}
-//		return indexPath.section == 0
-//	}
-	
-//	func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//		// 移动cell之后更换数据数组里的循序
-//		(allCurrencies[0]![sourceIndexPath.row], allCurrencies[0]![destinationIndexPath.row]) = (allCurrencies[0]![destinationIndexPath.row], allCurrencies[0]![sourceIndexPath.row])
-//		
-//		//更新缓存
-//		let shared = UserDefaults(suiteName: Config.groupId)
-//		shared?.set(allCurrencies[0], forKey: "favorites")
-//		
-//		NotificationCenter.default.post(name: .didUserDefaultsChange, object: self, userInfo: [
-//			"favorites": allCurrencies[0]!
-//		])
-//	}
-	
-	/// 限制跨分区移动
-	///
-	/// - Parameters: 参数
-	///   - tableView: tableView对象，代理的委托人
-	///   - sourceIndexPath: 移动之前cell位置
-	///   - proposedDestinationIndexPath: 移动之后cell的位置
-	/// - Returns: cell移动之后最后位置
-//	func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-//		//根据分区下标判断分区是否允许移动，当前后的位置在同一个分区，允许移动，返回移动之后的位置，当前后位置不在同一个分区，不允许移动，返回移动之前的位置
-//		if sourceIndexPath.section == proposedDestinationIndexPath.section {
-//			return proposedDestinationIndexPath
-//		} else {
-//			return sourceIndexPath
-//		}
-//		
-//	}
 }
 
 
@@ -375,18 +297,5 @@ extension CurrencyPickerViewController: UISearchResultsUpdating {
 		}
 
 		self.currencyTableView?.reloadData()
-		//self.currencyTableView?.setContentOffset(CGPoint.zero, animated: false)
-		
-		if searchController.searchBar.text?.count ?? 0 > 0 && self.searchResults.count == 0 {
-            let noDataLabel = UILabel()
-			noDataLabel.text = NSLocalizedString("currencyPicker.noResults", comment: "")
-			noDataLabel.textAlignment = .center
-			noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
-			self.currencyTableView.separatorStyle = .none
-			self.currencyTableView.backgroundView = noDataLabel
-		} else {
-			let tableViewBackground = UIView(frame: self.view.bounds)
-			self.currencyTableView.backgroundView = tableViewBackground
-		}
 	}
 }

@@ -78,7 +78,6 @@ class FrequencyViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		//获取当前选中的单元格
 		let cell:UITableViewCell! = tableView.cellForRow(at: indexPath)
-		//print(cell.accessoryType == .checkmark)
 		if cell.accessoryType != .checkmark {
 			//取消已经选中的单元格
 			for c in self.tableView.visibleCells {

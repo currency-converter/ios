@@ -42,6 +42,7 @@
 "currencyPicker.title" = "Valuta kiválasztása";
 "currencyPicker.favoriteCurrencies" = "Kedvenc pénznemek";
 "currencyPicker.allCurrencies" = "Minden pénznem";
+"currencyPicker.searchResults" = "Keresési eredmények";
 "currencyPicker.noResults" = "nincs eredmény";
 "currencyPicker.unknow" = "Ismeretlen";
 
