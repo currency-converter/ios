@@ -46,13 +46,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	
     // 左操作数真实值
     var leftOperand: String = "0"
-    // 左操作数显示值
-    var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
     
     // 右操作数真实值
     var rightOperand: String = ""
-    // 右操作数显示值
-    var rightOperandDisplayValue: String = ""
 	
 	// 输入货币类型
 	var fromSymbol: String!
@@ -121,7 +117,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			self.preferredContentSize = CGSize(width: maxSize.width, height: compactHeight);
 			
 			//延时2秒，让切换效果更加自然
-			DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
 				self.renderCompactMode()
 			})
 		} else {
@@ -202,7 +198,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		let fromScreen: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenWidth, height: subScreenHeight))
 		fromScreen.tag = 1
-//		fromScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		if isDebug {
 			fromScreen.backgroundColor = UIColor.green
 		}
@@ -210,7 +205,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		
 		let toScreen: UIButton = UIButton(frame: CGRect(x: 0, y: subScreenHeight + screenMargin, width: screenWidth, height: subScreenHeight))
 		toScreen.tag = 2
-//		toScreen.addTarget(self, action: #selector(onCurrencyPickerClick(_:)), for: .touchDown)
 		if isDebug {
 			toScreen.backgroundColor = UIColor.yellow
 		}
@@ -227,7 +221,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel.adjustsFontSizeToFitWidth = true
 		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		fromMoneyLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		fromMoneyLabel.text = self.leftOperandDisplayValue
+		fromMoneyLabel.text = numberFormatForDisplay(self.leftOperand)
 		fromScreen.addSubview(fromMoneyLabel)
 
 		let toSymbol = UIButton(frame: CGRect(x: 0, y: 0, width: symbolWidth, height: symbolHeight))
@@ -302,7 +296,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 		fromMoneyLabel.font = UIFont.systemFont(ofSize: expandedMoneyFontSize)
 		fromMoneyLabel.textColor = self.fromMoneyLabelTextColor[self.isEmpty ? 0 : 1]
 		fromMoneyLabel.textAlignment = .right
-		fromMoneyLabel.text = leftOperandDisplayValue
+		fromMoneyLabel.text = numberFormatForDisplay(leftOperand)
 		if isDebug {
 			fromMoneyLabel.backgroundColor = UIColor.gray
 		}
@@ -437,11 +431,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 	@objc func onInput(_ sender: UIButton) {
         // 真实值
         let plainValue = sender.accessibilityHint!
-        // 显示值
-        let labelValue = sender.currentTitle!
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal  // 小数形式
-        let decimalSeparator = String(numberFormatter.decimalSeparator)
 		self.operatorButton?.backgroundColor = UIColor.hex("da8009")
 		self.operatorButton?.setTitleColor(UIColor.white, for: .normal)
 		
@@ -451,9 +442,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 			self.isEmpty = true
             self.isResult = false
             self.leftOperand = "0"
-			self.leftOperandDisplayValue = zero
             self.rightOperand = ""
-            self.rightOperandDisplayValue = ""
 			self.operatorSymbol = ""
 		case "A":
 			self.flash(button: sender)
@@ -484,12 +473,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 if self.operatorSymbol == "" {
                     if !self.isEmpty {
                         self.leftOperand += "0"
-                        self.leftOperandDisplayValue += zero
                     }
                 } else {
                     if rightOperand != "0" {
                         self.rightOperand += "0"
-                        self.rightOperandDisplayValue += zero
                     }
                 }
             }
@@ -498,22 +485,18 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 if self.operatorSymbol == "" {
                     if self.isEmpty {
                         self.leftOperand = "0."
-                        self.leftOperandDisplayValue = zero + decimalSeparator
                         self.isEmpty = false
                     } else {
                         if !self.leftOperand.contains(".") {
                             self.leftOperand += "."
-                            self.leftOperandDisplayValue += decimalSeparator
                         }
                     }
                 } else {
                     if !self.rightOperand.contains(".") {
                         self.rightOperand += "."
-                        self.rightOperandDisplayValue += decimalSeparator
                     }
                     if self.rightOperand.hasPrefix(".") {
                         self.rightOperand = "0\(self.rightOperand)"
-                        self.rightOperandDisplayValue = zero + self.rightOperandDisplayValue
                     }
                 }
             }
@@ -523,20 +506,18 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             if (!isResult) {
                 if self.operatorSymbol == "" {
                     self.leftOperand = self.isEmpty ? plainValue : self.leftOperand + plainValue
-                    self.leftOperandDisplayValue = self.isEmpty ? labelValue : self.leftOperandDisplayValue + labelValue
                     self.isEmpty = false
                 } else {
                     self.rightOperand = self.rightOperand == "0" ? plainValue : self.rightOperand + plainValue
-                    self.rightOperandDisplayValue = self.rightOperandDisplayValue == zero ? labelValue : self.rightOperandDisplayValue + labelValue
                 }
             }
 		}
 
         if self.operatorSymbol != "" && self.rightOperand != "" {
-            fromMoneyLabel.text = self.rightOperandDisplayValue
+            fromMoneyLabel.text = numberFormatForDisplay(self.rightOperand)
             toMoneyLabel.text = self.output(self.rightOperand)
         } else {
-            fromMoneyLabel.text = self.leftOperandDisplayValue
+            fromMoneyLabel.text = numberFormatForDisplay(self.leftOperand)
             toMoneyLabel.text = self.output(self.leftOperand)
         }
 	}
@@ -567,14 +548,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             print("Unknow operator symbol: \(self.operatorSymbol)")
         }
         
-        self.leftOperand = "\(newResult)"
-        self.leftOperandDisplayValue = numberFormat(String(newResult))
+        if newResult.truncatingRemainder(dividingBy: 1) != 0 {
+            self.leftOperand = "\(newResult)"
+        } else {
+            self.leftOperand = "\(Int(newResult))"
+        }
         
         isResult = true
-        
         self.operatorSymbol = ""
         self.rightOperand = ""
-        self.rightOperandDisplayValue = ""
 	}
 	
 	@objc func onSettingsClick() {
@@ -626,6 +608,36 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let format = numberFormatter.string(from: price)!
         return format
 	}
+    
+    /**
+     * 将用户输入的数字格式化成展示的格式，需要满足
+     * 1. 针对阿拉伯语言使用特定的数字字符
+     * 2.小数点结尾时，小数点需要保留123.
+     * 3.小数点后面只有（一个或者多个）0时，0需要保留123.0
+     * 4.小数部分如果是0开头的，0需要保留，比如 '123.04'
+     */
+    func numberFormatForDisplay(_ s: String) -> String {
+        let dot = "."
+        let decimalSeparator = String(NumberFormatter().decimalSeparator)
+        
+        if s.contains(dot) {
+            let parts = s.components(separatedBy: dot)
+            if parts.count >= 2 {
+                let firstPart = parts[0]
+                let lastPart = parts[1]
+                
+                let formattedLastPart = lastPart.map { character in
+                    return numberFormat(String(character))
+                }.joined()
+                
+                return numberFormat(firstPart) + decimalSeparator + formattedLastPart
+            } else {
+                print("The string does not contain a dot.")
+            }
+        }
+        
+        return numberFormat(s)
+    }
         
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
         // Perform any setup necessary in order to update the view.

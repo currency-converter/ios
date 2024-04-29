@@ -17,8 +17,6 @@ class InterfaceController: WKInterfaceController {
     
     // 左操作数真实值
     var leftOperand: String = "0"
-    // 左操作数显示值
-    var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
 	
 	// 汇率
 	var rate: Float = 1
@@ -88,11 +86,17 @@ class InterfaceController: WKInterfaceController {
 		button8.setWidth(buttonWidth)
 		button9.setWidth(buttonWidth)
 		button0.setWidth(buttonWidth)
-		
+        
 		button7.setHeight(buttonHeight)
 		button8.setHeight(buttonHeight)
 		button9.setHeight(buttonHeight)
 		button0.setHeight(buttonHeight)
+        
+        button7.setTitle(NumberFormatter().string(from: NSNumber(value: 7))!)
+        button8.setTitle(NumberFormatter().string(from: NSNumber(value: 8))!)
+        button9.setTitle(NumberFormatter().string(from: NSNumber(value: 9))!)
+        button0.setTitle(NumberFormatter().string(from: NSNumber(value: 0))!)
+        
 		
 		button4.setWidth(buttonWidth)
 		button5.setWidth(buttonWidth)
@@ -103,18 +107,26 @@ class InterfaceController: WKInterfaceController {
 		button5.setHeight(buttonHeight)
 		button6.setHeight(buttonHeight)
 		buttonDot.setHeight(buttonHeight)
+        
+        button4.setTitle(NumberFormatter().string(from: NSNumber(value: 4))!)
+        button5.setTitle(NumberFormatter().string(from: NSNumber(value: 5))!)
+        button6.setTitle(NumberFormatter().string(from: NSNumber(value: 6))!)
+        buttonDot.setTitle(NumberFormatter().decimalSeparator)
 		
 		button1.setWidth(buttonWidth)
 		button2.setWidth(buttonWidth)
 		button3.setWidth(buttonWidth)
 		buttonAC.setWidth(buttonWidth)
-		
+        
 		button1.setHeight(buttonHeight)
 		button2.setHeight(buttonHeight)
 		button3.setHeight(buttonHeight)
 		buttonAC.setHeight(buttonHeight)
         
-        buttonDot.setTitle(NumberFormatter().decimalSeparator)
+        button1.setTitle(NumberFormatter().string(from: NSNumber(value: 1))!)
+        button2.setTitle(NumberFormatter().string(from: NSNumber(value: 2))!)
+        button2.setTitle(NumberFormatter().string(from: NSNumber(value: 3))!)
+        
 		buttonAC.setBackgroundColor(UIColor.loquatYellow)
 		
 		self.refresh()
@@ -128,7 +140,7 @@ class InterfaceController: WKInterfaceController {
 			toFlagImage.setImage(UIImage(contentsOfFile: path))
 		}
 		
-		fromMoneyLabel.setText(leftOperandDisplayValue)
+		fromMoneyLabel.setText(numberFormatForDisplay(leftOperand))
 		toMoneyLabel.setText(output(leftOperand))
 	}
 	
@@ -154,6 +166,37 @@ class InterfaceController: WKInterfaceController {
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
+    
+    /**
+     * 将用户输入的数字格式化成展示的格式，需要满足
+     * 1. 针对阿拉伯语言使用特定的数字字符
+     * 2.小数点结尾时，小数点需要保留123.
+     * 3.小数点后面只有（一个或者多个）0时，0需要保留123.0
+     * 4.小数部分如果是0开头的，0需要保留，比如 '123.04'
+     */
+    func numberFormatForDisplay(_ s: String) -> String {
+        let dot = "."
+        let decimalSeparator = String(NumberFormatter().decimalSeparator)
+        
+        if s.contains(dot) {
+            let parts = s.components(separatedBy: dot)
+            if parts.count >= 2 {
+                let firstPart = parts[0]
+                let lastPart = parts[1]
+                
+                let formattedLastPart = lastPart.map { character in
+                    return numberFormat(String(character))
+                }.joined()
+                
+                return numberFormat(firstPart) + decimalSeparator + formattedLastPart
+            } else {
+                print("The string does not contain a dot.")
+            }
+        }
+        
+        return numberFormat(s)
+    }
+    
 	
 	@objc func onDidWatchSendMessage(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
@@ -184,75 +227,68 @@ class InterfaceController: WKInterfaceController {
 		}
 	}
 	
-    func onInput(_ plainValue: String, _ labelValue: String) {
-        let decimalSeparator = String(NumberFormatter().decimalSeparator)
-        
+    func onInput(_ plainValue: String) {
 		switch plainValue {
 		case "AC":
             self.isEmpty = true
             self.leftOperand = "0"
-            self.leftOperandDisplayValue = zero
 		case "0":
             if !self.isEmpty {
                 self.leftOperand += "0"
-                self.leftOperandDisplayValue += zero
             }
 		case ".":
             if self.isEmpty {
                 self.leftOperand = "0."
-                self.leftOperandDisplayValue = zero + decimalSeparator
                 self.isEmpty = false
             } else {
                 if !self.leftOperand.contains(".") {
                     self.leftOperand += "."
-                    self.leftOperandDisplayValue += decimalSeparator
                 }
             }
 		default:
             self.leftOperand = self.isEmpty ? plainValue : self.leftOperand + plainValue
-            self.leftOperandDisplayValue = self.isEmpty ? labelValue : self.leftOperandDisplayValue + labelValue
             self.isEmpty = false
 		}
 
-		fromMoneyLabel.setText(self.leftOperandDisplayValue)
+		fromMoneyLabel.setText(numberFormatForDisplay(self.leftOperand))
 		toMoneyLabel.setText(self.output(self.leftOperand))
 	}
 
 	@IBAction func input7() {
-		onInput("7", "7")
+		onInput("7")
 	}
 	@IBAction func input8() {
-		onInput("8", "8")
+		onInput("8")
 	}
 	@IBAction func input9() {
-		onInput("9", "9")
+		onInput("9")
 	}
 	@IBAction func input0() {
-		onInput("0", "0")
+		onInput("0")
 	}
 	@IBAction func input4() {
-		onInput("4", "4")
+		onInput("4")
 	}
 	@IBAction func input5() {
-		onInput("5", "5")
+		onInput("5")
 	}
 	@IBAction func input6() {
-		onInput("6", "6")
+		onInput("6")
 	}
 	@IBAction func inputDot() {
-		onInput(".", ".")
+		onInput(".")
 	}
 	@IBAction func input1() {
-		onInput("1", "1")
+		onInput("1")
 	}
 	@IBAction func inpu2() {
-		onInput("2", "2")
+		onInput("2")
 	}
 	@IBAction func input3() {
-		onInput("3", "3")
+		onInput("3")
 	}
 	@IBAction func inputAC() {
-		onInput("AC", "AC")
+		onInput("AC")
 	}
 	@IBAction func pickToSymbol(_ sender: Any) {
 		presentController(withName: "Currency", context: ["toSymbol", self.toSymbol])

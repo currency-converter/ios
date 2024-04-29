@@ -35,12 +35,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	// 左操作数真实值
 	var leftOperand: String = "0"
     // 左操作数显示值
-    var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
+    // var leftOperandDisplayValue: String = NumberFormatter().string(from: 0)!
     
     // 右操作数真实值
     var rightOperand: String = ""
     // 右操作数显示值
-    var rightOperandDisplayValue: String = ""
+    // var rightOperandDisplayValue: String = ""
 	
 	// 汇率
 	var rate: Float = 1
@@ -118,50 +118,62 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     private func success(_ data: Data?, isClickEvent: Bool) {
         print("Request succeeded.")
-        // 新浪财经返回的数据是gbk格式
-        let cfEncoding = CFStringEncodings.GB_18030_2000
-        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEncoding.rawValue))
-        //从GBK编码的Data里初始化NSString, 返回的NSString是UTF-16编码
-        if let str = NSString(data: data!, encoding: encoding) {
-            let jsString = str as String
-            let lines = jsString.components(separatedBy: "\n")
+        
+        do {
+            guard let data = data else {
+                throw NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Request data is nil."])
+            }
+            
+            let cfEncoding = CFStringEncodings.GB_18030_2000
+            let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEncoding.rawValue))
+            
+            guard let str = NSString(data: data, encoding: encoding) as String? else {
+                throw NSError(domain: "StringEncodingError", code: -2, userInfo: [NSLocalizedDescriptionKey: "Failed to decode data to string."])
+            }
+            
+            let lines = str.components(separatedBy: "\n")
+            
             for line in lines {
                 let array = line.components(separatedBy: ",")
-                if (array.count == 18) { // 过滤无效数据
+                if array.count == 18 {
                     let rate = array[1]
                     let symbol = array[0].suffix(13).prefix(3).uppercased()
                     let time = array[0].suffix(8)
                     let characterSet = CharacterSet(charactersIn: "\";")
                     let date = array[array.count-1].trimmingCharacters(in: characterSet)
-                    
                     let isoDate = "\(date)T\(time)+0800"
+                    
                     let dateFormatter = ISO8601DateFormatter()
-                    // 防止非法时间格式导致崩溃
-                    if let updatedAt = dateFormatter.date(from:isoDate) {
-                        let timestamp = updatedAt.timeIntervalSince1970
-                        let newRate = Double(rate)
-                        self.rates?[symbol]?["a"] = NSNumber(value: newRate ?? 1.0)
-                        self.rates?[symbol]?["b"] = NSNumber(value: timestamp)
-                    } else {
-                        NSLog("invalid update time: \(isoDate)")
+                    
+                    guard let updatedAt = dateFormatter.date(from: isoDate) else {
+                        NSLog("Invalid update time: \(isoDate)")
+                        continue
                     }
+                    
+                    let timestamp = updatedAt.timeIntervalSince1970
+                    let newRate = Double(rate) ?? 1.0
+                    self.rates?[symbol]?["a"] = NSNumber(value: newRate)
+                    self.rates?[symbol]?["b"] = NSNumber(value: timestamp)
                 }
             }
             
-            // 美元是中间货币，每次更新汇率都需要更新美元的更新时间
             let now = Date()
-            let timeInterval:TimeInterval = now.timeIntervalSince1970
+            let timeInterval = now.timeIntervalSince1970
             self.rates?["USD"]?["b"] = NSNumber(value: Int(timeInterval))
-            //更新缓存数据
+            
             let shared = UserDefaults(suiteName: Config.groupId)
             shared?.set(self.rates, forKey: "rates")
             shared?.set(Int(timeInterval), forKey: "rateUpdatedAt")
+            
             NotificationCenter.default.post(name: .didUpdateRate, object: self, userInfo: ["error": false, "isClickEvent": isClickEvent])
-            //汇率更新后，需要主动更新app中正使用的汇率
+            
             self.setRate()
             print("Rate update succeeded.")
+        } catch {
+            NSLog("An error occurred in success method: \(error)")
         }
     }
+
 	
     public func updateRate(_ isClickEvent: Bool = false) {
         
@@ -357,6 +369,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		getPosition()
 		renderScreen()
 		renderKeyboard()
+        
 	}
 	
 	func observe() {
@@ -484,7 +497,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			view = fromScrollView
 			favorites = fromFavorites
 			scrollView = fromScrollView
-            moneyLabelText = leftOperandDisplayValue
+            moneyLabelText = numberFormatForDisplay(leftOperand)
 			symbolButtonTag = 1
 			fromControllers.removeAll()
 		} else {
@@ -691,7 +704,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 					"changeType": "swipe",
 					"isCustomRate": false
 				])
-				
 			})
 		}
 	}
@@ -717,12 +729,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	@objc func onInput(_ sender: UIButton) {
         // 真实值
         let plainValue = sender.accessibilityHint!
-        // 显示值
-        let labelValue = sender.currentTitle!
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal  // 小数形式
-        let decimalSeparator = String(numberFormatter.decimalSeparator)
-		
+        
 		//清除+-的选中状态
 		self.operatorButton?.isSelected = false
 		
@@ -731,9 +740,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             self.isEmpty = true
             self.isResult = false
             self.leftOperand = "0"
-            self.leftOperandDisplayValue = zero
             self.rightOperand = ""
-            self.rightOperandDisplayValue = ""
             self.operatorSymbol = ""
         case "A":
             self.onSettingsClick(sender)
@@ -762,12 +769,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 if self.operatorSymbol == "" {
                     if !self.isEmpty {
                         self.leftOperand += "0"
-                        self.leftOperandDisplayValue += zero
                     }
                 } else {
                     if rightOperand != "0" {
                         self.rightOperand += "0"
-                        self.rightOperandDisplayValue += zero
                     }
                 }
             }
@@ -776,22 +781,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 if self.operatorSymbol == "" {
                     if self.isEmpty {
                         self.leftOperand = "0."
-                        self.leftOperandDisplayValue = zero + decimalSeparator
                         self.isEmpty = false
                     } else {
                         if !self.leftOperand.contains(".") {
                             self.leftOperand += "."
-                            self.leftOperandDisplayValue += decimalSeparator
                         }
                     }
                 } else {
                     if !self.rightOperand.contains(".") {
                         self.rightOperand += "."
-                        self.rightOperandDisplayValue += decimalSeparator
                     }
                     if self.rightOperand.hasPrefix(".") {
                         self.rightOperand = "0\(self.rightOperand)"
-                        self.rightOperandDisplayValue = zero + self.rightOperandDisplayValue
                     }
                 }
             }
@@ -799,20 +800,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             if (!isResult) {
                 if self.operatorSymbol == "" {
                     self.leftOperand = self.isEmpty ? plainValue : self.leftOperand + plainValue
-                    self.leftOperandDisplayValue = self.isEmpty ? labelValue : self.leftOperandDisplayValue + labelValue
                     self.isEmpty = false
                 } else {
                     self.rightOperand = self.rightOperand == "0" ? plainValue : self.rightOperand + plainValue
-                    self.rightOperandDisplayValue = self.rightOperandDisplayValue == zero ? labelValue : self.rightOperandDisplayValue + labelValue
                 }
             }
 		}
 		
 		if self.operatorSymbol != "" && self.rightOperand != "" {
-			fromMoneyLabel.text = self.rightOperandDisplayValue
+			fromMoneyLabel.text = numberFormatForDisplay(self.rightOperand)
 			toMoneyLabel.text = self.output(self.rightOperand)
 		} else {
-			fromMoneyLabel.text = self.leftOperandDisplayValue
+			fromMoneyLabel.text = numberFormatForDisplay(self.leftOperand)
 			toMoneyLabel.text = self.output(self.leftOperand)
 		}
 		
@@ -834,15 +833,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		default:
 			print("Unknow operator symbol: \(self.operatorSymbol)")
 		}
-		
-		self.leftOperand = "\(newResult)"
-        self.leftOperandDisplayValue = numberFormat(String(newResult))
+        
+        if newResult.truncatingRemainder(dividingBy: 1) != 0 {
+            self.leftOperand = "\(newResult)"
+        } else {
+            self.leftOperand = "\(Int(newResult))"
+        }
         
         isResult = true
-        
         self.operatorSymbol = ""
         self.rightOperand = ""
-        self.rightOperandDisplayValue = ""
 	}
 	
 	func backspace() {
@@ -852,9 +852,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 let n = length > 1 ? String(self.leftOperand.prefix(length - 1)) : "0"
                 self.leftOperand = n
                 
-                let n2 = length > 1 ? String(self.leftOperandDisplayValue.prefix(length - 1)) : zero
-                self.leftOperandDisplayValue = n2
-                if (self.leftOperandDisplayValue == zero) {
+                if (self.leftOperand == "0") {
                     self.isEmpty = true
                 }
             } else {
@@ -862,9 +860,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 let n = length > 1 ? String(self.rightOperand.prefix(length - 1)) : ""
                 self.rightOperand = n
                 
-                let n2 = length > 1 ? String(self.rightOperandDisplayValue.prefix(length - 1)) : ""
-                self.rightOperandDisplayValue = n2
-                if (self.rightOperandDisplayValue == "" && self.operatorSymbol != "") {
+                if (self.rightOperand == "" && self.operatorSymbol != "") {
                     self.operatorButton?.isSelected = true
                 }
             }
@@ -906,8 +902,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		}
 		self.toMoneyLabel.becomeFirstResponder()
         self.toMoneyLabel.backgroundColor = UIColor.hex("cccccc")
-        // 获取文字的实际宽度
-//        let actualWidth = self.toMoneyLabel.actualWidth()
         // 计算文字的实际宽度
         let size = self.toMoneyLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: self.toMoneyLabel.frame.size.height))
 
@@ -977,6 +971,36 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		let format = numberFormatter.string(from: price)!
 		return format
 	}
+    
+    /**
+     * 将用户输入的数字格式化成展示的格式，需要满足
+     * 1. 针对阿拉伯语言使用特定的数字字符
+     * 2.小数点结尾时，小数点需要保留123.
+     * 3.小数点后面只有（一个或者多个）0时，0需要保留123.0
+     * 4.小数部分如果是0开头的，0需要保留，比如 '123.04'
+     */
+    func numberFormatForDisplay(_ s: String) -> String {
+        let dot = "."
+        let decimalSeparator = String(NumberFormatter().decimalSeparator)
+        
+        if s.contains(dot) {
+            let parts = s.components(separatedBy: dot)
+            if parts.count >= 2 {
+                let firstPart = parts[0]
+                let lastPart = parts[1]
+                
+                let formattedLastPart = lastPart.map { character in
+                    return numberFormat(String(character))
+                }.joined()
+                
+                return numberFormat(firstPart) + decimalSeparator + formattedLastPart
+            } else {
+                print("The string does not contain a dot.")
+            }
+        }
+        
+        return numberFormat(s)
+    }
 	
 	@objc func onDidUserDefaultsChange(_ notification: Notification) {
 		if let data = notification.userInfo as? [String: Any] {
@@ -1040,7 +1064,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		
 			if data.keys.contains("isCustomRate") || data.keys.contains("decimals") || data.keys.contains("usesGroupingSeparator") || data.keys.contains("fromSymbol") || data.keys.contains("toSymbol") {
 				DispatchQueue.main.async {
-					self.fromMoneyLabel.text = self.leftOperandDisplayValue
+                    self.fromMoneyLabel.text = self.numberFormatForDisplay(self.leftOperand)
 					self.toMoneyLabel.text = self.output(self.leftOperand)
 				}
 			}
@@ -1087,7 +1111,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 				let controllers = fromControllers[page]
 				self.fromSymbol = newSymbol
 				self.fromMoneyLabel = controllers?["moneyLabel"] as? UILabel
-                self.fromMoneyLabel?.text = self.leftOperandDisplayValue
+                self.fromMoneyLabel?.text = numberFormatForDisplay(self.leftOperand)
 				//为了触发isEmpty属性监听事件
 				self.isEmpty = true
 				self.isEmpty = self.leftOperand == "0"
